@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="uml servicioDeSalud">
+  <ClassDiagramComponents>
+    <Class name="Persona" package="" visibility="public" xPosition="530.0" yPosition="412.0">
+      <Fields>
+        <Field name="id" type="String" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="apellido" type="String" visibility="private"/>
+        <Field name="email" type="String" visibility="private"/>
+        <Field name="telefono" type="String" visibility="private"/>
+        <Field name="rol" type="Rol" visibility="private"/>
+        <Field name="foto" type="Imagen" visibility="private"/>
+        <Field name="password" type="String" visibility="private"/>
+        <Field name="activo" type="Boolean" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="Persona" returnType="void" visibility="public"/>
+        <Method name="Persona" returnType="void" visibility="public">
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="apellido"/>
+          <Argument type="String" name="email"/>
+          <Argument type="String" name="telefono"/>
+          <Argument type="Rol" name="rol"/>
+          <Argument type="Imagen" name="foto"/>
+          <Argument type="String" name="password"/>
+          <Argument type="Boolean" name="activo"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Profesional       " package="" visibility="public" xPosition="28.0" yPosition="466.0">
+      <Fields>
+        <Field name="especialidad" type="String" visibility="private"/>
+        <Field name="modalidad" type="Modalidad" visibility="private"/>
+        <Field name="ubicacion" type="String" visibility="private"/>
+        <Field name="horario" type="Date" visibility="private"/>
+        <Field name="dias" type="Date" visibility="private"/>
+        <Field name="obrasSociales" type="List&lt;ObraSocial&gt;" visibility="private"/>
+        <Field name="turnos" type="LIst&lt;Turno&gt;" visibility="private"/>
+        <Field name="honorarios" type="Double" visibility="private"/>
+        <Field name="reputacion" type="List&lt;Integer&gt;" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="Profesional" returnType="void" visibility="public"/>
+        <Method name="Profesional" returnType="void" visibility="public">
+          <Argument type="String" name="especialidad"/>
+          <Argument type="Modalidad" name="modalidad"/>
+          <Argument type="String" name="ubicacion"/>
+          <Argument type="Date" name="horario"/>
+          <Argument type="Date" name="dias"/>
+          <Argument type="LIst&lt;ObraSocial&gt;" name="obraSocial"/>
+          <Argument type="List&lt;Turno&gt;" name="turnos"/>
+          <Argument type="Double" name="honorarios"/>
+          <Argument type="List&lt;Integer&gt;" name="reputacion"/>
+        </Method>
+        <Method name="crearProfesinal" returnType="void" visibility="public"/>
+        <Method name="modificarProfesional" returnType="void" visibility="public"/>
+        <Method name="profesionales" returnType="List&lt;Profesional&gt;" visibility="public"/>
+        <Method name="untitledMethod" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name=" Paciente     " package="" visibility="public" xPosition="1036.0" yPosition="40.0">
+      <Fields>
+        <Field name="direccion" type="String" visibility="private"/>
+        <Field name="historiaClinica" type="List&lt;HistoriaClinica&gt;" visibility="private"/>
+        <Field name="obraSocial" type="ObraSocial" visibility="private"/>
+        <Field name="turnos" type="List&lt;Turno&gt;" visibility="private"/>
+        <Field name="fechaNacimiento" type="Date" visibility="private"/>
+        <Field name="sexo" type="String" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="Paciente" returnType="void" visibility="public"/>
+        <Method name="crearPaciente" returnType="void" visibility="public">
+          <Argument type="String" name="direccion"/>
+          <Argument type="List&lt;HistoriaClinica&gt;" name="historiaClinica"/>
+          <Argument type="ObraSocial" name="obraSocial"/>
+          <Argument type="List&lt;Turno&gt;" name="turnos"/>
+          <Argument type="Date" name="fechaNacimiento"/>
+          <Argument type="String" name="sexo"/>
+        </Method>
+        <Method name="modificarPaciente" returnType="void" visibility="public">
+          <Argument type="String" name="direccion"/>
+          <Argument type="List&lt;HistoriaClinica&gt;" name="historiaClinica"/>
+          <Argument type="ObraSocial" name="obraSocial"/>
+          <Argument type="List&lt;Turno&gt;" name="turnos"/>
+          <Argument type="Date" name="fechaNacimiento"/>
+          <Argument type="String" name="sexo"/>
+        </Method>
+        <Method name="listarPacientes" returnType="List&lt;Paciente&gt;" visibility="public"/>
+        <Method name="pedirTurno" returnType="void" visibility="public">
+          <Argument type="String" name="idPaciente"/>
+          <Argument type="String" name="idProfesional"/>
+          <Argument type="Date" name="fecha"/>
+        </Method>
+        <Method name="eliminarTurno" returnType="void" visibility="public">
+          <Argument type="String" name="idTurno"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Turno     " package="" visibility="public" xPosition="281.0" yPosition="40.0">
+      <Fields>
+        <Field name="id" type="String" visibility="private"/>
+        <Field name="fecha" type="Date" visibility="private"/>
+        <Field name="profesional" type="Profesional" visibility="private"/>
+        <Field name="paciente" type="Paciente" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="Turno" returnType="void" visibility="public"/>
+        <Method name="Turno" returnType="void" visibility="public">
+          <Argument type="String" name="id"/>
+          <Argument type="Date" name="fecha"/>
+          <Argument type="Paciente" name="paciente"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ObraSocial        " package="" visibility="public" xPosition="790.0" yPosition="1050.0">
+      <Fields>
+        <Field name="id" type="String" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="ObraSocial" returnType="void" visibility="public">
+          <Argument type="String" name="id"/>
+          <Argument type="String" name="nombre"/>
+        </Method>
+        <Method name="ObraSocial" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Administrador          " package="" visibility="public" xPosition="770.0" yPosition="796.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="Administrador" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="HistoriaClinica     " package="" visibility="public" xPosition="1203.0" yPosition="952.0">
+      <Fields>
+        <Field name="id" type="String" visibility="private"/>
+        <Field name="paciente" type="Paciente" visibility="private"/>
+        <Field name="turno" type="Turno" visibility="private"/>
+        <Field name="diagnostico" type="String" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="HistoriaClinica" returnType="void" visibility="public"/>
+        <Method name="HistoriaClinica" returnType="void" visibility="public">
+          <Argument type="String" name="id"/>
+          <Argument type="Paciente" name="paciente"/>
+          <Argument type="Turno" name="turno"/>
+          <Argument type="String" name="diagnostico"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Enum name="Rol     " package="" visibility="public" xPosition="704.0" yPosition="222.0">
+      <Literals>
+        <Literal name="PACIENTE"/>
+        <Literal name="PROFESIONAL"/>
+        <Literal name="ADMIN"/>
+      </Literals>
+    </Enum>
+    <Enum name="Modalidad         " package="" visibility="public" xPosition="11.0" yPosition="40.0">
+      <Literals>
+        <Literal name="TELECONSULTA"/>
+        <Literal name="PRESENCIAL"/>
+      </Literals>
+    </Enum>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="paTur" source=" Paciente     " target="Turno     " type="Composition" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="os" source=" Paciente     " target="ObraSocial        " type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="osPro" source="Profesional       " target="ObraSocial        " type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <IsRelation name="is" source=" Paciente     " target="Persona"/>
+    <HasRelation name="modal" source="Profesional       " target="Modalidad         " type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="Administrador          " target="Persona"/>
+    <IsRelation name="is" source="Profesional       " target="Persona"/>
+    <HasRelation name="rol" source="Persona" target="Rol     " type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="turPro" source="Profesional       " target="Turno     " type="Composition" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <UseRelation name="hc" source="HistoriaClinica     " target=" Paciente     " sourceCardinality="1..*" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
