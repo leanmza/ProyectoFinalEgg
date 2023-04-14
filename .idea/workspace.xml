@@ -5,6 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13e64717-c6b6-4e6b-a095-96677ff0863a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Entity/Persona.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Enum/Rol.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Exception/Miexcepcion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Repository/PersonaRepositorio.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Service/PersonaService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,7 +30,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/MedicApp/src/main/java/Entity/Persona.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MedicApp/target/classes/Entity/Persona.class" root0="SKIP_INSPECTION" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -36,6 +41,9 @@
     </option>
   </component>
   <component name="ProjectId" id="2OO8m0tZxQSku5Yi0CyIbEAA0Gx" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
