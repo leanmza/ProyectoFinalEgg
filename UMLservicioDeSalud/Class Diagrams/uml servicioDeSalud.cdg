@@ -40,7 +40,8 @@
         <Field name="obrasSociales" type="List&lt;ObraSocial&gt;" visibility="private"/>
         <Field name="turnos" type="LIst&lt;Turno&gt;" visibility="private"/>
         <Field name="honorarios" type="Double" visibility="private"/>
-        <Field name="reputacion" type="List&lt;Integer&gt;" visibility="private"/>
+        <Field name="cantVisitas" type="Integer" visibility="private"/>
+        <Field name="puntaje" type="Integer" visibility="private"/>
       </Fields>
       <Constructors>
         <Constructor visibility="public"/>
