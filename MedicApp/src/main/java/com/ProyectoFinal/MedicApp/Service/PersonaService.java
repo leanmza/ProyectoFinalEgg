@@ -13,13 +13,12 @@ public class PersonaService {
     private PersonaRepositorio personaRepositorio;
 
     @Transactional
+
     public void crearPersona(String nombre, String apellido, String email, String telefono, String password) throws MiExcepcion {
 
-        validarPersona(nombre, apellido, email, telefono, password);
 
-        Persona persona = new Persona();
-        persona.setActivo(true);
-        persona.setNombre(nombre);
+
+        validarPersona(nombre, apellido,email, telefono, password);
         persona.setApellido(apellido);
         persona.setEmail(email);
         persona.setTelefono(telefono);
