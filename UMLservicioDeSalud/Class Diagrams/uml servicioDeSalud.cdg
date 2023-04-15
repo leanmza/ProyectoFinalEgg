@@ -30,7 +30,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="Profesional       " package="" visibility="public" xPosition="-93.0" yPosition="412.0">
+    <Class name="Profesional       " package="" visibility="public" xPosition="68.0" yPosition="412.0">
       <Fields>
         <Field name="especialidad" type="String" visibility="private"/>
         <Field name="modalidad" type="Modalidad" visibility="private"/>
@@ -40,7 +40,8 @@
         <Field name="obrasSociales" type="List&lt;ObraSocial&gt;" visibility="private"/>
         <Field name="turnos" type="LIst&lt;Turno&gt;" visibility="private"/>
         <Field name="honorarios" type="Double" visibility="private"/>
-        <Field name="reputacion" type="List&lt;Integer&gt;" visibility="private"/>
+        <Field name="cantVisitas" type="Integer" visibility="private"/>
+        <Field name="puntaje" type="Integer" visibility="private"/>
       </Fields>
       <Constructors>
         <Constructor visibility="public"/>
@@ -110,7 +111,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="Turno     " package="" visibility="public" xPosition="1032.0" yPosition="358.0">
+    <Class name="Turno     " package="" visibility="public" xPosition="932.0" yPosition="372.0">
       <Fields>
         <Field name="id" type="String" visibility="private"/>
         <Field name="fecha" type="Date" visibility="private"/>
@@ -194,15 +195,15 @@
   </ClassDiagramComponents>
   <ClassDiagramRelations>
     <HasRelation name="modal" source="Profesional       " target="Modalidad         " type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
-    <HasRelation name="os" source=" Paciente     " target="ObraSocial        " type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
-    <UseRelation name="hc" source="HistoriaClinica     " target=" Paciente     " sourceCardinality="1..*" targetCardinality="1..1"/>
-    <HasRelation name="ubica" source="Profesional       " target="Ubicacion" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..1"/>
-    <HasRelation name="osPro" source="Profesional       " target="ObraSocial        " type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
-    <IsRelation name="is" source="Profesional       " target="Persona"/>
-    <HasRelation name="rol" source="Persona" target="Rol     " type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
-    <IsRelation name="is" source="Administrador          " target="Persona"/>
     <HasRelation name="paTur" source=" Paciente     " target="Turno     " type="Composition" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
-    <HasRelation name="turPro" source="Profesional       " target="Turno     " type="Composition" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <IsRelation name="is" source="Administrador          " target="Persona"/>
+    <HasRelation name="osPro" source="Profesional       " target="ObraSocial        " type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <UseRelation name="hc" source="HistoriaClinica     " target=" Paciente     " sourceCardinality="1..*" targetCardinality="1..1"/>
     <IsRelation name="is" source=" Paciente     " target="Persona"/>
+    <HasRelation name="turPro" source="Profesional       " target="Turno     " type="Composition" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <IsRelation name="is" source="Profesional       " target="Persona"/>
+    <HasRelation name="ubica" source="Profesional       " target="Ubicacion" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="os" source=" Paciente     " target="ObraSocial        " type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="rol" source="Persona" target="Rol     " type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
   </ClassDiagramRelations>
 </ClassDiagram>

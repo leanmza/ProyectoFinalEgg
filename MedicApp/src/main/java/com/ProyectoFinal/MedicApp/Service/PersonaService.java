@@ -19,6 +19,8 @@ public class PersonaService {
 
 
         validarPersona(nombre, apellido,email, telefono, password);
+        
+        Persona persona = new Persona();
         persona.setApellido(apellido);
         persona.setEmail(email);
         persona.setTelefono(telefono);
