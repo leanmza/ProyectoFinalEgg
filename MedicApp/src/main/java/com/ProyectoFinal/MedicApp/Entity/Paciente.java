@@ -4,6 +4,7 @@ import com.ProyectoFinal.MedicApp.Enum.Rol;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -15,13 +16,13 @@ public class Paciente extends Persona {
     
     private String direccion;
     
-    @OneToOne
+    @OneToMany
     private List<HistoriaClinica> historiaClinica;
     
     @OneToOne
     private ObraSocial obraSocial;
     
-    @OneToOne
+    @OneToMany
     private List<Turno> turnos;
     
     @Temporal(TemporalType.DATE)
