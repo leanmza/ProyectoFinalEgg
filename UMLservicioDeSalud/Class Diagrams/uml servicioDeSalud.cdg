@@ -2,7 +2,7 @@
 
 <ClassDiagram name="uml servicioDeSalud">
   <ClassDiagramComponents>
-    <Class name="Persona" package="" visibility="public" xPosition="710.0" yPosition="31.0">
+    <Class name="Persona" package="" visibility="public" xPosition="738.0" yPosition="48.0">
       <Fields>
         <Field name="id" type="String" visibility="private"/>
         <Field name="nombre" type="String" visibility="private"/>
@@ -194,6 +194,7 @@
     </Enum>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
+<<<<<<< Updated upstream
     <HasRelation name="modal" source="Profesional       " target="Modalidad         " type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
     <HasRelation name="paTur" source=" Paciente     " target="Turno     " type="Composition" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
     <IsRelation name="is" source="Administrador          " target="Persona"/>
@@ -205,5 +206,18 @@
     <HasRelation name="ubica" source="Profesional       " target="Ubicacion" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..1"/>
     <HasRelation name="os" source=" Paciente     " target="ObraSocial        " type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
     <HasRelation name="rol" source="Persona" target="Rol     " type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
+=======
+    <HasRelation name="os" source=" Paciente     " target="ObraSocial        " type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="Profesional       " target="Persona"/>
+    <HasRelation name="osPro" source="Profesional       " target="ObraSocial        " type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="turPro" source="Profesional       " target="Turno     " type="Composition" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <IsRelation name="is" source="Administrador          " target="Persona"/>
+    <HasRelation name="paTur" source=" Paciente     " target="Turno     " type="Composition" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <IsRelation name="is" source=" Paciente     " target="Persona"/>
+    <HasRelation name="ubica" source="Profesional       " target="Ubicacion" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="rol" source="Persona" target="Rol     " type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <UseRelation name="hc" source="HistoriaClinica     " target=" Paciente     " sourceCardinality="1..*" targetCardinality="1..1"/>
+    <HasRelation name="modal" source="Profesional       " target="Modalidad         " type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
+>>>>>>> Stashed changes
   </ClassDiagramRelations>
 </ClassDiagram>
