@@ -7,6 +7,7 @@ import com.ProyectoFinal.MedicApp.Enum.Modalidad;
 import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalServicio;
+
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -41,18 +42,17 @@ public class PortalControlador {
     }
     
     @PostMapping("/regitroProfesional")
-    public String registroProfesional(@RequestParam String nombre,
-            @RequestParam String apellido, @RequestParam String email, @RequestParam String telefono,
-            MultipartFile archivo, @RequestParam String password, @RequestParam String password2,
-            @RequestParam String especialidad, @RequestParam Modalidad modalidad,
-            @RequestParam Ubicacion ubicacion, @RequestParam Date horarioInicio,
-            @RequestParam Date horarioFin, @RequestParam Date dias, @RequestParam List<ObraSocial> obrasSociales,
-            @RequestParam Double honorarios) {
-        
+    public String registroProfesional(@RequestParam String nombre, @RequestParam String apellido, 
+            @RequestParam String email, @RequestParam String telefono,
+            /*MultipartFile archivo,*/ @RequestParam String password, @RequestParam String password2,
+            @RequestParam String especialidad, @RequestParam String modalidad,
+            @RequestParam String ubicacion, /*@RequestParam Date horarioInicio,
+            @RequestParam Date horarioFin,*/@RequestParam Date horario, @RequestParam Date dias, /*@RequestParam List<ObraSocial> obrasSociales,
+            @RequestParam List<Turno> turnos,*/ @RequestParam Double honorarios) {
         try {
-            profesionalService.crearProfesional(nombre, apellido, email, telefono, archivo,
-                    password, password2, especialidad, modalidad, ubicacion, horarioInicio,
-                    horarioFin, dias, obrasSociales, honorarios);
+            profesionalService.crearProfesional(nombre, apellido, email, telefono, /*archivo,*/
+                    password, password2, especialidad, modalidad, ubicacion,/* horarioInicio,
+                    horarioFin,*/horario, dias, /*obrasSociales,*/ honorarios);
             System.out.println("Ingreso exitoso");
             return "redirec:/inicio";
         } catch (MiExcepcion me) {

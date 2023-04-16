@@ -19,7 +19,6 @@ import lombok.Data;
  *
  * @author Lean
  */
-
 @Data
 @Entity
 
@@ -46,16 +45,18 @@ public class Profesional extends Persona {
     private List<Turno> turnos;  
     private double honorario;
     private List<Integer> reputacion;
+    private Integer cantVisitas;
+    private Integer puntaje;
 
     public Profesional() {
 
     }
 
-    public Profesional(String especialidad, Modalidad modalidad, Ubicacion ubicacion, 
-            Date horario, Date dias, List<ObraSocial> obrasSociales, List<Turno> turnos, 
-            double honorario, List<Integer> reputacion, Long id, String nombre, 
-            String apellido, String email, String telefono, Rol rol, String foto, 
-            String password, boolean activo) {
+
+    public Profesional(String especialidad, Modalidad modalidad, Ubicacion ubicacion, Date horario, Date dias, List<ObraSocial> obrasSociales, List<Turno> turnos,
+            double honorario, List<Integer> reputacion, Long id, String nombre, String apellido, String email, String telefono, Rol rol, String foto, String password, boolean activo,
+            Integer cantVisitas, Integer puntaje) {
+
         super(id, nombre, apellido, email, telefono, rol, foto, password, activo);
         this.especialidad = especialidad;
         this.modalidad = modalidad;
@@ -66,10 +67,8 @@ public class Profesional extends Persona {
         this.turnos = turnos;
         this.honorario = honorario;
         this.reputacion = reputacion;
+        this.cantVisitas = cantVisitas;
+        this.puntaje = puntaje;
     }
-    
-    
+
 }
-
-
-
