@@ -32,7 +32,7 @@ public class ProfesionalControlador {
     @PostMapping("/buscarespec")
     public String buscarespec(@RequestParam("buscaespec") String especialidad, ModelMap model) {
         
-        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidad(especialidad);
+        List<Profesional> profesionales = profesionalServicio.buscarProfesionalesPorEspecialidad(especialidad);
         model.addAttribute("profesionales", profesionales);
         return "listaespecialidad.html";
     }
