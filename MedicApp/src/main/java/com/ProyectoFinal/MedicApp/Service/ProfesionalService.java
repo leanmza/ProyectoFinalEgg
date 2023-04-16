@@ -183,6 +183,12 @@ public class ProfesionalService {
             throw ex;
         }
     }
+
+    public List<Profesional> buscarProfesionalesPorEspecialidad(String especialidad){       //Agregado por Claudio el 16/04 - 17:35
+        List<Profesional> profesionales = new ArrayList();
+        profesionales = (List<Profesional>) profesionalRepositorio.buscarPorEspecialidad(especialidad);
+        return profesionales;
+    }
 }
 
 

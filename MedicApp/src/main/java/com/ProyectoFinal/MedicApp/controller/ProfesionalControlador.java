@@ -6,7 +6,8 @@ package com.ProyectoFinal.MedicApp.controller;
 
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
-import com.ProyectoFinal.MedicApp.Service.ProfesionalServicio;
+import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
+import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,12 +28,12 @@ public class ProfesionalControlador {
     ProfesionalRepositorio profesionalRepositorio;
 
     @Autowired
-    ProfesionalServicio profesionalServicio;
+    ProfesionalService profesionalService;
 
     @PostMapping("/buscarespec")
     public String buscarespec(@RequestParam("buscaespec") String especialidad, ModelMap model) {
         
-        List<Profesional> profesionales = profesionalServicio.buscarProfesionalesPorEspecialidad(especialidad);
+        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidad(especialidad);
         model.addAttribute("profesionales", profesionales);
         return "listaespecialidad.html";
     }

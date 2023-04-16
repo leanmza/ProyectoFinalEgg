@@ -6,7 +6,7 @@ import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Enum.Modalidad;
 import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.Service.ProfesionalServicio;
+import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
 
 import java.util.Date;
 import java.util.List;
@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class PortalControlador {
     
     @Autowired
-    ProfesionalServicio profesionalService;
+    ProfesionalService profesionalService;              //Agregado por Claudio el 16/04 - 17:40
     
     @GetMapping("/inicio")
     public String inicio(ModelMap modelo, HttpSession session) {
