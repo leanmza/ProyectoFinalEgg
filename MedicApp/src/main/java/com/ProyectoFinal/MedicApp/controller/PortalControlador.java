@@ -1,14 +1,19 @@
 package com.ProyectoFinal.MedicApp.controller;
 
 
-import com.ProyectoFinal.MedicaApp.Exception.Miexcepcion;
-import com.ProyectoFinal.MedicaApp.ProfesionalService;
+import com.ProyectoFinal.MedicApp.Entity.Profesional;
+import com.ProyectoFinal.MedicApp.Enum.Modalidad;
+import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
+import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
+import com.ProyectoFinal.MedicApp.Service.ProfesionalServicio;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class PortalControlador {
     
     @Autowired
-    ProfesionalService profesionalService;
+    ProfesionalServicio profesionalService;
     
     @GetMapping("/inicio")
     public String inicio(ModelMap modelo, HttpSession session) {
@@ -49,7 +54,7 @@ public class PortalControlador {
                     horarioFin, dias, obrasSociales, honorarios);
             System.out.println("Ingreso exitoso");
             return "redirec:/inicio";
-        } catch (Miexcepcion me) {
+        } catch (MiExcepcion me) {
             System.out.println("Ingreso fallido\n" + me.getMessage());
             return "formulario_profesional.html";
         }
