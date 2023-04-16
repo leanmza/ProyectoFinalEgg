@@ -106,6 +106,19 @@ public class ProfesionalService {
     }
        
     
+    @Transactional(readOnly = true)
+    public List<Profesional>buscarProfesionalesPorEspecialidad(String especialidad){
+        
+        List<Profesional> especialistas = new ArrayList();
+        
+        especialistas = profesionalRepositorio.buscarPorEspecialidad(especialidad);
+        
+        return especialistas;
+    }
+    
+    
+    
+    
 //    DESCOMENTAR CUANDO SE CREE ObrasSociales
 //            @Transactional
 //        public List<ObrasSociales>listarObrasSociales(String id) {
