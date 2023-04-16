@@ -17,6 +17,7 @@ public class Persona {
     private String apellido;
     private String email;
     private String telefono;
+    
     @Enumerated(EnumType.STRING)
     private Rol rol;
     private String foto;

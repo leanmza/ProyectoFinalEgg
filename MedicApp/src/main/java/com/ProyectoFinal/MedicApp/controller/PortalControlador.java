@@ -1,11 +1,12 @@
 package com.ProyectoFinal.MedicApp.controller;
 
 
+import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Enum.Modalidad;
 import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
+import com.ProyectoFinal.MedicApp.Service.ProfesionalServicio;
 
 import java.util.Date;
 import java.util.List;
@@ -24,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class PortalControlador {
     
     @Autowired
-    ProfesionalService profesionalService;
+    ProfesionalServicio profesionalService;
     
     @GetMapping("/inicio")
     public String inicio(ModelMap modelo, HttpSession session) {

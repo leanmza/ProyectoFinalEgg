@@ -10,6 +10,7 @@ import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.Data;
@@ -22,16 +23,26 @@ import lombok.Data;
 @Entity
 
 public class Profesional extends Persona {
-
-    private String especialidad;
+    
+    private  String especialidad;
+    
+    @OneToOne
     private Modalidad modalidad;
+    
+    @OneToOne
     private Ubicacion ubicacion;
+    
     @Temporal(TemporalType.TIME)
     private Date horario;
+    
     @Temporal(TemporalType.DATE)
     private Date dias;
-//    private List<ObraSocial> obrasSociales; //FALTA CREAR CLASE ObraSocial
-//    private List<Turno> turnos;  //FALTA CREAR CLASE Turno
+    
+    @OneToOne
+    private List<ObraSocial> obrasSociales;
+    
+    @OneToOne
+    private List<Turno> turnos;  
     private double honorario;
     private List<Integer> reputacion;
     private Integer cantVisitas;
@@ -41,7 +52,8 @@ public class Profesional extends Persona {
 
     }
 
-    public Profesional(String especialidad, Modalidad modalidad, Ubicacion ubicacion, Date horario, Date dias, /*List<ObraSocial> obrasSociales, List<Turno> turnos,*/
+
+    public Profesional(String especialidad, Modalidad modalidad, Ubicacion ubicacion, Date horario, Date dias, List<ObraSocial> obrasSociales, List<Turno> turnos,
             double honorario, List<Integer> reputacion, Long id, String nombre, String apellido, String email, String telefono, Rol rol, String foto, String password, boolean activo,
             Integer cantVisitas, Integer puntaje) {
 
@@ -51,8 +63,8 @@ public class Profesional extends Persona {
         this.ubicacion = ubicacion;
         this.horario = horario;
         this.dias = dias;
-//        this.obrasSociales = obrasSociales;
-//        this.turnos = turnos;
+        this.obrasSociales = obrasSociales;
+        this.turnos = turnos;
         this.honorario = honorario;
         this.reputacion = reputacion;
         this.cantVisitas = cantVisitas;
