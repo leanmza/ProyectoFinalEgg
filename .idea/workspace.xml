@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13e64717-c6b6-4e6b-a095-96677ff0863a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Entity/Persona.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Enum/Rol.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Exception/Miexcepcion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Repository/PersonaRepositorio.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Service/PersonaService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/facua.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Entity/Persona.java" beforeDir="false" afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Entity/Persona.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Enum/Rol.java" beforeDir="false" afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Enum/Rol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Exception/Miexcepcion.java" beforeDir="false" afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Exception/MiExcepcion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Service/PersonaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Service/PersonaService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +28,19 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="68fc07be-435a-4f44-86cd-f6a067df32cd" />
+        <option name="url" value="https://github.com/leanmza/ProyectoFinalEgg.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/MedicApp/target/classes/Entity/Persona.class" root0="SKIP_INSPECTION" />
@@ -51,11 +64,12 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "last_opened_file_path": "C:/Users/facua/OneDrive/Escritorio/Proyecto egg Servicios",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.importing"
+    "settings.editor.selected.configurable": "IntelliLang.Advanced"
   }
 }]]></component>
   <component name="RunManager">
