@@ -98,7 +98,7 @@ public class ProfesionalService {
            @Transactional(readOnly = true)
     public List<Profesional>listar() {
  
-        List<Profesional> profesionales = new ArrayList();
+        List<Profesional> profesionales; // = new ArrayList();
 
         profesionales = profesionalRepositorio.findAll();
 
@@ -109,7 +109,7 @@ public class ProfesionalService {
     @Transactional(readOnly = true)
     public List<Profesional>buscarProfesionalesPorEspecialidad(String especialidad){
         
-        List<Profesional> especialistas = new ArrayList();
+        List<Profesional> especialistas; //= new ArrayList();
         
         especialistas = profesionalRepositorio.buscarPorEspecialidad(especialidad);
         

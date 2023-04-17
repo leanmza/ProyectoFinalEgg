@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,13 +28,20 @@ public class ProfesionalControlador {
     ProfesionalRepositorio profesionalRepositorio;
 
     @Autowired
-    ProfesionalService profesionalServicio;
+    ProfesionalService profesionalService;
 
     @PostMapping("/buscarespec")
     public String buscarespec(@RequestParam("buscaespec") String especialidad, ModelMap model) {
-        
-        List<Profesional> profesionales = profesionalServicio.buscarProfesionalesPorEspecialidad(especialidad);
+        System.out.println(especialidad);
+        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidad(especialidad);
         model.addAttribute("profesionales", profesionales);
         return "listaespecialidad.html";
+    }
+    
+    @GetMapping("/listar")
+    public String listar(ModelMap model) {
+        List<Profesional> profesionales = profesionalService.listar();
+        model.addAttribute("profesionales", profesionales);
+        return "listar.html";
     }
 }
