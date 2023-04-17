@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13e64717-c6b6-4e6b-a095-96677ff0863a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Entity/Persona.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Enum/Rol.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Exception/Miexcepcion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Repository/PersonaRepositorio.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Service/PersonaService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MedicApp/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MedicApp/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MedicApp/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MedicApp/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MedicApp/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/MedicAppApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MedicApp/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MedicApp/src/test/java/com/ProyectoFinal/MedicApp/MedicAppApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UMLservicioDeSalud/umlproject" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,16 +52,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/facua/OneDrive/Escritorio/Proyecto egg Servicios",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.importing"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/facua/OneDrive/Escritorio/Proyecto egg Servicios&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="MedicAppApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.ProyectoFinal.MedicApp.MedicAppApplication" />
@@ -68,6 +72,19 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="ProyectoClinica" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="ProyectoClinica" />
+      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
