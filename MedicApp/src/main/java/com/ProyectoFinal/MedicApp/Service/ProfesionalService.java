@@ -47,8 +47,8 @@ public class ProfesionalService {
         profesional.setEspecialidad(especialidad);
 
         //Falta ObrasSociales y Tunos, hay que crear las entidades
-        profesional.setModalidad(Modalidad.valueOf(modalidad));
-        profesional.setUbicacion(Ubicacion.valueOf(ubicacion));
+        profesional.setModalidad(Modalidad.valueOf(modalidad.toUpperCase()));
+        profesional.setUbicacion(Ubicacion.valueOf(ubicacion.toUpperCase()));
         profesional.setHorario(horario);
         profesional.setDias(dias);
         profesional.setHonorario(honorarios);
