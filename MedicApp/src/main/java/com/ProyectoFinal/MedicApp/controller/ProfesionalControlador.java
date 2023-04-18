@@ -38,11 +38,16 @@ public class ProfesionalControlador {
 
     @PostMapping("/buscarespec")
     public String buscarespec(@RequestParam("buscaespec") String especialidad, ModelMap model) {
+<<<<<<< HEAD
         
+=======
+        System.out.println(especialidad);
+>>>>>>> 2c1d50f0b2b11d1562299ab5d3aa9ec8e6662e69
         List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidad(especialidad);
         model.addAttribute("profesionales", profesionales);
         return "listaespecialidad.html";
     }
+<<<<<<< HEAD
 
     @GetMapping("/registrarProfesional")
     public String registrarProfesional() {
@@ -69,4 +74,13 @@ public class ProfesionalControlador {
 //            return "formulario_profesional.html";
 //        }
 //    }
+=======
+    
+    @GetMapping("/listar")
+    public String listar(ModelMap model) {
+        List<Profesional> profesionales = profesionalService.listar();
+        model.addAttribute("profesionales", profesionales);
+        return "listar.html";
+    }
+>>>>>>> 2c1d50f0b2b11d1562299ab5d3aa9ec8e6662e69
 }

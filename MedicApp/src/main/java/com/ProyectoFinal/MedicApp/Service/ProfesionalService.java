@@ -32,7 +32,14 @@ public class ProfesionalService {
     private ProfesionalRepositorio profesionalRepositorio;
 
     @Transactional
+<<<<<<< HEAD
     public void crearProfesional(String nombre, String apellido, String email, String telefono, String password, String password2, String especialidad, String modalidad, String ubicacion, Date dias, List<ObraSocial> obraSocial, List<Turno> turnos, Double honorarios) throws MiExcepcion {
+=======
+    public void crearProfesional(String nombre, String apellido, String email, String telefono, String password,
+            String password2, String especialidad, String modalidad, String ubicacion, Date horario, Date dias,
+            /*List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
+            Double honorarios) throws MiExcepcion {
+>>>>>>> 2c1d50f0b2b11d1562299ab5d3aa9ec8e6662e69
 
         validar(nombre, apellido, email, telefono, password, password2, especialidad, modalidad, ubicacion, dias, honorarios);
 
@@ -46,8 +53,16 @@ public class ProfesionalService {
         profesional.setRol(Rol.PROFESIONAL);
         profesional.setActivo(true);
         profesional.setEspecialidad(especialidad);
+<<<<<<< HEAD
         profesional.setModalidad(Modalidad.valueOf(modalidad));
         profesional.setUbicacion(Ubicacion.valueOf(ubicacion));
+=======
+
+        //Falta ObrasSociales y Tunos, hay que crear las entidades
+        profesional.setModalidad(Modalidad.valueOf(modalidad.toUpperCase()));
+        profesional.setUbicacion(Ubicacion.valueOf(ubicacion.toUpperCase()));
+        profesional.setHorario(horario);
+>>>>>>> 2c1d50f0b2b11d1562299ab5d3aa9ec8e6662e69
         profesional.setDias(dias);
         profesional.setObrasSociales(obraSocial);
         profesional.setTurnos(turnos);
@@ -56,11 +71,23 @@ public class ProfesionalService {
         profesionalRepositorio.save(profesional);
 
     }
+<<<<<<< HEAD
 
     @Transactional
     public void modificarProfesional(String idProfesional, String nombre, String apellido, String email, String telefono, String password, String password2, String especialidad, String modalidad, String ubicacion, Date dias, List<ObraSocial> obraSocial, List<Turno> turnos, Double honorarios) throws MiExcepcion {
 
         validar(nombre, apellido, email, telefono, password, password2, especialidad, modalidad, ubicacion, dias, honorarios);
+=======
+    
+    @Transactional
+   public void modificarProfesional(String idProfesional, String nombre, String apellido, String email, String telefono, String password,
+            String password2, String especialidad, String modalidad, String ubicacion, Date horario, Date dias, 
+            /*List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
+            Double honorarios) throws MiExcepcion {
+
+        validar(nombre, apellido, email, telefono, password, password2, especialidad, modalidad,
+                ubicacion, horario, dias, honorarios);
+>>>>>>> 2c1d50f0b2b11d1562299ab5d3aa9ec8e6662e69
         Optional<Profesional> respuesta = profesionalRepositorio.findById(idProfesional);
 
         if (respuesta.isPresent()) {
@@ -91,12 +118,21 @@ public class ProfesionalService {
     public Profesional getOne(String id) {
         return profesionalRepositorio.getOne(id);
     }
+<<<<<<< HEAD
 
 
     @Transactional(readOnly = true)
     public List<Profesional> listar() {
 
         List<Profesional> profesionales = new ArrayList();
+=======
+    
+    
+           @Transactional(readOnly = true)
+    public List<Profesional>listar() {
+ 
+        List<Profesional> profesionales; // = new ArrayList();
+>>>>>>> 2c1d50f0b2b11d1562299ab5d3aa9ec8e6662e69
 
         profesionales = profesionalRepositorio.findAll();
 
@@ -105,16 +141,29 @@ public class ProfesionalService {
 
 
     @Transactional(readOnly = true)
+<<<<<<< HEAD
     public List<Profesional> buscarProfesionalesPorEspecialidad(String especialidad) {
 
         List<Profesional> especialistas = new ArrayList();
 
+=======
+    public List<Profesional>buscarProfesionalesPorEspecialidad(String especialidad){
+        
+        List<Profesional> especialistas; //= new ArrayList();
+        
+>>>>>>> 2c1d50f0b2b11d1562299ab5d3aa9ec8e6662e69
         especialistas = profesionalRepositorio.buscarPorEspecialidad(especialidad);
 
         return especialistas;
     }
+<<<<<<< HEAD
 
 
+=======
+    
+        
+    
+>>>>>>> 2c1d50f0b2b11d1562299ab5d3aa9ec8e6662e69
 //    DESCOMENTAR CUANDO SE CREE ObrasSociales
 //            @Transactional
 //        public List<ObrasSociales>listarObrasSociales(String id) {
@@ -137,8 +186,14 @@ public class ProfesionalService {
 //        return turnos;
 //    }
 
+<<<<<<< HEAD
 
     public void validar(String nombre, String apellido, String email, String telefono, String password, String password2, String especialidad, String modalidad, String ubicacion, Date dias, Double honorarios) throws MiExcepcion {
+=======
+    public void validar(String nombre, String apellido, String email, String telefono, String password,
+            String password2, String especialidad, String modalidad, String ubicacion, Date horario, 
+            Date dias, Double honorarios) throws MiExcepcion {
+>>>>>>> 2c1d50f0b2b11d1562299ab5d3aa9ec8e6662e69
 
         try {
             if (nombre == null || nombre.isEmpty()) {

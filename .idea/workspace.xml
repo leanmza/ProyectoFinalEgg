@@ -5,17 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13e64717-c6b6-4e6b-a095-96677ff0863a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Entity/Foto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Repository/FotoRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Service/FotoService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/controller/FotoController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/resources/static/logoclinica3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/resources/templates/listaespecialidad.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MedicApp/src/main/resources/templates/listar.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Entity/Profesional.java" beforeDir="false" afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Entity/Profesional.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Service/ProfesionalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Service/ProfesionalService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/controller/PortalControlador.java" beforeDir="false" afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/controller/PortalControlador.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/controller/ProfesionalControlador.java" beforeDir="false" afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/controller/ProfesionalControlador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MedicApp/src/main/resources/templates/formulario_profesional.html" beforeDir="false" afterPath="$PROJECT_DIR$/MedicApp/src/main/resources/templates/formulario_profesional.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MedicApp/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/MedicApp/src/main/resources/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +30,19 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="68fc07be-435a-4f44-86cd-f6a067df32cd" />
+        <option name="url" value="https://github.com/leanmza/ProyectoFinalEgg.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/MedicApp/target/classes/Entity/Persona.class" root0="SKIP_INSPECTION" />
@@ -53,17 +63,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/facua/OneDrive/Escritorio/Proyecto egg Servicios",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.importing"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/facua/OneDrive/Escritorio/ProyectoClinica&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;IntelliLang.Advanced&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="MedicAppApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.ProyectoFinal.MedicApp.MedicAppApplication" />
@@ -74,19 +84,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="ProyectoClinica" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="ProyectoClinica" />
-      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
