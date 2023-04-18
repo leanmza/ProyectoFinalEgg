@@ -47,8 +47,9 @@ public class PortalControlador {
             /*MultipartFile archivo,*/ @RequestParam String password, @RequestParam String password2,
             @RequestParam String especialidad, @RequestParam String modalidad,
             @RequestParam String ubicacion, /*@RequestParam Date horarioInicio,
-            @RequestParam Date horarioFin,*/@RequestParam Date horario, @RequestParam Date dias, /*@RequestParam List<ObraSocial> obrasSociales,
-            @RequestParam List<Turno> turnos,*/ @RequestParam Double honorarios) {
+            @RequestParam Date horarioFin,*/@RequestParam Date horario, @RequestParam Date dias,
+            /*@RequestParam List<ObraSocial> obrasSociales, @RequestParam List<Turno> turnos,*/
+            @RequestParam Double honorarios) {
         try {
             profesionalService.crearProfesional(nombre, apellido, email, telefono, /*archivo,*/
                     password, password2, especialidad, modalidad, ubicacion,/* horarioInicio,
