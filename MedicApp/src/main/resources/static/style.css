@@ -1,11 +1,13 @@
+/* GENERAL */
+
 body {
-  background-color: #eee !important;
+  background-color: #49c5b6 !important;
   font-family: "Montserrat", sans-serif !important;
   margin: 0 0 0 0;
 }
 
-h1{
-    font-size: 5em !important;
+p {
+  color: #fff !important;
 }
 
 h1,
@@ -15,15 +17,6 @@ h3 {
 }
 
 /* HEADER */
-header {
-  /*background-color: #49c5b6;*/
-  text-align: right;
-  padding: 0 5%;
-  align-items: center;
-  position: sticky;
-  top: 0;
-}
-
 .cabecera {
   padding: 0 !important;
   height: 75px !important;
@@ -35,16 +28,23 @@ header {
   justify-items: start;
   display: flex;
   height: 3em;
-  
+  color: #17252a;
 }
 
 .navbar {
-  /*background-color: #49c5b6 ;*/
+  background-color: #49c5b6;
 }
 .navbar-collapse {
   justify-content: end;
 }
-
+header {
+  background-color: #49c5b6;
+  text-align: right;
+  padding: 0 5%;
+  align-items: center;
+  position: sticky;
+  top: 0;
+}
 
 .link:link,
 .link:visited,
@@ -67,13 +67,13 @@ header {
   border: none !important;
 }
 
-.btnTurnoHeader{
-margin-right:1em;
+/* BODY*/
+.presentacion {
+  padding: 0% 5% 10% 5%;
+   height: 90vh; 
+  width: 100%;
 }
 
-.contenedorLinks{
-    padding-right: 0 !important;
-}
 
 
 /* FOOTER */
@@ -102,49 +102,3 @@ footer {
   font-size: 1.5em;
   color: #17252a;
 }
-
-/*
-form {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0 auto;
-    width: 50%;
-  }
-  
-  label {
-    color: darkolivegreen;
-    font-size: 15px;
-    font-weight: 600;
-    display: inline-block;
-    width: 30%;
-    margin-bottom: 15px;
-  }
-  
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"],
-  select,
-  textarea {
-    width: 65%;
-    padding: 17px 10px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    margin-bottom: 10px;
-  }
-  
-  input[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 17px 20px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-bottom: 20px;
-    border: 2px solid
-    
-
-  }
-  
-  input[type="submit"]:hover {
-    background-color: #3e8e41;
-  }
-  */
