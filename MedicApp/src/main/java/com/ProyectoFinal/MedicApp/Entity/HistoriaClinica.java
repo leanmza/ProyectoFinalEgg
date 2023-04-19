@@ -1,11 +1,14 @@
 package com.ProyectoFinal.MedicApp.Entity;
 
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -20,19 +23,26 @@ public class HistoriaClinica {
     
     @ManyToOne
     private Paciente paciente;
-    
-    @OneToOne
-    private Turno turno;
+        
+   @Temporal(TemporalType.DATE)
+    private Date fechaConsulta;
+   
+   @OneToOne
+   private Profesional profesional; //Sacamos nombre y especialidad
+   
     private String diagnostico;
 
     public HistoriaClinica() {
     }
-
-    public HistoriaClinica(String id, Paciente paciente, Turno turno, String diagnostico) {
+    
+    public HistoriaClinica(String id, Paciente paciente, Date fechaConsulta, Profesional profesional, String diagnostico) {
         this.id = id;
         this.paciente = paciente;
-        this.turno = turno;
+        this.fechaConsulta = fechaConsulta;
+        this.profesional = profesional;
         this.diagnostico = diagnostico;
     }
+
+
     
 }

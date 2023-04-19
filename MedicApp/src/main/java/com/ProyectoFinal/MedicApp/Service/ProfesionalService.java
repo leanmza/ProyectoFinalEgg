@@ -30,7 +30,8 @@ public class ProfesionalService {
 
     @Transactional
     public void crearProfesional(String nombre, String apellido, String email, String telefono, String password,
-            String password2, String especialidad, String modalidad, String ubicacion, Date horario, Date dias, /*List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
+            String password2, String especialidad, String modalidad, String ubicacion, Date horario, Date dias,
+            /*List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
             Double honorarios) throws MiExcepcion {
 
         validar(nombre, apellido, email, telefono, password, password2, especialidad, modalidad, ubicacion, horario, dias, honorarios);
@@ -60,10 +61,12 @@ public class ProfesionalService {
     
     @Transactional
    public void modificarProfesional(String idProfesional, String nombre, String apellido, String email, String telefono, String password,
-            String password2, String especialidad, String modalidad, String ubicacion, Date horario, Date dias, /*List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
+            String password2, String especialidad, String modalidad, String ubicacion, Date horario, Date dias, 
+            /*List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
             Double honorarios) throws MiExcepcion {
 
-        validar(nombre, apellido, email, telefono, password, password2, especialidad, modalidad, ubicacion, horario, dias, honorarios);
+        validar(nombre, apellido, email, telefono, password, password2, especialidad, modalidad,
+                ubicacion, horario, dias, honorarios);
         Optional<Profesional> respuesta = profesionalRepositorio.findById(idProfesional);
 
         if (respuesta.isPresent()){
@@ -116,8 +119,7 @@ public class ProfesionalService {
         return especialistas;
     }
     
-    
-    
+        
     
 //    DESCOMENTAR CUANDO SE CREE ObrasSociales
 //            @Transactional
@@ -143,7 +145,8 @@ public class ProfesionalService {
     
 
     public void validar(String nombre, String apellido, String email, String telefono, String password,
-            String password2, String especialidad, String modalidad, String ubicacion, Date horario, Date dias, Double honorarios) throws MiExcepcion {
+            String password2, String especialidad, String modalidad, String ubicacion, Date horario, 
+            Date dias, Double honorarios) throws MiExcepcion {
 
         try {
             if (nombre == null || nombre.isEmpty()) {
