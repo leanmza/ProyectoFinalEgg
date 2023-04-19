@@ -25,7 +25,7 @@ h3 {
     height: 75px !important;
     position: sticky;  /* ESTO HACE AL HEADER FLOTANTE */
     top: 0; /* ESTO HACE AL HEADER FLOTANTE */
-    color: #17252a;
+    color: #eee;
 }
 
 header {
@@ -43,9 +43,9 @@ header {
 
 }
 
-/*.navbar {
-  background-color: #eee;  //CAMBIAR SI SE CAMBIA EL COLOR DE HEADER 
-}*/
+.navbar {
+  background-color: #eee; 
+}
 
 .navbar-collapse {
     justify-content: end;
@@ -68,7 +68,7 @@ header {
     padding: 1.7em;
     color: #17252a !important;
     font-weight: 600 !important;
-    background-color: #49c5b6 !important;
+    background-color: #eee !important;
     border: none !important;
 }
 
