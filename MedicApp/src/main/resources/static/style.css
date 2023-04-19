@@ -1,104 +1,112 @@
 /* GENERAL */
 
 body {
-  background-color: #49c5b6 !important;
-  font-family: "Montserrat", sans-serif !important;
-  margin: 0 0 0 0;
+    background-color: #eee !important;
+    font-family: "Montserrat", sans-serif !important;
+    padding-inline: 5%;
+
 }
 
 p {
-  color: #fff !important;
+    color: #222 !important;
 }
 
 h1,
 h2,
 h3 {
-  font-weight: 900 !important;
+    font-weight: 900 !important; /* NEGRITA*/
 }
 
 /* HEADER */
+
+
 .cabecera {
-  padding: 0 !important;
-  height: 75px !important;
-  position: sticky;
-  top: 0;
-  color: #17252a;
-}
-.logoHeader {
-  justify-items: start;
-  display: flex;
-  height: 3em;
-  color: #17252a;
+    padding: 0 !important;
+    height: 75px !important;
+    position: sticky;  /* ESTO HACE AL HEADER FLOTANTE */
+    top: 0; /* ESTO HACE AL HEADER FLOTANTE */
+    color: #17252a;
 }
 
-.navbar {
-  background-color: #49c5b6;
-}
-.navbar-collapse {
-  justify-content: end;
-}
 header {
-  background-color: #49c5b6;
-  text-align: right;
-  padding: 0 5%;
-  align-items: center;
-  position: sticky;
-  top: 0;
+    background-color: #eee;
+    text-align: right;
+    align-items: center; /* CENTRA VERTICALMENTE EL CONTENIDO */
+    position: sticky; /* ESTO HACE AL HEADER FLOTANTE */
+    top: 0; /* ESTO HACE AL HEADER FLOTANTE */
+}
+
+.logoHeader {
+    justify-items: start;
+    display: flex;
+    height: 3em;
+
+}
+
+/*.navbar {
+  background-color: #eee;  //CAMBIAR SI SE CAMBIA EL COLOR DE HEADER 
+}*/
+
+.navbar-collapse {
+    justify-content: end;
 }
 
 .link:link,
 .link:visited,
 .link:active {
-  text-decoration: none;
-  padding: 1.7em;
-  color: #17252a;
-  font-weight: 600;
+    text-decoration: none;
+    padding: 1.7em;
+    color: #17252a;
+    font-weight: 600;
 }
 
 .link:hover {
-  font-weight: 700;
+    font-weight: 700;
 }
 .navbar-toggler {
-  text-decoration: none;
-  padding: 1.7em;
-  color: #17252a !important;
-  font-weight: 600 !important;
-  background-color: #49c5b6 !important;
-  border: none !important;
+    text-decoration: none;
+    padding: 1.7em;
+    color: #17252a !important;
+    font-weight: 600 !important;
+    background-color: #49c5b6 !important;
+    border: none !important;
 }
 
-/* BODY*/
-.presentacion {
-  padding: 0% 5% 10% 5%;
-   height: 90vh; 
-  width: 100%;
+.btnTurnoHeader{
+    margin-right: 1em ;
 }
 
+/*MAIN*/
+main{
+    padding-top: 5%;
+    paddin-bottom: 5%;
+}
 
 
 /* FOOTER */
 
 footer {
-  background: transparent;
-  color: white;
-  text-align: center;
-  padding: 1em;
-  display: flex;
-  justify-content: center;
-  padding-inline: 5%;
+    background: transparent;
+    color: white;
+    text-align: center;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+  
 }
 
 .linkFooter {
-  margin-right: 5%;
+    margin-right: 5%;
 }
+
 .pie {
-  padding-inline: 0 !important;
+    padding-inline: 0 !important;
 }
 .logoFooter {
-  height: 35px;
+    height: 35px;
 }
 
 .iconoContacto {
-  font-size: 1.5em;
-  color: #17252a;
+    font-size: 1.5em;
+    color: #17252a;
 }
