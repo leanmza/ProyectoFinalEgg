@@ -1,67 +1,66 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profesionales</title>
-    <link rel="stylesheet" href="../static/style.css">
-
+    <link rel="stylesheet" href-"style.css">
 </head>
-<body>
-<form action="/pro/regitroProfesional" method="post">
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre" required><br>
-
-    <label for="apellido">Apellido:</label>
-    <input type="text" id="apellido" name="apellido" required><br>
-
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required><br>
-
-    <label for="telefono">Teléfono:</label>
-    <input type="tel" id="telefono" name="telefono" required><br>
-
-    <label for="especialidad">Especialidad:</label>
-    <select id="especialidad" name="especialidad" required>
-        <option value="">Seleccione una especialidad</option>
-        <option value="cardiologia">Cardiología</option>
-        <option value="dermatologia">Dermatología</option>
-        <option value="endocrinologia">Endocrinología</option>
-        <option value="neurologia">Neurología</option>
-    </select><br>
-
-    <label for="modalidad">Modalidad:</label>
-    <select id="modalidad" name="modalidad" required>
-        <option value="">Seleccione una modalidad</option>
-        <option value="teleconsulta">Teleconsulta</option>
-        <option value="presencial">Presencial</option>
-    </select><br>
-
-    <label for="obraSocial">Obra social:</label><br>
-    <input type="checkbox" id="pami" name="obraSocial[]" value="pami">
-    <label for="pami">PAMI</label><br>
-
-    <input type="checkbox" id="osde" name="obraSocial[]" value="osde">
-    <label for="osde">OSDE</label><br>
-
-    <input type="checkbox" id="swissMedical" name="obraSocial[]" value="swissMedical">
-    <label for="swissMedical">Swiss Medical</label><br>
-
-    <input type="checkbox" id="oscecac" name="obraSocial[]" value="oscecac">
-    <label for="oscecac">OSCECAC</label><br>
-
-    <label for="password">Contraseña:</label>
-    <input type="password" id="password" name="password" required><br>
-
-    <label for="password2">Repetir contraseña:</label>
-    <input type="password" id="password2" name="password2" required><br>
+<form>
+  <label for="nombre">Nombre:</label>
+  <input type="text" id="nombre" name="nombre"><br>
+  <br><br>
+  <label for="apellido">Apellido:</label>
+  <input type="text" id="apellido" name="apellido"><br>
+  <br><br>
+  <label for="email">E-mail:</label>
+  <input type="email" id="email" name="email"><br>
+  <br><br>
+  <label for="telefono">Teléfono:</label>
+  <input type="tel" id="telefono" name="telefono"><br>
+  <br><br>
+  <label for="password">Contraseña:</label>
+  <input type="password" id="password" name="password"><br>
+  <br><br>
+  <label for="password2">Contraseña2:</label>
+  <input type="password2" id="password2" name="password2"><br>
+  <br><br>
+</form>
 
 
-    <label for="texto">Ubicacion:</label>
-    <input type="text" id="texto" name="texto">
-    <br><br>
-    <fieldset>
+    <form>
+        
+        <label for="especialidad">Especialidad:</label>
+        <select id="especialidad" name="especialidad">
+          <option value="cardiología">Cardiología</option>
+          <option value="dermatología">Dermatología</option>
+          <option value="endocrinología">Endocrinología</option>
+          <option value="neurología">Neurología</option>
+        </select><br>
+        <br><br>
+        <label for="modalidad">modalidad:</label>
+        <select id="modalidad" name="modalidad">
+          <option value="TELECONSULTA">Teleconsulta</option>
+          <option value="PRESENCIAL">Presencial</option>
+        </select><br>
+        <br><br>
+        <label for="Obra Social">Obra Social:</label>
+        <select id="Obra Social" name="Obra Social">
+          <option value="PAMI">PAMI</option>
+          <option value="OSDE">OSDE</option>
+          <option value="SWISSMEDICAL">SWISSMEDICAL</option>
+          <option value="OSCECAC">OSCECAC</option>
+        </select><br>
+        <br><br>
+        <form>
+          <label for="texto">Ubicacion:</label>
+          <input type="text" id="texto" name="texto">
+          <br><br>
+        </form>
+       
+     
+      <fieldset>
         <legend>Selecciona los días disponibles:</legend>
         <input type="checkbox" id="lunes" name="dias" value="lunes">
         <label for="lunes">Lunes</label><br>
@@ -77,22 +76,17 @@
         <label for="sabado">Sábado</label><br>
         <input type="checkbox" id="domingo" name="dias" value="domingo">
         <label for="domingo">Domingo</label><br>
-    </fieldset>
-    <br>
+      </fieldset>
+      <br>
+
+  <form>
     <label for="inicio">Hora de inicio:</label>
-    <input type="time" id="inicio" name="horarioInicio"><br>
-
+    <input type="time" id="inicio" name="inicio"><br>
+  
     <label for="fin">Hora de fin:</label>
-    <input type="time" id="fin" name="horarioFin"><br>
+    <input type="time" id="fin" name="fin"><br>
+  
+        <input type="submit" value="Enviar">
+      </form>
 
-    <h1>Subir foto</h1>
-    <form action="/foto" method="post" enctype="multipart/form-data">
-        <input type="file" name="imagen" accept="image/*"><br>
-        <input type="submit" value="Subir">
-    </form>
-    
-    <button type="submit">Registrarse</button>
-</form>
-</body>
-</html>
-
+      

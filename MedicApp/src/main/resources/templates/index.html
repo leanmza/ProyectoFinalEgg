@@ -46,17 +46,27 @@
                     </ul>
 
 
-
+<!--
                     <div class="text-end">
                         <button type="button" class="btn btn-outline-dark me-2">Registrarse</button>
                         <button type="button" class="btn btn-warning">
 
                         </button>
                     </div>
+-->
+                    <form action="/pro/form_pro" method="GET">
+                        <button type="submit" class="btn btn-outline-dark me-2">Registrarse</button>
+                    </form>
+
                 </div>
             </div>
         </header>
 
+        
+                            <form action="/pro/buscarespec" method="POST">
+                                <input type="hidden" name="buscaespec" th:value="Clínico">
+                                <button type="submit">Buscar</button>
+                            </form>
 
         <form action="/pro/buscarespec" method="POST">
             <input type="hidden" name="buscaespec" th:value="Clínico">

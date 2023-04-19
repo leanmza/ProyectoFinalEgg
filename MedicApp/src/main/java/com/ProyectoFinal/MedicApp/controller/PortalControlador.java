@@ -3,7 +3,6 @@ package com.ProyectoFinal.MedicApp.controller;
 
 import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
-import com.ProyectoFinal.MedicApp.Entity.Turno;
 import com.ProyectoFinal.MedicApp.Enum.Modalidad;
 import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
@@ -37,9 +36,6 @@ public class PortalControlador {
         return "index.html";
     }
     
-<<<<<<< HEAD
-
-=======
     @GetMapping("/registrarProfesional")
     public String registrarProfesional() {
         return "formulario_profesional.html"; //ver nombre de archivo
@@ -65,5 +61,4 @@ public class PortalControlador {
             return "formulario_profesional.html";
         }
     }
->>>>>>> 2c1d50f0b2b11d1562299ab5d3aa9ec8e6662e69
 }
