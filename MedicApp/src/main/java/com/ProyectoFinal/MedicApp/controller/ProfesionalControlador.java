@@ -44,4 +44,9 @@ public class ProfesionalControlador {
         model.addAttribute("profesionales", profesionales);
         return "listar.html";
     }
+    
+    @GetMapping("/form_pro")
+    public String form_pro(ModelMap model) {
+        return "formulario_profesional.html";
+    }
 }
