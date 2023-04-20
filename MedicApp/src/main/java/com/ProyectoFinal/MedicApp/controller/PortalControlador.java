@@ -29,9 +29,7 @@ public class PortalControlador {
     
     @GetMapping("/inicio")
     public String inicio(ModelMap modelo, HttpSession session) {
-        
-        List<Profesional> profesionales = profesionalService.listar();
-        modelo.put("profesionales", profesionales);
+
         
         return "index.html";
     }
