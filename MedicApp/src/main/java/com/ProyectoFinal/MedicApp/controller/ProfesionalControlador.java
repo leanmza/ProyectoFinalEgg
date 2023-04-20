@@ -31,7 +31,7 @@ public class ProfesionalControlador {
     ProfesionalService profesionalService;
 
     @PostMapping("/buscarespec")
-    public String buscarespec(@RequestParam("buscaespec") String especialidad, ModelMap model) {
+    public String buscarespec(@RequestParam("especialidad") String especialidad, ModelMap model) {        //buscaespec
         System.out.println(especialidad);
         List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidad(especialidad);
         model.addAttribute("profesionales", profesionales);
