@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AdministradorControlador {
     
     @Autowired
-     PacienteService pacienteServicio;
+    PacienteService pacienteServicio;
     
     @Autowired
     ProfesionalService profesionalServicio;
