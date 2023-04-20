@@ -11,6 +11,7 @@ import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
 import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -101,7 +102,7 @@ public class ProfesionalService {
            @Transactional(readOnly = true)
     public List<Profesional>listar() {
  
-        List<Profesional> profesionales; // = new ArrayList();
+        List<Profesional> profesionales = new ArrayList();
 
         profesionales = profesionalRepositorio.findAll();
 
@@ -199,8 +200,6 @@ public class ProfesionalService {
             throw ex;
         }
     }
-
-
 }
 
 

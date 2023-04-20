@@ -6,7 +6,9 @@ import com.ProyectoFinal.MedicApp.Repository.PersonaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PersonaService {
 
     @Autowired
