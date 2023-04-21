@@ -53,27 +53,5 @@ public class Profesional extends Persona {
     private Integer cantVisitas;
     private Integer puntaje;
 
-//    public Profesional() {
-//
-//    }
-//
-//
-//    public Profesional(String especialidad, Modalidad modalidad, Ubicacion ubicacion, Date horario, Date dias, List<ObraSocial> obrasSociales, List<Turno> turnos,
-//            double honorario, /*List<Integer> reputacion,*/ String id, String nombre, String apellido, String email, String telefono, Rol rol, String foto, String password, boolean activo,
-//            Integer cantVisitas, Integer puntaje) {
-//
-//        super(id, nombre, apellido, email, telefono, rol, foto, password, activo);
-//        this.especialidad = especialidad;
-//        this.modalidad = modalidad;
-//        this.ubicacion = ubicacion;
-//        this.horario = horario;
-//        this.dias = dias;
-//        this.obrasSociales = obrasSociales;
-//        this.turnos = turnos;
-//        this.honorario = honorario;
-////        this.reputacion = reputacion;
-//        this.cantVisitas = cantVisitas;
-//        this.puntaje = puntaje;
-//    }
 
 }

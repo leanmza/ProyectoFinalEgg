@@ -41,7 +41,7 @@ public class PortalControlador {
     
     @PostMapping("/regitroProfesional")
     public String registroProfesional(@RequestParam String nombre, @RequestParam String apellido, 
-            @RequestParam String email, @RequestParam String telefono,
+            @RequestParam String dni, @RequestParam String email, @RequestParam String telefono,
             /*MultipartFile archivo,*/ @RequestParam String password, @RequestParam String password2,
             @RequestParam String especialidad, @RequestParam String modalidad,
             @RequestParam String ubicacion, /*@RequestParam Date horarioInicio,
@@ -49,7 +49,7 @@ public class PortalControlador {
             /*@RequestParam List<ObraSocial> obrasSociales, @RequestParam List<Turno> turnos,*/
             @RequestParam Double honorarios) {
         try {
-            profesionalService.crearProfesional(nombre, apellido, email, telefono, /*archivo,*/
+            profesionalService.crearProfesional(nombre, apellido, dni, email, telefono, /*archivo,*/
                     password, password2, especialidad, modalidad, ubicacion,/* horarioInicio,
                     horarioFin,*/horario, dias, /*obrasSociales,*/ honorarios);
             System.out.println("Ingreso exitoso");

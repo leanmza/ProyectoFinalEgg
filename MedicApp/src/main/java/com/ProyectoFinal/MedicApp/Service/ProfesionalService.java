@@ -30,17 +30,18 @@ public class ProfesionalService {
     private ProfesionalRepositorio profesionalRepositorio;
 
     @Transactional
-    public void crearProfesional(String nombre, String apellido, String email, String telefono, String password,
+    public void crearProfesional(String nombre, String apellido, String dni, String email, String telefono, String password,
             String password2, String especialidad, String modalidad, String ubicacion, Date horario, Date dias,
             /*List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
             Double honorarios) throws MiExcepcion {
 
-        validar(nombre, apellido, email, telefono, password, password2, especialidad, modalidad, ubicacion, horario, dias, honorarios);
+        validar(nombre, apellido, dni, email, telefono, password, password2, especialidad, modalidad, ubicacion, horario, dias, honorarios);
 
         Profesional profesional = new Profesional();
 
         profesional.setNombre(nombre);
         profesional.setApellido(apellido);
+        profesional.setDni(dni);
         profesional.setEmail(email);
         profesional.setTelefono(telefono);
         profesional.setPassword(password);
@@ -59,69 +60,66 @@ public class ProfesionalService {
         profesionalRepositorio.save(profesional);
 
     }
-    
+
     @Transactional
-   public void modificarProfesional(String idProfesional, String nombre, String apellido, String email, String telefono, String password,
-            String password2, String especialidad, String modalidad, String ubicacion, Date horario, Date dias, 
+    public void modificarProfesional(String idProfesional, String nombre, String apellido, String dni, String email, String telefono, String password,
+            String password2, String especialidad, String modalidad, String ubicacion, Date horario, Date dias,
             /*List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
             Double honorarios) throws MiExcepcion {
 
-        validar(nombre, apellido, email, telefono, password, password2, especialidad, modalidad,
+        validar(nombre, apellido, dni, email, telefono, password, password2, especialidad, modalidad,
                 ubicacion, horario, dias, honorarios);
         Optional<Profesional> respuesta = profesionalRepositorio.findById(idProfesional);
 
-        if (respuesta.isPresent()){
-        Profesional profesional = new Profesional();
+        if (respuesta.isPresent()) {
+            Profesional profesional = new Profesional();
 
-        profesional.setNombre(nombre);
-        profesional.setApellido(apellido);
-        profesional.setEmail(email);
-        profesional.setTelefono(telefono);
-        profesional.setPassword(password);
-        profesional.setRol(Rol.PROFESIONAL);
-        profesional.setActivo(true);
-        profesional.setEspecialidad(especialidad);
-        //Falta ObrasSociales y Tunos, hay que crear las entidades
-        profesional.setModalidad(Modalidad.valueOf(modalidad));
-        profesional.setUbicacion(Ubicacion.valueOf(ubicacion));
-        profesional.setHorario(horario);
-        profesional.setDias(dias);
-        profesional.setHonorario(honorarios);
-        profesional.setCantVisitas(0);
-        profesional.setPuntaje(0);
-        profesionalRepositorio.save(profesional);
+            profesional.setNombre(nombre);
+            profesional.setApellido(apellido);
+            profesional.setDni(dni);
+            profesional.setEmail(email);
+            profesional.setTelefono(telefono);
+            profesional.setPassword(password);
+            profesional.setRol(Rol.PROFESIONAL);
+            profesional.setActivo(true);
+            profesional.setEspecialidad(especialidad);
+            //Falta ObrasSociales y Tunos, hay que crear las entidades
+            profesional.setModalidad(Modalidad.valueOf(modalidad));
+            profesional.setUbicacion(Ubicacion.valueOf(ubicacion));
+            profesional.setHorario(horario);
+            profesional.setDias(dias);
+            profesional.setHonorario(honorarios);
+            profesional.setCantVisitas(0);
+            profesional.setPuntaje(0);
+            profesionalRepositorio.save(profesional);
+        }
+
     }
- 
-   }   
-    
-       public Profesional getOne(String id) {
+
+    public Profesional getOne(String id) {
         return profesionalRepositorio.getOne(id);
     }
-    
-    
-           @Transactional(readOnly = true)
-    public List<Profesional>listar() {
- 
+
+    @Transactional(readOnly = true)
+    public List<Profesional> listar() {
+
         List<Profesional> profesionales = new ArrayList();
 
         profesionales = profesionalRepositorio.findAll();
 
         return profesionales;
     }
-       
-    
+
     @Transactional(readOnly = true)
-    public List<Profesional>buscarProfesionalesPorEspecialidad(String especialidad){
-        
+    public List<Profesional> buscarProfesionalesPorEspecialidad(String especialidad) {
+
         List<Profesional> especialistas; //= new ArrayList();
-        
+
         especialistas = profesionalRepositorio.buscarPorEspecialidad(especialidad);
-        
+
         return especialistas;
     }
-    
-        
-    
+
 //    DESCOMENTAR CUANDO SE CREE ObrasSociales
 //            @Transactional
 //        public List<ObrasSociales>listarObrasSociales(String id) {
@@ -132,7 +130,6 @@ public class ProfesionalService {
 //
 //        return obrasSociales;
 //    }
-       
     //    DESCOMENTAR CUANDO SE CREE TURNOS
 //            @Transactional
 //        public List<Turnos>listaTurnos(String id) {
@@ -143,10 +140,8 @@ public class ProfesionalService {
 //
 //        return turnos;
 //    }
-    
-
-    public void validar(String nombre, String apellido, String email, String telefono, String password,
-            String password2, String especialidad, String modalidad, String ubicacion, Date horario, 
+    public void validar(String nombre, String apellido, String dni, String email, String telefono, String password,
+            String password2, String especialidad, String modalidad, String ubicacion, Date horario,
             Date dias, Double honorarios) throws MiExcepcion {
 
         try {
@@ -155,6 +150,10 @@ public class ProfesionalService {
             }
 
             if (apellido == null || apellido.isEmpty()) {
+                throw new MiExcepcion("El apellido de la persona no puede ser nulo o vacío");
+            }
+            
+            if (dni == null || dni.isEmpty()) {
                 throw new MiExcepcion("El apellido de la persona no puede ser nulo o vacío");
             }
 
@@ -201,7 +200,6 @@ public class ProfesionalService {
         }
     }
 }
-
 
 // DESCOMENTAR CUANDO SE HAGA SECURITY
 //    @Override
