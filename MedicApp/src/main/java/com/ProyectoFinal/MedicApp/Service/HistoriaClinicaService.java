@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
+import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
 import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
 //import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
 import java.util.ArrayList;
@@ -32,8 +33,8 @@ public class HistoriaClinicaService {
         @Autowired
         private HistoriaClinicaRepositorio historiaClinicaRepositorio;
 
-//        @Autowired 
-//                private PacienteRepositorio pacienteRepositorio;
+        @Autowired 
+                private PacienteRepositorio pacienteRepositorio;
         
         @Autowired
         private ProfesionalRepositorio profesionalRepositorio;
@@ -45,12 +46,12 @@ public class HistoriaClinicaService {
 
             HistoriaClinica historiaClinica = new HistoriaClinica();
 
-//            Optional<Paciente> respuestaPaciente = pacienteRepositorio.findById(idPaciente);
-//
-//            if (respuestaPaciente.isPresent()) {
-//                Paciente paciente = respustaPaciente.get();
-//                historiaClinica.setPaciente(paciente);
-//            }
+            Optional<Paciente> respuestaPaciente = pacienteRepositorio.findById(idPaciente);
+
+            if (respuestaPaciente.isPresent()) {
+                Paciente paciente = respuestaPaciente.get();
+                historiaClinica.setPaciente(paciente);
+            }
             Optional<Profesional> respuestaProfesional = profesionalRepositorio.findById(idProfesional);
 
             if (respuestaProfesional.isPresent()) {
@@ -78,12 +79,12 @@ public class HistoriaClinicaService {
             
             HistoriaClinica historiaClinica = new HistoriaClinica();
 
-//            Optional<Paciente> respuestaPaciente = pacienteRepositorio.findById(idPaciente); //busco el paciente
-//
-//            if (respuestaPaciente.isPresent()) {
-//                Paciente paciente = respustaPaciente.get();
-//                historiaClinica.setPaciente(paciente);
-//            }
+            Optional<Paciente> respuestaPaciente = pacienteRepositorio.findById(idPaciente); //busco el paciente
+
+            if (respuestaPaciente.isPresent()) {
+                Paciente paciente = respuestaPaciente.get();
+                historiaClinica.setPaciente(paciente);
+            }
             Optional<Profesional> respuestaProfesional = profesionalRepositorio.findById(idProfesional); // busco el profesional
 
             if (respuestaProfesional.isPresent()) {
