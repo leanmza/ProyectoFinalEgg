@@ -28,6 +28,6 @@ public interface TurnoRepositorio extends JpaRepository<Turno, String> {
     @Query("SELECT t FROM Turno t JOIN t.paciente tp WHERE tp.apellido = :apellidoPaciente")
     public List<Turno> buscarPorApellidoPaciente(@Param("apellidoPaciente") String apellidoPaciente);
     
-    @Query("SELECT t FROM Turno t JOIN t.paciente tp WHERE tp.nombre = :nombreProfesional")
+    @Query("SELECT t FROM Turno t JOIN t.paciente tp WHERE tp.nombre = :nombrePaciente")
     public List<Turno> buscarPorNombrePaciente(@Param("nombrePaciente") String nombrePaciente);
 }
