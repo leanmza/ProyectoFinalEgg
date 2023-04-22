@@ -15,16 +15,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import javax.servlet.http.HttpSession;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  *
  * @author Lean
  */
 @Service
-public class ProfesionalService {
+public class ProfesionalService implements UserDetailsService {
 
     @Autowired
     private ProfesionalRepositorio profesionalRepositorio;
@@ -41,10 +51,10 @@ public class ProfesionalService {
 
         profesional.setNombre(nombre);
         profesional.setApellido(apellido);
-        profesional.setDni(dni);
+//        profesional.setDni(dni);
         profesional.setEmail(email);
         profesional.setTelefono(telefono);
-        profesional.setPassword(password);
+        profesional.setPassword(new BCryptPasswordEncoder().encode(password));
         profesional.setRol(Rol.PROFESIONAL);
         profesional.setActivo(true);
         profesional.setEspecialidad(especialidad);
@@ -76,7 +86,7 @@ public class ProfesionalService {
 
             profesional.setNombre(nombre);
             profesional.setApellido(apellido);
-            profesional.setDni(dni);
+//            profesional.setDni(dni);
             profesional.setEmail(email);
             profesional.setTelefono(telefono);
             profesional.setPassword(password);
@@ -199,33 +209,33 @@ public class ProfesionalService {
             throw ex;
         }
     }
+
+
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        
+        Profesional profesional = profesionalRepositorio.buscarPorEmail(email);
+      
+        if (profesional != null) {
+
+            List<GrantedAuthority> permisos = new ArrayList();
+
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + profesional.getRol().toString());
+
+            permisos.add(p);
+
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+
+            HttpSession session = attr.getRequest().getSession(true);
+
+            session.setAttribute("usuariosession", profesional);
+
+            return new User(profesional.getEmail(), profesional.getPassword(), permisos);
+        } else {
+            return null;
+        }
+
+    }
+
 }
-
-// DESCOMENTAR CUANDO SE HAGA SECURITY
-//    @Override
-//    public UserDetails loadUserByUsername(String nombreUsuario) throws UsernameNotFoundException {
-//
-//        Periodista periodista = periodistaRepositorio.buscarPorId(nombreUsuario);
-//                
-//        if (periodista != null) {
-//
-//            List<GrantedAuthority> permisos = new ArrayList();
-//
-//            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + periodista.getRol().toString());
-//
-//            permisos.add(p);
-//
-//            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-//
-//            HttpSession session = attr.getRequest().getSession(true);
-//
-//            session.setAttribute("usuariosession", periodista);
-//
-//            return new User(periodista.getNombreUsuario(), periodista.getPassword(), permisos);
-//        } else {
-//            return null;
-//        }
-//
-//    }
-
-//}
