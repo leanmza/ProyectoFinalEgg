@@ -11,18 +11,27 @@ import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  *
  * @author cmoro1
  */
-
 @Service
-public class PacienteService {
-    
+public class PacienteService implements UserDetailsService {
+
     @Autowired
     private PacienteRepositorio pacienteRepositorio;
 
@@ -38,7 +47,7 @@ public class PacienteService {
         paciente.setApellido(apellido);
         paciente.setEmail(email);
         paciente.setTelefono(telefono);
-        paciente.setPassword(password);
+        paciente.setPassword(new BCryptPasswordEncoder().encode(password));
         paciente.setDireccion(direccion);
         paciente.setFechaNacimiento(fechaNacimiento);
         paciente.setSexo(sexo);
@@ -50,10 +59,10 @@ public class PacienteService {
     public Paciente getOne(String id) {
         return pacienteRepositorio.getOne(id);
     }
-    
+
     @Transactional(readOnly = true)
-    public List<Paciente>listar() {
- 
+    public List<Paciente> listar() {
+
         List<Paciente> pacientes = new ArrayList();
 
         pacientes = pacienteRepositorio.findAll();
@@ -100,7 +109,7 @@ public class PacienteService {
             if (fechaNacimiento == null) {
                 throw new MiExcepcion("La fecha no puede ser nula");
             }
-            
+
             if (sexo == null || sexo.isEmpty()) {
                 throw new MiExcepcion("El sexo no puede ser nulo o vacío");
             }
@@ -109,5 +118,31 @@ public class PacienteService {
             throw ex;
         }
     }
-}
 
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+        Paciente paciente = pacienteRepositorio.buscarPorEmail(email);
+
+        if (paciente != null) {
+
+            List<GrantedAuthority> permisos = new ArrayList();
+
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + paciente.getRol().toString());
+
+            permisos.add(p);
+
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+
+            HttpSession session = attr.getRequest().getSession(true);
+
+            session.setAttribute("usuariosession", paciente);
+
+            return new User(paciente.getEmail(), paciente.getPassword(), permisos);
+        } else {
+            return null;
+        }
+
+    }
+
+}
