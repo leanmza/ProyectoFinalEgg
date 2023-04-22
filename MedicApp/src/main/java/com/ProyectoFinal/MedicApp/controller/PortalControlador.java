@@ -59,4 +59,10 @@ public class PortalControlador {
             return "formulario_profesional.html";
         }
     }
+
+
+    @GetMapping("/login")
+    public String loginl() {
+        return "login.html"; //ver nombre de archivo
+    }
 }

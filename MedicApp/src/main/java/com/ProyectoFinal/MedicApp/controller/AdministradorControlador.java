@@ -59,7 +59,7 @@ public class AdministradorControlador {
     }
     
     @PostMapping("/crearProfesional")
-    public String crearProfesional(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String email,
+    public String crearProfesional(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String email,
             @RequestParam String telefono, @RequestParam String password, @RequestParam String password2,
             @RequestParam String especialidad, @RequestParam String modalidad, @RequestParam String ubicacion,
             @RequestParam Date horario, @RequestParam Date dias,
@@ -67,7 +67,7 @@ public class AdministradorControlador {
             @RequestParam Double honorarios) {
         
         try {
-            profesionalServicio.crearProfesional(nombre, apellido, email, telefono, password, password2,
+            profesionalServicio.crearProfesional(nombre, apellido, dni, email, telefono, password, password2,
                     especialidad, modalidad, ubicacion, horario, dias, honorarios);
             
             return "redirect: /admin/profesionales";

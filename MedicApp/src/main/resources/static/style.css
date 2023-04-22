@@ -1,22 +1,20 @@
 /* GENERAL */
 
 body {
-  background-color: #517EB9 !important;
+  background-color: #517eb9 !important;
   font-family: "Montserrat", sans-serif !important;
-
 }
 
-main{
-    padding-inline: 5%;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    
+main {
+  padding-inline: 5%;
+  padding-top: 5%;
+  padding-bottom: 5%;
 }
-header{
-    padding-inline: 5%;
+header {
+  padding-inline: 5%;
 }
-footer{
-    padding-inline: 5%;
+footer {
+  padding-inline: 5%;
 }
 
 p {
@@ -30,10 +28,10 @@ h3 {
 }
 
 button {
-    background-color: #012350   !important;
-    color: white;
-    border-color: #012350 !important;
-  }
+  background-color: #012350 !important;
+  color: white;
+  border-color: #012350 !important;
+}
 
 /* HEADER */
 
@@ -91,7 +89,6 @@ header {
   margin-right: 1em;
 }
 
-
 /* FOOTER */
 
 footer {
@@ -119,27 +116,33 @@ footer {
   color: #17252a;
 }
 
-
 /* FORMULARIO */
 
-.login {
-    display: grid;
+.login,
+.divFormProfesional,
+.divFormPaciente {
+  /* CENTRAR CONTEINER-FLUID */
+  display: grid;
   justify-content: center;
   align-content: center;
 }
 
+.contenedorLogin {
+  justify-content: center;
+  display: flex;
+}
 .titulo {
   text-align: center;
   padding: 2% 0 2% 0;
 }
 
 .formulario {
-    background-color: #feffff;
-    padding: 10% 5% 5% 5%;
-    border-radius: 8px;
-    justify-content: center;
-    align-content: center;
-    width: 40vw;
+  background-color: #feffff;
+  padding: 10% 5% 5% 5%;
+  border-radius: 8px;
+  justify-content: center;
+  align-content: center;
+  width: 40vw;
 }
 
 input {
@@ -153,28 +156,98 @@ input {
   box-sizing: border-box;
 }
 
-#comentario {
-  height: 10em;
-}
-
 .btn-submit {
   display: flex;
   justify-content: end;
 }
-
-.colBtn {
-  display: flex;
+.rowLogin {
   justify-content: center;
 }
 
+.rowDatosPersonales label {
+  padding-left: 1em !important;
+}
 .form-floating:not(.form-control:disabled)::before {
   top: 0 !important;
   left: 0 !important;
   width: 0 !important;
 }
-.rowLogin {
+
+.form-floating {
+  margin-bottom: 1em !important;
+}
+.bi {
+  padding-inline: 0.5em;
+}
+
+.divCrearUsuario {
+  padding: 5% 0 5% 0;
+  text-align: center;
+  border-top: solid 1px #012350;
+}
+
+.loginFormulario {
+  background-color: #fff;
+  border-radius: 8px;
+  width: 40vw;
+  display: grid;
   justify-content: center;
-  padding-bottom: 1em;
+  align-content: center;
+}
+
+/* FORMULARIO PERSONA Y PROFESIONAL */
+.formularioCrear {
+  width: 70vw !important;
+  padding-top: 5% !important;
+}
+
+.divObraSocial,
+.divDias {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.divObraSocial input,
+.divDias input {
+  height: auto !important;
+}
+
+.selectPro {
+  justify-content: space-evenly !important;
+}
+.especialidad {
+  /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+  display: flex;
+  justify-content: start;
+}
+.ubicacion {
+  /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+  display: flex;
+  justify-content: center;
+}
+
+.modalidad {
+  /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+  display: flex;
+  justify-content: end;
+}
+
+.rowHorario {
+  justify-content: center;
+}
+
+.rowHorario label {
+  display: flex;
+  justify-content: end;
+}
+
+.rowHorario .rowHoras {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rowHorario .inputHora {
+  text-align: center;
 }
 
 /* LOGIN*/
