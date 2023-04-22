@@ -10,55 +10,64 @@
 
         <!--MAIN-->
 
-        <main>
-
-
-
-            <div class="container-fluid contenedorDiv">
-                <div class="login">
-                    <h3 class="titulo">INICIAR SESIÓN</h3>
-                    <form
-                        action=""
-                        method="get"
-                        class="form-floating row formulario"
-                        id="formLogin"
-                        >
-                        <div class="row rowLogin">
-                            <div class="col-xs-12 form-floating">
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    id="email"
-                                    name="email"
-                                    placeholder=""
-                                    />
-                                <label for="nombre">Email</label>
-                            </div>
-                        </div>
-                        <div class="row rowLogin">
-                            <div class="col-xs-12 form-floating">
-                                <input
-                                    type="password"
-                                    class="form-control"
-                                    id="password"
-                                    name="password"
-                                    placeholder=""
-                                    />
-                                <label for="password">Contraseña</label>
-                            </div>
-                        </div>
-                        <div class="row rowLogin">
-                            <div class="col-xs-12 col-md-4 colBtn">
-                                <button type="submit" class="btn btn-primary btn-submit">
-                                    Iniciar sesión
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+ <main>
+      <div class="container-fluid contenedorLogin">
+        <div class="login">
+          <h3 class="titulo">INICIAR SESIÓN</h3>
+          <div class="loginFormulario">
+          <form
+            action=""
+            method="get"
+            class="form-floating row formulario"
+            id="formLogin"
+          >
+            <div class="row rowLogin">
+              <div class="col-xs-12 form-floating">
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  placeholder=""
+                />
+                <label for="nombre"><i class="bi bi-envelope"></i>Email</label>
+              </div>
+            </div>
+            <div class="row rowLogin">
+              <div class="col-xs-12 form-floating">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  placeholder=""
+                />
+                <label for="password"
+                  ><i class="bi bi-lock"></i>Contraseña</label
+                >
+              </div>
+            </div>
+            <div class="row rowLogin">
+              <div class="col-xs-12 col-md-4 colBtn">
+                <button type="submit" class="btn btn-primary btn-submit">
+                  Iniciar sesión
+                </button>
+              </div>
             </div>
 
-        </main>
+          </form>
+          
+          <div class="divCrearUsuario">
+            <p>Si todavía no tenes usuario</p>
+            <a href="/pac/form_pac" id="linkCrear" class="link"
+              ><button class="btn btn-primary">Hacé click acá</button></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    </main>
+        
         <!--FOOTER-->
         <div class="container-fluid pie">
             <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->

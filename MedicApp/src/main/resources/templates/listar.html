@@ -11,39 +11,54 @@
         <!--MAIN-->
 
         <main>
-            
- 
-        <h1>LISTA</h1>
-        <div class="container">
-            <hr>
-            <div class="card w-50">
-                <div class="card-body">
-            <div th:each="profesional : ${profesionales}">
-                <div class="card w-50">
-                    <div class="card-body">
-                        <h5 th:text="${profesional.nombre}"></h5>
-                        <h5 th:text="${profesional.apellido}"></h5>
-                        <h5 th:text="${profesional.especialidad}"></h5>                        
-                    </div>
-                </div>
-         
+
+            <div class="container-fluid contenedorDiv">
+                <h3>LISTA DE PROFESIONALES</h3>
+                <form action="/pro/buscarespec" method="POST">
+                    <input type="text" name="especialidad" />
+                    <button type="submit">Buscar por especialidad</button>
+                </form>
+                <table class="table table-light">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Especialidad</th>
+                            <th scope="col">Valor de Consulta</th>
+                            <!-- <th scope="col">Calificación</th> -->
+                            <!--<th scope="col" sec:authorize ="hasRole ('ADMIN')" >Acciones</th>-->
+                        </tr>
+                    </thead>
+
+                    <tbody th:each="profesional : ${profesionales}">
+                        <tr>
+                            <td th:text="${profesional.nombre}"> </td>
+                            <td th:text="${profesional.apellido}"></td>
+                            <td th:text="${profesional.especialidad}"></td>
+                            <td th:text="${profesional.honorario}"></td>
+<!--                             <td th:text="${profesional.calificación}"></td>   resolver como pasar la calificación -->
+                            
+                            <!-- <td>
+                                    <a sec:authorize ="hasRole ('ADMIN')" th:href= "@{/noticia/modificar/__${noticia.id}__}"> Modificar </a>
+                                </td> 
+                                <td>
+                                    <a sec:authorize ="hasRole ('ADMIN')" th:href= "@{/noticia/eliminar/__${noticia.id}__}"> Eliminar </a>
+                                </td> 
+                                                      <td>
+                                              <a sec:authorize ="hasRole ('ADMIN')"  th:href= "@{/libro/modificar/__${libro.isbn}__}"><i class="fas fa-feather-alt"></i> Modificar </a>
+                                          </td>-->
+                        </tr>
+                    </tbody>
+                </table>
+
+                <a class="btn btn-primary" href="/" role="button">Volver</a>
+
+
             </div>
 
-                </div>
-            </div>
-      
-            <a class="btn btn-primary" href="/" role="button">Volver</a>
 
-            <form action="/pro/buscarespec" method="POST">
-                <input type="text" name="especialidad">
-                <button type="submit">Buscar por especialidad</button>
-            </form>            
-           <hr>
-        </div>
-            
-            
         </main>
-     <!--FOOTER-->
+        <!--FOOTER-->
         <div class="container-fluid pie">
             <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
         </div>

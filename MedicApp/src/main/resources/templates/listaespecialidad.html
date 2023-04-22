@@ -11,26 +11,42 @@
         <!--MAIN-->
 
         <main>
-            
-             <h1>LISTA ESPECIALIDAD</h1>
-        <div class="container">
-            <hr>
-            <div th:each="profesional : ${profesionales}">
-                <div class="card w-50">
-                    <div class="card-body">
-                        <h5 th:text="${profesional.nombre}"></h5>
-                        <h5 th:text="${profesional.apellido}"></h5>
-                        <h5 th:text="${profesional.especialidad}"></h5>                        
-                    </div>
-                </div>
-                          
-            <a class="btn btn-primary" href="/" role="button">Volver</a>
-            <hr>
-        </div>
-            
-            
+
+
+            <div class="container-fluid contenedorDiv">
+                <h3>PROFESIONALES POR ESPECIALIDAD</h3>
+
+                <table class="table table-light">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Especialidad</th>
+                            <th scope="col">Valor de Consulta</th>
+                            <!-- <th scope="col">Calificación</th> -->
+
+                    </thead>
+
+                    <tbody th:each="profesional : ${profesionales}">
+                        <tr>
+                            <td th:text="${profesional.nombre}"></td>
+                            <td th:text="${profesional.apellido}"></td>
+                            <td th:text="${profesional.especialidad}"></td>
+                            <td th:text="${profesional.honorario}"></td>
+                            <!-- <td th:text="${profesional.calificación}"></td> -->
+                        </tr>
+                    </tbody>
+                </table>
+
+                <a class="btn btn-primary" href="/" role="button">Volver</a>
+
+
+            </div>
+
+
+
         </main>
-     <!--FOOTER-->
+        <!--FOOTER-->
         <div class="container-fluid pie">
             <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
         </div>

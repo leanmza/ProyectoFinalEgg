@@ -6,7 +6,11 @@
             href="/"
             class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"
             >
-            <img src="../../logo_App_fondo_transparente.png" alt="logo" class="logoHeader" />
+            <img
+                src="logo App_Mesa de trabajo 1.png"
+                alt="logo"
+                class="logoHeader"
+                />
         </a>
     </div>
 
@@ -21,7 +25,6 @@
                 aria-expanded="false"
                 aria-label="Toggle navigation"
                 >
-
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -33,19 +36,20 @@
                     >
                     <a href="#contacto" id="btn-contacto" class="link">FAQ</a>
                     <a href="#contacto" id="btn-contacto" class="link">Perfil</a>
-
                 </div>
-
-
             </div>
             <!--ESTO TIENE QUE APARECER SOLO EN EL INICIO.HTML-->
-            <button type="button" class="btn btn-primary botonesHeader btnTurnoHeader">Sacar Turno</button>
+            <button
+                type="button"
+                class="btn btn-primary botonesHeader btnTurnoHeader"
+                >
+                Sacar Turno
+            </button>
 
-            <button type="button" class="btn btn-primary botonesHeader">Iniciar Sesión</button>
+            <a href="/login"> <button type="button" class="btn btn-primary botonesHeader">Iniciar Sesión</button></a>
+
+
+            <!--<!--  AGREGAR A BOTON SACAR TURNO (poner como atributo de la etiqueta)  sec:authorize ="hasRole ('PACIENTE')"-->
         </div>
-
-
     </nav>
-
-
 </header>
