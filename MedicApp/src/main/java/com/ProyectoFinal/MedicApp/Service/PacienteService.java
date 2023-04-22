@@ -89,7 +89,7 @@ public class PacienteService {
                 throw new MiExcepcion("La segunda contraseña no puede ser nula o vacía");
             }
 
-            if (password != password2) {
+            if (!(password.equals(password2))) {
                 throw new MiExcepcion("Las contraseñas no coinciden");
             }
 
