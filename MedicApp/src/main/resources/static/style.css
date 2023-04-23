@@ -7,7 +7,7 @@ body {
 
 main {
   padding-inline: 5%;
-  padding-top: 5%;
+  padding-top: 4%;
   padding-bottom: 5%;
 }
 header {
@@ -196,11 +196,22 @@ input {
 }
 
 /* FORMULARIO PERSONA Y PROFESIONAL */
+.tituloForm{
+  padding: 0 0 4% 0;
+}
+
+.tituloForm h4{
+  text-align: center;
+}
 .formularioCrear {
   width: 70vw !important;
   padding-top: 5% !important;
 }
 
+.divSexo {
+  align-items: center;
+  display: flex;
+}
 .divObraSocial,
 .divDias {
   display: flex !important;
@@ -248,6 +259,11 @@ input {
 }
 .rowHorario .inputHora {
   text-align: center;
+}
+
+.DivBtnEnviar {
+  display: flex;
+  justify-content: center;
 }
 
 /* LOGIN*/

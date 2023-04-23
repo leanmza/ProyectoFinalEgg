@@ -10,140 +10,215 @@
 
         <!--MAIN-->
 
- <main>
-
-    <form>
-      <section class="container-fluid container-custome mt-2 w-50">
-        <div class="card p-4">
-          <legend>
-            <font style="vertical-align: inherit;">FORMULARIO PROFESIONAL</font>
-          </legend>
-          <div class="mb-3">
-            <label for="nombre" class="form-label">Nombre:</label>
-            <input type="text" id="nombre" class="form-control" placeholder="Escriba Nombre">
+        <main>
+          <div id="divFormProfesional" class="container-fluid divFormProfesional">
+            <div class="row titulo">
+              <h3>REGISTRO DE PROFESIONAL</h3>
+            </div>
+            <div class="row">
+              <form
+                class="form-floating row g-3 formulario"
+                id="formulario"
+                method="post"
+                action=""
+              >
+                <h4>Datos Personales</h4>
+                <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
+                <!-- INPUT NOMBRE-->
+                <div class="col-xs-12 col-md-6 form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="nombre"
+                    name="nombre"
+                    placeholder=""
+                  />
+                  <label for="nombre">Nombre</label>
+                </div>
+                <!-- INPUT APELLIDO-->
+                <div class="col-xs-12 col-md-6 form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="apellido"
+                    name="apellido"
+                    placeholder=""
+                  />
+                  <label for="apellido">Apellido</label>
+                </div>
+                <!-- INPUT MAIL-->
+                <div class="col-xs-12 col-md-6 form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="correo"
+                    placeholder=""
+                    name="correo"
+                  />
+                  <label for="correo">Email</label>
+                </div>
+                <!-- INPUT TELEFONO-->
+                <div class="col-xs-12 col-md-6 form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="telefono"
+                    name="telefono"
+                    placeholder=""
+                  />
+                  <label for="telefono">Telefono</label>
+                </div>
+                <!-- INPUT PASSWORD-->
+                <div class="col-xs-12 col-md-6 form-floating">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    name="password"
+                    placeholder=""
+                  />
+                  <label for="password">Contraseña</label>
+                </div>
+                <!-- INPUT PASSWORD2-->
+                <div class="col-xs-12 col-md-6 form-floating">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password2"
+                    name="password2"
+                    placeholder=""
+                  />
+                  <label for="password2">Repetir Contraseña</label>
+                </div>
+      
+                <div class="row">
+                  <!-- INFORMACIÓN DE PROFESIONAL -->
+                  <div class="col-12">
+                    <h4>INFORMACIÓN DEL PROFESIONAL</h4>
+                  </div>
+      
+                  <div class="row">
+                    <!-- SELECT ESPECIALIDAD -->
+                    <div class="col-xs-12 col-md-6 form-floating"></div>
+                    <label for="especialidad">Especialidad</label>
+                    <select
+                      name="especialidad"
+                      id="especialidad"
+                      class="especialidad"
+                    >
+                      <option value="" selected>Elija una especialidad...</option>
+                      <option value="Cardiologia">Cardiología</option>
+                      <option value="Clinica">Clínica</option>
+                      <option value="Dermatología">Dermatología</option>
+                      <option value="Endocrinología">Endocrinología</option>
+                      <option value="Neurología">Neurología</option>
+                      <option value="Traumatologia">Traumatologia</option>
+                      <option value="Pediatria">Pediatría</option>
+                    </select>
+                  </div>
+      
+                  <!-- SELECT UBICACIÓN -->
+                  <div class="col-xs-12 col-md-6 form-floating"></div>
+                  <label for="ubicacion">Ubicación</label>
+                  <select name="ubicacion" id="ubicacion" class="ubicacion">
+                    <option value="" selected>Elija una ubicación...</option>
+                    <option value="NORTE">Norte</option>
+                    <option value="CENTRO">Centro</option>
+                    <option value="SUR">Sur</option>
+                    <option value="ESTE">Este</option>
+                    <option value="OESTE">Oeste</option>
+                  </select>
+                </div>
+      
+                <!-- SELECT MODALIDAD -->
+                <div class="col-xs-12 col-md-6 form-floating">
+                  <label for="modalidad">Modalidad</label>
+                  <select name="modalidad" id="modalidad" class="modalidad">
+                    <option value="" selected>Elija una modalidad</option>
+                    <option value="TELEMEDICINA">Telemedicina</option>
+                    <option value="PRESENCIAL">Presencial</option>
+                  </select>
+                </div>
+      
+                <!-- SELECT OBRAS SOCIALES-->
+                <h4>Obras Sociales</h4>
+                <div class="row">
+                  <div class="form-floating">
+                    <div class="row">
+                      <div class="col-xs-6 col-md-4 divObraSocial">
+                        <label for="pami">PAMI</label>
+                        <input type="checkbox" name="pami" id="pami" />
+                      </div>
+      
+                      <div class="col-xs-6 col-md-4 divObraSocial">
+                        <label for="osde">OSDE</label>
+                        <input type="checkbox" name="osde" id="osde" />
+                      </div>
+      
+                      <div class="col-xs-6 col-md-4 divObraSocial">
+                        <label for="swissMedical">SWISS MEDICAL</label>
+                        <input
+                          type="checkbox"
+                          name="swissMedical"
+                          id="swissMedical"
+                        />
+                      </div>
+      
+                      <div class="col-xs-6 col-md-4 divObraSocial">
+                        <label for="osecac">OSECAC</label>
+                        <input type="checkbox" name="osecac" id="osecac" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+      
+                <!-- DÍAS Y HORARIOS -->
+                <div class="col-12">
+                  <h4>DÍAS Y HORARIOS DE ATENCIÓN</h4>
+                </div>
+      
+                <div class="row">
+                  <!-- INPUT DE DÍAS -->
+                  <div class="row">
+                    <div class="col-xs-12 form-floating">
+                      <label for="lunes">Lunes</label>
+                      <input type="checkbox" name="lunes" id="lunes" />
+      
+                      <label for="martes">Martes</label>
+                      <input type="checkbox" name="martes" id="martes" />
+      
+                      <label for="miercoles">Miércoles</label>
+                      <input type="checkbox" name="miercoles" id="miercoles" />
+      
+                      <label for="jueves">Jueves</label>
+                      <input type="checkbox" name="jueves" id="jueves" />
+      
+                      <label for="viernes">Viernes</label>
+                      <input type="checkbox" name="viernes" id="viernes" />
+      
+                      <label for="jueves">Sábado</label>
+                      <input type="checkbox" name="sabado" id="sabado" />
+                    </div>
+                  </div>
+                </div>
+      
+                <div class="col-xs-12 btnEnviar">
+                  <button
+                    type="submit"
+                    name="submit"
+                    value="enviar"
+                    class="btn btn-primary"
+                  >
+                    Enviar
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
-          <div class="mb-3">
-            <label for="apellido" class="form-label">Apellido:</label>
-            <input type="text" id="apellido" class="form-control" placeholder="Escriba Apellido">
-          </div>
-          <div class="mb-3">
-            <label for="Email" class="form-label">Email:</label>
-            <input type="email" id="Email" class="form-control" placeholder="Escriba Email">
-          </div>
-          <div class="mb-3">
-            <label for="telefono" class="form-label">Telefono:</label>
-            <input type="tel" id="telefono" class="form-control" placeholder="Escriba Telefono">
-          </div>
-          <div class="mb-3">
-            <label for="contrasena" class="form-label">Contraseña:</label>
-            <input type="password" id="contrasena" class="form-control" placeholder="Escriba contraseña">
-          </div>
-          <div class="mb-3">
-            <label for="contrasena2" class="form-label"> Confirmar Contraseña:</label>
-            <input type="password" id="contrasena2" class="form-control" placeholder="Confirmar contraseña">
-          </div>
-          
-          <legend>
-            <font style="vertical-align: inherit;">Datos Profesionales</font>
-          </legend>
-          
-          <div class="mb-3">
-            <label for="especialidad" class="form-label">Especialidad:</label>
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Selecione una Especialidad</option>
-              <option value="1">Clinico</option>
-              <option value="2">Pediatria</option>
-              <option value="3">Ginecologia</option>
-              <option value="4">Cardiologia</option>
-            </select>
-          </div>
-
-          <div class="mb-3">
-            <label for="modalidad" class="form-label">Modalidad:</label>
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Selecione una Modalidad</option>
-              <option value="1">TELEMEDICINA</option>
-              <option value="2">PRESENCIAL</option>
-            </select>
-          </div>
-
-          <div class="mb-3">
-            <label for="obra social" class="form-label">Obra Social:</label>
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Selecione Obra Social</option>
-              <option value="1">PAMI</option>
-              <option value="2">OSDE</option>
-              <option value="3">SWISSMEDICAL</option>
-              <option value="4">OSECAC</option>
-            </select>
-          </div>
-
-          <div class="mb-3">
-            <label for="ubicacion" class="form-label">Ubicacion:</label>
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Selecione Ubicacion</option>
-              <option value="1">NORTE</option>
-              <option value="2">SUR</option>
-              <option value="3">ESTE</option>
-              <option value="4">OESTE</option>
-            </select>
-          </div>
-
-          <legend>
-            <font style="vertical-align: inherit;">Dias Disponibles</font>
-          </legend>
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="lunes">
-            <label class="form-check-label" for="lunes">Lunes</label>
-          </div>
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="martes">
-            <label class="form-check-label" for="martes">Martes</label>
-          </div>
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="miercoles">
-            <label class="form-check-label" for="miercoles">Miercoles</label>
-          </div>
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="jueves">
-            <label class="form-check-label" for="jueves">Jueves</label>
-          </div>
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="viernes">
-            <label class="form-check-label" for="viernes">Viernes</label>
-          </div>
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="sabado">
-            <label class="form-check-label" for="sabado">Sabado</label>
-          </div>
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="domingo">
-            <label class="form-check-label" for="domingo">Domingo</label>
-          </div>
-          <div class="mb-3">
-            <label for="fecha" class="form-label">Fecha inicio:</label>
-            <input type="date" id="fecha" class="form-control" placeholder="fecha">
-          </div>
-          <div class="mb-3">
-            <label for="horario" class="form-label">Horario Inicio:</label>
-            <input type="time" id="horario" class="form-control" placeholder="Hora">
-          </div>
-          <div class="mb-3">
-            <label for="horario" class="form-label">Horario Fin :</label>
-            <input type="time" id="horario" class="form-control" placeholder="Hora">
-          </div>
-          <div class="mb-3">
-            <label for="horario" class="form-label">Valor Consulta:</label>
-            <input type="text" disabled id="valor" class="form-control" value="$">
-          </div>
-          <button type="submit" class="btn btn-primary">
-            Enviar
-          </button>
-        </div>
-      </section>
-    </form>
-
-  </main>
+      
+            
+            
+        </main>
      <!--FOOTER-->
         <div class="container-fluid pie">
             <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
