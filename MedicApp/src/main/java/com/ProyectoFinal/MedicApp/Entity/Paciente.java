@@ -1,6 +1,5 @@
 package com.ProyectoFinal.MedicApp.Entity;
 
-import com.ProyectoFinal.MedicApp.Enum.Rol;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
