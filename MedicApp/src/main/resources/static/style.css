@@ -103,6 +103,7 @@ footer {
   padding: 1em;
   display: flex;
   justify-content: center;
+  padding-inline: 5%;
 }
 
 .linkFooter {
