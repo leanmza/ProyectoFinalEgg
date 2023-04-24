@@ -89,6 +89,11 @@ header {
   margin-right: 1em;
 }
 
+.divHeaderPerfil {
+  display: flex;
+  align-items: center;
+}
+
 /* FOOTER */
 
 footer {
@@ -168,7 +173,6 @@ input {
   padding-left: 1em !important;
 }
 
-
 .form-floating:not(.form-control:disabled)::before {
   top: 0 !important;
   left: 0 !important;
@@ -198,11 +202,11 @@ input {
 }
 
 /* FORMULARIO PERSONA Y PROFESIONAL */
-.tituloForm{
+.tituloForm {
   padding: 0 0 4% 0;
 }
 
-.tituloForm h4{
+.tituloForm h4 {
   text-align: center;
 }
 .formularioCrear {
@@ -228,20 +232,22 @@ input {
 .selectPro {
   justify-content: space-evenly !important;
 }
-.especialidad { /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
- 
-   
+.especialidad {
+  /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+
   display: flex;
   justify-content: start;
 }
-.ubicacion { /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
-  
-  display: flex; 
+.ubicacion {
+  /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+
+  display: flex;
   justify-content: center;
 }
 
-.modalidad { /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
-  
+.modalidad {
+  /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+
   display: flex;
   justify-content: end;
 }
@@ -269,16 +275,16 @@ input {
   justify-content: center;
 }
 
-.labelObraSocial{
+.labelObraSocial {
   padding-left: 0 !important;
 }
 
-.rowObrasSociales{
+.rowObrasSociales {
   justify-content: center;
 }
 
-h5{
-  text-align: center  ;
+h5 {
+  text-align: center;
 }
 
 /* LOGIN*/
