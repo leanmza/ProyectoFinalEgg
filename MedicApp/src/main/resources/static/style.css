@@ -164,9 +164,11 @@ input {
   justify-content: center;
 }
 
-.rowDatosPersonales label {
+.datosInput {
   padding-left: 1em !important;
 }
+
+
 .form-floating:not(.form-control:disabled)::before {
   top: 0 !important;
   left: 0 !important;
@@ -226,19 +228,20 @@ input {
 .selectPro {
   justify-content: space-evenly !important;
 }
-.especialidad {
-  /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+.especialidad { /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+ 
+   
   display: flex;
   justify-content: start;
 }
-.ubicacion {
-  /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
-  display: flex;
+.ubicacion { /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+  
+  display: flex; 
   justify-content: center;
 }
 
-.modalidad {
-  /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+.modalidad { /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+  
   display: flex;
   justify-content: end;
 }
@@ -257,13 +260,25 @@ input {
   justify-content: center;
   align-items: center;
 }
-.rowHorario .inputHora {
-  text-align: center;
+.inputHora {
+  text-align: center !important;
 }
 
 .DivBtnEnviar {
   display: flex;
   justify-content: center;
+}
+
+.labelObraSocial{
+  padding-left: 0 !important;
+}
+
+.rowObrasSociales{
+  justify-content: center;
+}
+
+h5{
+  text-align: center  ;
 }
 
 /* LOGIN*/

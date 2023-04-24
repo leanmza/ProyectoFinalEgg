@@ -11,29 +11,40 @@
         <!--MAIN-->
 
         <main>
-          <div id="divFormProfesional" class="container-fluid divFormProfesional">
+          <div id="divFormPaciente" class="container-fluid divFormPaciente">
             <div class="row titulo">
-              <h3>REGISTRO DE PROFESIONAL</h3>
+              <h3>REGISTRAR PROFESIONAL</h3>
             </div>
-            <div class="row">
-              <form
-                class="form-floating row g-3 formulario"
-                id="formulario"
-                method="post"
-                action=""
-              >
-                <h4>Datos Personales</h4>
-                <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
+    
+            <form
+              class="form-floating row formulario formularioCrear"
+              id="formulario"
+              th:action="@{/admin/crearProfesional}"
+              method="POST"
+            >
+              <!-- PRESTAR ATENCIÓN A LA RUTA DE TH:ACTION CUANDO SE CREE EL CONTROLADOR -->
+    
+              <!-- DATOS PERSONALES -->
+              <div class="row rowDatosPersonales">
+                <div class="tituloForm">
+                  <h4>DATOS PERSONALES</h4>
+                </div>
+               
+    
+                <!-- INPUT OCULTO DEL ID -->
+                <input hidden type="text" id="id" name="id" th:value="${id}" />
+    
                 <!-- INPUT NOMBRE-->
-                <div class="col-xs-12 col-md-6 form-floating">
+                <div class="col-xs-12 col-md-6 form-floating">  <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
                   <input
                     type="text"
                     class="form-control"
                     id="nombre"
                     name="nombre"
+                    th:value="${nombre}"
                     placeholder=""
                   />
-                  <label for="nombre">Nombre</label>
+                  <label for="nombre" class="datosInput">Nombre</label>
                 </div>
                 <!-- INPUT APELLIDO-->
                 <div class="col-xs-12 col-md-6 form-floating">
@@ -42,9 +53,10 @@
                     class="form-control"
                     id="apellido"
                     name="apellido"
+                    th:value="${apellido}"
                     placeholder=""
                   />
-                  <label for="apellido">Apellido</label>
+                  <label for="apellido" class="datosInput">Apellido</label>
                 </div>
                 <!-- INPUT MAIL-->
                 <div class="col-xs-12 col-md-6 form-floating">
@@ -52,10 +64,11 @@
                     type="text"
                     class="form-control"
                     id="correo"
-                    placeholder=""
                     name="correo"
+                    th:value="${email}"
+                    placeholder=""
                   />
-                  <label for="correo">Email</label>
+                  <label for="correo" class="datosInput">Email</label>
                 </div>
                 <!-- INPUT TELEFONO-->
                 <div class="col-xs-12 col-md-6 form-floating">
@@ -64,10 +77,12 @@
                     class="form-control"
                     id="telefono"
                     name="telefono"
+                    th:value="${telefono}"
                     placeholder=""
                   />
-                  <label for="telefono">Telefono</label>
+                  <label for="telefono" class="datosInput">Telefono</label>
                 </div>
+    
                 <!-- INPUT PASSWORD-->
                 <div class="col-xs-12 col-md-6 form-floating">
                   <input
@@ -77,7 +92,7 @@
                     name="password"
                     placeholder=""
                   />
-                  <label for="password">Contraseña</label>
+                  <label for="password" class="datosInput">Contraseña</label>
                 </div>
                 <!-- INPUT PASSWORD2-->
                 <div class="col-xs-12 col-md-6 form-floating">
@@ -88,136 +103,288 @@
                     name="password2"
                     placeholder=""
                   />
-                  <label for="password2">Repetir Contraseña</label>
+                  <label for="password2" class="datosInput"
+                    >Repetir Contraseña</label
+                  >
                 </div>
-      
-                <div class="row">
-                  <!-- INFORMACIÓN DE PROFESIONAL -->
-                  <div class="col-12">
-                    <h4>INFORMACIÓN DEL PROFESIONAL</h4>
-                  </div>
-      
-                  <div class="row">
-                    <!-- SELECT ESPECIALIDAD -->
-                    <div class="col-xs-12 col-md-6 form-floating"></div>
-                    <label for="especialidad">Especialidad</label>
-                    <select
-                      name="especialidad"
-                      id="especialidad"
-                      class="especialidad"
-                    >
-                      <option value="" selected>Elija una especialidad...</option>
-                      <option value="Cardiologia">Cardiología</option>
-                      <option value="Clinica">Clínica</option>
-                      <option value="Dermatología">Dermatología</option>
-                      <option value="Endocrinología">Endocrinología</option>
-                      <option value="Neurología">Neurología</option>
-                      <option value="Traumatologia">Traumatologia</option>
-                      <option value="Pediatria">Pediatría</option>
-                    </select>
-                  </div>
-      
-                  <!-- SELECT UBICACIÓN -->
-                  <div class="col-xs-12 col-md-6 form-floating"></div>
-                  <label for="ubicacion">Ubicación</label>
-                  <select name="ubicacion" id="ubicacion" class="ubicacion">
-                    <option value="" selected>Elija una ubicación...</option>
-                    <option value="NORTE">Norte</option>
-                    <option value="CENTRO">Centro</option>
-                    <option value="SUR">Sur</option>
-                    <option value="ESTE">Este</option>
-                    <option value="OESTE">Oeste</option>
-                  </select>
+              </div>
+    
+              <!-- DATOS DEL PROFESIONAL -->
+              <div class="row rowDatosProfesional">
+                <div class="tituloForm">
+                  <h4>DATOS DEL PROFESIONAL</h4>
                 </div>
-      
-                <!-- SELECT MODALIDAD -->
+    
+                <!-- INPUT ESPECIALIDAD-->
                 <div class="col-xs-12 col-md-6 form-floating">
-                  <label for="modalidad">Modalidad</label>
-                  <select name="modalidad" id="modalidad" class="modalidad">
-                    <option value="" selected>Elija una modalidad</option>
-                    <option value="TELEMEDICINA">Telemedicina</option>
-                    <option value="PRESENCIAL">Presencial</option>
+                  <select
+                    name="especialidad"
+                    id="especialidad"
+                    class="especialidad form-select"
+                  >
+                    <option value="" selected disabled>Eligir especialidad</option>
+                    <option value="cardiologia">Cardiología</option>
+                    <option value="clinica">Clínica</option>
+                    <option value="ginecologia">Ginecología</option>
+                    <option value="pediatria">Pediatría</option>
                   </select>
+                  <label for="ubicacion" class="datosInput">Especialidad</label>
                 </div>
-      
-                <!-- SELECT OBRAS SOCIALES-->
-                <h4>Obras Sociales</h4>
-                <div class="row">
-                  <div class="form-floating">
-                    <div class="row">
-                      <div class="col-xs-6 col-md-4 divObraSocial">
-                        <label for="pami">PAMI</label>
-                        <input type="checkbox" name="pami" id="pami" />
-                      </div>
-      
-                      <div class="col-xs-6 col-md-4 divObraSocial">
-                        <label for="osde">OSDE</label>
-                        <input type="checkbox" name="osde" id="osde" />
-                      </div>
-      
-                      <div class="col-xs-6 col-md-4 divObraSocial">
-                        <label for="swissMedical">SWISS MEDICAL</label>
-                        <input
-                          type="checkbox"
-                          name="swissMedical"
-                          id="swissMedical"
-                        />
-                      </div>
-      
-                      <div class="col-xs-6 col-md-4 divObraSocial">
-                        <label for="osecac">OSECAC</label>
-                        <input type="checkbox" name="osecac" id="osecac" />
-                      </div>
+    
+                <!-- INPUT UBICACIÓN-->
+                <div class="col-xs-12 col-md-6 form-floating">
+                  <select
+                    name="ubicacion"
+                    id="ubicacion"
+                    class="ubicacion form-select"
+                  >
+                    <option value="" selected disabled>Eligir ubicación...</option>
+                    <option value="norte">Norte</option>
+                    <option value="centro">Centro</option>
+                    <option value="sur">Sur</option>
+                    <option value="este">Este</option>
+                    <option value="oeste">Oeste</option>
+                  </select>
+                  <label for="ubicacion" class="datosInput">Ubicación</label>
+                </div>
+                <!-- INPUT MODALIDAD -->
+                <div class="col-xs-12 col-md-6 form-floating">
+                  <select
+                    name="modalidad"
+                    id="modalidad"
+                    class="modalidad form-select"
+                  >
+                    <option value="" selected disabled>Eligir una modalidad</option>
+                    <option value="telemedicina">Telemedicina</option>
+                    <option value="presencial">Presencial</option>
+                  </select>
+                  <label for="modalidad" class="datosInput">Modalidad</label>
+                </div>
+                <!-- INPUT VALOR CONSULTA-->
+                <div class="col-xs-12 col-md-6 form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="honorarios"
+                    name="honorarios"
+                    th:value="${honorarios}"
+                    placeholder=""
+                  />
+                  <label for="honorarios" class="datosInput">
+                    <i class="bi bi-currency-dollar"></i>Valor de la consulta</label
+                  >
+                </div>
+                <!-- INPUT OBRA SOCIAL-->
+                <div class="col-xs-12">
+                  <div class="col-12">
+                    <h5>Obras Sociales</h5>
+                  </div>
+                  <div class="row rowObrasSociales">
+                    <div
+                      class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check form-switch"
+                    >
+                      <input
+                        type="checkbox"
+                        name="obrasSociales[]"
+                        id="osde"
+                        class="form-check-input"
+                      />
+                      <label for="osde" class="form-check-label labelObraSocial"
+                        >OSDE</label
+                      >
+                    </div>
+    
+                    <div
+                      class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check form-switch"
+                    >
+                      <input
+                        type="checkbox"
+                        name="obrasSociales[]"
+                        id="osecac"
+                        class="form-check-input"
+                      />
+                      <label for="osecac" class="form-check-label labelObraSocial"
+                        >OSECAC</label
+                      >
+                    </div>
+                    <div
+                      class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check form-switch"
+                    >
+                      <input
+                        type="checkbox"
+                        name="obrasSociales[]"
+                        id="pami"
+                        class="form-check-input"
+                      />
+                      <label for="pami" class="form-check-label labelObraSocial"
+                        >PAMI</label
+                      >
+                    </div>
+                    <div
+                      class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check form-switch"
+                    >
+                      <input
+                        type="checkbox"
+                        name="obrasSociales[]"
+                        id="swissMedical"
+                        class="form-check-input"
+                      />
+                      <label
+                        for="swissMedical"
+                        class="form-check-label labelObraSocial"
+                        >Swiss Medical</label
+                      >
                     </div>
                   </div>
                 </div>
-      
-                <!-- DÍAS Y HORARIOS -->
-                <div class="col-12">
+              </div>
+    
+              <!-- DÍAS Y HORARIOS -->
+              <div class="row rowDiasHorarios">
+                <div class="tituloForm">
                   <h4>DÍAS Y HORARIOS DE ATENCIÓN</h4>
                 </div>
-      
-                <div class="row">
-                  <!-- INPUT DE DÍAS -->
-                  <div class="row">
-                    <div class="col-xs-12 form-floating">
-                      <label for="lunes">Lunes</label>
-                      <input type="checkbox" name="lunes" id="lunes" />
-      
-                      <label for="martes">Martes</label>
-                      <input type="checkbox" name="martes" id="martes" />
-      
-                      <label for="miercoles">Miércoles</label>
-                      <input type="checkbox" name="miercoles" id="miercoles" />
-      
-                      <label for="jueves">Jueves</label>
-                      <input type="checkbox" name="jueves" id="jueves" />
-      
-                      <label for="viernes">Viernes</label>
-                      <input type="checkbox" name="viernes" id="viernes" />
-      
-                      <label for="jueves">Sábado</label>
-                      <input type="checkbox" name="sabado" id="sabado" />
+    
+                <!-- INPUT DE DÍAS -->
+                <div class="col-xs-12">
+                  <div class="col-12">
+                    <h5>Días de atención</h5>
+                  </div>
+                  <div class="row rowObrasSociales">
+                    <div
+                      class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check form-switch"
+                    >
+                      <input
+                        type="checkbox"
+                        name="dias[]"
+                        id="lunes"
+                        class="form-check-input"
+                      />
+                      <label for="lunes" class="form-check-label labelObraSocial"
+                        >Lunes</label
+                      >
+                    </div>
+    
+                    <div
+                      class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check form-switch"
+                    >
+                      <input
+                        type="checkbox"
+                        name="dias[]"
+                        id="martes"
+                        class="form-check-input"
+                      />
+                      <label for="martes" class="form-check-label labelObraSocial"
+                        >Martes</label
+                      >
+                    </div>
+    
+                    <div
+                      class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check form-switch"
+                    >
+                      <input
+                        type="checkbox"
+                        name="dias[]"
+                        id="miercoles"
+                        class="form-check-input"
+                      />
+                      <label
+                        for="miercoles"
+                        class="form-check-label labelObraSocial"
+                        >Miércoles</label
+                      >
+                    </div>
+    
+                    <div
+                      class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check form-switch"
+                    >
+                      <input
+                        type="checkbox"
+                        name="dias[]"
+                        id="jueves"
+                        class="form-check-input"
+                      />
+                      <label for="jueves" class="form-check-label labelObraSocial"
+                        >Jueves</label
+                      >
+                    </div>
+                    <div
+                      class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check form-switch"
+                    >
+                      <input
+                        type="checkbox"
+                        name="dias[]"
+                        id="viernes"
+                        class="form-check-input"
+                      />
+                      <label for="viernes" class="form-check-label labelObraSocial"
+                        >Viernes</label
+                      >
+                    </div>
+                    <div
+                      class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check form-switch"
+                    >
+                      <input
+                        type="checkbox"
+                        name="dias[]"
+                        id="sabado"
+                        class="form-check-input"
+                      />
+                      <label for="sabado" class="form-check-label labelObraSocial"
+                        >Sábado</label
+                      >
                     </div>
                   </div>
                 </div>
-      
-                <div class="col-xs-12 btnEnviar">
-                  <button
-                    type="submit"
-                    name="submit"
-                    value="enviar"
-                    class="btn btn-primary"
-                  >
-                    Enviar
-                  </button>
+    
+                <div class="row rowHorario">
+                  <!-- INPUT HORA INICIO-->
+                  <div class="col-12">
+                    <h5>Horario de atención</h5>
+                  </div>
+                  <div class="col-xs-12 col-md-3 form-floating inputHora">
+                    <input
+                      type="time"
+                      class="form-control inputHora"
+                      id="horaInicio"
+                      name="horaInicio "
+                      th:value="${horarioInicio}"
+                      placeholder=""
+                    />
+                    <label for="horaInicio" class="datosInput inputHora">
+                      <i class="bi bi-clock"></i>Hora de inicio</label
+                    >
+                  </div>
+    
+                  <!-- INPUT HORA FIN-->
+                  <div class="col-xs-12 col-md-3 form-floating">
+                    <input
+                      type="time"
+                      class="form-control inputHora"
+                      id="horaFin"
+                      name="horaFin"
+                      th:value="${horarioFin}"
+                      placeholder=""
+                    />
+                    <label for="horaFin" class="datosInput inputHora">
+                      <i class="bi bi-clock"></i>Hora de finalización</label
+                    >
+                  </div>
                 </div>
-              </form>
-            </div>
+              </div>
+    
+              <div class="col-xs-12 DivBtnEnviar">
+                <button
+                  type="submit"
+                  name="submit"
+                  value="registrar"
+                  class="btn btn-primary btnEnviar"
+                >
+                  ¡Registrar Profesional!
+                </button>
+              </div>
+            </form>
           </div>
-      
-            
-            
         </main>
      <!--FOOTER-->
         <div class="container-fluid pie">
