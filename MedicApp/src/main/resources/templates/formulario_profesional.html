@@ -123,12 +123,12 @@
                     class="especialidad form-select"
                   >
                     <option value="" selected disabled>Eligir especialidad</option>
-                    <option value="cardiologia">Cardiología</option>
-                    <option value="clinica">Clínica</option>
-                    <option value="ginecologia">Ginecología</option>
-                    <option value="pediatria">Pediatría</option>
+                    <option value="Cardiologia">Cardiología</option>
+                    <option value="Clinica">Clínica</option>
+                    <option value="Ginecologia">Ginecología</option>
+                    <option value="Pediatria">Pediatría</option>
                   </select>
-                  <label for="ubicacion" class="datosInput">Especialidad</label>
+                  <label for="especialidad" class="datosInput">Especialidad</label>
                 </div>
     
                 <!-- INPUT UBICACIÓN-->
@@ -139,11 +139,9 @@
                     class="ubicacion form-select"
                   >
                     <option value="" selected disabled>Eligir ubicación...</option>
-                    <option value="norte">Norte</option>
-                    <option value="centro">Centro</option>
-                    <option value="sur">Sur</option>
-                    <option value="este">Este</option>
-                    <option value="oeste">Oeste</option>
+                    <div th:each="ubicacion : ${ubicaciones}">
+                        <option th:text="${ubicacion}"></option>
+                    </div>
                   </select>
                   <label for="ubicacion" class="datosInput">Ubicación</label>
                 </div>
@@ -155,8 +153,9 @@
                     class="modalidad form-select"
                   >
                     <option value="" selected disabled>Eligir una modalidad</option>
-                    <option value="telemedicina">Telemedicina</option>
-                    <option value="presencial">Presencial</option>
+                    <div th:each="modalidad : ${modalidades}">
+                        <option th:text="${modalidad}"></option>
+                    </div>
                   </select>
                   <label for="modalidad" class="datosInput">Modalidad</label>
                 </div>

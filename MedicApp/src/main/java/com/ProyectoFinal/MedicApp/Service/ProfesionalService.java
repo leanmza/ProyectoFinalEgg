@@ -62,8 +62,8 @@ public class ProfesionalService implements UserDetailsService {
         profesional.setActivo(true);
         profesional.setEspecialidad(especialidad);
 
-        profesional.setModalidad(modalidad);
-        profesional.setUbicacion(ubicacion);
+        profesional.setModalidad(modalidad.toString());
+        profesional.setUbicacion(ubicacion.toString());
         profesional.setHonorarios(honorarios);
 //        profesional.setDias(dias);
 //        profesional.setHoraInicio(horaInicio);

@@ -40,7 +40,7 @@ public class Profesional extends Persona {
     @OneToMany
     private List<ObraSocial> obrasSociales;
 
-    private Double honorarios;
+    private Double honorario;
     
     @OneToMany
     private List<Turno> turnos;
