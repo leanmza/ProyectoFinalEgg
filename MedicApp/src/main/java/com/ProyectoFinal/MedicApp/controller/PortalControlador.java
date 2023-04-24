@@ -104,17 +104,18 @@ public class PortalControlador {
         return "login.html"; //ver nombre de archivo
     }
 
-
-  @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_ADMINISTRADOR')")
     @GetMapping("/inicio")
-    public String inicio(HttpSession session) {
+    public String inicio(HttpSession session, ModelMap modelo) {
         
-        Paciente logueado = (Paciente) session.getAttribute("usuariosession");
+        Paciente logueado = (Paciente) session.getAttribute("pacienteSession");
+        modelo.put("pacienteSession", logueado);
         
-//        if (logueado.getRol().toString().equals("ADMIN")) {
-//            return "redirect:/admin/dashboard";
-//        }
+        if (logueado.getRol().toString().equals("ADMINISTRADOR")) {
+            return "redirect:/admin/dashboard";
+        }
         
            return "inicio.html";
     }
+  
 }

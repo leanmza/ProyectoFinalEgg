@@ -240,7 +240,7 @@ public class ProfesionalService implements UserDetailsService {
 
             HttpSession session = attr.getRequest().getSession(true);
 
-            session.setAttribute("usuariosession", profesional);
+            session.setAttribute("profesionalSession", profesional);
 
             return new User(profesional.getEmail(), profesional.getPassword(), permisos);
         } else {

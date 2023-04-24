@@ -2,13 +2,18 @@ package com.ProyectoFinal.MedicApp.controller;
 
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
+import com.ProyectoFinal.MedicApp.Enum.Modalidad;
+import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Ariel
  */
 @Controller
+@PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
 @RequestMapping("/admin")
 public class AdministradorControlador {
     
@@ -41,7 +47,7 @@ public class AdministradorControlador {
         List<Paciente> pacientes = pacienteServicio.listar();
         modelo.put("pacientes", pacientes);
         
-        return "admin_pacientes.html";
+        return "listar_pac.html";
     }
     
     @GetMapping("/profesionales")
@@ -49,12 +55,24 @@ public class AdministradorControlador {
         List<Profesional> profesionales = profesionalServicio.listar();
         modelo.put("profesionales", profesionales);
         
-        return "admin_pacientes.html";
+        return "listar.html";
     }
     // /admin/registroProfesional
     
     @GetMapping("/registroProfesional")
     public String registroProfesional(ModelMap modelo) {
+        
+        List<String> ubicaciones = new ArrayList<>();
+        for (Ubicacion aux : Ubicacion.values()) {
+            ubicaciones.add(aux.toString());
+        }
+        modelo.put("ubicaciones", ubicaciones);
+        
+        List<String> modalidades = new ArrayList<>();
+        for (Modalidad aux : Modalidad.values()) {
+            modalidades.add(aux.toString());
+        }
+        modelo.put("modalidades", modalidades);
         
         return "formulario_profesional.html";
     }
@@ -74,10 +92,12 @@ public class AdministradorControlador {
              password,   password2,  especialidad, ubicacion, modalidad,
              honorarios/*, obrasSociales, dias, horaInicio, horaFin*/);
             
-            return "redirect: /admin/profesionales";
+            return "redirect:/admin/profesionales";
             
         } catch (MiExcepcion e) {
             System.out.println("Error al cargar Profesional");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             return "formulario_profesional.html";
         }
        

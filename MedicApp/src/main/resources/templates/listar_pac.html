@@ -13,29 +13,25 @@
         <main>
 
             <div class="container-fluid contenedorDiv">
-                <h3>LISTA DE PROFESIONALES</h3>
-                <form action="/pro/buscarespec" method="POST">
-                    <input type="text" name="especialidad" />
-                    <button type="submit">Buscar por especialidad</button>
-                </form>
+                <h3>LISTA DE PACIENTES</h3>
                 <table class="table table-light">
                     <thead>
                         <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Apellido</th>
-                            <th scope="col">Especialidad</th>
-                            <th scope="col">Valor de Consulta</th>
+                            <th scope="col">Teléfono</th>
+                            <th scope="col">Email</th>
                             <!-- <th scope="col">Calificación</th> -->
                             <!--<th scope="col" sec:authorize ="hasRole ('ADMIN')" >Acciones</th>-->
                         </tr>
                     </thead>
 
-                    <tbody th:each="profesional : ${profesionales}">
+                    <tbody th:each="paciente : ${pacientes}">
                         <tr>
-                            <td th:text="${profesional.nombre}"> </td>
-                            <td th:text="${profesional.apellido}"></td>
-                            <td th:text="${profesional.especialidad}"></td>
-                            <td th:text="${profesional.honorario}"></td>
+                            <td th:text="${paciente.nombre}"> </td>
+                            <td th:text="${paciente.apellido}"></td>
+                            <td th:text="${paciente.telefono}"></td>
+                            <td th:text="${paciente.email}"></td>
 <!--                             <td th:text="${profesional.calificación}"></td>   resolver como pasar la calificación -->
                             
                             <!-- <td>
@@ -51,7 +47,7 @@
                     </tbody>
                 </table>
 
-                <a class="btn btn-primary" href="/inicio" role="button">Volver</a>
+                <a class="btn btn-primary" href="/" role="button">Volver</a>
 
 
             </div>
