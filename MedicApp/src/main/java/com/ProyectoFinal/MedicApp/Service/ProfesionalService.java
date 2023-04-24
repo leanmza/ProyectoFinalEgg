@@ -62,9 +62,9 @@ public class ProfesionalService implements UserDetailsService {
         profesional.setActivo(true);
         profesional.setEspecialidad(especialidad);
 
-        profesional.setModalidad(modalidad);
-        profesional.setUbicacion(ubicacion);
-        profesional.setHonorarios(honorarios);
+        profesional.setModalidad(modalidad.toString());
+        profesional.setUbicacion(ubicacion.toString());
+        profesional.setHonorario(honorarios);
 //        profesional.setDias(dias);
 //        profesional.setHoraInicio(horaInicio);
 //        profesional.setHoraFin(horaFin);
@@ -102,7 +102,7 @@ public class ProfesionalService implements UserDetailsService {
       
         profesional.setModalidad(modalidad);
         profesional.setUbicacion(ubicacion);
-        profesional.setHonorarios(honorarios);
+        profesional.setHonorario(honorarios);
 //        profesional.setDias(dias);
 //        profesional.setHoraInicio(horaInicio);
 //        profesional.setHoraFin(horaFin);
