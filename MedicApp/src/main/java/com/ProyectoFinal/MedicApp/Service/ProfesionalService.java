@@ -64,7 +64,7 @@ public class ProfesionalService implements UserDetailsService {
 
         profesional.setModalidad(modalidad.toString());
         profesional.setUbicacion(ubicacion.toString());
-        profesional.setHonorarios(honorarios);
+        profesional.setHonorario(honorarios);
 //        profesional.setDias(dias);
 //        profesional.setHoraInicio(horaInicio);
 //        profesional.setHoraFin(horaFin);
@@ -102,7 +102,7 @@ public class ProfesionalService implements UserDetailsService {
       
         profesional.setModalidad(modalidad);
         profesional.setUbicacion(ubicacion);
-        profesional.setHonorarios(honorarios);
+        profesional.setHonorario(honorarios);
 //        profesional.setDias(dias);
 //        profesional.setHoraInicio(horaInicio);
 //        profesional.setHoraFin(horaFin);

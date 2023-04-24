@@ -170,4 +170,14 @@ public class PacienteService implements UserDetailsService {
 
     }
 
+    public void darDeBaja(String id) {
+        Optional<Paciente> respuesta = pacienteRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            Paciente paciente = respuesta.get();
+            paciente.setActivo(Boolean.FALSE);
+            
+            pacienteRepositorio.save(paciente);
+        }
+    }
+
 }

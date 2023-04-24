@@ -7,6 +7,8 @@ import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +42,37 @@ public class AdministradorControlador {
     public String panelAdministrativo() {
         
         return "panel.html";
+    }
+    
+    @GetMapping("/form_pac")
+    public String form_pac(ModelMap model) {
+        return "formulario_paciente.html";
+    }
+
+    @PostMapping("/registroPaciente")
+    public String registroPaciente(@RequestParam String nombre, @RequestParam String apellido,
+            @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
+            @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
+            @RequestParam String sexo) {
+       
+        try {
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            Date fechaNacimiento = formato.parse(nacimiento);
+            
+            pacienteServicio.crearPaciente(nombre, apellido, correo, telefono, password, password2, direccion, fechaNacimiento, sexo);
+            System.out.println("Ingreso de paciente exitoso");
+            return "redirect:/inicio";
+            
+        } catch (MiExcepcion me) {
+            System.out.println("Ingreso de paciente FALLIDO!\n" + me.getMessage());
+            
+            return "formulario_paciente.html";
+            
+        } catch (ParseException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+            return "formulario_paciente.html";
+        }
     }
     
     @GetMapping("/pacientes")

@@ -36,8 +36,27 @@ public class PortalControlador {
         return "index.html";
     }
     
+    @GetMapping("/login")
+    public String login() {
+        
+        return "login.html"; //ver nombre de archivo
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_ADMINISTRADOR')")
+    @GetMapping("/inicio")
+    public String inicio(HttpSession session, ModelMap modelo) {
+        
+        Paciente logueado = (Paciente) session.getAttribute("pacienteSession");
+        modelo.put("pacienteSession", logueado);
+        
+        if (logueado.getRol().toString().equals("ADMINISTRADOR")) {
+            return "redirect:/admin/dashboard";
+        }
+        
+           return "inicio.html";
+    }
     
-       @GetMapping("/form_pac")
+    @GetMapping("/form_pac")
     public String form_pac(ModelMap model) {
         return "formulario_paciente.html";
     }
@@ -68,54 +87,4 @@ public class PortalControlador {
         }
     }
     
-    
-    
-    
-    
-//    @GetMapping("/registrarProfesional")
-//    public String registrarProfesional() {
-//        return "formulario_profesional.html"; //ver nombre de archivo
-//    }
-//    
-//    @PostMapping("/regitroProfesional")
-//    public String registroProfesional(@RequestParam String nombre, @RequestParam String apellido, 
-//            @RequestParam String dni, @RequestParam String email, @RequestParam String telefono,
-//            /*MultipartFile archivo,*/ @RequestParam String password, @RequestParam String password2,
-//            @RequestParam String especialidad, @RequestParam String modalidad,
-//            @RequestParam String ubicacion, /*@RequestParam Date horarioInicio,
-//            @RequestParam Date horarioFin,*/@RequestParam Date horario, @RequestParam Date dias,
-//            /*@RequestParam List<ObraSocial> obrasSociales, @RequestParam List<Turno> turnos,*/
-//            @RequestParam Double honorarios) {
-//        try {
-//            profesionalService.crearProfesional(nombre, apellido, dni, email, telefono, /*archivo,*/
-//                    password, password2, especialidad, modalidad, ubicacion,/* horarioInicio,
-//                    horarioFin,*/horario, dias, /*obrasSociales,*/ honorarios);
-//            System.out.println("Ingreso exitoso");
-//            return "redirec:/inicio";
-//        } catch (MiExcepcion me) {
-//            System.out.println("Ingreso fallido\n" + me.getMessage());
-//            return "formulario_profesional.html";
-//        }
-//    }
-    
-    @GetMapping("/login")
-    public String login() {
-        
-        return "login.html"; //ver nombre de archivo
-    }
-
-    @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_ADMINISTRADOR')")
-    @GetMapping("/inicio")
-    public String inicio(HttpSession session, ModelMap modelo) {
-        
-        Paciente logueado = (Paciente) session.getAttribute("pacienteSession");
-        modelo.put("pacienteSession", logueado);
-        
-        if (logueado.getRol().toString().equals("ADMINISTRADOR")) {
-            return "redirect:/admin/dashboard";
-        }
-        
-           return "inicio.html";
-    }
-  
 }
