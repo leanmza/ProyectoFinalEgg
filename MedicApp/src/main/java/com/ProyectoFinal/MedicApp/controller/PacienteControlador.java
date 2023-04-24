@@ -45,6 +45,13 @@ public class PacienteControlador {
         return "formulario_paciente.html";
     }
     
+    @GetMapping("/listar_pac")
+    public String listar_pac(ModelMap model) {
+        List<Paciente> pacientes = pacienteService.listar();
+        model.addAttribute("pacientes", pacientes);
+        return "listar_pac.html";
+    }
+
     @PostMapping("/registroPaciente")
     public String registroPaciente(@RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
