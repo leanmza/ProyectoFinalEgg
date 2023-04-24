@@ -5,6 +5,7 @@ import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class AdministradorControlador {
         
         return "admin_pacientes.html";
     }
-    
+    // /admin/registroProfesional
     
     @GetMapping("/registroProfesional")
     public String registroProfesional(ModelMap modelo) {
@@ -58,17 +59,20 @@ public class AdministradorControlador {
         return "formulario_profesional.html";
     }
     
+   
     @PostMapping("/crearProfesional")
-    public String crearProfesional(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String email,
-            @RequestParam String telefono, @RequestParam String password, @RequestParam String password2,
-            @RequestParam String especialidad, @RequestParam String modalidad, @RequestParam String ubicacion,
-            @RequestParam Date horario, @RequestParam Date dias,
-            /*@RequestParam List<ObrasSociales> obrasSociales, @RequestParam(required = false) List<Turno>turnos,*/
-            @RequestParam Double honorarios) {
+    public String crearProfesional(@RequestParam String nombre, @RequestParam String apellido,
+            @RequestParam String correo, @RequestParam String telefono, @RequestParam String password,
+            @RequestParam String password2,  @RequestParam String especialidad,
+            @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios/*,
+           @RequestParam("obrasSociales[]") List<String> obrasSociales, @RequestParam("dias[]") List<String> dias,
+            @RequestParam("horaInicio") LocalTime horaInicio, @RequestParam ("horaFin") LocalTime horaFin
+            , @RequestParam(required = false) List<Turno>turnos*/ ) {
         
         try {
-            profesionalServicio.crearProfesional(nombre, apellido, dni, email, telefono, password, password2,
-                    especialidad, modalidad, ubicacion, horario, dias, honorarios);
+            profesionalServicio.crearProfesional(nombre, apellido,correo,   telefono,   
+             password,   password2,  especialidad, ubicacion, modalidad,
+             honorarios/*, obrasSociales, dias, horaInicio, horaFin*/);
             
             return "redirect: /admin/profesionales";
             
@@ -76,6 +80,6 @@ public class AdministradorControlador {
             System.out.println("Error al cargar Profesional");
             return "formulario_profesional.html";
         }
-        
+       
     }
 }
