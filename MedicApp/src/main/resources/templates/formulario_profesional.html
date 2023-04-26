@@ -68,8 +68,8 @@
             <label for="modalidad" class="form-label">Modalidad:</label>
             <select class="form-select" aria-label="Default select example">
               <option selected>Selecione una Modalidad</option>
-              <option value="1">Telemedicina</option>
-              <option value="2">Presencial</option>
+              <option value="1">TELEMEDICINA</option>
+              <option value="2">PRESENCIAL</option>
             </select>
           </div>
 
@@ -131,12 +131,16 @@
             <input type="date" id="fecha" class="form-control" placeholder="fecha">
           </div>
           <div class="mb-3">
-            <label for="horario" class="form-label">Horario inicio:</label>
+            <label for="horario" class="form-label">Horario Inicio:</label>
+            <input type="time" id="horario" class="form-control" placeholder="Hora">
+          </div>
+          <div class="mb-3">
+            <label for="horario" class="form-label">Horario Fin :</label>
             <input type="time" id="horario" class="form-control" placeholder="Hora">
           </div>
           <div class="mb-3">
             <label for="horario" class="form-label">Valor Consulta:</label>
-            <input type="text" disabled id="valor" class="form-control" value="$6000">
+            <input type="text" disabled id="valor" class="form-control" value="$">
           </div>
           <button type="submit" class="btn btn-primary">
             Enviar

@@ -1,3 +1,7 @@
 .container-custome{
   
 }
+body{
+    background-image: url("./doctor-estetoscopio-.avif");
+    background-size: cover;
+}
