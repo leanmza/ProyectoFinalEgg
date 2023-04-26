@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,17 +43,23 @@ public class PortalControlador {
         return "login.html"; //ver nombre de archivo
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_ADMINISTRADOR')")
+    @Transactional
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_PROFESIONAL', 'ROLE_ADMINISTRADOR')")
     @GetMapping("/inicio")
     public String inicio(HttpSession session, ModelMap modelo) {
-        
-        Paciente logueado = (Paciente) session.getAttribute("pacienteSession");
-        modelo.put("pacienteSession", logueado);
-        
-        if (logueado.getRol().toString().equals("ADMINISTRADOR")) {
-            return "redirect:/admin/dashboard";
+        if(session.getAttribute("pacienteSession") != null){
+            Paciente logueado = (Paciente) session.getAttribute("pacienteSession");
+            modelo.put("pacienteSession", logueado);
         }
         
+        if(session.getAttribute("profesionalSession") != null){
+            Profesional logueado = (Profesional) session.getAttribute("profesionalSession");
+            modelo.put("profesionalSession", logueado);
+        
+            if (logueado.getRol().toString().equals("ADMINISTRADOR")) {
+                return "redirect:/admin/dashboard";
+            }
+        }
            return "inicio.html";
     }
     
@@ -61,6 +68,7 @@ public class PortalControlador {
         return "formulario_paciente.html";
     }
     
+    @Transactional
     @PostMapping("/registroPaciente")
     public String registroPaciente(@RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,

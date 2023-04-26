@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +38,7 @@ public class ProfesionalControlador {
     @Autowired
     ProfesionalService profesionalService;
 
+    @Transactional
     @PostMapping("/buscarespec")
     public String buscarespec(@RequestParam("especialidad") String especialidad, ModelMap model) {        //buscaespec
         System.out.println(especialidad);
@@ -45,6 +47,7 @@ public class ProfesionalControlador {
         return "listaespecialidad.html";
     }
     
+    @Transactional
     @GetMapping("/listar")
     public String listar(ModelMap model) {
         List<Profesional> profesionales = profesionalService.listar();

@@ -5,9 +5,11 @@
 package com.ProyectoFinal.MedicApp.Service;
 
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
+import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Enum.Rol;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
+import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +37,9 @@ public class PacienteService implements UserDetailsService {
 
     @Autowired
     private PacienteRepositorio pacienteRepositorio;
+    
+    @Autowired
+    private ProfesionalRepositorio profesionalRepositorio;
 
     @Transactional
     public void crearPaciente(String nombre, String apellido, String email, String telefono, String password,
@@ -56,7 +61,7 @@ public class PacienteService implements UserDetailsService {
         paciente.setActivo(true);
         pacienteRepositorio.save(paciente);
     }
-    
+
     @Transactional
     public void modificarPaciente(String id, String nombre, String apellido, String email, String telefono, String password,
             String password2, String direccion, Date fechaNacimiento, String sexo) throws MiExcepcion {
@@ -148,6 +153,7 @@ public class PacienteService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         Paciente paciente = pacienteRepositorio.buscarPorEmail(email);
+        Profesional profesional = profesionalRepositorio.buscarPorEmail(email);
 
         if (paciente != null) {
 
@@ -164,6 +170,23 @@ public class PacienteService implements UserDetailsService {
             session.setAttribute("pacienteSession", paciente);
 
             return new User(paciente.getEmail(), paciente.getPassword(), permisos);
+
+        } else if (profesional != null) {
+
+            List<GrantedAuthority> permisos = new ArrayList();
+
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + profesional.getRol().toString());
+
+            permisos.add(p);
+
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+
+            HttpSession session = attr.getRequest().getSession(true);
+
+            session.setAttribute("profesionalSession", profesional);
+
+            return new User(profesional.getEmail(), profesional.getPassword(), permisos);
+
         } else {
             return null;
         }
@@ -175,7 +198,7 @@ public class PacienteService implements UserDetailsService {
         if (respuesta.isPresent()) {
             Paciente paciente = respuesta.get();
             paciente.setActivo(Boolean.FALSE);
-            
+
             pacienteRepositorio.save(paciente);
         }
     }
