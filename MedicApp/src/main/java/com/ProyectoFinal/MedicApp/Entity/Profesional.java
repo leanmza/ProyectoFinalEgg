@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -37,13 +37,13 @@ public class Profesional extends Persona {
    
 //    private List<String> dias;
 
-//    @OneToMany
-//    private List<ObraSocial> obrasSociales;
+    @OneToMany
+    private List<ObraSocial> obrasSociales;
 
     private Double honorario;
     
-//    @OneToMany
-//    private List<Turno> turnos;
+    @OneToMany
+    private List<Turno> turnos;
 
     
 //    private LocalTime horaInicio;

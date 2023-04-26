@@ -73,13 +73,16 @@
                     <label for="naciemiento">Fecha de Nacimiento</label>
                   </div>
                   <!-- INPUT SEXO-->
-                  <div class="col-xs-12 col-md-6 divSexo">
-                    <label for="sexo">Sexo</label>
-                    <select name="sexo" id="sexo" class="sexo">
-                      <option value="" selected>Elejir opción...</option>
+
+                  <div class="col-xs-12 col-md-6 divSexo form-floating">
+                  
+                    <select name="sexo" id="sexo" class="sexo form-select">
+                      <option value="" selected disabled>Elegir opción...</option>
                       <option value="masculino">Masculino</option>
                       <option value="femenino">Femenino</option>
+                      <option value="otro">Otro</option>
                     </select>
+                    <label for="sexo">Sexo</label>
                   </div>
                   <!-- INPUT DIRECCIÓN-->
                   <div class="col-xs-12 col-md-6 form-floating">
