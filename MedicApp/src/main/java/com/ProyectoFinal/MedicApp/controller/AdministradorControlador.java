@@ -75,12 +75,14 @@ public class AdministradorControlador {
         }
     }
     
+    
+    
     @GetMapping("/pacientes")
     public String mostrarPacientes(ModelMap modelo) {
         List<Paciente> pacientes = pacienteServicio.listar();
         modelo.put("pacientes", pacientes);
         
-        return "listar_pac.html";
+        return "listar_paciente.html";
     }
     
     @GetMapping("/profesionales")
@@ -91,6 +93,12 @@ public class AdministradorControlador {
         return "listar.html";
     }
     // /admin/registroProfesional
+    
+
+    @GetMapping("/form_pro")
+    public String form_pro(ModelMap model) {
+        return "formulario_profesional.html";
+    }
     
     @GetMapping("/registroProfesional")
     public String registroProfesional(ModelMap modelo) {

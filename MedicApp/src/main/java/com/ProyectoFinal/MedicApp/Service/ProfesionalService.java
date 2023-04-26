@@ -28,6 +28,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
+
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
@@ -77,8 +78,8 @@ public class ProfesionalService implements UserDetailsService {
     @Transactional
     public void modificarProfesional (String idProfesional, String nombre, String apellido, String correo, String telefono,
             String password, String password2, String especialidad, String ubicacion,
-            String modalidad, Double honorarios,/* List<String> obrasSociales, List<String> dias,*/
-            LocalTime horaInicio, LocalTime horaFin /*List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
+            String modalidad, Double honorarios/*, List<String> obrasSociales, List<String> dias,
+            LocalTime horaInicio, LocalTime horaFin List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
             ) throws MiExcepcion {
 
         validar(nombre, apellido, correo, telefono, password, password2,
@@ -225,28 +226,27 @@ public class ProfesionalService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
         Profesional profesional = profesionalRepositorio.buscarPorEmail(email);
-
+        
         if (profesional != null) {
-
+            
             List<GrantedAuthority> permisos = new ArrayList();
-
+            
             GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + profesional.getRol().toString());
-
+            
             permisos.add(p);
-
+            
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-
+            
             HttpSession session = attr.getRequest().getSession(true);
-
+            
             session.setAttribute("profesionalSession", profesional);
-
+            
             return new User(profesional.getEmail(), profesional.getPassword(), permisos);
         } else {
             return null;
         }
-
     }
-
 }
+
+

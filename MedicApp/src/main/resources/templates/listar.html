@@ -11,13 +11,35 @@
         <!--MAIN-->
 
         <main>
-
             <div class="container-fluid contenedorDiv">
-                <h3>LISTA DE PROFESIONALES</h3>
-                <form action="/pro/buscarespec" method="POST">
-                    <input type="text" name="especialidad" />
-                    <button type="submit">Buscar por especialidad</button>
+                <div class="row titulo">
+                    <h3>LISTA DE PROFESIONALES</h3>
+                </div>
+                <form action="/pro/buscarespec" method="POST" class="form-floating">
+                    <div class="row rowDatosPersonales">
+                        <div class="barraBusqueda col-xs-12">
+                            <div class="col-xs-12 col-md-2 form-floating">
+                                <select
+                                    name="especialidad"
+                                    id="especialidad"
+                                    class="especialidad form-select"
+                                    >
+                                    <option value="" selected disabled>Eligir especialidad</option>
+                                    <option value="Cardiologia">Cardiología</option>
+                                    <option value="Clinica">Clínica</option>
+                                    <option value="Ginecologia">Ginecología</option>
+                                    <option value="Pediatria">Pediatría</option>
+                                </select>
+                                <label for="especialidad" class="datosInput">Especialidad</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btnEnviar btnBuscar">
+                                Buscar por especialidad
+                            </button>
+                        </div>
+                    </div>
                 </form>
+
                 <table class="table table-light">
                     <thead>
                         <tr>
@@ -25,39 +47,37 @@
                             <th scope="col">Apellido</th>
                             <th scope="col">Especialidad</th>
                             <th scope="col">Valor de Consulta</th>
-                            <!-- <th scope="col">Calificación</th> -->
-                            <!--<th scope="col" sec:authorize ="hasRole ('ADMIN')" >Acciones</th>-->
+                            <th scope="col">Calificación</th> 
+                            <th scope="col" sec:authorize ="hasRole ('ADMINISTRADOR')" >Acciones</th>
                         </tr>
                     </thead>
 
                     <tbody th:each="profesional : ${profesionales}">
                         <tr>
-                            <td th:text="${profesional.nombre}"> </td>
+                            <td th:text="${profesional.nombre}"></td>
                             <td th:text="${profesional.apellido}"></td>
                             <td th:text="${profesional.especialidad}"></td>
                             <td th:text="${profesional.honorario}"></td>
-<!--                             <td th:text="${profesional.calificación}"></td>   resolver como pasar la calificación -->
+                            <td th:text="${'En construción'}"></td>
+
+                            <!--<td th:text="${profesional.calificación}"></td>--> 
+                            <!--resolver como pasar la calificación--> 
+
+                            <td>
+                                <a sec:authorize ="hasRole ('ADMINISTRADOR')" th:href= "@{/pro/perfil/__${profesional.id}__}"> Modificar </a>
+                            </td>
                             
-                            <!-- <td>
-                                    <a sec:authorize ="hasRole ('ADMIN')" th:href= "@{/noticia/modificar/__${noticia.id}__}"> Modificar </a>
-                                </td> 
-                                <td>
-                                    <a sec:authorize ="hasRole ('ADMIN')" th:href= "@{/noticia/eliminar/__${noticia.id}__}"> Eliminar </a>
-                                </td> 
-                                                      <td>
-                                              <a sec:authorize ="hasRole ('ADMIN')"  th:href= "@{/libro/modificar/__${libro.isbn}__}"><i class="fas fa-feather-alt"></i> Modificar </a>
-                                          </td>-->
+<!--                            <td>
+                                <a sec:authorize ="hasRole ('ADMIN')" th:href= "@{/noticia/eliminar/__${noticia.id}__}"> Eliminar </a>
+                            </td> -->
                         </tr>
                     </tbody>
                 </table>
 
                 <a class="btn btn-primary" href="/inicio" role="button">Volver</a>
-
-
             </div>
-
-
-        </main>
+     </main>
+ 
         <!--FOOTER-->
         <div class="container-fluid pie">
             <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->

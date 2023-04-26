@@ -38,12 +38,12 @@
                     <a href="#contacto" id="btn-contacto" class="link">Preguntas Frecuentes</a>
                     
                     <!-- ENVIO A CADA ROL A SU RESPECTIVO FORMULARIO -->
-                    <div class="link  divHeaderPerfil" sec:authorize ="hasRole ('PACIENTE')">
-                        <a th:href="@{/pac/perfil}" id="btn-contacto" class="link">Perfil</a>
-                    </div>
-                    <div sec:authorize ="hasRole ('ADMINISTRADOR')" class="link  divHeaderPerfil" >
-                        <a th:href="@{/pro/perfil}" id="btn-contacto" class="link">Perfil</a>
-                    </div>
+                   
+                        <a th:href="@{/pac/perfil}" id="btn-contacto" class="link" sec:authorize ="hasRole ('PACIENTE')">Perfil</a>
+
+                 
+                        <a th:href="@{/pro/perfil}" id="btn-contacto" class="link" sec:authorize ="hasRole ('ADMINISTRADOR')">Perfil</a>
+                 
                     
                 </div>
             </div>

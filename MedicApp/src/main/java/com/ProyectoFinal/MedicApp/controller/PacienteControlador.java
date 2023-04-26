@@ -69,7 +69,7 @@ public class PacienteControlador {
         } catch (MiExcepcion me) {
             System.out.println("Ingreso de paciente FALLIDO!\n" + me.getMessage());
             
-            return "ediar_paciente.html";
+            return "editar_paciente.html";
             
         } catch (ParseException ex) {
             System.out.println(ex.getMessage());
