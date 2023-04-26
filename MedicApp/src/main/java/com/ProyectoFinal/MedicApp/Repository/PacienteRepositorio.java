@@ -4,8 +4,7 @@
  */
 package com.ProyectoFinal.MedicApp.Repository;
 
-import com.ProyectoFinal.MedicApp.Entity.Profesional;
-import java.util.List;
+import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,11 +16,9 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface ProfesionalRepositorio extends JpaRepository<Profesional, String>{
+public interface PacienteRepositorio extends JpaRepository<Paciente, String> {
 
-    @Query("SELECT p FROM Profesional p WHERE p.especialidad = :especialidad")
-    public List<Profesional> buscarPorEspecialidad(@Param("especialidad")String especialidad);
-    
-     @Query("SELECT p FROM Profesional p WHERE p.email = :email")
-    public Profesional buscarPorEmail(@Param("email")String email);
+    @Query("SELECT pa FROM Paciente pa WHERE pa.email = :email")
+    public Paciente buscarPorEmail(@Param("email") String email);
+
 }

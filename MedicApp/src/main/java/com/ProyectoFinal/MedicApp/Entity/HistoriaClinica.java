@@ -32,17 +32,7 @@ public class HistoriaClinica {
    
     private String diagnostico;
 
-    public HistoriaClinica() {
-    }
-    
-    public HistoriaClinica(String id, Paciente paciente, Date fechaConsulta, Profesional profesional, String diagnostico) {
-        this.id = id;
-        this.paciente = paciente;
-        this.fechaConsulta = fechaConsulta;
-        this.profesional = profesional;
-        this.diagnostico = diagnostico;
     }
 
 
-    
-}
+

@@ -1,112 +1,332 @@
 /* GENERAL */
 
 body {
-    background-color: #eee !important;
-    font-family: "Montserrat", sans-serif !important;
-    padding-inline: 5%;
+  background-color: #517eb9 !important;
+  font-family: "Montserrat", sans-serif !important;
+}
 
+main {
+  padding-inline: 5%;
+  padding-top: 4%;
+  padding-bottom: 5%;
+}
+header {
+  padding-inline: 5%;
+}
+footer {
+  padding-inline: 5%;
 }
 
 p {
-    color: #222 !important;
+  color: #222 !important;
 }
 
 h1,
 h2,
 h3 {
-    font-weight: 900 !important; /* NEGRITA*/
+  font-weight: 900 !important; /* NEGRITA*/
+}
+
+button {
+  background-color: #012350 !important;
+  color: white;
+  border-color: #012350 !important;
 }
 
 /* HEADER */
 
-
 .cabecera {
-    padding: 0 !important;
-    height: 75px !important;
-    position: sticky;  /* ESTO HACE AL HEADER FLOTANTE */
-    top: 0; /* ESTO HACE AL HEADER FLOTANTE */
-    color: #eee;
+  padding: 0 !important;
+  height: 75px !important;
+  position: sticky; /* ESTO HACE AL HEADER FLOTANTE */
+  top: 0; /* ESTO HACE AL HEADER FLOTANTE */
 }
 
 header {
-    background-color: #eee;
-    text-align: right;
-    align-items: center; /* CENTRA VERTICALMENTE EL CONTENIDO */
-    position: sticky; /* ESTO HACE AL HEADER FLOTANTE */
-    top: 0; /* ESTO HACE AL HEADER FLOTANTE */
+  background-color: #fff;
+  text-align: right;
+  align-items: center; /* CENTRA VERTICALMENTE EL CONTENIDO */
+  position: sticky; /* ESTO HACE AL HEADER FLOTANTE */
+  top: 0; /* ESTO HACE AL HEADER FLOTANTE */
 }
 
 .logoHeader {
-    justify-items: start;
-    display: flex;
-    height: 3em;
-
+  justify-items: start;
+  display: flex;
+  height: 5.5em;
 }
 
 .navbar {
-  background-color: #eee; 
+  background-color: #fff;
 }
 
 .navbar-collapse {
-    justify-content: end;
+  justify-content: end;
 }
 
 .link:link,
 .link:visited,
 .link:active {
-    text-decoration: none;
-    padding: 1.7em;
-    color: #17252a;
-    font-weight: 600;
+  text-decoration: none;
+  padding: 1.7em;
+  color: #17252a;
+  font-weight: 600;
 }
 
 .link:hover {
-    font-weight: 700;
+  font-weight: 700;
 }
 .navbar-toggler {
-    text-decoration: none;
-    padding: 1.7em;
-    color: #17252a !important;
-    font-weight: 600 !important;
-    background-color: #eee !important;
-    border: none !important;
+  text-decoration: none;
+  padding: 1.7em;
+  color: #17252a !important;
+  font-weight: 600 !important;
+  background-color: #fff !important;
+  border: none !important;
 }
 
-.btnTurnoHeader{
-    margin-right: 1em ;
+.btnTurnoHeader {
+  margin-right: 1em;
 }
 
-/*MAIN*/
-main{
-    padding-top: 5%;
-    padding-bottom: 5%;
+.divHeaderPerfil {
+  display: flex;
+  align-items: center;
 }
-
 
 /* FOOTER */
 
 footer {
-    background: transparent;
-    color: white;
-    text-align: center;
-    padding: 1em;
-    display: flex;
-    justify-content: center;
-  
+  background-color: #fff;
+  color: white;
+  text-align: center;
+  padding: 1em;
+  display: flex;
+  justify-content: center;
 }
 
 .linkFooter {
-    margin-right: 5%;
+  margin-right: 5%;
 }
 
 .pie {
-    padding-inline: 0 !important;
+  padding-inline: 0 !important;
 }
 .logoFooter {
-    height: 35px;
+  height: 35px;
 }
 
 .iconoContacto {
-    font-size: 1.5em;
-    color: #17252a;
+  font-size: 1.5em;
+  color: #17252a;
 }
+
+/* FORMULARIO */
+
+.login,
+.divFormProfesional,
+.divFormPaciente {
+  /* CENTRAR CONTEINER-FLUID */
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+
+.contenedorLogin {
+  justify-content: center;
+  display: flex;
+}
+.titulo {
+  text-align: center;
+  padding: 2% 0 2% 0;
+}
+
+.formulario {
+  background-color: #feffff;
+  padding: 10% 5% 5% 5%;
+  border-radius: 8px;
+  justify-content: center;
+  align-content: center;
+  width: 40vw;
+}
+
+input {
+  font-size: 1em;
+  width: 25em;
+  max-width: 100% !important;
+  height: 2.5em;
+  margin: 0.5em;
+  border-radius: 5px;
+  border: solid #17252a;
+  box-sizing: border-box;
+}
+
+.btn-submit {
+  display: flex;
+  justify-content: end;
+}
+.rowLogin {
+  justify-content: center;
+}
+
+.datosInput {
+  padding-left: 1em !important;
+}
+
+.form-floating:not(.form-control:disabled)::before {
+  top: 0 !important;
+  left: 0 !important;
+  width: 0 !important;
+}
+
+.form-floating {
+  margin-bottom: 1em !important;
+}
+.bi {
+  padding-inline: 0.5em;
+}
+
+.divCrearUsuario {
+  padding: 5% 0 5% 0;
+  text-align: center;
+  border-top: solid 1px #012350;
+}
+
+.loginFormulario {
+  background-color: #fff;
+  border-radius: 8px;
+  width: 40vw;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+
+/* FORMULARIO PERSONA Y PROFESIONAL */
+.tituloForm {
+  padding: 0 0 4% 0;
+}
+
+.tituloForm h4 {
+  text-align: center;
+}
+.formularioCrear {
+  width: 70vw !important;
+  padding-top: 5% !important;
+}
+
+.divSexo {
+  align-items: center;
+  display: flex;
+}
+.divObraSocial,
+.divDias {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.divObraSocial input,
+.divDias input {
+  height: auto !important;
+}
+
+.selectPro {
+  justify-content: space-evenly !important;
+}
+.especialidad {
+  /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+
+  display: flex;
+  justify-content: start;
+}
+.ubicacion {
+  /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+
+  display: flex;
+  justify-content: center;
+}
+
+.modalidad {
+  /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+
+  display: flex;
+  justify-content: end;
+}
+
+.rowHorario {
+  justify-content: center;
+}
+
+.rowHorario label {
+  display: flex;
+  justify-content: end;
+}
+
+.rowHorario .rowHoras {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.inputHora {
+  text-align: center !important;
+}
+
+.DivBtnEnviar {
+  display: flex;
+  justify-content: center;
+}
+
+.labelObraSocial {
+  padding-left: 0 !important;
+}
+
+.rowObrasSociales {
+  justify-content: center;
+}
+
+h5 {
+  text-align: center;
+}
+
+/* INDEX */
+.presentacionRow {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  height: 65vh;
+ }
+.adorno1,
+.adorno2,
+.adorno3 {
+  font-size: 3em;
+  text-align: left;
+  padding: 0.5em 0 0.5em 0;
+}
+.adorno1,
+.adorno3 {
+  color: #def2f1;
+}
+
+.adorno2 {
+  color: #17252a !important  ;
+}
+
+.nosotros {
+  color: #17252a !important;
+}
+
+.textoIndex {
+  color: #fff !important;
+  padding-top: 5%;
+ padding-bottom: 5% ;
+  font-size: 1.2em;
+  font-weight: 600;
+  text-shadow: 0px 1px 4px #17252a;
+
+}
+
+/* LOGIN*/
+
+/* MEDIAS QUERYS */
+
+/* TAMAÑO EXTRA PEQUEÑOS   */
