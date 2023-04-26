@@ -62,8 +62,8 @@ public class ProfesionalService implements UserDetailsService {
         profesional.setActivo(true);
         profesional.setEspecialidad(especialidad);
 
-        profesional.setModalidad(modalidad.toString());
-        profesional.setUbicacion(ubicacion.toString());
+        profesional.setModalidad(modalidad);
+        profesional.setUbicacion(ubicacion);
         profesional.setHonorario(honorarios);
 //        profesional.setDias(dias);
 //        profesional.setHoraInicio(horaInicio);
@@ -227,6 +227,7 @@ public class ProfesionalService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         Profesional profesional = profesionalRepositorio.buscarPorEmail(email);
+        System.out.println("Profesional desde UserDetail: "+profesional);
 
         if (profesional != null) {
 

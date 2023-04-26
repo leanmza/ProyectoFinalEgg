@@ -66,10 +66,10 @@
                  </button>
                 </a>
             <!-- SEGUN ESTE INICIANO O NO SESION MOSTRAMOS UNO U OTRO BOTON -->
-            <div th:if="${session.pacienteSession == null}">
+            <div th:if="${session.pacienteSession == null && session.profesionalSession == null}">
                 <a href="/login"> <button type="button" class="btn btn-primary botonesHeader">Iniciar Sesión</button></a>
             </div>
-            <div th:if="${session.pacienteSession != null}">
+            <div th:if="${session.pacienteSession != null || session.profesionalSession != null}">
                 <a href="/logout"><button type="button" class="btn btn-primary botonesHeader">Cerrar Sesión</button></a>
             </div>
 

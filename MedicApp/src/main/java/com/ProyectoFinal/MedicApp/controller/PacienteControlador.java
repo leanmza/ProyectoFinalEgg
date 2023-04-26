@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +43,7 @@ public class PacienteControlador {
     @Autowired
     PacienteService pacienteService;
 
+    @Transactional
     @GetMapping("/perfil")
     public String perfil(ModelMap modelo, HttpSession session) {
         Paciente paciente = (Paciente) session.getAttribute("pacienteSession");
@@ -50,6 +52,7 @@ public class PacienteControlador {
         return "editar_paciente.html";
     }
     
+    @Transactional
     @PostMapping("/perfil/{id}")
     public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
@@ -78,6 +81,7 @@ public class PacienteControlador {
         }
     }
     
+    @Transactional
     @GetMapping("/baja/{id}")
     public String bajaPaciente(@PathVariable String id) {
         
