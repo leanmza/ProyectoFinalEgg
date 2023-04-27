@@ -115,15 +115,15 @@ public class AdministradorControlador {
     public String crearProfesional(@RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String correo, @RequestParam String telefono, @RequestParam String password,
             @RequestParam String password2,  @RequestParam String especialidad,
-            @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios/*,
+            @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,/*
            @RequestParam("obrasSociales[]") List<String> obrasSociales, @RequestParam("dias[]") List<String> dias,
-            @RequestParam("horaInicio") LocalTime horaInicio, @RequestParam ("horaFin") LocalTime horaFin
-            , @RequestParam(required = false) List<Turno>turnos*/ ) {
+            */@RequestParam LocalTime horaInicio, @RequestParam LocalTime horaFin
+            /*, @RequestParam(required = false) List<Turno>turnos*/ ) {
         
         try {
             profesionalServicio.crearProfesional(nombre, apellido,correo,   telefono,   
              password,   password2,  especialidad, ubicacion, modalidad,
-             honorarios/*, obrasSociales, dias, horaInicio, horaFin*/);
+             honorarios/*, obrasSociales, dias*/, horaInicio, horaFin);
             
             return "redirect:/admin/profesionales";
             

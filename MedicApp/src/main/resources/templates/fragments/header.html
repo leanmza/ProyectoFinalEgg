@@ -42,7 +42,10 @@
                         <a th:href="@{/pac/perfil}" id="btn-contacto" class="link">Perfil</a>
                     </div>
                     <div sec:authorize ="hasRole ('ADMINISTRADOR')" class="link  divHeaderPerfil" >
-                        <a th:href="@{/pro/perfil}" id="btn-contacto" class="link">Perfil</a>
+                        <a th:href="@{/profesional/perfil}" id="btn-contacto" class="link">Perfil</a>
+                    </div>
+                    <div sec:authorize ="hasRole ('PROFESIONAL')" class="link  divHeaderPerfil" >
+                        <a th:href="@{/profesional/perfil}" id="btn-contacto" class="link">Perfil</a>
                     </div>
                     
                 </div>

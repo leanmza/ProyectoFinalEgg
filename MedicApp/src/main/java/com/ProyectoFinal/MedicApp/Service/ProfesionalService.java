@@ -43,12 +43,12 @@ public class ProfesionalService implements UserDetailsService {
     @Transactional
     public void crearProfesional(String nombre, String apellido, String correo, String telefono,
             String password, String password2, String especialidad, String ubicacion,
-            String modalidad, Double honorarios/*, List<String> obrasSociales, List<String> dias,
-            LocalTime horaInicio, LocalTime horaFin  List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
+            String modalidad, Double honorarios/*, List<String> obrasSociales, List<String> dias*/,
+            LocalTime horaInicio, LocalTime horaFin  /*List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
             ) throws MiExcepcion {
 
        validar(nombre, apellido, correo, telefono, password, password2,
-                    especialidad, ubicacion, modalidad, honorarios /*, obrasSociales, dias,horaInicio, horaFin*/ );
+                    especialidad, ubicacion, modalidad, honorarios /*, obrasSociales, dias*/,horaInicio, horaFin);
 
         Profesional profesional = new Profesional();
 
@@ -66,8 +66,8 @@ public class ProfesionalService implements UserDetailsService {
         profesional.setUbicacion(ubicacion);
         profesional.setHonorario(honorarios);
 //        profesional.setDias(dias);
-//        profesional.setHoraInicio(horaInicio);
-//        profesional.setHoraFin(horaFin);
+        profesional.setHoraInicio(horaInicio);
+        profesional.setHoraFin(horaFin);
         profesional.setCantVisitas(0);
         profesional.setPuntaje(0);
         profesionalRepositorio.save(profesional);
@@ -82,7 +82,7 @@ public class ProfesionalService implements UserDetailsService {
             ) throws MiExcepcion {
 
         validar(nombre, apellido, correo, telefono, password, password2,
-                especialidad, ubicacion, modalidad, honorarios /*, obrasSociales, dias, horaInicio, horaFin*/ );
+                especialidad, ubicacion, modalidad, honorarios /*, obrasSociales, dias */,horaInicio, horaFin);
         Optional<Profesional> respuesta = profesionalRepositorio.findById(idProfesional);
 
         if (respuesta.isPresent()) {
@@ -104,8 +104,8 @@ public class ProfesionalService implements UserDetailsService {
         profesional.setUbicacion(ubicacion);
         profesional.setHonorario(honorarios);
 //        profesional.setDias(dias);
-//        profesional.setHoraInicio(horaInicio);
-//        profesional.setHoraFin(horaFin);
+        profesional.setHoraInicio(horaInicio);
+        profesional.setHoraFin(horaFin);
 
         profesionalRepositorio.save(profesional);
         }
@@ -158,8 +158,8 @@ public class ProfesionalService implements UserDetailsService {
 //    }
     public void validar(String nombre, String apellido, String correo, String telefono,
             String password, String password2, String especialidad, String ubicacion,
-            String modalidad, Double honorarios/*, List<String> obrasSociales, List<String> dias,
-            LocalTime horaInicio, LocalTime horaFin*/ ) throws MiExcepcion {
+            String modalidad, Double honorarios/*, List<String> obrasSociales, List<String> dias*/,
+            LocalTime horaInicio, LocalTime horaFin) throws MiExcepcion {
 
         try {
             if (nombre == null || nombre.isEmpty()) {
@@ -211,12 +211,12 @@ public class ProfesionalService implements UserDetailsService {
 //            if (dias == null || dias.isEmpty()) {
 //                throw new MiExcepcion("Los días no pueden ser nulos o vacíos");
 //            }
-//            if (horaInicio == null) {
-//                throw new MiExcepcion("La hora de inicio no puede ser nula");
-//            }
-//                if (horaFin == null) {
-//                throw new MiExcepcion("Los hora de finalización no puede ser nula");
-//            }
+            if (horaInicio == null) {
+                throw new MiExcepcion("La hora de inicio no puede ser nula");
+            }
+                if (horaFin == null) {
+                throw new MiExcepcion("Los hora de finalización no puede ser nula");
+            }
 
         } catch (MiExcepcion ex) {
             throw ex;
