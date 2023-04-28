@@ -31,19 +31,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
 @RequestMapping("/admin")
 public class AdministradorControlador {
-    
+
     @Autowired
     PacienteService pacienteServicio;
-    
+
     @Autowired
     ProfesionalService profesionalServicio;
-    
+
     @GetMapping("/dashboard")
     public String panelAdministrativo() {
-        
+
         return "panel.html";
     }
-    
+
     @GetMapping("/form_pac")
     public String form_pac(ModelMap model) {
         return "formulario_paciente.html";
@@ -54,93 +54,93 @@ public class AdministradorControlador {
             @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
             @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
             @RequestParam String sexo) {
-       
+
         try {
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
             Date fechaNacimiento = formato.parse(nacimiento);
-            
+
             pacienteServicio.crearPaciente(nombre, apellido, correo, telefono, password, password2, direccion, fechaNacimiento, sexo);
             System.out.println("Ingreso de paciente exitoso");
             return "redirect:/inicio";
-            
+
         } catch (MiExcepcion me) {
             System.out.println("Ingreso de paciente FALLIDO!\n" + me.getMessage());
-            
+
             return "formulario_paciente.html";
-            
+
         } catch (ParseException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
             return "formulario_paciente.html";
         }
     }
-    
-    
-    
+
     @GetMapping("/pacientes")
     public String mostrarPacientes(ModelMap modelo) {
         List<Paciente> pacientes = pacienteServicio.listar();
         modelo.put("pacientes", pacientes);
-        
+
         return "listar_paciente.html";
     }
-    
+
     @GetMapping("/profesionales")
     public String mostrarProfesionales(ModelMap modelo) {
         List<Profesional> profesionales = profesionalServicio.listar();
         modelo.put("profesionales", profesionales);
-        
+
         return "listar.html";
     }
     // /admin/registroProfesional
-    
 
     @GetMapping("/form_pro")
     public String form_pro(ModelMap model) {
         return "formulario_profesional.html";
     }
-    
+
     @GetMapping("/registroProfesional")
     public String registroProfesional(ModelMap modelo) {
-        
+
         List<String> ubicaciones = new ArrayList<>();
         for (Ubicacion aux : Ubicacion.values()) {
             ubicaciones.add(aux.toString());
         }
         modelo.put("ubicaciones", ubicaciones);
-        
+
         List<String> modalidades = new ArrayList<>();
         for (Modalidad aux : Modalidad.values()) {
             modalidades.add(aux.toString());
         }
         modelo.put("modalidades", modalidades);
-        
+
         return "formulario_profesional.html";
     }
-    
-   
+
     @PostMapping("/crearProfesional")
     public String crearProfesional(@RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String correo, @RequestParam String telefono, @RequestParam String password,
-            @RequestParam String password2,  @RequestParam String especialidad,
+            @RequestParam String password2, @RequestParam String especialidad,
             @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,/*
            @RequestParam("obrasSociales[]") List<String> obrasSociales, @RequestParam("dias[]") List<String> dias,
-            */@RequestParam LocalTime horaInicio, @RequestParam LocalTime horaFin
-            /*, @RequestParam(required = false) List<Turno>turnos*/ ) {
-        
+             */ @RequestParam String horaInicio, @RequestParam String horaFin
+    /*, @RequestParam(required = false) List<Turno>turnos*/) {
+
         try {
-            profesionalServicio.crearProfesional(nombre, apellido,correo,   telefono,   
-             password,   password2,  especialidad, ubicacion, modalidad,
-             honorarios/*, obrasSociales, dias*/, horaInicio, horaFin);
             
+            LocalTime horaInicioLT = LocalTime.parse(horaInicio);
+            LocalTime horaFinLT = LocalTime.parse(horaFin);
+            
+            profesionalServicio.crearProfesional(nombre, apellido, correo, telefono,
+                    password, password2, especialidad, ubicacion, modalidad,
+                    honorarios/*, obrasSociales, dias*/, horaInicioLT, horaFinLT);
+
             return "redirect:/admin/profesionales";
-            
+
         } catch (MiExcepcion e) {
             System.out.println("Error al cargar Profesional");
             System.out.println(e.getMessage());
             e.printStackTrace();
             return "formulario_profesional.html";
         }
-       
+
     }
 }

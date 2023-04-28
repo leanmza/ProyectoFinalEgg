@@ -18,14 +18,14 @@ public class Paciente extends Persona {
     
     private String direccion;
     
-    @OneToMany
-    private List<HistoriaClinica> historiaClinica;
+//    @OneToMany
+//    private List<HistoriaClinica> historiaClinica;
     
     @OneToOne
     private ObraSocial obraSocial;
     
-    @OneToMany
-    private List<Turno> turnos;
+//    @OneToMany
+//    private List<Turno> turnos;
     
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;

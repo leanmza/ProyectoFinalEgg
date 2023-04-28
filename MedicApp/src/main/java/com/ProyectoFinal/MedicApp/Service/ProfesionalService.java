@@ -45,11 +45,11 @@ public class ProfesionalService implements UserDetailsService {
     public void crearProfesional(String nombre, String apellido, String correo, String telefono,
             String password, String password2, String especialidad, String ubicacion,
             String modalidad, Double honorarios/*, List<String> obrasSociales, List<String> dias*/,
-            LocalTime horaInicio, LocalTime horaFin  /*List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
-            ) throws MiExcepcion {
+            LocalTime horaInicio, LocalTime horaFin /*List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
+    ) throws MiExcepcion {
 
-       validar(nombre, apellido, correo, telefono, password, password2,
-                    especialidad, ubicacion, modalidad, honorarios /*, obrasSociales, dias*/,horaInicio, horaFin);
+        validar(nombre, apellido, correo, telefono, password, password2,
+                especialidad, ubicacion, modalidad, honorarios /*, obrasSociales, dias*/, horaInicio, horaFin);
 
         Profesional profesional = new Profesional();
 
@@ -76,39 +76,39 @@ public class ProfesionalService implements UserDetailsService {
     }
 
     @Transactional
-    public void modificarProfesional (String idProfesional, String nombre, String apellido, String correo, String telefono,
+    public void modificarProfesional(String idProfesional, String nombre, String apellido, String correo, String telefono,
             String password, String password2, String especialidad, String ubicacion,
-            String modalidad, Double honorarios/*, List<String> obrasSociales, List<String> dias,
-            LocalTime horaInicio, LocalTime horaFin List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
-            ) throws MiExcepcion {
+            String modalidad, Double honorarios/*, List<String> obrasSociales, List<String> dias*/,
+            LocalTime horaInicio, LocalTime horaFin/*, List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
+    ) throws MiExcepcion {
 
         validar(nombre, apellido, correo, telefono, password, password2,
-                especialidad, ubicacion, modalidad, honorarios /*, obrasSociales, dias */,horaInicio, horaFin);
+                especialidad, ubicacion, modalidad, honorarios /*, obrasSociales, dias */, horaInicio, horaFin);
         Optional<Profesional> respuesta = profesionalRepositorio.findById(idProfesional);
 
         if (respuesta.isPresent()) {
-            Profesional profesional = new Profesional();
+            Profesional profesional = respuesta.get();
 
-         profesional.setNombre(nombre);
-        profesional.setApellido(apellido);
+            profesional.setNombre(nombre);
+            profesional.setApellido(apellido);
 //        profesional.setDni(dni);
-        profesional.setEmail(correo);
-        profesional.setTelefono(telefono);
-        profesional.setPassword(new BCryptPasswordEncoder().encode(password));
-        profesional.setRol(Rol.PROFESIONAL);
-        profesional.setActivo(true);
-        profesional.setEspecialidad(especialidad);
-        //Falta ObrasSociales y Tunos, hay que crear las entidades
-        
-      
-        profesional.setModalidad(modalidad);
-        profesional.setUbicacion(ubicacion);
-        profesional.setHonorario(honorarios);
-//        profesional.setDias(dias);
-        profesional.setHoraInicio(horaInicio);
-        profesional.setHoraFin(horaFin);
+            profesional.setEmail(correo);
+            profesional.setTelefono(telefono);
+            profesional.setPassword(new BCryptPasswordEncoder().encode(password));
+            profesional.setRol(Rol.PROFESIONAL);
+            profesional.setActivo(true);
+            profesional.setEspecialidad(especialidad);
+            //Falta ObrasSociales y Tunos, hay que crear las entidades
 
-        profesionalRepositorio.save(profesional);
+            profesional.setModalidad(modalidad);
+            profesional.setUbicacion(ubicacion);
+            profesional.setHonorario(honorarios);
+//        profesional.setDias(dias);
+            profesional.setHoraInicio(horaInicio);
+            profesional.setHoraFin(horaFin);
+
+            profesionalRepositorio.save(profesional);
+           
         }
 
     }
@@ -197,7 +197,7 @@ public class ProfesionalService implements UserDetailsService {
             if (ubicacion == null || ubicacion.isEmpty()) {
                 throw new MiExcepcion("La ubicacion no puede ser nula o vacía");
             }
-            
+
             if (modalidad == null || modalidad.isEmpty()) {
                 throw new MiExcepcion("La modalidad no puede ser nula o vacía");
             }
@@ -215,7 +215,7 @@ public class ProfesionalService implements UserDetailsService {
             if (horaInicio == null) {
                 throw new MiExcepcion("La hora de inicio no puede ser nula");
             }
-                if (horaFin == null) {
+            if (horaFin == null) {
                 throw new MiExcepcion("Los hora de finalización no puede ser nula");
             }
 
@@ -227,27 +227,25 @@ public class ProfesionalService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Profesional profesional = profesionalRepositorio.buscarPorEmail(email);
-        System.out.println("Profesional desde UserDetail: "+profesional);
+        System.out.println("Profesional desde UserDetail: " + profesional);
 
         if (profesional != null) {
-            
+
             List<GrantedAuthority> permisos = new ArrayList();
-            
+
             GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + profesional.getRol().toString());
-            
+
             permisos.add(p);
-            
+
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-            
+
             HttpSession session = attr.getRequest().getSession(true);
-            
+
             session.setAttribute("profesionalSession", profesional);
-            
+
             return new User(profesional.getEmail(), profesional.getPassword(), permisos);
         } else {
             return null;
         }
     }
 }
-
-

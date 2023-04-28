@@ -350,7 +350,8 @@
                                     class="form-control inputHora"
                                     id="horaInicio"
                                     name="horaInicio"
-                                    th:value="${profesional.horarioInicio}"
+                                    
+                                    th:value="${#temporals.format(profesional.horaInicio, 'HH:mm')}"
                                     placeholder=""
                                     />
                                 <label for="horaInicio" class="datosInput inputHora">
@@ -365,7 +366,7 @@
                                     class="form-control inputHora"
                                     id="horaFin"
                                     name="horaFin"
-                                    th:value="${profesional.horarioFin}"
+                                    th:value="${#temporals.format(profesional.horaFin, 'HH:mm')}"
                                     placeholder=""
                                     />
                                 <label for="horaFin" class="datosInput inputHora">
