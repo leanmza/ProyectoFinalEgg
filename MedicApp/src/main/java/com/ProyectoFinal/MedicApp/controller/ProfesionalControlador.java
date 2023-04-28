@@ -4,11 +4,14 @@
  */
 package com.ProyectoFinal.MedicApp.controller;
 
+import com.ProyectoFinal.MedicApp.Entity.Persona;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
+import com.ProyectoFinal.MedicApp.Enum.Modalidad;
+import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
+import java.util.ArrayList;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -17,6 +20,7 @@ import org.springframework.expression.ParseException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +34,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 
 @Controller
-@RequestMapping("/pro")
+@RequestMapping("/profesional")
+@PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
 public class ProfesionalControlador {
     @Autowired
     ProfesionalRepositorio profesionalRepositorio;
@@ -56,41 +61,52 @@ public class ProfesionalControlador {
     }
     
 
- @GetMapping("/perfil")
-    public String perfil(ModelMap modelo, HttpSession session) {
-        Profesional profesional = (Profesional) session.getAttribute("profesionalSession");
-        modelo.put("profesional", profesional);
+    @Transactional
+    @GetMapping("/perfil")
+    public String perfil(Model modelo, HttpSession session) {
+        Persona profesional = (Profesional) session.getAttribute("profesionalSession");
+        System.out.println("Profesional: " + profesional.toString());
+        modelo.addAttribute("profesional", profesional);
+        
+        List<String> ubicaciones = new ArrayList<>();
+        for (Ubicacion aux : Ubicacion.values()) {
+            ubicaciones.add(aux.toString());
+        }
+        modelo.addAttribute("ubicaciones", ubicaciones);
+        
+        List<String> modalidades = new ArrayList<>();
+        for (Modalidad aux : Modalidad.values()) {
+            modalidades.add(aux.toString());
+        }
+        modelo.addAttribute("modalidades", modalidades);
         
         return "editar_profesional.html";
     }
         
-    
-    @PostMapping("/perfil/{id}")
+    @Transactional
+    @PostMapping("perfil/{id}")
     public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String correo, @RequestParam String telefono, @RequestParam String password,
             @RequestParam String password2,  @RequestParam String especialidad,
-            @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,/*,
-           @RequestParam("obrasSociales[]") List<String> obrasSociales, @RequestParam("dias[]") List<String> dias,
-            @RequestParam("horaInicio") LocalTime horaInicio, @RequestParam ("horaFin") LocalTime horaFin
-            , @RequestParam(required = false) List<Turno>turnos*/  HttpSession session, ModelMap modelo ) {
+            @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,
+            /*@RequestParam("obrasSociales[]") List<String> obrasSociales, @RequestParam("dias[]") List<String> dias,*/
+            @RequestParam LocalTime horaInicio, @RequestParam LocalTime horaFin
+            /*, @RequestParam(required = false) List<Turno>turnos*/ , HttpSession session) {
         
         try {
-    
-            profesionalService.modificarProfesional(modalidad, nombre, apellido, correo, telefono, password, password2,
-                    especialidad, ubicacion, modalidad, honorarios);
-       
+            profesionalService.modificarProfesional(id, nombre, apellido, correo, telefono, password, password2, 
+                    especialidad, ubicacion, modalidad, honorarios, horaInicio, horaFin);
             session.setAttribute("profesionalSession", profesionalService.getOne(id));
+            
             return "redirect:/inicio";
             
-        } catch (MiExcepcion me) {
-            System.out.println("Ingreso de profesional FALLIDO!\n" + me.getMessage());
-            
-            return "editar_profesional.html";
-            
-        } catch (ParseException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
+        } catch (MiExcepcion e) {
+            System.out.println("Error al actualizar Profesional");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             return "editar_profesional.html";
         }
+       
     }
+    
 }

@@ -47,6 +47,7 @@ public class PacienteControlador {
     @GetMapping("/perfil")
     public String perfil(ModelMap modelo, HttpSession session) {
         Paciente paciente = (Paciente) session.getAttribute("pacienteSession");
+        System.out.println("Paciente: " + paciente.toString());
         modelo.put("paciente", paciente);
         
         return "editar_paciente.html";
