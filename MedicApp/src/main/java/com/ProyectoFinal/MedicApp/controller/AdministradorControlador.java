@@ -5,6 +5,7 @@ import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Enum.Modalidad;
 import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
+import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
 import java.text.ParseException;
@@ -17,6 +18,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,44 +39,22 @@ public class AdministradorControlador {
 
     @Autowired
     ProfesionalService profesionalServicio;
-
+    
+       @Autowired
+    ObraSocialService obraSocialServicio;
+    
     @GetMapping("/dashboard")
     public String panelAdministrativo() {
 
         return "panel.html";
     }
+    
+    
+    //FORMULARIO PARA CREAR UN PACIENTE
 
-    @GetMapping("/form_pac")
-    public String form_pac(ModelMap model) {
-        return "formulario_paciente.html";
-    }
-
-    @PostMapping("/registroPaciente")
-    public String registroPaciente(@RequestParam String nombre, @RequestParam String apellido,
-            @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
-            @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
-            @RequestParam String sexo) {
-
-        try {
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-            Date fechaNacimiento = formato.parse(nacimiento);
-
-            pacienteServicio.crearPaciente(nombre, apellido, correo, telefono, password, password2, direccion, fechaNacimiento, sexo);
-            System.out.println("Ingreso de paciente exitoso");
-            return "redirect:/inicio";
-
-        } catch (MiExcepcion me) {
-            System.out.println("Ingreso de paciente FALLIDO!\n" + me.getMessage());
-
-            return "formulario_paciente.html";
-
-        } catch (ParseException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-            return "formulario_paciente.html";
-        }
-    }
-
+    
+    
+    //LISTA DE PACIENTES
     @GetMapping("/pacientes")
     public String mostrarPacientes(ModelMap modelo) {
         List<Paciente> pacientes = pacienteServicio.listar();
@@ -82,7 +62,8 @@ public class AdministradorControlador {
 
         return "listar_paciente.html";
     }
-
+    
+    //LISTA DE PROFESIONALES
     @GetMapping("/profesionales")
     public String mostrarProfesionales(ModelMap modelo) {
         List<Profesional> profesionales = profesionalServicio.listar();
@@ -90,9 +71,11 @@ public class AdministradorControlador {
 
         return "listar.html";
     }
-    // /admin/registroProfesional
 
-    @GetMapping("/form_pro")
+    
+
+    //FORMULARIO PARA CREAR UN PROFESIONAL
+    @GetMapping("/form_profesional")
     public String form_pro(ModelMap model) {
         return "formulario_profesional.html";
     }
@@ -143,4 +126,34 @@ public class AdministradorControlador {
         }
 
     }
+    
+    
+    
+    //FORMULARIO PARA CREAR UNA OBRA SOCIAL
+     @GetMapping("/form_obraSocial")
+    public String form_obraSocial(ModelMap model) {
+        
+        return "formulario_obra_social.html";
+    }
+
+     @Transactional
+    @PostMapping("/registroObraSocial")
+    public String registroObraSocial(@RequestParam String nombreObraSocial) {
+       
+        try {
+            obraSocialServicio.crearObraSocial(nombreObraSocial);
+           
+            System.out.println("Ingreso de obra social exitoso");
+            return "redirect:/admin/form_profesional";
+            
+        } catch (MiExcepcion me) {
+            System.out.println("Ingreso de obra social FALLIDO!\n" + me.getMessage());
+            
+             return "formulario_obra_social.html";
+            
+        }  
+        
+    }
+    
+
 }

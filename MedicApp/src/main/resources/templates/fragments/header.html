@@ -3,9 +3,27 @@
     class="d-flex flex-wrap justify-content-between align-content-center"
     >
     <div class="col-xs-12 col-md-2 imgLogo">
+
+        
+        <!--SI  HAY LOGUEADO-->
         <a
             href="/inicio"
             class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"
+            th:if="${session.pacienteSession != null} OR ${session.profesionalSession != null} "
+            >
+            <img
+                src="../../logo_App_fondo_transparente.png"
+                alt="logo"
+                class="logoHeader"
+                />
+        </a>
+        
+        
+                <!--SI NO  HAY LOGUEADO-->
+        <a
+            href="/"
+            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"
+           th:if="${session.pacienteSession == null} AND ${session.profesionalSession == null}"
             >
             <img
                 src="../../logo_App_fondo_transparente.png"
@@ -32,10 +50,10 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav navibar">
                     <a href="/inicio" id="btn-inicio" class="link">Inicio</a>
-                    <a href="/pro/listar" id="btn-list-profesionales" class="link"
+                    <a href="/listar" id="btn-list-profesionales" class="link"
                        >Profesionales</a
                     >
-                    <a href="#contacto" id="btn-contacto" class="link">Preguntas Frecuentes</a>
+                    <a href="/preguntasFrecuentes" id="btn-contacto" class="link">Preguntas Frecuentes</a>
                     
                     <!-- ENVIO A CADA ROL A SU RESPECTIVO FORMULARIO -->
 
