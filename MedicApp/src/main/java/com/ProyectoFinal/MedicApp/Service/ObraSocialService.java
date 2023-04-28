@@ -29,13 +29,14 @@ public class ObraSocialService {
     public void crearObraSocial(String nombre) throws MiExcepcion {
 
         validar(nombre);
+        
         ObraSocial obraSocial = new ObraSocial();
 
         obraSocial.setNombre(nombre);
 
         obraSocialRepositorio.save(obraSocial);
 
-    }
+        }
 
     @Transactional
     public void modificarProfesional(String idObraSocial, String nombre) throws MiExcepcion {

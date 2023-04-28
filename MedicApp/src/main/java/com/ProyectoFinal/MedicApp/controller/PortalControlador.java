@@ -8,10 +8,12 @@ import com.ProyectoFinal.MedicApp.Enum.Modalidad;
 import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
+import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,6 +32,9 @@ public class PortalControlador {
     
     @Autowired
     PacienteService pacienteService;              //Agregado por Claudio el 16/04 - 17:40
+    
+        @Autowired
+    ProfesionalService profesionalService;
     
     @GetMapping("/")
     public String index() {
@@ -69,6 +74,8 @@ public class PortalControlador {
            return "inicio.html";
     }
     
+    
+    //FORMULARIO PARA REGISTRAR UN PACIENTE
     @GetMapping("/form_pac")
     public String form_pac(ModelMap model) {
         return "formulario_paciente.html";
@@ -99,6 +106,29 @@ public class PortalControlador {
             ex.printStackTrace();
             return "formulario_paciente.html";
         }
+    }
+    
+        @Transactional
+    @PostMapping("/buscarespec")
+    public String buscarespec(@RequestParam("especialidad") String especialidad, ModelMap model) {        //buscaespec
+        System.out.println(especialidad);
+        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidad(especialidad);
+        model.addAttribute("profesionales", profesionales);
+        return "listaespecialidad.html";
+    }
+    
+    @Transactional
+    @GetMapping("/listar")
+    public String listar(ModelMap model) {
+        List<Profesional> profesionales = profesionalService.listar();
+        model.addAttribute("profesionales", profesionales);
+        return "listar.html";
+    }
+    
+        @GetMapping("/preguntasFrecuentes")
+    public String preguntasFrecuentes() {
+        
+        return "preguntas_frecuentes.html"; //ver nombre de archivo
     }
     
 }

@@ -6,6 +6,8 @@ package com.ProyectoFinal.MedicApp.Repository;
 
 import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,6 +16,10 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ObraSocialRepositorio extends JpaRepository <ObraSocial, String> {
-  
+     
+    @Query("SELECT os FROM ObraSocial os WHERE os.nombre = :nombre")
+    public ObraSocial buscarPorNombre(@Param("nombre") String nombre);
+    
+    
     
 }

@@ -17,10 +17,9 @@
               <h3>HISTORIA CLÍNICA</h3>
               <div class="col-12 text-center"></div>
               <div class="row datosPaciente">
-                <h5>
-                  DATOS DEL PACIENTE: INSERTAR CON THYMELEAF NOMBRE, APELLIDO, SEXO,
-                  FECHA NACIMIENTO
-                </h5>
+                  <h5 class="tituloListaHistoriaClinica" th:text=" ${session.paciente.nombre}+ ' ' + ${session.paciente.apellido} +
+                      ' ' + ${session.paciente.sexo} + ' ' + ${session.paciente.fechaNacimiento}">
+                   </h5>
               </div>
             </div>
             <div class="row">
@@ -52,7 +51,7 @@
                 type="submit"
                 name="submit"
                 value="volver"
-                class="btn btn-primary btnEnviar"
+                class="btn btn-primary btnEnviar botonesLista"
               >
                 Volver
               </button></a>
@@ -62,7 +61,7 @@
               <div class="col-12 text-right">
                 <button
                   type="button"
-                  class="btn btn-primary"
+                  class="btn btn-primary botonesLista"
                   onclick="exportToPdf()"
                 >
                  Generar resumen

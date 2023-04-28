@@ -13,6 +13,7 @@ main {
 header {
   padding-inline: 5%;
 }
+
 footer {
   padding-inline: 5%;
 }
@@ -27,7 +28,12 @@ h3 {
   font-weight: 900 !important; /* NEGRITA*/
 }
 
-button {
+.botonesHeader,
+.botonesIndex,
+.botonesLogin,
+.botonesFormulario,
+.botonesLista,
+.botonesImagen {
   background-color: #012350 !important;
   color: white;
   border-color: #012350 !important;
@@ -60,7 +66,8 @@ header {
   background-color: #fff;
 }
 
-.navbar-collapse {
+
+.navbar-collapse { /* ACA ESTÁN LOS LINKS DEL HEADER */
   justify-content: end;
 }
 
@@ -76,23 +83,22 @@ header {
 .link:hover {
   font-weight: 700;
 }
-.navbar-toggler {
+
+.navbar-toggler { /* MENÚ HAMBURGUESA */
   text-decoration: none;
   padding: 1.7em;
   color: #17252a !important;
   font-weight: 600 !important;
   background-color: #fff !important;
   border: none !important;
+  text-align: center;
 }
 
 .btnTurnoHeader {
   margin-right: 1em;
 }
 
-.divHeaderPerfil {
-  display: flex;
-  align-items: center;
-}
+
 
 /* FOOTER */
 
@@ -103,7 +109,7 @@ footer {
   padding: 1em;
   display: flex;
   justify-content: center;
-    padding-inline: 5% !important;
+  padding-inline: 5%;
 }
 
 .linkFooter {
@@ -183,6 +189,7 @@ input {
 .form-floating {
   margin-bottom: 1em !important;
 }
+
 .bi {
   padding-inline: 0.5em;
 }
@@ -349,6 +356,16 @@ display: flex;
   text-shadow: 0px 1px 4px #17252a;
 
 }
+
+/* MODAL */
+
+  .btnCerrarModal{
+    background-color: transparent !important;
+  }
+
+  .DivBtnEnviar{
+    justify-content: space-evenly;
+  }
 
 /* LOGIN*/
 

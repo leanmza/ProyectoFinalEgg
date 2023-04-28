@@ -30,30 +30,18 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 
 @Controller
+@PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
 @RequestMapping("/pro")
 public class ProfesionalControlador {
+    
     @Autowired
     ProfesionalRepositorio profesionalRepositorio;
 
     @Autowired
     ProfesionalService profesionalService;
 
-    @Transactional
-    @PostMapping("/buscarespec")
-    public String buscarespec(@RequestParam("especialidad") String especialidad, ModelMap model) {        //buscaespec
-        System.out.println(especialidad);
-        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidad(especialidad);
-        model.addAttribute("profesionales", profesionales);
-        return "listaespecialidad.html";
-    }
-    
-    @Transactional
-    @GetMapping("/listar")
-    public String listar(ModelMap model) {
-        List<Profesional> profesionales = profesionalService.listar();
-        model.addAttribute("profesionales", profesionales);
-        return "listar.html";
-    }
+
+
     
 
  @GetMapping("/perfil")

@@ -33,9 +33,9 @@ public class HistoriaClinicaService {
         @Autowired
         private HistoriaClinicaRepositorio historiaClinicaRepositorio;
 
-        @Autowired 
-                private PacienteRepositorio pacienteRepositorio;
-        
+        @Autowired
+        private PacienteRepositorio pacienteRepositorio;
+
         @Autowired
         private ProfesionalRepositorio profesionalRepositorio;
 
@@ -66,52 +66,51 @@ public class HistoriaClinicaService {
 
             historiaClinicaRepositorio.save(historiaClinica);
         }
-        
-                @Transactional
-       
-                public void modificarHistoriaClinica(String idHistoriaClinica, String idPaciente, String idProfesional, String diagnostico) throws MiExcepcion {
+
+        @Transactional
+
+        public void modificarHistoriaClinica(String idHistoriaClinica, String idPaciente, String idProfesional, String diagnostico) throws MiExcepcion {
 
             validar(idPaciente, idProfesional, diagnostico);
 
             Optional<HistoriaClinica> respuesta = historiaClinicaRepositorio.findById(idHistoriaClinica); //busco la historia clinica
-            
-            if(respuesta.isPresent()){
-            
-            HistoriaClinica historiaClinica = new HistoriaClinica();
 
-            Optional<Paciente> respuestaPaciente = pacienteRepositorio.findById(idPaciente); //busco el paciente
+            if (respuesta.isPresent()) {
 
-            if (respuestaPaciente.isPresent()) {
-                Paciente paciente = respuestaPaciente.get();
-                historiaClinica.setPaciente(paciente);
-            }
-            Optional<Profesional> respuestaProfesional = profesionalRepositorio.findById(idProfesional); // busco el profesional
+                HistoriaClinica historiaClinica = new HistoriaClinica();
 
-            if (respuestaProfesional.isPresent()) {
-                Profesional profesional = respuestaProfesional.get();
-                historiaClinica.setProfesional(profesional);
-            }
+                Optional<Paciente> respuestaPaciente = pacienteRepositorio.findById(idPaciente); //busco el paciente
 
-            Date fechaConsulta = new Date();
-
-            historiaClinica.setFechaConsulta(fechaConsulta);
-            historiaClinica.setDiagnostico(diagnostico);
-
-            historiaClinicaRepositorio.save(historiaClinica);
-        }
+                if (respuestaPaciente.isPresent()) {
+                    Paciente paciente = respuestaPaciente.get();
+                    historiaClinica.setPaciente(paciente);
                 }
-                
-                
-    @Transactional(readOnly = true)
-    public List<HistoriaClinica> listar(String idPaciente) {
+                Optional<Profesional> respuestaProfesional = profesionalRepositorio.findById(idProfesional); // busco el profesional
 
-        List<HistoriaClinica> historiasClinicas = new ArrayList();
+                if (respuestaProfesional.isPresent()) {
+                    Profesional profesional = respuestaProfesional.get();
+                    historiaClinica.setProfesional(profesional);
+                }
 
-        historiasClinicas = historiaClinicaRepositorio.buscarPorPaciente(idPaciente);
+                Date fechaConsulta = new Date();
 
-        return historiasClinicas;
-    }
-        
+                historiaClinica.setFechaConsulta(fechaConsulta);
+                historiaClinica.setDiagnostico(diagnostico);
+
+                historiaClinicaRepositorio.save(historiaClinica);
+            }
+        }
+
+        @Transactional(readOnly = true)
+        public List<HistoriaClinica> listar(String idPaciente) {
+
+            List<HistoriaClinica> historiasClinicas = new ArrayList();
+
+            historiasClinicas = historiaClinicaRepositorio.buscarPorPaciente(idPaciente);
+
+            return historiasClinicas;
+        }
+
         public void validar(String idPaciente, String idProfesional, String diagnostico) throws MiExcepcion {
 
             try {
