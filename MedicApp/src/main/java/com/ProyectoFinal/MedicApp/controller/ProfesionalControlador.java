@@ -33,10 +33,31 @@ public class ProfesionalControlador {
 
     @Transactional
     @PostMapping("/buscarespec")
-    public String buscarespec(@RequestParam("especialidad") String especialidad, ModelMap model) {        //buscaespec
+    public String buscarespec(@RequestParam("especialidad") String especialidad, ModelMap model) {
         System.out.println(especialidad);
         List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidad(especialidad);
         model.addAttribute("profesionales", profesionales);
+        model.addAttribute("espec", especialidad);
+        return "listaespecialidad.html";
+    }
+
+    @Transactional
+    @PostMapping("/buscarespechonorario")
+    public String buscarespechonorario(@RequestParam("especialidad") String especialidad, ModelMap model) {
+        System.out.println(especialidad);
+        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidadOrdenadoHonorario(especialidad);
+        model.addAttribute("profesionales", profesionales);
+        model.addAttribute("espec", especialidad);
+        return "listaespecialidad.html";
+    }
+
+    @Transactional
+    @PostMapping("/buscarespeccalificacion")
+    public String buscarespeccalificacion(@RequestParam("especialidad") String especialidad, ModelMap model) {
+        System.out.println(especialidad);
+        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidadOrdenadoCalificacion(especialidad);
+        model.addAttribute("profesionales", profesionales);
+        model.addAttribute("espec", especialidad);
         return "listaespecialidad.html";
     }
     

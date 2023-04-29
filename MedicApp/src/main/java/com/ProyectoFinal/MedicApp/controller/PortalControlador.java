@@ -50,6 +50,10 @@ public class PortalControlador {
         if(session.getAttribute("pacienteSession") != null){
             Paciente logueado = (Paciente) session.getAttribute("pacienteSession");
             modelo.put("pacienteSession", logueado);
+            if (logueado.getRol().toString().equals("ADMINISTRADOR")) {
+                return "redirect:/admin/dashboard";
+            }
+
         }
         
         if(session.getAttribute("profesionalSession") != null){
