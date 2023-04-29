@@ -21,7 +21,7 @@
                 <div class="row titulo">
                     <h3>LISTA DE PROFESIONALES</h3>
                 </div>
-                <form action="/pro/buscarespec" method="POST" class="form-floating">
+                <form action="/buscarespec" method="POST" class="form-floating">
                     <div class="row rowDatosPersonales">
                         <div class="barraBusqueda col-xs-12">
                             <div class="col-xs-12 col-md-2 form-floating">
@@ -39,7 +39,7 @@
                                 <label for="especialidad" class="datosInput">Especialidad</label>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btnEnviar btnBuscar">
+                            <button type="submit" class="btn btn-primary btnEnviar btnBuscar botonesLista">
                                 Buscar por especialidad
                             </button>
                         </div>
@@ -80,8 +80,9 @@
                         </tr>
                     </tbody>
                 </table>
-
-                <a class="btn btn-primary" href="/inicio" role="button">Volver</a>
+                         
+                <a class="btn btn-primary botonesLista" href="/inicio" role="button" th:if="${session.pacienteSession != null} OR ${session.profesionalSession != null} ">Volver</a>
+                 <a class="btn btn-primary botonesLista" href="/" role="button" th:if="${session.pacienteSession == null} AND ${session.profesionalSession == null}">Volver</a>
             </div>
      </main>
  
