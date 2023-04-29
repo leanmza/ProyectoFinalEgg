@@ -55,10 +55,10 @@ public class PacienteControlador {
     
     @Transactional
     @PostMapping("/perfil/{id}")
-    public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
-            @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
-            @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
-            @RequestParam String sexo, HttpSession session, ModelMap modelo ) {
+    public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,  
+            @RequestParam String dni, @RequestParam String correo, @RequestParam String telefono,
+            @RequestParam String nacimiento, @RequestParam String password, @RequestParam String password2, 
+            @RequestParam String direccion, @RequestParam String sexo, HttpSession session, ModelMap modelo ) {
         
         try {
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd"); //yyyy-MM-dd
@@ -66,7 +66,7 @@ public class PacienteControlador {
             
             /*String id, String nombre, String apellido, String email, String telefono, String password,
             String password2, String direccion, Date fechaNacimiento, String sexo*/
-            pacienteService.modificarPaciente(id, nombre, apellido, correo, telefono, password, password2, direccion, fechaNacimiento, sexo);
+            pacienteService.modificarPaciente(id, nombre, apellido, dni, correo, telefono, password, password2, direccion, fechaNacimiento, sexo);
             session.setAttribute("pacienteSession", pacienteService.getOne(id));
             return "redirect:/inicio";
             

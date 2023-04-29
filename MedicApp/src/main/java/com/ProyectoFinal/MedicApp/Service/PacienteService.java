@@ -37,20 +37,21 @@ public class PacienteService implements UserDetailsService {
 
     @Autowired
     private PacienteRepositorio pacienteRepositorio;
-    
+
     @Autowired
     private ProfesionalRepositorio profesionalRepositorio;
 
     @Transactional
-    public void crearPaciente(String nombre, String apellido, String email, String telefono, String password,
+    public void crearPaciente(String nombre, String apellido, String dni, String email, String telefono, String password,
             String password2, String direccion, Date fechaNacimiento, String sexo) throws MiExcepcion {
 
-        validar(nombre, apellido, email, telefono, password, password2, direccion, fechaNacimiento, sexo);
+        validar(nombre, apellido, dni, email, telefono, password, password2, direccion, fechaNacimiento, sexo);
 
         Paciente paciente = new Paciente();
 
         paciente.setNombre(nombre);
         paciente.setApellido(apellido);
+        paciente.setDni(dni);
         paciente.setEmail(email);
         paciente.setTelefono(telefono);
         paciente.setPassword(new BCryptPasswordEncoder().encode(password));
@@ -63,10 +64,10 @@ public class PacienteService implements UserDetailsService {
     }
 
     @Transactional
-    public void modificarPaciente(String id, String nombre, String apellido, String email, String telefono, String password,
+    public void modificarPaciente(String id, String nombre, String apellido, String dni, String email, String telefono, String password,
             String password2, String direccion, Date fechaNacimiento, String sexo) throws MiExcepcion {
 
-        validar(nombre, apellido, email, telefono, password, password2, direccion, fechaNacimiento, sexo);
+        validar(nombre, apellido, dni, email, telefono, password, password2, direccion, fechaNacimiento, sexo);
 
         Optional<Paciente> respuesta = pacienteRepositorio.findById(id);
         if (respuesta.isPresent()) {
@@ -74,6 +75,7 @@ public class PacienteService implements UserDetailsService {
 
             paciente.setNombre(nombre);
             paciente.setApellido(apellido);
+            paciente.setDni(dni);
             paciente.setEmail(email);
             paciente.setTelefono(telefono);
             paciente.setPassword(new BCryptPasswordEncoder().encode(password));
@@ -100,7 +102,7 @@ public class PacienteService implements UserDetailsService {
         return pacientes;
     }
 
-    public void validar(String nombre, String apellido, String email, String telefono, String password,
+    public void validar(String nombre, String apellido, String dni, String email, String telefono, String password,
             String password2, String direccion, Date fechaNacimiento, String sexo) throws MiExcepcion {
 
         try {
@@ -110,6 +112,10 @@ public class PacienteService implements UserDetailsService {
 
             if (apellido == null || apellido.isEmpty()) {
                 throw new MiExcepcion("El apellido no puede ser nulo o vacío");
+            }
+
+            if (dni == null || dni.isEmpty()) {
+                throw new MiExcepcion("El DNI no puede ser nulo o vacío");
             }
 
             if (email == null || email.isEmpty()) {

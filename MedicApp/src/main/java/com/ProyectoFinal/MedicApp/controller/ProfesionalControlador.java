@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/profesional")
-@PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+@PreAuthorize("hasAnyRole('ROLE_PROFESIONAL', 'ROLE_ADMINISTRADOR')")
 public class ProfesionalControlador {
     
     @Autowired

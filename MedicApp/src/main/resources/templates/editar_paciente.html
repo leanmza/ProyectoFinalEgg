@@ -60,6 +60,18 @@
                                 />
                             <label for="apellido">Apellido</label>
                         </div>
+                         <!-- INPUT DNI-->
+                        <div class="col-xs-12 col-md-6 form-floating">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="dni"
+                                name="dni"
+                                th:value="${paciente.dni}"
+                                placeholder=""
+                                />
+                            <label for="dni">DNI (sin puntos ni espacios)</label>
+                        </div>
                         <!-- INPUT FECHA NACIMIENTO -->
                         <div class="col-xs-12 col-md-6 form-floating">
                             <input

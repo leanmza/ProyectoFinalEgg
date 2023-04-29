@@ -1,101 +1,114 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <header
-    class="d-flex flex-wrap justify-content-between align-content-center"
-    >
-    <div class="col-xs-12 col-md-2 imgLogo">
+        class="d-flex flex-wrap justify-content-between align-content-center"
+        >
+        <div class="col-xs-12 col-md-2 imgLogo">
 
-        
-        <!--SI  HAY LOGUEADO-->
-        <a
-            href="/inicio"
-            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"
-            th:if="${session.pacienteSession != null} OR ${session.profesionalSession != null} "
-            >
-            <img
-                src="../../logo_App_fondo_transparente.png"
-                alt="logo"
-                class="logoHeader"
-                />
-        </a>
-        
-        
-                <!--SI NO  HAY LOGUEADO-->
-        <a
-            href="/"
-            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"
-           th:if="${session.pacienteSession == null} AND ${session.profesionalSession == null}"
-            >
-            <img
-                src="../../logo_App_fondo_transparente.png"
-                alt="logo"
-                class="logoHeader"
-                />
-        </a>
-    </div>
 
-    <nav class="col-xs-12 col-md-9 navbar navbar-expand-md">
-        <div class="container-fluid contenedorLinks">
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
+            <!--SI  HAY LOGUEADO-->
+            <a
+                href="/inicio"
+                class="logo"
+                th:if="${session.pacienteSession != null} OR ${session.profesionalSession != null} "
                 >
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                <img
+                    src="../../logo_App_fondo_transparente.png"
+                    alt="logo"
+                    class="logoHeader"
+                    />
+            </a>
 
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav navibar">
-                    <a href="/inicio" id="btn-inicio" class="link">Inicio</a>
-                    <a href="/listar" id="btn-list-profesionales" class="link"
-                       >Profesionales</a
+
+            <!--SI NO  HAY LOGUEADO-->
+            <a
+                href="/"
+                class="logo"
+                th:if="${session.pacienteSession == null} AND ${session.profesionalSession == null}"
+                >
+                <img
+                    src="../../logo_App_fondo_transparente.png"
+                    alt="logo"
+                    class="logoHeader"
+                    />
+            </a>
+        </div>
+
+        <nav class="col-xs-12 col-md-9 navbar navbar-expand-md">
+            <div class="container-fluid contenedorLinks">
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
                     >
-                    <a href="/preguntasFrecuentes" id="btn-contacto" class="link">Preguntas Frecuentes</a>
-                    
-                    <!-- ENVIO A CADA ROL A SU RESPECTIVO FORMULARIO -->
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                    <div class="link  divHeaderPerfil" sec:authorize ="hasRole ('PACIENTE')">
-                        <a th:href="@{/pac/perfil}" id="btn-contacto" class="link">Perfil</a>
-                    </div>
-                    <div sec:authorize ="hasRole ('ADMINISTRADOR')" class="link  divHeaderPerfil" >
-                        <a th:href="@{/profesional/perfil}" id="btn-contacto" class="link">Perfil</a>
-                    </div>
-                    <div sec:authorize ="hasRole ('PROFESIONAL')" class="link  divHeaderPerfil" >
-                        <a th:href="@{/profesional/perfil}" id="btn-contacto" class="link">Perfil</a>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav navibar">
+
+                        <!--SI  HAY LOGUEADO-->
+                        <a
+                            href="/inicio"
+                            th:if="${session.pacienteSession != null} OR ${session.profesionalSession != null} "
+                            id="btn-inicio" class="link">Inicio
+                        </a>
+
+
+                        <!--SI NO  HAY LOGUEADO-->
+                        <a
+                            href="/"
+                            th:if="${session.pacienteSession == null} AND ${session.profesionalSession == null}"
+                            id="btn-inicio" class="link">Inicio
+                        </a>
+
+                        <a href="/listar" id="btn-list-profesionales" class="link"
+                           >Profesionales</a
+                        >
+                        <a href="/preguntasFrecuentes" id="btn-contacto" class="link">Preguntas Frecuentes</a>
+
+                        <!-- ENVIO A CADA ROL A SU RESPECTIVO FORMULARIO -->
+
+                
+                            <a th:href="@{/pac/perfil}" id="btn-contacto" class="link  divHeaderPerfil" sec:authorize ="hasRole ('PACIENTE')">Perfil</a>
+                   
+                            <a th:href="@{/profesional/perfil}" id="btn-contacto" sec:authorize ="hasRole ('ADMINISTRADOR')" class="link  divHeaderPerfil">Perfil</a>
+                                  
+                            <a th:href="@{/profesional/perfil}" id="btn-contacto" sec:authorize ="hasRole ('PROFESIONAL')" class="link  divHeaderPerfil">Perfil</a>
+                   
                     </div>
                 </div>
-            </div>
-            <!--ESTO TIENE QUE APARECER SOLO EN EL INICIO.HTML-->
-            <button
-                type="button"
-                class="btn btn-primary botonesHeader btnTurnoHeader"
-                sec:authorize ="hasRole ('PACIENTE')"
-                >
-                Sacar Turno
-            </button>
-            
-                     <!--ESTO TIENE QUE APARECER SOLO EN EL INICIO.HTML-->
-                     <a th:href="@{/admin/registroProfesional}"><button
-                     type="button"
-                     class="btn btn-primary botonesHeader btnTurnoHeader"
-                     sec:authorize ="hasRole ('ADMINISTRADOR')"
-                     >
-                     Crear Profesional
-                 </button>
-                </a>
-            <!-- SEGUN ESTE INICIANO O NO SESION MOSTRAMOS UNO U OTRO BOTON -->
-            <div th:if="${session.pacienteSession == null && session.profesionalSession == null}">
-                <a href="/login"> <button type="button" class="btn btn-primary botonesHeader">Iniciar Sesión</button></a>
-            </div>
-            <div th:if="${session.pacienteSession != null || session.profesionalSession != null}">
-                <a href="/logout"><button type="button" class="btn btn-primary botonesHeader">Cerrar Sesión</button></a>
-            </div>
+                <!--ESTO TIENE QUE APARECER SOLO EN EL INICIO.HTML-->
+                <button
+                    type="button"
+                    class="btn btn-primary botonesHeader btnTurnoHeader"
+                    sec:authorize ="hasRole ('PACIENTE')"
+                    >
+                    Sacar Turno
+                </button>
 
-       <!--  AGREGAR A BOTON SACAR TURNO (poner como atributo de la etiqueta)  sec:authorize ="hasRole ('PACIENTE')"-->
-        </div>
-    </nav>
-</header>
+                <!--ESTO TIENE QUE APARECER SOLO EN EL INICIO.HTML-->
+                <a th:href="@{/admin/registroProfesional}"><button
+                        type="button"
+                        class="btn btn-primary botonesHeader btnTurnoHeader"
+                        sec:authorize ="hasRole ('ADMINISTRADOR')"
+                        >
+                        Crear Profesional
+                    </button>
+                </a>
+                <!-- SEGUN ESTE INICIANO O NO SESION MOSTRAMOS UNO U OTRO BOTON -->
+                <div th:if="${session.pacienteSession == null && session.profesionalSession == null}">
+                    <a href="/login"> <button type="button" class="btn btn-primary botonesHeader">Iniciar Sesión</button></a>
+                </div>
+                <div th:if="${session.pacienteSession != null || session.profesionalSession != null}">
+                    <a href="/logout"><button type="button" class="btn btn-primary botonesHeader">Cerrar Sesión</button></a>
+                </div>
+
+                <!--  AGREGAR A BOTON SACAR TURNO (poner como atributo de la etiqueta)  sec:authorize ="hasRole ('PACIENTE')"-->
+            </div>
+        </nav>
+    </header>
 </html>

@@ -6,6 +6,7 @@ package com.ProyectoFinal.MedicApp.Service;
 
 import com.ProyectoFinal.MedicApp.Entity.HistoriaClinica;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
+
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Repository.HistoriaClinicaRepositorio;
 import java.util.Date;
@@ -14,21 +15,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
+
 import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
-//import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 /**
  *
  * @author Lean
  */
 @Service
-
 public class HistoriaClinicaService {
 
-    public class ObraSocialService {
+
 
         @Autowired
         private HistoriaClinicaRepositorio historiaClinicaRepositorio;
@@ -40,26 +42,25 @@ public class HistoriaClinicaService {
         private ProfesionalRepositorio profesionalRepositorio;
 
         @Transactional
-        public void crearHistoriaClinica(String idPaciente, String idProfesional, String diagnostico) throws MiExcepcion {
+        public void crearHistoriaClinica(String dni, Date fechaConsulta, String idProfesional, String diagnostico) throws MiExcepcion {
 
-            validar(idPaciente, idProfesional, diagnostico);
+            crearHistoriaClinica(dni, fechaConsulta, idProfesional, diagnostico);
+            
+            validar(dni, idProfesional, diagnostico);
 
             HistoriaClinica historiaClinica = new HistoriaClinica();
 
-            Optional<Paciente> respuestaPaciente = pacienteRepositorio.findById(idPaciente);
-
-            if (respuestaPaciente.isPresent()) {
-                Paciente paciente = respuestaPaciente.get();
+            Paciente paciente = pacienteRepositorio.buscarPorDni(dni); // Me tiraba error con el optional
+                 
                 historiaClinica.setPaciente(paciente);
-            }
+     
+            
             Optional<Profesional> respuestaProfesional = profesionalRepositorio.findById(idProfesional);
 
             if (respuestaProfesional.isPresent()) {
                 Profesional profesional = respuestaProfesional.get();
                 historiaClinica.setProfesional(profesional);
             }
-
-            Date fechaConsulta = new Date();
 
             historiaClinica.setFechaConsulta(fechaConsulta);
             historiaClinica.setDiagnostico(diagnostico);
@@ -69,9 +70,9 @@ public class HistoriaClinicaService {
 
         @Transactional
 
-        public void modificarHistoriaClinica(String idHistoriaClinica, String idPaciente, String idProfesional, String diagnostico) throws MiExcepcion {
+        public void modificarHistoriaClinica(String idHistoriaClinica, String dni, Date fechaConsulta, String idProfesional, String diagnostico) throws MiExcepcion {
 
-            validar(idPaciente, idProfesional, diagnostico);
+            validar(dni, idProfesional, diagnostico);
 
             Optional<HistoriaClinica> respuesta = historiaClinicaRepositorio.findById(idHistoriaClinica); //busco la historia clinica
 
@@ -79,12 +80,11 @@ public class HistoriaClinicaService {
 
                 HistoriaClinica historiaClinica = new HistoriaClinica();
 
-                Optional<Paciente> respuestaPaciente = pacienteRepositorio.findById(idPaciente); //busco el paciente
+               Paciente paciente = pacienteRepositorio.buscarPorDni(dni); // Me tiraba error con el optional
 
-                if (respuestaPaciente.isPresent()) {
-                    Paciente paciente = respuestaPaciente.get();
+           
                     historiaClinica.setPaciente(paciente);
-                }
+         
                 Optional<Profesional> respuestaProfesional = profesionalRepositorio.findById(idProfesional); // busco el profesional
 
                 if (respuestaProfesional.isPresent()) {
@@ -92,7 +92,7 @@ public class HistoriaClinicaService {
                     historiaClinica.setProfesional(profesional);
                 }
 
-                Date fechaConsulta = new Date();
+
 
                 historiaClinica.setFechaConsulta(fechaConsulta);
                 historiaClinica.setDiagnostico(diagnostico);
@@ -111,10 +111,20 @@ public class HistoriaClinicaService {
             return historiasClinicas;
         }
 
-        public void validar(String idPaciente, String idProfesional, String diagnostico) throws MiExcepcion {
+        @Transactional(readOnly = true)
+        public List<HistoriaClinica> listar() {
+
+            List<HistoriaClinica> historiasClinicas = new ArrayList();
+
+            historiasClinicas = historiaClinicaRepositorio.findAll();
+
+            return historiasClinicas;
+        }
+
+        public void validar(String dni, String idProfesional, String diagnostico) throws MiExcepcion {
 
             try {
-                if (idPaciente == null || idPaciente.isEmpty()) {
+                if (dni == null || dni.isEmpty()) {
                     throw new MiExcepcion("El paciente no puede ser nulo o vacío");
                 }
 
@@ -133,4 +143,3 @@ public class HistoriaClinicaService {
         }
     }
 
-}

@@ -74,11 +74,7 @@ public class AdministradorControlador {
 
     
 
-    //FORMULARIO PARA CREAR UN PROFESIONAL
-    @GetMapping("/form_profesional")
-    public String form_pro(ModelMap model) {
-        return "formulario_profesional.html";
-    }
+
 
     @GetMapping("/registroProfesional")
     public String registroProfesional(ModelMap modelo) {
