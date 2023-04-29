@@ -64,8 +64,7 @@ public class ProfesionalControlador {
     @Transactional
     @GetMapping("/perfil")
     public String perfil(Model modelo, HttpSession session) {
-        Persona profesional = (Profesional) session.getAttribute("profesionalSession");
-        System.out.println("Profesional: " + profesional.toString());
+        Profesional profesional = (Profesional) session.getAttribute("profesionalSession");
         modelo.addAttribute("profesional", profesional);
         
         List<String> ubicaciones = new ArrayList<>();
