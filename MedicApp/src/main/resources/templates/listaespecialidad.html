@@ -51,13 +51,13 @@
 
                 <a class="btn btn-primary botonesLista" href="/profesional/listar" role="button">Volver</a>
 
-                <form action="/pro/buscarespechonorario" method="POST">
+                <form action="/buscarespechonorario" method="POST">
                     <input type="hidden" name="especialidad" th:value="${espec}" />
                     <button type="submit">Ordenar por honorarios</button>
                     <p>(De mayor a menor)</p>
                 </form>
 
-                <form action="/pro/buscarespeccalificacion" method="POST">
+                <form action="/buscarespeccalificacion" method="POST">
                     <input type="hidden" name="especialidad" th:value="${espec}"/>
                     <button type="submit">Ordenar por calificación</button>
                     <p>(De mayor a menor)</p>
