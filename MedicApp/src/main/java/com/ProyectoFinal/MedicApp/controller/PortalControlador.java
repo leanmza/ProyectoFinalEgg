@@ -88,7 +88,7 @@ public class PortalControlador {
     public String registroPaciente(@RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
             @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
-            @RequestParam String sexo) {
+            @RequestParam String sexo, MultipartFile foto) {
        
         try {
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");

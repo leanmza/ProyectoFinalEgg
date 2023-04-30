@@ -2,10 +2,10 @@ package com.ProyectoFinal.MedicApp.Repository;
 
 
 import com.ProyectoFinal.MedicApp.Entity.Foto;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FotoRepository extends CrudRepository<Foto, Long> {
+public interface FotoRepositorio extends JpaRepository<Foto, String> {
 
 }

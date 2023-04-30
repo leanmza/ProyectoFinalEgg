@@ -7,6 +7,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
@@ -28,7 +29,9 @@ public class Persona {
 
     @Enumerated(EnumType.STRING)
     private Rol rol;
-    private String foto;
+    
+    @OneToOne
+    private Foto foto;
     private String password;
     private boolean activo = false;
 //

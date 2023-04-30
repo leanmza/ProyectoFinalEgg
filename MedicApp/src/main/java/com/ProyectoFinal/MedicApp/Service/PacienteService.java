@@ -4,6 +4,7 @@
  */
 package com.ProyectoFinal.MedicApp.Service;
 
+import com.ProyectoFinal.MedicApp.Entity.Foto;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Enum.Rol;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -40,10 +42,13 @@ public class PacienteService implements UserDetailsService {
     
     @Autowired
     private ProfesionalRepositorio profesionalRepositorio;
+    
+    @Autowired
+    private FotoService fotoServicio;
 
     @Transactional
     public void crearPaciente(String nombre, String apellido, String email, String telefono, String password,
-            String password2, String direccion, Date fechaNacimiento, String sexo) throws MiExcepcion {
+            String password2, String direccion, Date fechaNacimiento, String sexo, MultipartFile foto) throws MiExcepcion {
 
         validar(nombre, apellido, email, telefono, password, password2, direccion, fechaNacimiento, sexo);
 
@@ -57,6 +62,8 @@ public class PacienteService implements UserDetailsService {
         paciente.setDireccion(direccion);
         paciente.setFechaNacimiento(fechaNacimiento);
         paciente.setSexo(sexo);
+        
+        Foto foto = fotoServicio.guardar(foto);
         paciente.setRol(Rol.PACIENTE);
         paciente.setActivo(true);
         pacienteRepositorio.save(paciente);
