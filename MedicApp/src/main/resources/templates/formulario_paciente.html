@@ -26,7 +26,7 @@
                 <!-- DATOS PERSONALES -->
                 <div class="row rowDatosPersonales">
                   <div class="tituloForm">
-                    <h4>COMPLETÁ EL FORMULARIO Y SÉ PARTE DE (nombre_app)</h4>
+                    <h4>Completá el formulario y sé parte de MiTurno</h4>
                   </div>
                   <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
                   <!-- INPUT OCULTO DEL ID -->
@@ -73,13 +73,16 @@
                     <label for="naciemiento">Fecha de Nacimiento</label>
                   </div>
                   <!-- INPUT SEXO-->
-                  <div class="col-xs-12 col-md-6 divSexo">
-                    <label for="sexo">Sexo</label>
-                    <select name="sexo" id="sexo" class="sexo">
-                      <option value="" selected>Elejir opción...</option>
+
+                  <div class="col-xs-12 col-md-6 divSexo form-floating">
+                  
+                    <select name="sexo" id="sexo" class="sexo form-select">
+                      <option value="" selected disabled>Elegir opción...</option>
                       <option value="masculino">Masculino</option>
                       <option value="femenino">Femenino</option>
+                      <option value="otro">Otro</option>
                     </select>
+                    <label for="sexo">Sexo</label>
                   </div>
                   <!-- INPUT DIRECCIÓN-->
                   <div class="col-xs-12 col-md-6 form-floating">
@@ -126,6 +129,7 @@
                       id="password"
                       name="password"
                       placeholder=""
+                  
                     />
                     <label for="password">Contraseña</label>
                   </div>

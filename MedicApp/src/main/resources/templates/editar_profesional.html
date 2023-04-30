@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace= "/fragments/head :: head" </head>  <!--NO MODIFICAR-->
 
-<head th:replace="/fragments/head :: head">
+    <body>
+        <!--HEADER-->
+        <div class="container-fluid cabecera">
+            <header th:replace="/fragments/header :: header"</header>  <!--NO MODIFICAR-->
+        </div>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link rel="stylesheet" href="./assets/styles.css">
-</head> <!--NO MODIFICAR-->
+        <!--MAIN-->
 
         <main>
           <div id="divFormPaciente" class="container-fluid divFormPaciente">
             <div class="row titulo">
-              <h3>REGISTRAR PROFESIONAL</h3>
+              <h3>EDITAR PERFIL</h3>
             </div>
-     
+    
             <form
               class="form-floating row formulario formularioCrear"
               id="formulario"
-              th:action="@{/admin/crearProfesional}"
+              th:action="@{/pro/perfil/__${profesional.id}"
               method="POST"
             >
               <!-- PRESTAR ATENCIÓN A LA RUTA DE TH:ACTION CUANDO SE CREE EL CONTROLADOR -->
@@ -30,7 +32,7 @@
                
     
                 <!-- INPUT OCULTO DEL ID -->
-                <input hidden type="text" id="id" name="id" th:value="${id}" />
+                <input hidden type="text" id="id" name="id" th:value="${profesional.id}" />
     
                 <!-- INPUT NOMBRE-->
                 <div class="col-xs-12 col-md-6 form-floating">  <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
@@ -39,7 +41,7 @@
                     class="form-control"
                     id="nombre"
                     name="nombre"
-                    th:value="${nombre}"
+                    th:value="${profesional.nombre}"
                     placeholder=""
                   />
                   <label for="nombre" class="datosInput">Nombre</label>
@@ -51,7 +53,7 @@
                     class="form-control"
                     id="apellido"
                     name="apellido"
-                    th:value="${apellido}"
+                    th:value="${profesional.apellido}"
                     placeholder=""
                   />
                   <label for="apellido" class="datosInput">Apellido</label>
@@ -63,7 +65,7 @@
                     class="form-control"
                     id="correo"
                     name="correo"
-                    th:value="${email}"
+                    th:value="${profesional.email}"
                     placeholder=""
                   />
                   <label for="correo" class="datosInput">Email</label>
@@ -75,7 +77,7 @@
                     class="form-control"
                     id="telefono"
                     name="telefono"
-                    th:value="${telefono}"
+                    th:value="${profesional.telefono}"
                     placeholder=""
                   />
                   <label for="telefono" class="datosInput">Telefono</label>
@@ -109,7 +111,7 @@
     
               <!-- DATOS DEL PROFESIONAL -->
               <div class="row rowDatosProfesional">
-                <div class="tituloFormPro">
+                <div class="tituloForm">
                   <h4>DATOS DEL PROFESIONAL</h4>
                 </div>
     
@@ -119,6 +121,7 @@
                     name="especialidad"
                     id="especialidad"
                     class="especialidad form-select"
+                    th:value="${profesional.especialidad}"
                   >
                     <option value="" selected disabled>Eligir especialidad</option>
                     <option value="Cardiologia">Cardiología</option>
@@ -135,6 +138,7 @@
                     name="ubicacion"
                     id="ubicacion"
                     class="ubicacion form-select"
+                    th:value="${profesional.ubicacion}"
                   >
                     <option value="" selected disabled>Eligir ubicación...</option>
                     <div th:each="ubicacion : ${ubicaciones}">
@@ -149,6 +153,7 @@
                     name="modalidad"
                     id="modalidad"
                     class="modalidad form-select"
+                    th:value="${profesional.modalidad}"
                   >
                     <option value="" selected disabled>Eligir una modalidad</option>
                     <div th:each="modalidad : ${modalidades}">
@@ -164,7 +169,7 @@
                     class="form-control"
                     id="honorarios"
                     name="honorarios"
-                    th:value="${honorarios}"
+                    th:value="${profesional.honorarios}"
                     placeholder=""
                   />
                   <label for="honorarios" class="datosInput">
@@ -173,7 +178,7 @@
                 </div>
                 <!-- INPUT OBRA SOCIAL-->
                 <div class="col-xs-12">
-                  <div class="col-12 ">
+                  <div class="col-12">
                     <h5>Obras Sociales</h5>
                   </div>
                   <div class="row rowObrasSociales">
@@ -238,7 +243,7 @@
     
               <!-- DÍAS Y HORARIOS -->
               <div class="row rowDiasHorarios">
-                <div class="tituloHoraFormPro">
+                <div class="tituloForm">
                   <h4>DÍAS Y HORARIOS DE ATENCIÓN</h4>
                 </div>
     
@@ -345,7 +350,7 @@
                       class="form-control inputHora"
                       id="horaInicio"
                       name="horaInicio "
-                      th:value="${horarioInicio}"
+                      th:value="${profesional.horarioInicio}"
                       placeholder=""
                     />
                     <label for="horaInicio" class="datosInput inputHora">
@@ -360,7 +365,7 @@
                       class="form-control inputHora"
                       id="horaFin"
                       name="horaFin"
-                      th:value="${horarioFin}"
+                      th:value="${profesional.horarioFin}"
                       placeholder=""
                     />
                     <label for="horaFin" class="datosInput inputHora">
@@ -377,7 +382,7 @@
                   value="registrar"
                   class="btn btn-primary btnEnviar"
                 >
-                  ¡Registrar Profesional!
+                  Actualizar
                 </button>
               </div>
             </form>
@@ -387,20 +392,13 @@
         <div class="container-fluid pie">
             <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
         </div>
-      </section>
-    </form>
-
-  </main>
-  <!--FOOTER-->
-  <div class="container-fluid pie">
-    <footer th:replace="/fragments/footer :: footer"></footer><!--NO MODIFICAR-->
-  </div>
 
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
-    crossorigin="anonymous"></script> <!--NO MODIFICAR-->
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+            crossorigin="anonymous"
+        ></script> <!--NO MODIFICAR-->
 
-</body>
-
+    </body>
 </html>
