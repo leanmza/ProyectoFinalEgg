@@ -4,6 +4,7 @@
  */
 package com.ProyectoFinal.MedicApp.Service;
 
+import com.ProyectoFinal.MedicApp.Entity.Imagen;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Enum.Rol;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -40,10 +42,15 @@ public class PacienteService implements UserDetailsService {
 
     @Autowired
     private ProfesionalRepositorio profesionalRepositorio;
+    
+    @Autowired
+    private ImagenService imagenServicio;
 
     @Transactional
+
     public void crearPaciente(String nombre, String apellido, String dni, String email, String telefono, String password,
-            String password2, String direccion, Date fechaNacimiento, String sexo) throws MiExcepcion {
+            String password2, String direccion, Date fechaNacimiento, String sexo, MultipartFile archivo) throws MiExcepcion {
+
 
         validar(nombre, apellido, dni, email, telefono, password, password2, direccion, fechaNacimiento, sexo);
 
@@ -58,6 +65,10 @@ public class PacienteService implements UserDetailsService {
         paciente.setDireccion(direccion);
         paciente.setFechaNacimiento(fechaNacimiento);
         paciente.setSexo(sexo);
+        
+        Imagen imagen = imagenServicio.guardar(archivo);
+        paciente.setImagen(imagen);
+        
         paciente.setRol(Rol.PACIENTE);
         paciente.setActivo(true);
         pacienteRepositorio.save(paciente);
@@ -65,7 +76,7 @@ public class PacienteService implements UserDetailsService {
 
     @Transactional
     public void modificarPaciente(String id, String nombre, String apellido, String dni, String email, String telefono, String password,
-            String password2, String direccion, Date fechaNacimiento, String sexo) throws MiExcepcion {
+            String password2, String direccion, Date fechaNacimiento, String sexo, MultipartFile archivo) throws MiExcepcion {
 
         validar(nombre, apellido, dni, email, telefono, password, password2, direccion, fechaNacimiento, sexo);
 
@@ -82,6 +93,14 @@ public class PacienteService implements UserDetailsService {
             paciente.setDireccion(direccion);
             paciente.setFechaNacimiento(fechaNacimiento);
             paciente.setSexo(sexo);
+            
+            String idImagen = null;
+            if (paciente.getImagen() != null) {
+                idImagen = paciente.getImagen().getId();
+            }
+            Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+            paciente.setImagen(imagen);
+        
             paciente.setRol(Rol.PACIENTE);
             paciente.setActivo(true);
             pacienteRepositorio.save(paciente);
