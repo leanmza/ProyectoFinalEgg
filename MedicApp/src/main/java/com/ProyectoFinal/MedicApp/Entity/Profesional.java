@@ -55,5 +55,5 @@ public class Profesional extends Persona {
 //    private List<Integer> reputacion;
     private Integer cantVisitas;
     private Integer puntaje;
-
+    private Double calificacion;
 }
