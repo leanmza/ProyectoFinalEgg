@@ -136,6 +136,26 @@ public class ProfesionalService implements UserDetailsService {
 
         return especialistas;
     }
+    
+    @Transactional(readOnly = true)
+    public List<Profesional> buscarProfesionalesPorEspecialidadOrdenadoHonorario(String especialidad) {
+
+        List<Profesional> especialistas; //= new ArrayList();
+
+        especialistas = profesionalRepositorio.buscarPorEspecialidadOrdHonorario(especialidad);
+
+        return especialistas;
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Profesional> buscarProfesionalesPorEspecialidadOrdenadoCalificacion(String especialidad) {
+
+        List<Profesional> especialistas; //= new ArrayList();
+
+        especialistas = profesionalRepositorio.buscarPorEspecialidadOrdCalificacion(especialidad);
+
+        return especialistas;
+    }
 
 //    DESCOMENTAR CUANDO SE CREE ObrasSociales
 //            @Transactional

@@ -1,6 +1,5 @@
 package com.ProyectoFinal.MedicApp.controller;
 
-import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Enum.Modalidad;
@@ -105,16 +104,8 @@ public class PortalControlador {
             return "formulario_paciente.html";
         }
     }
-
-    @Transactional
-    @PostMapping("/buscarespec")
-    public String buscarespec(@RequestParam("especialidad") String especialidad, ModelMap model) {        //buscaespec
-        System.out.println(especialidad);
-        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidad(especialidad);
-        model.addAttribute("profesionales", profesionales);
-        return "listaespecialidad.html";
-    }
-
+    
+    
     @Transactional
     @GetMapping("/listar")
     public String listar(ModelMap model) {
@@ -122,6 +113,37 @@ public class PortalControlador {
         model.addAttribute("profesionales", profesionales);
         return "listar.html";
     }
+
+    @Transactional
+    @PostMapping("/buscarespec")
+    public String buscarespec(@RequestParam("especialidad") String especialidad, ModelMap model) {
+        System.out.println(especialidad);
+        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidad(especialidad);
+        model.addAttribute("profesionales", profesionales);
+        model.addAttribute("espec", especialidad);
+        return "listaespecialidad.html";
+    }
+
+    @Transactional
+    @PostMapping("/buscarespechonorario")
+    public String buscarespechonorario(@RequestParam("especialidad") String especialidad, ModelMap model) {
+        System.out.println(especialidad);
+        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidadOrdenadoHonorario(especialidad);
+        model.addAttribute("profesionales", profesionales);
+        model.addAttribute("espec", especialidad);
+        return "listaespecialidad.html";
+    }
+
+    @Transactional
+    @PostMapping("/buscarespeccalificacion")
+    public String buscarespeccalificacion(@RequestParam("especialidad") String especialidad, ModelMap model) {
+        System.out.println(especialidad);
+        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidadOrdenadoCalificacion(especialidad);
+        model.addAttribute("profesionales", profesionales);
+        model.addAttribute("espec", especialidad);
+        return "listaespecialidad.html";
+    }
+
 
     @GetMapping("/preguntasFrecuentes")
     public String preguntasFrecuentes() {
