@@ -41,6 +41,7 @@ public class PacienteControlador {
     PacienteService pacienteService;
 
     @Transactional
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_ADMINISTRADOR')")
     @GetMapping("/perfil")
     public String perfil(ModelMap modelo, HttpSession session) {
         Paciente paciente = (Paciente) session.getAttribute("pacienteSession");
@@ -50,6 +51,7 @@ public class PacienteControlador {
     }
     
     @Transactional
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_ADMINISTRADOR')")
     @PostMapping("/perfil/{id}")
     public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,  
             @RequestParam String dni, @RequestParam String correo, @RequestParam String telefono,
