@@ -22,6 +22,7 @@
 
                     th:action="@{/registroPaciente}"
                     method="POST"
+                    enctype="multipart/form-data"
                     >
                     <!-- DATOS PERSONALES -->
                     <div class="row rowDatosPersonales">
@@ -85,9 +86,7 @@
                             <label for="naciemiento">Fecha de Nacimiento</label>
                         </div>
                         <!-- INPUT SEXO-->
-
                         <div class="col-xs-12 col-md-6 divSexo form-floating">
-
                             <select name="sexo" id="sexo" class="sexo form-select">
                                 <option value="" selected disabled>Elegir opción...</option>
                                 <option value="masculino">Masculino</option>
@@ -132,7 +131,16 @@
                                 />
                             <label for="telefono">Telefono</label>
                         </div>
-
+                        <!-- INPUT IMAGEN -->
+                        <div class="col-xs-12 col-md-6 form-floating">
+                            <input 
+                                type="file" 
+                                class="form-control" 
+                                id="foto" 
+                                name="archivo"
+                                />
+                            <label for="foto">Foto de Perfil</label>
+                        </div>
                         <!-- INPUT PASSWORD-->
                         <div class="col-xs-12 col-md-6 form-floating">
                             <input
@@ -141,7 +149,6 @@
                                 id="password"
                                 name="password"
                                 placeholder=""
-
                                 />
                             <label for="password">Contraseña</label>
                         </div>
@@ -157,7 +164,7 @@
                             <label for="password2">Repetir Contraseña</label>
                         </div>
                     </div>
-
+                    
                     <div class="col-xs-12 DivBtnEnviar">
                         <button
                             type="submit"

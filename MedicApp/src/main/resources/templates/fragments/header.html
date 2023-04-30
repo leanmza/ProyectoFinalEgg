@@ -9,7 +9,7 @@
             <a
                 href="/inicio"
                 class="logo"
-                th:if="${session.pacienteSession != null} OR ${session.profesionalSession != null} "
+                th:if="${session.pacienteSession != null || session.profesionalSession != null} "
                 >
                 <img
                     src="../../logo_App_fondo_transparente.png"
@@ -23,7 +23,7 @@
             <a
                 href="/"
                 class="logo"
-                th:if="${session.pacienteSession == null} AND ${session.profesionalSession == null}"
+                th:if="${session.pacienteSession == null && session.profesionalSession == null}"
                 >
                 <img
                     src="../../logo_App_fondo_transparente.png"
@@ -46,14 +46,14 @@
                     >
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
+                    
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav navibar">
 
                         <!--SI  HAY LOGUEADO-->
                         <a
                             href="/inicio"
-                            th:if="${session.pacienteSession != null} OR ${session.profesionalSession != null} "
+                            th:if="${session.pacienteSession != null || session.profesionalSession != null} "
                             id="btn-inicio" class="link">Inicio
                         </a>
 
@@ -61,7 +61,7 @@
                         <!--SI NO  HAY LOGUEADO-->
                         <a
                             href="/"
-                            th:if="${session.pacienteSession == null} AND ${session.profesionalSession == null}"
+                            th:if="${session.pacienteSession == null && session.profesionalSession == null}"
                             id="btn-inicio" class="link">Inicio
                         </a>
 
@@ -73,11 +73,18 @@
                         <!-- ENVIO A CADA ROL A SU RESPECTIVO FORMULARIO -->
 
                 
-                            <a th:href="@{/pac/perfil}" id="btn-contacto" class="link  divHeaderPerfil" sec:authorize ="hasRole ('PACIENTE')">Perfil</a>
+                            <a th:href="@{/pac/perfil}" id="btn-contacto" class="link  divHeaderPerfil" sec:authorize ="hasRole ('PACIENTE')">
+                                Perfil <img class="imagen-perfil" th:if="${session.pacienteSession.imagen != null}" th:src="@{/imagen/perfil/__${session.pacienteSession.id}__}" >
+                                
+                            </a>
                    
-                            <a th:href="@{/profesional/perfil}" id="btn-contacto" sec:authorize ="hasRole ('ADMINISTRADOR')" class="link  divHeaderPerfil">Perfil</a>
+                            <a th:href="@{/profesional/perfil}" id="btn-contacto" sec:authorize ="hasRole ('ADMINISTRADOR')" class="link  divHeaderPerfil">
+                                Perfil <img class="imagen-perfil" th:if="${session.profesionalSession.imagen != null}" th:src="@{/imagen/perfil/__${session.profesionalSession.id}__}" >
+                            </a>
                                   
-                            <a th:href="@{/profesional/perfil}" id="btn-contacto" sec:authorize ="hasRole ('PROFESIONAL')" class="link  divHeaderPerfil">Perfil</a>
+                            <a th:href="@{/profesional/perfil}" id="btn-contacto" sec:authorize ="hasRole ('PROFESIONAL')" class="link  divHeaderPerfil">
+                                Perfil <img class="imagen-perfil" th:if="${session.profesionalSession.imagen != null}" th:src="@{/imagen/perfil/__${session.profesionalSession.id}__}" >
+                            </a>
                    
                     </div>
                 </div>

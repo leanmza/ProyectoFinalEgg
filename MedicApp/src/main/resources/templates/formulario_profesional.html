@@ -21,6 +21,7 @@
               id="formulario"
               th:action="@{/admin/crearProfesional}"
               method="POST"
+              enctype="multipart/form-data"
             >
               <!-- PRESTAR ATENCIÓN A LA RUTA DE TH:ACTION CUANDO SE CREE EL CONTROLADOR -->
     
@@ -82,7 +83,16 @@
                   />
                   <label for="telefono" class="datosInput">Telefono</label>
                 </div>
-    
+                <!-- INPUT IMAGEN -->
+                <div class="col-xs-12 col-md-6 form-floating">
+                    <input 
+                        type="file" 
+                        class="form-control" 
+                        id="foto" 
+                        name="archivo"
+                        />
+                    <label for="foto">Foto de Perfil</label>
+                </div>
                 <!-- INPUT PASSWORD-->
                 <div class="col-xs-12 col-md-6 form-floating">
                   <input

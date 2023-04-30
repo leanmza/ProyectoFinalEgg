@@ -11,10 +11,6 @@ import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -47,7 +44,6 @@ public class PacienteControlador {
     @GetMapping("/perfil")
     public String perfil(ModelMap modelo, HttpSession session) {
         Paciente paciente = (Paciente) session.getAttribute("pacienteSession");
-        System.out.println("Paciente: " + paciente.toString());
         modelo.put("paciente", paciente);
         
         return "editar_paciente.html";
@@ -58,15 +54,15 @@ public class PacienteControlador {
     public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,  
             @RequestParam String dni, @RequestParam String correo, @RequestParam String telefono,
             @RequestParam String nacimiento, @RequestParam String password, @RequestParam String password2, 
-            @RequestParam String direccion, @RequestParam String sexo, HttpSession session, ModelMap modelo ) {
+            @RequestParam String direccion, @RequestParam String sexo, @RequestParam(required = false) MultipartFile archivo, HttpSession session, ModelMap modelo ) {
         
         try {
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd"); //yyyy-MM-dd
             Date fechaNacimiento = formato.parse(nacimiento);
             
-            /*String id, String nombre, String apellido, String email, String telefono, String password,
-            String password2, String direccion, Date fechaNacimiento, String sexo*/
-            pacienteService.modificarPaciente(id, nombre, apellido, dni, correo, telefono, password, password2, direccion, fechaNacimiento, sexo);
+            System.out.println("ARCHIVO " + archivo.getContentType());
+            pacienteService.modificarPaciente(id, nombre, apellido, dni, correo, telefono, password, password2, direccion, 
+                    fechaNacimiento, sexo, archivo);
             session.setAttribute("pacienteSession", pacienteService.getOne(id));
             return "redirect:/inicio";
             
