@@ -33,7 +33,7 @@
             </a>
         </div>
 
-        <nav class="col-xs-12 col-md-9 navbar navbar-expand-md">
+        <nav class="col-xs-12 col-md-10 navbar navbar-expand-md">
             <div class="container-fluid contenedorLinks">
                 <button
                     class="navbar-toggler"
@@ -73,9 +73,18 @@
                         <!-- ENVIO A CADA ROL A SU RESPECTIVO FORMULARIO -->
 
                 
-                            <a th:href="@{/pac/perfil}" id="btn-contacto" class="link  divHeaderPerfil" sec:authorize ="hasRole ('PACIENTE')">Perfil</a>
+                            <a th:href="@{/pac/perfil}" id="btn-contacto" class="link  divHeaderPerfil" sec:authorize ="hasRole ('PACIENTE')">
+                                Perfil <img class="imagen-perfil" th:if="${session.pacienteSession.imagen != null}" th:src="@{/imagen/perfil/__${session.pacienteSession.id}__}" >
+                                
+                            </a>
+                        
+                             <a th:if="${session.pacienteSession != null}" th:href="@{/pac/perfil}" id="btn-contacto" sec:authorize ="hasRole ('ADMINISTRADOR')" class="link  divHeaderPerfil">
+                                Perfil <img class="imagen-perfil" th:if="${session.pacienteSession.imagen != null}" th:src="@{/imagen/perfil/__${session.pacienteSession.id}__}" >
+                            </a>
                    
-                            <a th:href="@{/profesional/perfil}" id="btn-contacto" sec:authorize ="hasRole ('ADMINISTRADOR')" class="link  divHeaderPerfil">Perfil</a>
+                            <a th:if="${session.profesionalSession != null}" th:href="@{/profesional/perfil}" id="btn-contacto" sec:authorize ="hasRole ('ADMINISTRADOR')" class="link  divHeaderPerfil">
+                                Perfil <img class="imagen-perfil" th:if="${session.profesionalSession.imagen != null}" th:src="@{/imagen/perfil/__${session.profesionalSession.id}__}" >
+                            </a>
                                   
                             <a th:href="@{/profesional/perfil}" id="btn-contacto" sec:authorize ="hasRole ('PROFESIONAL')" class="link  divHeaderPerfil">Perfil</a>
                    
