@@ -15,24 +15,21 @@ import org.hibernate.annotations.GenericGenerator;
 @Data
 @Entity
 public class HistoriaClinica {
-    
-   @Id
+
+    @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    
+
     @ManyToOne
     private Paciente paciente;
-        
-   @Temporal(TemporalType.DATE)
+
+    @Temporal(TemporalType.DATE)
     private Date fechaConsulta;
-   
-   @OneToOne
-   private Profesional profesional; //Sacamos nombre y especialidad
-   
+
+    @OneToOne
+    private Profesional profesional; //Sacamos nombre y especialidad
+
     private String diagnostico;
 
-    }
-
-
-
+}

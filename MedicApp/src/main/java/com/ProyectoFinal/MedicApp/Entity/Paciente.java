@@ -24,8 +24,8 @@ public class Paciente extends Persona {
     @OneToOne
     private ObraSocial obraSocial;
     
-//    @OneToMany
-//    private List<Turno> turnos;
+    @OneToMany
+    private List<Turno> turnos;
     
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;

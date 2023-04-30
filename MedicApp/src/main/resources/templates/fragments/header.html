@@ -46,7 +46,7 @@
                     >
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                    
+
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav navibar">
 
@@ -72,30 +72,31 @@
 
                         <!-- ENVIO A CADA ROL A SU RESPECTIVO FORMULARIO -->
 
-                
-                            <a th:href="@{/pac/perfil}" id="btn-contacto" class="link  divHeaderPerfil" sec:authorize ="hasRole ('PACIENTE')">
-                                Perfil <img class="imagen-perfil" th:if="${session.pacienteSession.imagen != null}" th:src="@{/imagen/perfil/__${session.pacienteSession.id}__}" >
-                                
-                            </a>
-                   
-                            <a th:href="@{/profesional/perfil}" id="btn-contacto" sec:authorize ="hasRole ('ADMINISTRADOR')" class="link  divHeaderPerfil">
-                                Perfil <img class="imagen-perfil" th:if="${session.profesionalSession.imagen != null}" th:src="@{/imagen/perfil/__${session.profesionalSession.id}__}" >
-                            </a>
+
+                        <a th:href="@{/pac/perfil}" id="btn-contacto" class="link  divHeaderPerfil" sec:authorize ="hasRole ('PACIENTE')">
+                            Perfil <img class="imagen-perfil" th:if="${session.pacienteSession.imagen != null}" th:src="@{/imagen/perfil/__${session.pacienteSession.id}__}">
                                   
-                            <a th:href="@{/profesional/perfil}" id="btn-contacto" sec:authorize ="hasRole ('PROFESIONAL')" class="link  divHeaderPerfil">
-                                Perfil <img class="imagen-perfil" th:if="${session.profesionalSession.imagen != null}" th:src="@{/imagen/perfil/__${session.profesionalSession.id}__}" >
-                            </a>
-                   
+                        </a>
+
+                        <a th:href="@{/profesional/perfil}" id="btn-contacto" sec:authorize ="hasRole ('ADMINISTRADOR')" class="link  divHeaderPerfil">
+                            Perfil <img class="imagen-perfil" th:if="${session.profesionalSession.imagen != null}" th:src="@{/imagen/perfil/__${session.profesionalSession.id}__}" >
+                        </a>
+
+                        <a th:href="@{/profesional/perfil}" id="btn-contacto" sec:authorize ="hasRole ('PROFESIONAL')" class="link  divHeaderPerfil">
+                            Perfil <img class="imagen-perfil" th:if="${session.profesionalSession.imagen != null}" th:src="@{/imagen/perfil/__${session.profesionalSession.id}__}" >
+                        </a>
+
                     </div>
                 </div>
                 <!--ESTO TIENE QUE APARECER SOLO EN EL INICIO.HTML-->
-                <button
-                    type="button"
-                    class="btn btn-primary botonesHeader btnTurnoHeader"
-                    sec:authorize ="hasRole ('PACIENTE')"
-                    >
-                    Sacar Turno
-                </button>
+                <a th:href="@{/pac/turno}"><button
+                        type="button"
+                        class="btn btn-primary botonesHeader btnTurnoHeader"
+                        sec:authorize ="hasRole ('PACIENTE')"
+                        >
+                        Sacar Turno
+                    </button>
+                </a>
 
                 <!--ESTO TIENE QUE APARECER SOLO EN EL INICIO.HTML-->
                 <a th:href="@{/admin/registroProfesional}"><button
