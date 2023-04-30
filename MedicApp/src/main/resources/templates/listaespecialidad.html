@@ -15,7 +15,6 @@
 
             <div class="container-fluid contenedorDiv">
                 <h3>PROFESIONALES POR ESPECIALIDAD</h3>
-
                 <table class="table table-light">
                     <thead>
                         <tr>
@@ -23,7 +22,7 @@
                             <th scope="col">Apellido</th>
                             <th scope="col">Especialidad</th>
                             <th scope="col">Valor de Consulta</th>
-                            <!-- <th scope="col">Calificación</th> -->
+                            <th scope="col">Calificación</th>
 
                     </thead>
 
@@ -33,12 +32,36 @@
                             <td th:text="${profesional.apellido}"></td>
                             <td th:text="${profesional.especialidad}"></td>
                             <td th:text="${profesional.honorario}"></td>
-                            <!-- <td th:text="${profesional.calificación}"></td> -->
+                            <td>
+                                <span th:if="${profesional.calificacion >= 0.00 and profesional.calificacion < 0.25}"> <img src="../../img/estrella00.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 0.25 and profesional.calificacion < 0.75}"> <img src="../../img/estrella05.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 0.75 and profesional.calificacion < 1.25}"> <img src="../../img/estrella10.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 1.25 and profesional.calificacion < 1.75}"> <img src="../../img/estrella15.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 1.75 and profesional.calificacion < 2.25}"> <img src="../../img/estrella20.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 2.25 and profesional.calificacion < 2.75}"> <img src="../../img/estrella25.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 2.75 and profesional.calificacion < 3.25}"> <img src="../../img/estrella30.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 3.25 and profesional.calificacion < 3.75}"> <img src="../../img/estrella35.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 3.75 and profesional.calificacion < 4.25}"> <img src="../../img/estrella40.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 4.25 and profesional.calificacion < 4.75}"> <img src="../../img/estrella45.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 4.75}"> <img src="../../img/estrella50.jpg" height="20"> </span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
 
                 <a class="btn btn-primary botonesLista" th:href="@{/listar}" role="button">Volver</a>
+
+                <form action="/buscarespechonorario" method="POST">
+                    <input type="hidden" name="especialidad" th:value="${espec}" />
+                    <button type="submit">Ordenar por honorarios</button>
+                    <p>(De mayor a menor)</p>
+                </form>
+
+                <form action="/buscarespeccalificacion" method="POST">
+                    <input type="hidden" name="especialidad" th:value="${espec}"/>
+                    <button type="submit">Ordenar por calificación</button>
+                    <p>(De mayor a menor)</p>
+                </form>
 
 
             </div>

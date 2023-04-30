@@ -80,6 +80,7 @@ public class ProfesionalService implements UserDetailsService {
         profesional.setHoraFin(horaFin);
         profesional.setCantVisitas(0);
         profesional.setPuntaje(0);
+        profesional.setCalificacion(0.0);
         profesionalRepositorio.save(profesional);
 
     }
@@ -150,6 +151,26 @@ public class ProfesionalService implements UserDetailsService {
         List<Profesional> especialistas; //= new ArrayList();
 
         especialistas = profesionalRepositorio.buscarPorEspecialidad(especialidad);
+
+        return especialistas;
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Profesional> buscarProfesionalesPorEspecialidadOrdenadoHonorario(String especialidad) {
+
+        List<Profesional> especialistas; //= new ArrayList();
+
+        especialistas = profesionalRepositorio.buscarPorEspecialidadOrdHonorario(especialidad);
+
+        return especialistas;
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Profesional> buscarProfesionalesPorEspecialidadOrdenadoCalificacion(String especialidad) {
+
+        List<Profesional> especialistas; //= new ArrayList();
+
+        especialistas = profesionalRepositorio.buscarPorEspecialidadOrdCalificacion(especialidad);
 
         return especialistas;
     }
