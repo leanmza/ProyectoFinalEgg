@@ -18,8 +18,8 @@ public class Paciente extends Persona {
     
     private String direccion;
     
-//    @OneToMany
-//    private List<HistoriaClinica> historiaClinica;
+    @OneToMany
+    private List<HistoriaClinica> historiaClinica;
     
     @OneToOne
     private ObraSocial obraSocial;
