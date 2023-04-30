@@ -71,6 +71,10 @@ header {
   justify-content: end;
 }
 
+
+.navibar{
+    align-items: center;
+}
 .link:link,
 .link:visited,
 .link:active {
