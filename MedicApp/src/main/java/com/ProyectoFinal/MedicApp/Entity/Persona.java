@@ -23,7 +23,7 @@ public class Persona {
 
     private String nombre;
     private String apellido;
-//    private String dni;
+    private String dni;
     private String email;
     private String telefono;
 
@@ -31,7 +31,7 @@ public class Persona {
     private Rol rol;
     
     @OneToOne
-    private Foto foto;
+    private Imagen imagen;
     private String password;
     private boolean activo = false;
 //

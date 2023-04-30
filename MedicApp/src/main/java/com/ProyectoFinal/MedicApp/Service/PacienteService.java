@@ -4,7 +4,7 @@
  */
 package com.ProyectoFinal.MedicApp.Service;
 
-import com.ProyectoFinal.MedicApp.Entity.Foto;
+import com.ProyectoFinal.MedicApp.Entity.Imagen;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Enum.Rol;
@@ -39,23 +39,26 @@ public class PacienteService implements UserDetailsService {
 
     @Autowired
     private PacienteRepositorio pacienteRepositorio;
-    
+
     @Autowired
     private ProfesionalRepositorio profesionalRepositorio;
     
     @Autowired
-    private FotoService fotoServicio;
+    private ImagenService imagenServicio;
 
     @Transactional
-    public void crearPaciente(String nombre, String apellido, String email, String telefono, String password,
-            String password2, String direccion, Date fechaNacimiento, String sexo, MultipartFile foto) throws MiExcepcion {
 
-        validar(nombre, apellido, email, telefono, password, password2, direccion, fechaNacimiento, sexo);
+    public void crearPaciente(String nombre, String apellido, String dni, String email, String telefono, String password,
+            String password2, String direccion, Date fechaNacimiento, String sexo, MultipartFile archivo) throws MiExcepcion {
+
+
+        validar(nombre, apellido, dni, email, telefono, password, password2, direccion, fechaNacimiento, sexo);
 
         Paciente paciente = new Paciente();
 
         paciente.setNombre(nombre);
         paciente.setApellido(apellido);
+        paciente.setDni(dni);
         paciente.setEmail(email);
         paciente.setTelefono(telefono);
         paciente.setPassword(new BCryptPasswordEncoder().encode(password));
@@ -63,17 +66,19 @@ public class PacienteService implements UserDetailsService {
         paciente.setFechaNacimiento(fechaNacimiento);
         paciente.setSexo(sexo);
         
-        Foto foto = fotoServicio.guardar(foto);
+        Imagen imagen = imagenServicio.guardar(archivo);
+        paciente.setImagen(imagen);
+        
         paciente.setRol(Rol.PACIENTE);
         paciente.setActivo(true);
         pacienteRepositorio.save(paciente);
     }
 
     @Transactional
-    public void modificarPaciente(String id, String nombre, String apellido, String email, String telefono, String password,
-            String password2, String direccion, Date fechaNacimiento, String sexo) throws MiExcepcion {
+    public void modificarPaciente(String id, String nombre, String apellido, String dni, String email, String telefono, String password,
+            String password2, String direccion, Date fechaNacimiento, String sexo, MultipartFile archivo) throws MiExcepcion {
 
-        validar(nombre, apellido, email, telefono, password, password2, direccion, fechaNacimiento, sexo);
+        validar(nombre, apellido, dni, email, telefono, password, password2, direccion, fechaNacimiento, sexo);
 
         Optional<Paciente> respuesta = pacienteRepositorio.findById(id);
         if (respuesta.isPresent()) {
@@ -81,12 +86,21 @@ public class PacienteService implements UserDetailsService {
 
             paciente.setNombre(nombre);
             paciente.setApellido(apellido);
+            paciente.setDni(dni);
             paciente.setEmail(email);
             paciente.setTelefono(telefono);
             paciente.setPassword(new BCryptPasswordEncoder().encode(password));
             paciente.setDireccion(direccion);
             paciente.setFechaNacimiento(fechaNacimiento);
             paciente.setSexo(sexo);
+            
+            String idImagen = null;
+            if (paciente.getImagen() != null) {
+                idImagen = paciente.getImagen().getId();
+            }
+            Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+            paciente.setImagen(imagen);
+        
             paciente.setRol(Rol.PACIENTE);
             paciente.setActivo(true);
             pacienteRepositorio.save(paciente);
@@ -107,7 +121,7 @@ public class PacienteService implements UserDetailsService {
         return pacientes;
     }
 
-    public void validar(String nombre, String apellido, String email, String telefono, String password,
+    public void validar(String nombre, String apellido, String dni, String email, String telefono, String password,
             String password2, String direccion, Date fechaNacimiento, String sexo) throws MiExcepcion {
 
         try {
@@ -117,6 +131,10 @@ public class PacienteService implements UserDetailsService {
 
             if (apellido == null || apellido.isEmpty()) {
                 throw new MiExcepcion("El apellido no puede ser nulo o vacío");
+            }
+
+            if (dni == null || dni.isEmpty()) {
+                throw new MiExcepcion("El DNI no puede ser nulo o vacío");
             }
 
             if (email == null || email.isEmpty()) {

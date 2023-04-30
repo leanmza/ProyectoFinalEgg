@@ -4,6 +4,7 @@
  */
 package com.ProyectoFinal.MedicApp.Service;
 
+import com.ProyectoFinal.MedicApp.Entity.Imagen;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Enum.Modalidad;
 import com.ProyectoFinal.MedicApp.Enum.Rol;
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -40,10 +42,13 @@ public class ProfesionalService implements UserDetailsService {
 
     @Autowired
     private ProfesionalRepositorio profesionalRepositorio;
+    
+    @Autowired
+    private ImagenService imagenServicio;
 
     @Transactional
     public void crearProfesional(String nombre, String apellido, String correo, String telefono,
-            String password, String password2, String especialidad, String ubicacion,
+            MultipartFile archivo, String password, String password2, String especialidad, String ubicacion,
             String modalidad, Double honorarios/*, List<String> obrasSociales, List<String> dias*/,
             LocalTime horaInicio, LocalTime horaFin /*List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
     ) throws MiExcepcion {
@@ -58,6 +63,10 @@ public class ProfesionalService implements UserDetailsService {
 //        profesional.setDni(dni);
         profesional.setEmail(correo);
         profesional.setTelefono(telefono);
+        
+        Imagen imagen = imagenServicio.guardar(archivo);
+        profesional.setImagen(imagen);
+        
         profesional.setPassword(new BCryptPasswordEncoder().encode(password));
         profesional.setRol(Rol.PROFESIONAL);
         profesional.setActivo(true);
@@ -77,7 +86,7 @@ public class ProfesionalService implements UserDetailsService {
 
     @Transactional
     public void modificarProfesional(String idProfesional, String nombre, String apellido, String correo, String telefono,
-            String password, String password2, String especialidad, String ubicacion,
+            MultipartFile archivo, String password, String password2, String especialidad, String ubicacion,
             String modalidad, Double honorarios/*, List<String> obrasSociales, List<String> dias*/,
             LocalTime horaInicio, LocalTime horaFin/*, List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
     ) throws MiExcepcion {
@@ -94,6 +103,14 @@ public class ProfesionalService implements UserDetailsService {
 //        profesional.setDni(dni);
             profesional.setEmail(correo);
             profesional.setTelefono(telefono);
+            
+            String idImagen = null;
+            if (profesional.getImagen() != null) {
+                idImagen = profesional.getImagen().getId();
+            }
+            Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+            profesional.setImagen(imagen);
+            
             profesional.setPassword(new BCryptPasswordEncoder().encode(password));
             profesional.setRol(Rol.PROFESIONAL);
             profesional.setActivo(true);

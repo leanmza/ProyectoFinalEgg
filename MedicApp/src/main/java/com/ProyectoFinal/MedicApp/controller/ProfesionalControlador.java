@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -35,7 +36,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/profesional")
-@PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+@PreAuthorize("hasAnyRole('ROLE_PROFESIONAL', 'ROLE_ADMINISTRADOR')")
 public class ProfesionalControlador {
     
     @Autowired
@@ -43,10 +44,6 @@ public class ProfesionalControlador {
 
     @Autowired
     ProfesionalService profesionalService;
-
-
-
-    
 
     @Transactional
     @GetMapping("/perfil")
@@ -72,15 +69,15 @@ public class ProfesionalControlador {
     @Transactional
     @PostMapping("perfil/{id}")
     public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
-            @RequestParam String correo, @RequestParam String telefono, @RequestParam String password,
-            @RequestParam String password2,  @RequestParam String especialidad,
+            @RequestParam String correo, @RequestParam String telefono, @RequestParam(required = false) MultipartFile archivo, 
+            @RequestParam String password, @RequestParam String password2,  @RequestParam String especialidad,
             @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,
             /*@RequestParam("obrasSociales[]") List<String> obrasSociales, @RequestParam("dias[]") List<String> dias,*/
             @RequestParam LocalTime horaInicio, @RequestParam LocalTime horaFin
-            /*, @RequestParam(required = false) List<Turno>turnos*/ , HttpSession session) {
+            /*, @RequestParam(required = false) List<Turno>turnos*/, HttpSession session) {
         
         try {
-            profesionalService.modificarProfesional(id, nombre, apellido, correo, telefono, password, password2, 
+            profesionalService.modificarProfesional(id, nombre, apellido, correo, telefono, archivo, password, password2, 
                     especialidad, ubicacion, modalidad, honorarios, horaInicio, horaFin);
             session.setAttribute("profesionalSession", profesionalService.getOne(id));
             

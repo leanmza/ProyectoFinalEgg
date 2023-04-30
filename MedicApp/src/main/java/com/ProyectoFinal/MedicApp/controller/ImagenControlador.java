@@ -2,7 +2,7 @@ package com.ProyectoFinal.MedicApp.controller;
 
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
-import com.ProyectoFinal.MedicApp.Service.FotoService;
+import com.ProyectoFinal.MedicApp.Service.ImagenService;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +17,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
-@RequestMapping("/foto")
-public class FotoController {
+@RequestMapping("/imagen")
+public class ImagenControlador {
 
     @Autowired
-    private FotoService fotoService;
+    private ImagenService imagenService;
 
     @Autowired
     private PacienteService pacienteServicio;
@@ -30,24 +30,25 @@ public class FotoController {
     private ProfesionalService profesionalServicio;
 
     @GetMapping("/perfil/{id}")
-    public ResponseEntity<byte[]> imagenUsuario(@PathVariable String id, HttpSession session) {
-        byte[] foto = null;
+    public ResponseEntity<byte[]> imagenPersona(@PathVariable String id, HttpSession session) {
+        
+        System.out.println("Paciente " + session.toString());
+        byte[] imagen = null;
         
         if (session.getAttribute("pacienteSession") != null) {
+            System.out.println("Imagen Paciente");
             Paciente paciente = pacienteServicio.getOne(id);
-            foto = paciente.getFoto().getContenido();
-        }
-        
-        if (session.getAttribute("profesionalSession") != null) {
+            imagen = paciente.getImagen().getContenido();
+        } else if (session.getAttribute("profesionalSession") != null) {
+            System.out.println("Imagen Profesional");
             Profesional profesional = profesionalServicio.getOne(id);
-            foto = profesional.getFoto().getContenido();
-        }
+            imagen = profesional.getImagen().getContenido();
+        } 
 
-            HttpHeaders headers = new HttpHeaders();
-            MediaType mediaType = new MediaType("IMAGE_JPEG", "IMAGE_PNG");
-            headers.setContentType(mediaType);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
 
-            return new ResponseEntity(foto, headers, HttpStatus.OK); //retornamos la imagen
+        return new ResponseEntity(imagen, headers, HttpStatus.OK); //retornamos la imagen
         
     }
 }

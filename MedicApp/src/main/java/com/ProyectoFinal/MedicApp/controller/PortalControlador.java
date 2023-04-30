@@ -1,11 +1,7 @@
 package com.ProyectoFinal.MedicApp.controller;
 
-
-import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
-import com.ProyectoFinal.MedicApp.Enum.Modalidad;
-import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
@@ -85,16 +81,17 @@ public class PortalControlador {
     
     @Transactional
     @PostMapping("/registroPaciente")
-    public String registroPaciente(@RequestParam String nombre, @RequestParam String apellido,
+    public String registroPaciente(@RequestParam String nombre, @RequestParam String apellido,  @RequestParam String dni,
             @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
             @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
-            @RequestParam String sexo, MultipartFile foto) {
+            @RequestParam String sexo, @RequestParam(required = false) MultipartFile archivo) {
        
         try {
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
             Date fechaNacimiento = formato.parse(nacimiento);
             
-            pacienteService.crearPaciente(nombre, apellido, correo, telefono, password, password2, direccion, fechaNacimiento, sexo);
+            pacienteService.crearPaciente(nombre, apellido, dni, correo, telefono, password, password2, direccion, 
+                    fechaNacimiento, sexo, archivo);
             System.out.println("Ingreso de paciente exitoso");
             return "redirect:/inicio";
             
