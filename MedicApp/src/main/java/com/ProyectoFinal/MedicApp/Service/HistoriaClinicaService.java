@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
 /**
  *
  * @author Lean
@@ -30,32 +29,53 @@ import java.util.Optional;
 @Service
 public class HistoriaClinicaService {
 
+    @Autowired
+    private HistoriaClinicaRepositorio historiaClinicaRepositorio;
 
+    @Autowired
+    private PacienteRepositorio pacienteRepositorio;
 
-        @Autowired
-        private HistoriaClinicaRepositorio historiaClinicaRepositorio;
+    @Autowired
+    private ProfesionalRepositorio profesionalRepositorio;
 
-        @Autowired
-        private PacienteRepositorio pacienteRepositorio;
+    @Transactional
+    public void crearHistoriaClinica(String dni, Date fechaConsulta, String userProfesionalName, String diagnostico) throws MiExcepcion {
 
-        @Autowired
-        private ProfesionalRepositorio profesionalRepositorio;
+        validar(dni, userProfesionalName, diagnostico);
 
-        @Transactional
-        public void crearHistoriaClinica(String dni, Date fechaConsulta, String idProfesional, String diagnostico) throws MiExcepcion {
+        HistoriaClinica historiaClinica = new HistoriaClinica();
 
-            crearHistoriaClinica(dni, fechaConsulta, idProfesional, diagnostico);
-            
-            validar(dni, idProfesional, diagnostico);
+        Paciente paciente = pacienteRepositorio.buscarPorDni(dni); // ME TIRABA ERROR CON EL OPTIONAL
+
+        historiaClinica.setPaciente(paciente);
+
+        Profesional profesional = profesionalRepositorio.buscarPorEmail(userProfesionalName); // ME TIRABA ERROR CON EL OPTIONAL
+
+        historiaClinica.setProfesional(profesional);
+
+        historiaClinica.setFechaConsulta(fechaConsulta);
+        historiaClinica.setDiagnostico(diagnostico);
+
+        historiaClinicaRepositorio.save(historiaClinica);
+    }
+
+    @Transactional
+
+    public void modificarHistoriaClinica(String idHistoriaClinica, String dni, Date fechaConsulta, String idProfesional, String diagnostico) throws MiExcepcion {
+
+        validar(dni, idProfesional, diagnostico);
+
+        Optional<HistoriaClinica> respuesta = historiaClinicaRepositorio.findById(idHistoriaClinica); //busco la historia clinica
+
+        if (respuesta.isPresent()) {
 
             HistoriaClinica historiaClinica = new HistoriaClinica();
 
             Paciente paciente = pacienteRepositorio.buscarPorDni(dni); // Me tiraba error con el optional
-                 
-                historiaClinica.setPaciente(paciente);
-     
-            
-            Optional<Profesional> respuestaProfesional = profesionalRepositorio.findById(idProfesional);
+
+            historiaClinica.setPaciente(paciente);
+
+            Optional<Profesional> respuestaProfesional = profesionalRepositorio.findById(idProfesional); // busco el profesional
 
             if (respuestaProfesional.isPresent()) {
                 Profesional profesional = respuestaProfesional.get();
@@ -67,79 +87,52 @@ public class HistoriaClinicaService {
 
             historiaClinicaRepositorio.save(historiaClinica);
         }
-
-        @Transactional
-
-        public void modificarHistoriaClinica(String idHistoriaClinica, String dni, Date fechaConsulta, String idProfesional, String diagnostico) throws MiExcepcion {
-
-            validar(dni, idProfesional, diagnostico);
-
-            Optional<HistoriaClinica> respuesta = historiaClinicaRepositorio.findById(idHistoriaClinica); //busco la historia clinica
-
-            if (respuesta.isPresent()) {
-
-                HistoriaClinica historiaClinica = new HistoriaClinica();
-
-               Paciente paciente = pacienteRepositorio.buscarPorDni(dni); // Me tiraba error con el optional
-
-           
-                    historiaClinica.setPaciente(paciente);
-         
-                Optional<Profesional> respuestaProfesional = profesionalRepositorio.findById(idProfesional); // busco el profesional
-
-                if (respuestaProfesional.isPresent()) {
-                    Profesional profesional = respuestaProfesional.get();
-                    historiaClinica.setProfesional(profesional);
-                }
-
-
-
-                historiaClinica.setFechaConsulta(fechaConsulta);
-                historiaClinica.setDiagnostico(diagnostico);
-
-                historiaClinicaRepositorio.save(historiaClinica);
-            }
-        }
-
-        @Transactional(readOnly = true)
-        public List<HistoriaClinica> listar(String idPaciente) {
-
-            List<HistoriaClinica> historiasClinicas = new ArrayList();
-
-            historiasClinicas = historiaClinicaRepositorio.buscarPorPaciente(idPaciente);
-
-            return historiasClinicas;
-        }
-
-        @Transactional(readOnly = true)
-        public List<HistoriaClinica> listar() {
-
-            List<HistoriaClinica> historiasClinicas = new ArrayList();
-
-            historiasClinicas = historiaClinicaRepositorio.findAll();
-
-            return historiasClinicas;
-        }
-
-        public void validar(String dni, String idProfesional, String diagnostico) throws MiExcepcion {
-
-            try {
-                if (dni == null || dni.isEmpty()) {
-                    throw new MiExcepcion("El paciente no puede ser nulo o vacío");
-                }
-
-                if (idProfesional == null || idProfesional.isEmpty()) {
-                    throw new MiExcepcion("El profesional no puede ser nulo o vacío");
-                }
-
-                if (diagnostico == null || diagnostico.isEmpty()) {
-                    throw new MiExcepcion("El dignostico no puede ser nulo o vacío");
-                }
-
-            } catch (MiExcepcion ex) {
-                throw ex;
-            }
-
-        }
     }
 
+//    @Transactional(readOnly = true)
+//    public List<HistoriaClinica> listar(String dniPaciente) {
+//
+//        Paciente paciente = pacienteRepositorio.buscarPorDni(dniPaciente); //busco por dni para traer el id
+//
+//        String idPaciente = paciente.getId();
+//
+//        List<HistoriaClinica> historiasClinicas = new ArrayList();
+//
+//        historiasClinicas = historiaClinicaRepositorio.buscarPorPaciente(idPaciente);
+//
+//        return historiasClinicas;
+//    }
+    @Transactional(readOnly = true)
+    public List<HistoriaClinica> listar(String dniPaciente) {
+        Paciente paciente = pacienteRepositorio.buscarPorDni(dniPaciente);
+
+        String idPaciente = paciente.getId();
+
+        List<HistoriaClinica> historiasClinicas; //= new ArrayList();
+
+        historiasClinicas = historiaClinicaRepositorio.buscarPorPaciente(idPaciente);
+        
+        return historiasClinicas;
+    }
+
+    public void validar(String dni, String userProfesionalName, String diagnostico) throws MiExcepcion {
+
+        try {
+            if (dni == null || dni.isEmpty()) {
+                throw new MiExcepcion("El paciente no puede ser nulo o vacío");
+            }
+
+            if (userProfesionalName == null || userProfesionalName.isEmpty()) {
+                throw new MiExcepcion("El profesional no puede ser nulo o vacío");
+            }
+
+            if (diagnostico == null || diagnostico.isEmpty()) {
+                throw new MiExcepcion("El dignostico no puede ser nulo o vacío");
+            }
+
+        } catch (MiExcepcion ex) {
+            throw ex;
+        }
+
+    }
+}
