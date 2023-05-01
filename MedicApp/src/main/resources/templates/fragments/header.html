@@ -74,8 +74,9 @@
 
 
                         <a th:href="@{/pac/perfil}" id="btn-contacto" class="link  divHeaderPerfil" sec:authorize ="hasRole ('PACIENTE')">
-                            Perfil <img class="imagen-perfil" th:if="${session.pacienteSession.imagen != null}" th:src="@{/imagen/perfil/__${session.pacienteSession.id}__}">
-                                  
+                            Perfil 
+                            <img class="imagen-perfil" th:if="${session.pacienteSession.imagen != null}" th:src="@{/imagen/perfil/__${session.pacienteSession.id}__}">
+                            <img class="imagen-perfil" th:if="${session.pacienteSession.imagen == null}" src="{../../../../logo_App_fondo_transparente.png}">    
                         </a>
 
                         <a th:href="@{/profesional/perfil}" id="btn-contacto" sec:authorize ="hasRole ('ADMINISTRADOR')" class="link  divHeaderPerfil">

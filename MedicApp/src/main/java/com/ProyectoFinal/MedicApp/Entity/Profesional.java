@@ -37,8 +37,8 @@ public class Profesional extends Persona {
    
 //    private List<String> dias;
 
-    @OneToMany
-    private List<ObraSocial> obrasSociales;
+//    @OneToMany
+//    private List<ObraSocial> obrasSociales;
 
     private Double honorario;
 

@@ -47,15 +47,6 @@ public class ImagenControlador {
             Profesional profesional = profesionalServicio.getOne(id);
             imagen = profesional.getImagen().getContenido();
         } 
-        
-        if (imagen == null) {
-            ClassPathResource imgDefault = new ClassPathResource("static/predeterminada_perfil.png");
-        try {
-            imagen = StreamUtils.copyToByteArray(imgDefault.getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
