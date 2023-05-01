@@ -54,9 +54,11 @@ public class HistoriaClinicaControlador {
 
     @Transactional
     @PostMapping("/listar")
-    public String listar(@RequestParam("dniPaciente") String dniPaciente, ModelMap model) {
+    public String listar(@RequestParam String dniPaciente, ModelMap model) {
+        
         System.out.println(dniPaciente);
         List<HistoriaClinica> historiasClinicas = historiaClinicaService.listar(dniPaciente);
+        
         model.addAttribute("historiasClinicas", historiasClinicas);
         return "lista_historia_clinica.html";
     }

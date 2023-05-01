@@ -102,6 +102,7 @@ public class HistoriaClinicaService {
 //
 //        return historiasClinicas;
 //    }
+    
     @Transactional(readOnly = true)
     public List<HistoriaClinica> listar(String dniPaciente) {
         Paciente paciente = pacienteRepositorio.buscarPorDni(dniPaciente);

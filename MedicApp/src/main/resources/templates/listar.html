@@ -25,7 +25,7 @@
                                     id="especialidad"
                                     class="especialidad form-select"
                                     >
-                                    <option value="" selected disabled>Eligir especialidad</option>
+                                    <option value="" selected disabled>Todas</option>
                                     <option value="Cardiologia">Cardiología</option>
                                     <option value="Clinica">Clínica</option>
                                     <option value="Ginecologia">Ginecología</option>
@@ -35,7 +35,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary btnEnviar btnBuscar botonesLista">
-                                Buscar por especialidad
+                                Buscar
                             </button>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                             <td th:text="${profesional.nombre}"></td>
                             <td th:text="${profesional.apellido}"></td>
                             <td th:text="${profesional.especialidad}"></td>
-                            <td th:text="${profesional.honorario}"></td>
+                            <td th:text="'$ ' + ${profesional.honorario}"></td>
                             <td>
                                 <span th:if="${profesional.calificacion >= 0.00 and profesional.calificacion < 0.25}"> <img src="../../img/estrella00.jpg" height="20"> </span>
                                 <span th:if="${profesional.calificacion >= 0.25 and profesional.calificacion < 0.75}"> <img src="../../img/estrella05.jpg" height="20"> </span>
