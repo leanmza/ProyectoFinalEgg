@@ -51,14 +51,14 @@
 
                 <a class="btn btn-primary botonesLista" href="/listar" role="button">Volver</a>
 
-                <form action="/buscarespechonorario" method="POST">
-                    <input type="hidden" name="especialidad" th:value="${espec}" />
+                <form action="/buscarEspecialidadPorHonorario" method="POST">
+                    <input type="hidden" name="especialidad" th:value="${especialidad}" />
                     <button type="submit">Ordenar por honorarios</button>
                     <p>(De mayor a menor)</p>
                 </form>
 
-                <form action="/buscarespeccalificacion" method="POST">
-                    <input type="hidden" name="especialidad" th:value="${espec}"/>
+                <form action="/buscarEspecialidadPorCalificacion" method="POST">
+                    <input type="hidden" name="especialidad" th:value="${especialidad}"/>
                     <button type="submit">Ordenar por calificación</button>
                     <p>(De mayor a menor)</p>
                 </form>

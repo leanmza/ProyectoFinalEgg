@@ -8,6 +8,7 @@ import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,13 +97,13 @@ public class AdministradorControlador {
             @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,/*
            @RequestParam("obrasSociales[]") List<String> obrasSociales, @RequestParam("dias[]") List<String> dias,
              */ @RequestParam String horaInicio, @RequestParam String horaFin
-    /*, @RequestParam(required = false) List<Turno>turnos*/) {
+    /*, @RequestParam(required = false) List<Turno>turnos*/) throws IOException {
 
         try {
             
             LocalTime horaInicioLT = LocalTime.parse(horaInicio);
             LocalTime horaFinLT = LocalTime.parse(horaFin);
-            
+            System.out.println(archivo.getBytes().toString());
             profesionalServicio.crearProfesional(nombre, apellido, correo, telefono,
                     archivo, password, password2, especialidad, ubicacion, modalidad,
                     honorarios/*, obrasSociales, dias*/, horaInicioLT, horaFinLT);

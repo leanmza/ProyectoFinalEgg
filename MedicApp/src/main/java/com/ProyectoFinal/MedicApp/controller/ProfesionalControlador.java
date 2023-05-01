@@ -91,32 +91,33 @@ public class ProfesionalControlador {
         }
     }
        
-    @PostMapping("/buscarespec")
-    public String buscarespec(@RequestParam("especialidad") String especialidad, ModelMap model) {
+    @Transactional
+    @PostMapping("/buscarEspececialidad")
+    public String buscarEspececialidad(@RequestParam String especialidad, ModelMap model) {
         System.out.println(especialidad);
         List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidad(especialidad);
         model.addAttribute("profesionales", profesionales);
-        model.addAttribute("espec", especialidad);
+        model.addAttribute("especialidad", especialidad);
         return "listaespecialidad.html";
     }
 
     @Transactional
-    @PostMapping("/buscarespechonorario")
-    public String buscarespechonorario(@RequestParam("especialidad") String especialidad, ModelMap model) {
+    @PostMapping("/buscarEspecialidadPorHonorario")
+    public String buscarEspecialidadPorHonorario(@RequestParam String especialidad, ModelMap model) {
         System.out.println(especialidad);
         List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidadOrdenadoHonorario(especialidad);
         model.addAttribute("profesionales", profesionales);
-        model.addAttribute("espec", especialidad);
+        model.addAttribute("especialidad", especialidad);
         return "listaespecialidad.html";
     }
 
     @Transactional
-    @PostMapping("/buscarespeccalificacion")
-    public String buscarespeccalificacion(@RequestParam("especialidad") String especialidad, ModelMap model) {
+    @PostMapping("/buscarEspecialidadPorCalificacion")
+    public String buscarEspecialidadPorCalificacion(@RequestParam String especialidad, ModelMap model) {
         System.out.println(especialidad);
         List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidadOrdenadoCalificacion(especialidad);
         model.addAttribute("profesionales", profesionales);
-        model.addAttribute("espec", especialidad);
+        model.addAttribute("especialidad", especialidad);
         return "listaespecialidad.html";
     }
     

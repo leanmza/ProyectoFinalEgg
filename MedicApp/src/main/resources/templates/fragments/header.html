@@ -74,20 +74,23 @@
 
                 
                             <a th:href="@{/pac/perfil}" id="btn-contacto" class="link  divHeaderPerfil" sec:authorize ="hasRole ('PACIENTE')">
-                                Perfil <img class="imagen-perfil" th:if="${session.pacienteSession.imagen != null}" th:src="@{/imagen/perfil/__${session.pacienteSession.id}__}" >
-                                
+                                Perfil <img class="imagen-perfil" th:src="${session.pacienteSession.imagen != null} ? @{/imagen/perfil/__${session.pacienteSession.id}__} : @{../../predeterminada_perfil.png}" >
+                                       
                             </a>
                         
                              <a th:if="${session.pacienteSession != null}" th:href="@{/pac/perfil}" id="btn-contacto" sec:authorize ="hasRole ('ADMINISTRADOR')" class="link  divHeaderPerfil">
-                                Perfil <img class="imagen-perfil" th:if="${session.pacienteSession.imagen != null}" th:src="@{/imagen/perfil/__${session.pacienteSession.id}__}" >
+                                Perfil 
+                                <img class="imagen-perfil" th:src="${session.pacienteSession.imagen != null} ? @{/imagen/perfil/__${session.pacienteSession.id}__} : @{../../predeterminada_perfil.png}" >
                             </a>
                    
                             <a th:if="${session.profesionalSession != null}" th:href="@{/profesional/perfil}" id="btn-contacto" sec:authorize ="hasRole ('ADMINISTRADOR')" class="link  divHeaderPerfil">
-                                Perfil <img class="imagen-perfil" th:if="${session.profesionalSession.imagen != null}" th:src="@{/imagen/perfil/__${session.profesionalSession.id}__}" >
+                                Perfil 
+                                <img class="imagen-perfil" th:src="${session.profesionalSession.imagen != null} ? @{/imagen/perfil/__${session.profesionalSession.id}__} : @{../../predeterminada_perfil.png}" >
                             </a>
                                   
                             <a th:href="@{/profesional/perfil}" id="btn-contacto" sec:authorize ="hasRole ('PROFESIONAL')" class="link  divHeaderPerfil">
-                                Perfil <img class="imagen-perfil" th:if="${session.profesionalSession.imagen != null}" th:src="@{/imagen/perfil/__${session.profesionalSession.id}__}" >
+                                Perfil 
+                                <img class="imagen-perfil" th:src="${session.profesionalSession.imagen != null} ? @{/imagen/perfil/__${session.profesionalSession.id}__} : @{../../predeterminada_perfil.png}" >
                             </a>
                    
                     </div>

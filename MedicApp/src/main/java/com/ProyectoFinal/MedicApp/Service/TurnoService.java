@@ -122,7 +122,15 @@ public class TurnoService {
         
         return turnos;
     }
-
+    
+    @Transactional(readOnly = true)
+    public List<Turno> buscarPorDniPaciente(@RequestParam String dni) {
+        List<Turno> turnos = new ArrayList<>();
+        turnos = turnoRepositorio.buscarPorDniPaciente(dni);
+        
+        return turnos;
+    }
+    
     private void validar(Date fecha, String idProfesional, String idPaciente) throws MiExcepcion {
         
         if (fecha == null) {
