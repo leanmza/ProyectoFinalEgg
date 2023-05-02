@@ -25,17 +25,6 @@ public class Imagen {
     @Basic(fetch = FetchType.LAZY)
     private byte[] contenido;
 
-    public Imagen(byte[] imagen) {
-        this.contenido = imagen;
-    }
-
     public Imagen() {
-    }
-
-    public Imagen(String id, String mime, String nombre, byte[] contenido) {
-        this.id = id;
-        this.mime = mime;
-        this.nombre = nombre;
-        this.contenido = contenido;
     }
 }

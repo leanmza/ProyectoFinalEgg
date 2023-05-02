@@ -70,10 +70,10 @@ public class ProfesionalControlador {
     @PostMapping("perfil/{id}")
     public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String correo, @RequestParam String telefono, @RequestParam(required = false) MultipartFile archivo, 
-            @RequestParam String password, @RequestParam String password2,  @RequestParam String especialidad,
+            @RequestParam(required = false) String password, @RequestParam(required = false) String password2,  @RequestParam String especialidad,
             @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,
             /*@RequestParam("obrasSociales[]") List<String> obrasSociales, @RequestParam("dias[]") List<String> dias,*/
-            @RequestParam LocalTime horaInicio, @RequestParam LocalTime horaFin
+            @RequestParam(required = false) LocalTime horaInicio, @RequestParam(required = false) LocalTime horaFin
             /*, @RequestParam(required = false) List<Turno>turnos*/, HttpSession session) {
         
         try {

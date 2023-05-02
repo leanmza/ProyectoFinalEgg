@@ -1,0 +1,2256 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace= "/fragments/head :: head" </head>  <!--NO MODIFICAR-->
+
+    <body>
+        <!--HEADER-->
+        <div class="container-fluid cabecera">
+            <header th:replace="/fragments/header :: header"</header>  <!--NO MODIFICAR-->
+        </div>
+
+        <!--MAIN-->
+
+        <main>
+            
+        <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Seleccionar el Dia - Turnos con su Medico</title>
+    <link href="descarga.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <meta name="viewport" content="width=device-width" />
+    <link
+      href="/Content/css?v=htCytkkms7P0gXhVyO9YrL5rBpYHfABPCa3LvkPt2ps1"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Trebuchet MS", Tahoma, sans-serif;
+      }
+    </style>
+    <link
+      href="/Content/themes/base/css?v=FJhqLX2_RHirasOJ_24MYUs48Z44Z-E9i3SNKt8IuW01"
+      rel="stylesheet"
+    />
+
+    <script src="/bundles/jquery?v=JzhfglzUfmVF2qo-weTo-kvXJ9AJvIRBLmu11PgpbVY1"></script>
+
+    <script src="/bundles/jqueryui?v=EHft7nwilnDMnejvwTyEKn_C5lwIsN1M3Xyb8c9OmSQ1"></script>
+
+    <script src="/bundles/json?v=O2jDnmaRnNKHaYX4EjVMbv8WlxsNYik4rhYcLbD7gB41"></script>
+
+    <script type="text/javascript">
+      var celdaSeleccionada = 0;
+      var pSelecionada = 0;
+
+      function overTD(td, color, idP, idPColor) {
+        if (td != celdaSeleccionada) {
+          td.bgColor = color;
+
+          var nodo = document.getElementById(idP);
+          nodo.style.color = idPColor;
+        }
+      }
+
+      function outTD(td, color, idP, idPColor) {
+        if (td != celdaSeleccionada) {
+          td.style.cursor = "pointer";
+          td.bgColor = color;
+
+          var nodo = document.getElementById(idP);
+          nodo.style.color = idPColor;
+        }
+      }
+
+      function seleccionDia(td, fecha) {
+        celdaSeleccionada.bgColor = "#f0f4f7";
+        var nodo = document.getElementById(fecha);
+        nodo.style.color = "black";
+
+        celdaSeleccionada = td;
+
+        var n = fecha.toString().length;
+        if (n < 8) {
+          fecha = "0" + fecha;
+        }
+
+        var diaCadena = fecha.toString();
+        var mesCadena = fecha.toString();
+        var anioCadena = fecha.toString();
+
+        var dia = diaCadena.substring(0, 2);
+        var mes = mesCadena.substring(2, 4);
+        var anio = anioCadena.substring(4, 8);
+
+        var diasSemana = new Array(
+          "Domingo",
+          "Lunes",
+          "Martes",
+          "Miércoles",
+          "Jueves",
+          "Viernes",
+          "Sábado"
+        );
+        var meses = new Array(
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre"
+        );
+
+        document.getElementById("Fecha").value =
+          dia + "/" + mes + "/" + anio.toString();
+
+        //var nodo = document.getElementById("Fecha");
+        //nodo.value = dia + '/' + mes + '/' + anio;
+
+        var mesFinal = mes;
+        if (mes != "10" && mes != "11" && mes != "12") {
+          mesFinal = mes.substring(1, 2);
+        }
+
+        if (dia.substring(0, 1) == "0") {
+          dia = dia.substring(1, 2);
+        }
+
+        var f = new Date(anio, mesFinal - 1, dia);
+
+        td.style.cursor = "default";
+        td.bgColor = "green";
+
+        var nodo = document.getElementById("fechaDescripcion");
+        nodo.style.color = "green";
+        nodo.value =
+          diasSemana[f.getDay()] + " " + dia + " de " + meses[mesFinal - 1];
+      }
+
+      $(document).ready(function () {
+        var today = new Date();
+        var dd = today.getDate();
+        var dia = dd.toString();
+        if (dd <= 9) {
+          dia = "0" + dd.toString();
+        }
+        var mm = today.getMonth() + 1; //January is 0!
+        var mes = mm.toString();
+        if (mm <= 9) {
+          mes = "0" + mm.toString();
+        }
+        var yyyy = today.getFullYear();
+
+        document.getElementById("Fecha").value =
+          dia + "/" + mes + "/" + yyyy.toString();
+
+        var disabledDays;
+        $.get(
+          "/CargaDeDatos/ReturnDate",
+          null,
+          function (data) {
+            disabledDays = data;
+
+            $("#rangeInlinePicker").datepicker({
+              inline: true,
+              beforeShowDay: disableAllTheseDays,
+              rangeSelect: false,
+              numberOfMonths: 3,
+              minDate: 1,
+              maxDate: "+3m",
+              dateFormat: "dd/mm/yy",
+              onSelect: selecciono,
+              validateOnBlur: false,
+            });
+          },
+          "json"
+        );
+
+        function selecciono(date) {
+          //alert(date);
+          document.getElementById("Fecha").value = date;
+          var dateSelect = $(this).datepicker("getDate"); //used below
+          var dayOfWeek = $.datepicker.formatDate("DD", dateSelect);
+          var dateOfSelected = $.datepicker.formatDate("d", dateSelect);
+          var mesOfSelected = $.datepicker.formatDate("MM", dateSelect);
+
+          $("#fechaDetalle").text(
+            dayOfWeek + " de " + dateOfSelected + " de " + mesOfSelected
+          );
+        }
+
+        function disableAllTheseDays(date) {
+          var m = date.getMonth(),
+            d = date.getDate(),
+            y = date.getFullYear();
+          for (i = 0; i < disabledDays.length; i++) {
+            //if you change the dateFormat,please remember to change this too
+            if ($.inArray(y + "-" + (m + 1) + "-" + d, disabledDays) != -1) {
+              return [
+                false,
+                "ui-state-hover",
+                "Dia completo o no se dan turnos",
+              ];
+            }
+          }
+          if (date.getDay() == 0) {
+            //Domingo
+            return [false, "ui-state-hover", "Domingo no laborable"];
+          }
+
+          return [true];
+        }
+      });
+
+      $.datepicker.regional["es"] = {
+        closeText: "Cerrar",
+        prevText: "<Ant",
+        nextText: "Sig>",
+        currentText: "Hoy",
+        monthNames: [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ],
+        monthNamesShort: [
+          "Ene",
+          "Feb",
+          "Mar",
+          "Abr",
+          "May",
+          "Jun",
+          "Jul",
+          "Ago",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dic",
+        ],
+        dayNames: [
+          "Domingo",
+          "Lunes",
+          "Martes",
+          "Miércoles",
+          "Jueves",
+          "Viernes",
+          "Sábado",
+        ],
+        dayNamesShort: ["Dom", "Lun", "Mar", "Mié", "Juv", "Vie", "Sáb"],
+        dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá"],
+        weekHeader: "Sm",
+        dateFormat: "dd/mm/yy",
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: "",
+      };
+      $.datepicker.setDefaults($.datepicker.regional["es"]);
+    </script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(["_setAccount", "UA-34289414-1"]);
+      _gaq.push(["_trackPageview"]);
+
+      (function () {
+        var ga = document.createElement("script");
+        ga.type = "text/javascript";
+        ga.async = true;
+        ga.src =
+          ("https:" == document.location.protocol
+            ? "https://ssl"
+            : "http://www") + ".google-analytics.com/ga.js";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+    <script>
+      function preventBack() {
+        window.history.forward();
+      }
+
+      setTimeout("preventBack()", 0);
+      window.onunload = function () {
+        null;
+      };
+    </script>
+  </head>
+  <body>
+    <div>
+      <div>
+        <table width="100%">
+          <tr>
+            <td>
+              <img src="descarga.png" alt="VTV" height="70" width="70" />
+            </td>
+            <td align="right">
+              <div
+                id="texts"
+                style="float: right; font-size: 20px; font-weight: bold"
+              >
+                RESERVA DE TURNO&nbsp;&nbsp;
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="float: right; font-size: 16px; font-weight: bold; color: red">
+        <label></label>
+      </div>
+
+      <div class="modal-body">
+        <div id=" tituloPage" style="color: #333333; font-size: 16px">
+          Seleccionar el Dia
+        </div>
+
+        <form action="pag3.html" method="post">
+          <br />
+          <fieldset style="height: 420px">
+            <legend>Modificación de Datos y selección del dia del turno</legend>
+
+            <table width="100%">
+              <tr>
+                <td width="50%" style="height: 250px; vertical-align: top">
+                  <table style="height: 250px; width: 100%">
+                    <tr style="height: 40px; width: 50%">
+                      <td style="height: 40px; width: 50%">
+                        <p>
+                          <label id="lblPlanta">Localidad:</label>
+                        </p>
+                      </td>
+                      <td style="height: 40px; width: 50%">
+                        <div class="remarca">
+                          <label id="Planta">CORRIENTES</label>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr style="height: 40px; width: 50%">
+                      <td style="height: 40px; width: 50%">
+                        <p>
+                          <label id="lblDominio">DNI:</label>
+                        </p>
+                      </td>
+                      <td style="height: 40px; width: 50%">
+                        <div class="remarca">
+                          <label id="Patente"></label>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr style="height: 40px; width: 50%">
+                      <td style="height: 40px; width: 50%">
+                        <p>
+                          <label id="lblNombre">Nombre:</label>
+                        </p>
+                      </td>
+                      <td>
+                        <input
+                          data-val="true"
+                          data-val-regex="Nombre con Caracteres inválidos."
+                          data-val-regex-pattern="^[a-zA-ZñÑ&#39;&#39;-&#39;\s]{1,40}$"
+                          data-val-required="Se debe ingresar el nombre."
+                          id="Nombre"
+                          name="Nombre"
+                          type="text"
+                          value=""
+                        />
+                      </td>
+                    </tr>
+                    <tr style="height: 40px; width: 50%">
+                      <td style="height: 40px; width: 50%">
+                        <p>
+                          <label id="lblApellido">Apellido:</label>
+                        </p>
+                      </td>
+                      <td>
+                        <input
+                          data-val="true"
+                          data-val-regex="Apellido con Caracteres inválidos."
+                          data-val-regex-pattern="^[a-zA-ZñÑ&#39;&#39;-&#39;\s]{1,40}$"
+                          data-val-required="Se debe ingresar el apellido."
+                          id="Apellido"
+                          name="Apellido"
+                          type="text"
+                          value=""
+                        />
+                      </td>
+                    </tr>
+                    <tr style="height: 40px; width: 50%">
+                      <td style="height: 40px; width: 50%">
+                        <p>
+                          <label id="lblTelefono">Telefono:</label>
+                        </p>
+                      </td>
+                      <td>
+                        <input
+                          data-val="true"
+                          data-val-required="Se debe ingresar el telefono."
+                          id="Telefono"
+                          name="Telefono"
+                          type="text"
+                          value=""
+                        />
+                      </td>
+                    </tr>
+                    <tr style="height: 40px; width: 50%">
+                      <td style="height: 40px; width: 50%">
+                        <p>
+                          <label id="lblTelefonoCelular"
+                            >Telefono Celular:</label
+                          >
+                        </p>
+                      </td>
+                      <td>
+                        <input
+                          data-val="true"
+                          data-val-required="Se debe ingresar el telefono celular."
+                          id="Celular"
+                          name="Celular"
+                          type="text"
+                          value=""
+                        />
+                      </td>
+                    </tr>
+                    <tr style="height: 40px; width: 50%">
+                      <td style="height: 40px; width: 50%">
+                        <p>
+                          <label id="lblEmail">Email:</label>
+                        </p>
+                      </td>
+                      <td>
+                        <input
+                          data-val="true"
+                          data-val-regex="Email invalido."
+                          data-val-regex-pattern="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"
+                          data-val-required="Se debe ingresar el e-mail."
+                          id="Email"
+                          name="Email"
+                          type="text"
+                          value=""
+                        />
+                      </td>
+                    </tr>
+                    <tr style="height: 40px; width: 100%">
+                      <td colspan="2" style="height: 40px; width: 1000%">
+                        <h5 style="color: red; font-size: 12pt">
+                          <span
+                            class="field-validation-valid"
+                            data-valmsg-for="Nombre"
+                            data-valmsg-replace="true"
+                          ></span>
+                          <span
+                            class="field-validation-valid"
+                            data-valmsg-for="Apellido"
+                            data-valmsg-replace="true"
+                          ></span>
+                          <span
+                            class="field-validation-valid"
+                            data-valmsg-for="Telefono"
+                            data-valmsg-replace="true"
+                          ></span>
+                          <span
+                            class="field-validation-valid"
+                            data-valmsg-for="Celular"
+                            data-valmsg-replace="true"
+                          ></span>
+                          <span
+                            class="field-validation-valid"
+                            data-valmsg-for="Email"
+                            data-valmsg-replace="true"
+                          ></span>
+                          <span
+                            class="field-validation-valid"
+                            data-valmsg-for="Fecha"
+                            data-valmsg-replace="true"
+                          ></span>
+                        </h5>
+                      </td>
+                    </tr>
+                  </table>
+                  <br />
+                  <br />
+                </td>
+                <td width="50%" style="height: 250px; vertical-align: top">
+                  <table style="height: 250px; width: 100%">
+                    <tr style="height: 250px; width: 100%">
+                      <td colspan="2" style="height: 170px">
+                        <table
+                          width="100%"
+                          style="
+                            background-color: #f0f4f7;
+                            border-style: solid;
+                            border-width: 1px;
+                            height: 170px;
+                            vertical-align: top;
+                          "
+                        >
+                          <tr style="height: 170px; vertical-align: top">
+                            <td style="height: 170px">
+                              <table
+                                width="100%"
+                                style="height: 170px; vertical-align: top"
+                              >
+                                <tr style="height: 30px; vertical-align: top">
+                                  <td
+                                    class="remarca"
+                                    style="
+                                      font-size: 14px;
+                                      height: 30px;
+                                      text-align: center;
+                                    "
+                                    colspan="7"
+                                  >
+                                    Abril 2023
+                                  </td>
+                                </tr>
+
+                                <tr style="height: 20px">
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Lu
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Ma
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Mi
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Ju
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Vi
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Sa
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Do
+                                    </p>
+                                  </td>
+                                </tr>
+
+                                <tr style="height: 20px">
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaDetalle"
+                                      style="color: gray; font: bold"
+                                    ></p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaDetalle"
+                                      style="color: gray; font: bold"
+                                    ></p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaDetalle"
+                                      style="color: gray; font: bold"
+                                    ></p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaDetalle"
+                                      style="color: gray; font: bold"
+                                    ></p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaDetalle"
+                                      style="color: gray; font: bold"
+                                    ></p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="1042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      1
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="2042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      2
+                                    </p>
+                                  </td>
+                                </tr>
+                                <tr style="height: 20px">
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="3042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      3
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="4042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      4
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="5042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      5
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="6042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      6
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="7042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      7
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="8042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      8
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="9042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      9
+                                    </p>
+                                  </td>
+                                </tr>
+                                <tr style="height: 20px">
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="10042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      10
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="11042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      11
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="12042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      12
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="13042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      13
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="14042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      14
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="15042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      15
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="16042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      16
+                                    </p>
+                                  </td>
+                                </tr>
+                                <tr style="height: 20px">
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="17042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      17
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="18042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      18
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="19042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      19
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="20042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      20
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="21042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      21
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="22042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      22
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="23042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      23
+                                    </p>
+                                  </td>
+                                </tr>
+                                <tr style="height: 20px">
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="24042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      24
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="25042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      25
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="26042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      26
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="27042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      27
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="28042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      28
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="29042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      29
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="30042023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      30
+                                    </p>
+                                  </td>
+                                </tr>
+                                <tr style="height: 20px"></tr>
+                              </table>
+                            </td>
+                            <td style="height: 170px">
+                              <table
+                                width="100%"
+                                style="height: 170px; vertical-align: top"
+                              >
+                                <tr style="height: 30px; vertical-align: top">
+                                  <td
+                                    class="remarca"
+                                    style="
+                                      font-size: 14px;
+                                      height: 30px;
+                                      text-align: center;
+                                    "
+                                    colspan="7"
+                                  >
+                                    Mayo 2023
+                                  </td>
+                                </tr>
+
+                                <tr style="height: 20px">
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Lu
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Ma
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Mi
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Ju
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Vi
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Sa
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Do
+                                    </p>
+                                  </td>
+                                </tr>
+
+                                <tr style="height: 20px">
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="1052023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      1
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="2052023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      2
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td3052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 3052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 3052023, 'black'); "
+                                    onclick="seleccionDia(this, 3052023); "
+                                  >
+                                    <p
+                                      id="3052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      3
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td4052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 4052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 4052023, 'black'); "
+                                    onclick="seleccionDia(this, 4052023); "
+                                  >
+                                    <p
+                                      id="4052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      4
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td5052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 5052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 5052023, 'black'); "
+                                    onclick="seleccionDia(this, 5052023); "
+                                  >
+                                    <p
+                                      id="5052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      5
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td6052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 6052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 6052023, 'black'); "
+                                    onclick="seleccionDia(this, 6052023); "
+                                  >
+                                    <p
+                                      id="6052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      6
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="7052023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      7
+                                    </p>
+                                  </td>
+                                </tr>
+                                <tr style="height: 20px">
+                                  <td
+                                    id="td8052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 8052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 8052023, 'black'); "
+                                    onclick="seleccionDia(this, 8052023); "
+                                  >
+                                    <p
+                                      id="8052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      8
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td9052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 9052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 9052023, 'black'); "
+                                    onclick="seleccionDia(this, 9052023); "
+                                  >
+                                    <p
+                                      id="9052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      9
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td10052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 10052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 10052023, 'black'); "
+                                    onclick="seleccionDia(this, 10052023); "
+                                  >
+                                    <p
+                                      id="10052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      10
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td11052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 11052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 11052023, 'black'); "
+                                    onclick="seleccionDia(this, 11052023); "
+                                  >
+                                    <p
+                                      id="11052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      11
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td12052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 12052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 12052023, 'black'); "
+                                    onclick="seleccionDia(this, 12052023); "
+                                  >
+                                    <p
+                                      id="12052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      12
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td13052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 13052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 13052023, 'black'); "
+                                    onclick="seleccionDia(this, 13052023); "
+                                  >
+                                    <p
+                                      id="13052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      13
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="14052023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      14
+                                    </p>
+                                  </td>
+                                </tr>
+                                <tr style="height: 20px">
+                                  <td
+                                    id="td15052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 15052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 15052023, 'black'); "
+                                    onclick="seleccionDia(this, 15052023); "
+                                  >
+                                    <p
+                                      id="15052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      15
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td16052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 16052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 16052023, 'black'); "
+                                    onclick="seleccionDia(this, 16052023); "
+                                  >
+                                    <p
+                                      id="16052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      16
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td17052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 17052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 17052023, 'black'); "
+                                    onclick="seleccionDia(this, 17052023); "
+                                  >
+                                    <p
+                                      id="17052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      17
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td18052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 18052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 18052023, 'black'); "
+                                    onclick="seleccionDia(this, 18052023); "
+                                  >
+                                    <p
+                                      id="18052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      18
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td19052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 19052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 19052023, 'black'); "
+                                    onclick="seleccionDia(this, 19052023); "
+                                  >
+                                    <p
+                                      id="19052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      19
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td20052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 20052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 20052023, 'black'); "
+                                    onclick="seleccionDia(this, 20052023); "
+                                  >
+                                    <p
+                                      id="20052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      20
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="21052023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      21
+                                    </p>
+                                  </td>
+                                </tr>
+                                <tr style="height: 20px">
+                                  <td
+                                    id="td22052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 22052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 22052023, 'black'); "
+                                    onclick="seleccionDia(this, 22052023); "
+                                  >
+                                    <p
+                                      id="22052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      22
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td23052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 23052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 23052023, 'black'); "
+                                    onclick="seleccionDia(this, 23052023); "
+                                  >
+                                    <p
+                                      id="23052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      23
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td24052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 24052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 24052023, 'black'); "
+                                    onclick="seleccionDia(this, 24052023); "
+                                  >
+                                    <p
+                                      id="24052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      24
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="25052023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      25
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="26052023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      26
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="27052023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      27
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="28052023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      28
+                                    </p>
+                                  </td>
+                                </tr>
+                                <tr style="height: 20px">
+                                  <td
+                                    id="td29052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 29052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 29052023, 'black'); "
+                                    onclick="seleccionDia(this, 29052023); "
+                                  >
+                                    <p
+                                      id="29052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      29
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td30052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 30052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 30052023, 'black'); "
+                                    onclick="seleccionDia(this, 30052023); "
+                                  >
+                                    <p
+                                      id="30052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      30
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td31052023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 31052023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 31052023, 'black'); "
+                                    onclick="seleccionDia(this, 31052023); "
+                                  >
+                                    <p
+                                      id="31052023"
+                                      style="color: black; font: bold"
+                                    >
+                                      31
+                                    </p>
+                                  </td>
+                                </tr>
+                                <tr style="height: 20px"></tr>
+                              </table>
+                            </td>
+                            <td style="height: 170px">
+                              <table
+                                width="100%"
+                                style="height: 170px; vertical-align: top"
+                              >
+                                <tr style="height: 30px; vertical-align: top">
+                                  <td
+                                    class="remarca"
+                                    style="
+                                      font-size: 14px;
+                                      height: 30px;
+                                      text-align: center;
+                                    "
+                                    colspan="7"
+                                  >
+                                    Junio 2023
+                                  </td>
+                                </tr>
+
+                                <tr style="height: 20px">
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Lu
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Ma
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Mi
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Ju
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Vi
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Sa
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaEncabezado"
+                                      style="color: black; font: bold"
+                                    >
+                                      Do
+                                    </p>
+                                  </td>
+                                </tr>
+
+                                <tr style="height: 20px">
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaDetalle"
+                                      style="color: gray; font: bold"
+                                    ></p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaDetalle"
+                                      style="color: gray; font: bold"
+                                    ></p>
+                                  </td>
+                                  <td style="height: 20px">
+                                    <p
+                                      id="fechaDetalle"
+                                      style="color: gray; font: bold"
+                                    ></p>
+                                  </td>
+                                  <td
+                                    id="td1062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 1062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 1062023, 'black'); "
+                                    onclick="seleccionDia(this, 1062023); "
+                                  >
+                                    <p
+                                      id="1062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      1
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td2062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 2062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 2062023, 'black'); "
+                                    onclick="seleccionDia(this, 2062023); "
+                                  >
+                                    <p
+                                      id="2062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      2
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td3062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 3062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 3062023, 'black'); "
+                                    onclick="seleccionDia(this, 3062023); "
+                                  >
+                                    <p
+                                      id="3062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      3
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="4062023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      4
+                                    </p>
+                                  </td>
+                                </tr>
+                                <tr style="height: 20px">
+                                  <td
+                                    id="td5062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 5062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 5062023, 'black'); "
+                                    onclick="seleccionDia(this, 5062023); "
+                                  >
+                                    <p
+                                      id="5062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      5
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td6062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 6062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 6062023, 'black'); "
+                                    onclick="seleccionDia(this, 6062023); "
+                                  >
+                                    <p
+                                      id="6062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      6
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td7062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 7062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 7062023, 'black'); "
+                                    onclick="seleccionDia(this, 7062023); "
+                                  >
+                                    <p
+                                      id="7062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      7
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td8062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 8062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 8062023, 'black'); "
+                                    onclick="seleccionDia(this, 8062023); "
+                                  >
+                                    <p
+                                      id="8062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      8
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td9062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 9062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 9062023, 'black'); "
+                                    onclick="seleccionDia(this, 9062023); "
+                                  >
+                                    <p
+                                      id="9062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      9
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td10062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 10062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 10062023, 'black'); "
+                                    onclick="seleccionDia(this, 10062023); "
+                                  >
+                                    <p
+                                      id="10062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      10
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="11062023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      11
+                                    </p>
+                                  </td>
+                                </tr>
+                                <tr style="height: 20px">
+                                  <td
+                                    id="td12062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 12062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 12062023, 'black'); "
+                                    onclick="seleccionDia(this, 12062023); "
+                                  >
+                                    <p
+                                      id="12062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      12
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td13062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 13062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 13062023, 'black'); "
+                                    onclick="seleccionDia(this, 13062023); "
+                                  >
+                                    <p
+                                      id="13062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      13
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td14062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 14062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 14062023, 'black'); "
+                                    onclick="seleccionDia(this, 14062023); "
+                                  >
+                                    <p
+                                      id="14062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      14
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td15062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 15062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 15062023, 'black'); "
+                                    onclick="seleccionDia(this, 15062023); "
+                                  >
+                                    <p
+                                      id="15062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      15
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td16062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 16062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 16062023, 'black'); "
+                                    onclick="seleccionDia(this, 16062023); "
+                                  >
+                                    <p
+                                      id="16062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      16
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="17062023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      17
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="18062023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      18
+                                    </p>
+                                  </td>
+                                </tr>
+                                <tr style="height: 20px">
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="19062023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      19
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="20062023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      20
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td21062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 21062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 21062023, 'black'); "
+                                    onclick="seleccionDia(this, 21062023); "
+                                  >
+                                    <p
+                                      id="21062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      21
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td22062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 22062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 22062023, 'black'); "
+                                    onclick="seleccionDia(this, 22062023); "
+                                  >
+                                    <p
+                                      id="22062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      22
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td23062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 23062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 23062023, 'black'); "
+                                    onclick="seleccionDia(this, 23062023); "
+                                  >
+                                    <p
+                                      id="23062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      23
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td24062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 24062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 24062023, 'black'); "
+                                    onclick="seleccionDia(this, 24062023); "
+                                  >
+                                    <p
+                                      id="24062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      24
+                                    </p>
+                                  </td>
+                                  <td style="height: 20px; text-align: center">
+                                    <p
+                                      id="25062023"
+                                      style="color: lightgray; font: bold"
+                                    >
+                                      25
+                                    </p>
+                                  </td>
+                                </tr>
+                                <tr style="height: 20px">
+                                  <td
+                                    id="td26062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 26062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 26062023, 'black'); "
+                                    onclick="seleccionDia(this, 26062023); "
+                                  >
+                                    <p
+                                      id="26062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      26
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td27062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 27062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 27062023, 'black'); "
+                                    onclick="seleccionDia(this, 27062023); "
+                                  >
+                                    <p
+                                      id="27062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      27
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td28062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 28062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 28062023, 'black'); "
+                                    onclick="seleccionDia(this, 28062023); "
+                                  >
+                                    <p
+                                      id="28062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      28
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td29062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 29062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 29062023, 'black'); "
+                                    onclick="seleccionDia(this, 29062023); "
+                                  >
+                                    <p
+                                      id="29062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      29
+                                    </p>
+                                  </td>
+                                  <td
+                                    id="td30062023"
+                                    style="
+                                      border-color: lightgray;
+                                      border-style: solid;
+                                      border-width: 1px;
+                                      height: 20px;
+                                      text-align: center;
+                                    "
+                                    onmousemove="outTD(this, 'green', 30062023, '#f0f4f7') "
+                                    onMouseOut="overTD(this, '#f0f4f7', 30062023, 'black'); "
+                                    onclick="seleccionDia(this, 30062023); "
+                                  >
+                                    <p
+                                      id="30062023"
+                                      style="color: black; font: bold"
+                                    >
+                                      30
+                                    </p>
+                                  </td>
+                                </tr>
+                                <tr style="height: 20px"></tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr style="height: 40px; width: 100%">
+                      <td style="height: 40px">
+                        <input
+                          id="fechaDescripcion"
+                          type="text"
+                          readonly="readonly"
+                          style="border: none; color: green"
+                        />
+                      </td>
+                      <td style="height: 40px">
+                        <input
+                          id="Fecha"
+                          name="Fecha"
+                          style="display: none"
+                          type="text"
+                          value="29/04/2023"
+                        />
+                      </td>
+                    </tr>
+                    <tr style="height: 40px; width: 100%">
+                      <td style="height: 40px; text-align: left; width: 50%">
+                        <p
+                          id="comentarioLeyenda1"
+                          style="
+                            color: black;
+                            font-size: 12px;
+                            font-weight: bold;
+                          "
+                        >
+                          Fechas disponibles: dias en negrita
+                        </p>
+                        <p
+                          id="comentarioLeyenda2"
+                          style="
+                            color: black;
+                            font-size: 12px;
+                            font-weight: bold;
+                          "
+                        >
+                          Fechas no disponibles: dias grisados
+                        </p>
+                      </td>
+                      <td style="height: 40px; text-align: right; width: 50%">
+                        <button
+                          name="button"
+                          value="Siguiente"
+                          type="submit"
+                          style="
+                            background-color: #f5812e;
+                            border: none;
+                            color: #ffffff;
+                            font-size: 12pt;
+                            height: 50px;
+                            text-align: center;
+                            width: 150px;
+                          "
+                        >
+                          Siguiente
+                        </button>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
+<script id="f5_cspm">
+  (function () {
+    var f5_cspm = {
+      f5_p: "KEOPJDEAMFNPFNICLGKPBLAHFIMPHPPKCHDNNHJFJKMNEPEJLKBGMDJOAPOPADHLACABGKNMJLPDEBFHLCIANLAMACLAHLKAEBEDGLCFLNBPMGKIAIDAPPNHPFGPJNBG",
+      setCharAt: function (str, index, chr) {
+        if (index > str.length - 1) return str;
+        return str.substr(0, index) + chr + str.substr(index + 1);
+      },
+      get_byte: function (str, i) {
+        var s = (i / 16) | 0;
+        i = i & 15;
+        s = s * 32;
+        return (
+          ((str.charCodeAt(i + 16 + s) - 65) << 4) |
+          (str.charCodeAt(i + s) - 65)
+        );
+      },
+      set_byte: function (str, i, b) {
+        var s = (i / 16) | 0;
+        i = i & 15;
+        s = s * 32;
+        str = f5_cspm.setCharAt(
+          str,
+          i + 16 + s,
+          String.fromCharCode((b >> 4) + 65)
+        );
+        str = f5_cspm.setCharAt(str, i + s, String.fromCharCode((b & 15) + 65));
+        return str;
+      },
+      set_latency: function (str, latency) {
+        latency = latency & 0xffff;
+        str = f5_cspm.set_byte(str, 40, latency >> 8);
+        str = f5_cspm.set_byte(str, 41, latency & 0xff);
+        str = f5_cspm.set_byte(str, 35, 2);
+        return str;
+      },
+      wait_perf_data: function () {
+        try {
+          var wp = window.performance.timing;
+          if (wp.loadEventEnd > 0) {
+            var res = wp.loadEventEnd - wp.navigationStart;
+            if (res < 60001) {
+              var cookie_val = f5_cspm.set_latency(f5_cspm.f5_p, res);
+              window.document.cookie =
+                "f5avr2094242054aaaaaaaaaaaaaaaa_cspm_=" +
+                encodeURIComponent(cookie_val) +
+                ";path=/";
+            }
+            return;
+          }
+        } catch (err) {
+          return;
+        }
+        setTimeout(f5_cspm.wait_perf_data, 100);
+        return;
+      },
+      go: function () {
+        var chunk = window.document.cookie.split(/\s*;\s*/);
+        for (var i = 0; i < chunk.length; ++i) {
+          var pair = chunk[i].split(/\s*=\s*/);
+          if (pair[0] == "f5_cspm" && pair[1] == "1234") {
+            var d = new Date();
+            d.setTime(d.getTime() - 1000);
+            window.document.cookie =
+              "f5_cspm=;expires=" + d.toUTCString() + ";path=/;";
+            setTimeout(f5_cspm.wait_perf_data, 100);
+          }
+        }
+      },
+    };
+    f5_cspm.go();
+  })();
+</script>
+            
+            
+        </main>
+     <!--FOOTER-->
+        <div class="container-fluid pie">
+            <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
+        </div>
+
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+            crossorigin="anonymous"
+        ></script> <!--NO MODIFICAR-->
+
+    </body>
+</html>

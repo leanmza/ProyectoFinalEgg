@@ -66,8 +66,10 @@ public class PacienteService implements UserDetailsService {
         paciente.setFechaNacimiento(fechaNacimiento);
         paciente.setSexo(sexo);
         
-        Imagen imagen = imagenServicio.guardar(archivo);
-        paciente.setImagen(imagen);
+        if(!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
+            Imagen imagen = imagenServicio.guardar(archivo);
+            paciente.setImagen(imagen);
+        }
         
         paciente.setRol(Rol.PACIENTE);
         paciente.setActivo(true);

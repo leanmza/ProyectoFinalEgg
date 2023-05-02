@@ -64,8 +64,10 @@ public class ProfesionalService implements UserDetailsService {
         profesional.setEmail(correo);
         profesional.setTelefono(telefono);
         
-        Imagen imagen = imagenServicio.guardar(archivo);
-        profesional.setImagen(imagen);
+        if(!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
+            Imagen imagen = imagenServicio.guardar(archivo);
+            profesional.setImagen(imagen);
+        }
         
         profesional.setPassword(new BCryptPasswordEncoder().encode(password));
         profesional.setRol(Rol.PROFESIONAL);
