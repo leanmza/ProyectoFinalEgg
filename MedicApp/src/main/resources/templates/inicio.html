@@ -10,12 +10,50 @@
 
         <!--MAIN-->
 
-        <main>
-            
-            <h1>ESTE ES INICIO.HTML</h1>
-            
-            
-        </main>
+    <main>
+      <div class="container-fluid contenedorMain contenedorCards">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div class="col">
+            <div class="card h-100">
+              <img src="calendario.jpg" class="card-img-top imgCard" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title">Mis Turnos</h5>
+                <p class="card-text">
+                  Lista de los proximos turnos
+                </p>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col">
+            <div class="card h-100">
+              <img src="ilustracion-doctores.jpg" class="card-img-top imgCard" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title">Mis Profesionales</h5>
+                <p class="card-text">Lista de los profesionales que ya ha sacado
+                   turnos previamente en la APP. Sería para acelerar la busqueda</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card h-100">
+              <img src="predeterminada_perfil.png" class="card-img-top imgCard" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title">Mi Perfil</h5>
+                <p class="card-text">
+                  Vista foto de perfil, nombre, apellido, edad.
+                  Link para editar perfil
+                </p>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </main>
      <!--FOOTER-->
         <div class="container-fluid pie">
             <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->

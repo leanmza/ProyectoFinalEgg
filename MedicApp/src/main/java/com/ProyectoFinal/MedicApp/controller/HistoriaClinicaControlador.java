@@ -89,7 +89,7 @@ public class HistoriaClinicaControlador {
             //MODIFICAR EL SERVICE crearHistoriaClinica PARA QUE RECIBA EL DNI Y LO USE PARA BUSCAR EN EL REPOSITORIO DE LOS PACIENTES, 
             //TRAIGA AL PACIENTE Y LOS ASIGNE A ESTA HISTORIA CLINICA
             historiaClinicaService.crearHistoriaClinica(dni, fechaConsulta, userProfesionalName, diagnostico);
-            System.out.println("Ingreso de paciente exitoso");
+            System.out.println("Ingreso de historia clinica exitoso");
             return "redirect:/inicio";
 
         } catch (MiExcepcion me) {

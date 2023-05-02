@@ -13,8 +13,24 @@
         <main>
 
 
-            <div class="container-fluid contenedorDiv">
+            <div class="container-fluid contenedorDiv contenedorMain">
                 <h3>PROFESIONALES POR ESPECIALIDAD</h3>
+                <div class="row rowFiltros">
+                    <div class="col-3">
+                        <form action="/buscarespechonorario" method="POST">
+                            <input type="hidden" name="especialidad" th:value="${espec}" />
+                            <button type="submit" class="btn btn-primary    botonesLista">Ordenar por honorarios</button>
+                            <p>(De mayor a menor)</p>
+                        </form>
+                    </div>
+                    <div class="col-3">
+                        <form action="/buscarespeccalificacion" method="POST">
+                            <input type="hidden" name="especialidad" th:value="${espec}"/>
+                            <button type="submit" class="btn btn-primary botonesLista">Ordenar por calificación</button>
+                            <p>(De mayor a menor)</p>
+                        </form>
+                    </div>
+                </div>
                 <table class="table table-light">
                     <thead>
                         <tr>
@@ -51,17 +67,7 @@
 
                 <a class="btn btn-primary botonesLista" href="/listar" role="button">Volver</a>
 
-                <form action="/buscarespechonorario" method="POST">
-                    <input type="hidden" name="especialidad" th:value="${espec}" />
-                    <button type="submit">Ordenar por honorarios</button>
-                    <p>(De mayor a menor)</p>
-                </form>
 
-                <form action="/buscarespeccalificacion" method="POST">
-                    <input type="hidden" name="especialidad" th:value="${espec}"/>
-                    <button type="submit">Ordenar por calificación</button>
-                    <p>(De mayor a menor)</p>
-                </form>
 
 
             </div>

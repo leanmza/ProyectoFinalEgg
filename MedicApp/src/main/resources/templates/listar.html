@@ -11,7 +11,7 @@
         <!--MAIN-->
 
         <main>
-            <div class="container-fluid contenedorDiv">
+            <div class="container-fluid contenedorDiv contenedorMain">
 
                 <div class="row titulo">
                     <h3>LISTA DE PROFESIONALES</h3>
@@ -50,8 +50,8 @@
                             <th scope="col">Especialidad</th>
                             <th scope="col">Valor de Consulta</th>
                             <th scope="col">Calificación</th> 
-                            <th scope="col" sec:authorize ="hasRole ('ADMINISTRADOR')" >Acciones</th>
-                        </tr>
+<!--                            <th scope="col" sec:authorize ="hasRole ('ADMINISTRADOR')" >Acciones</th>
+                        </tr>-->
                     </thead>
 
                     <tbody th:each="profesional : ${profesionales}">
@@ -74,12 +74,10 @@
                                 <span th:if="${profesional.calificacion >= 4.75}"> <img src="../../img/estrella50.jpg" height="20"> </span>
                             </td>
 
-                            <td>
+<!--                            <td>
                                 <a sec:authorize ="hasRole ('ADMINISTRADOR')" th:href= "@{/pro/perfil/__${profesional.id}__}"> Modificar </a>
-                            </td>
-                                <!-- <td>
-                                    <a sec:authorize ="hasRole ('ADMIN')" th:href= "@{/noticia/eliminar/__${noticia.id}__}"> Eliminar </a>
-                                </td>  -->
+                            </td>-->
+                      
                                
                         </tr>
                     </tbody>
