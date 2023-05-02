@@ -105,6 +105,7 @@ public class HistoriaClinicaService {
     
     @Transactional(readOnly = true)
     public List<HistoriaClinica> listar(String dniPaciente) {
+        
         Paciente paciente = pacienteRepositorio.buscarPorDni(dniPaciente);
 
         String idPaciente = paciente.getId();

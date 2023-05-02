@@ -19,6 +19,7 @@
                 </a>
 
 
+                <<<<<<< HEAD
                 <!--SI NO  HAY LOGUEADO-->
                 <a
                     href="/"
@@ -125,8 +126,8 @@
                         <img class="imagen-perfil" 
                              sec:authorize ="hasRole ('PACIENTE')"
                              th:src="${session.pacienteSession.imagen != null ? '/imagen/perfil/__${session.pacienteSession.id}__' : '../predeterminada_perfil.png'}" >
-                        
-                        
+
+
 
 
                         <img class="imagen-perfil" 

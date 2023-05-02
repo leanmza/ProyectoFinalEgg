@@ -136,7 +136,7 @@ public class AdministradorControlador {
             obraSocialServicio.crearObraSocial(nombreObraSocial);
            
             System.out.println("Ingreso de obra social exitoso");
-            return "redirect:/admin/form_profesional";
+            return "redirect:/admin/dashboard";
             
         } catch (MiExcepcion me) {
             System.out.println("Ingreso de obra social FALLIDO!\n" + me.getMessage());
