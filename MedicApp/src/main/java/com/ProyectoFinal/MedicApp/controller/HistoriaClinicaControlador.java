@@ -10,6 +10,7 @@ import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.HistoriaClinicaRepositorio;
 import com.ProyectoFinal.MedicApp.Service.HistoriaClinicaService;
+import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,16 +43,18 @@ public class HistoriaClinicaControlador {
 
     @Autowired
     HistoriaClinicaService historiaClinicaService;
+    
+    @Autowired
+    PacienteService pacienteServicio;
 
     
-
     @GetMapping("/buscar")
     public String listar(ModelMap model) {
 
         return "busqueda_historia_clinica.html";
     }
     
-
+    
     @Transactional
     @PostMapping("/listar")
     public String listar(@RequestParam String dniPaciente, ModelMap model) {
@@ -62,33 +65,33 @@ public class HistoriaClinicaControlador {
         model.addAttribute("historiasClinicas", historiasClinicas);
         return "lista_historia_clinica.html";
     }
-
+    
     @Transactional
     @GetMapping("/form_historia_clinica")
     public String crearHistoriaClinica(ModelMap modelo, HttpSession session) {
-        Profesional profesional = (Profesional) session.getAttribute("pacienteSession");
-
+        
+        Profesional profesional = (Profesional) session.getAttribute("profesionalSession");
         modelo.put("profesional", profesional);
 
+        modelo.put("dia", new Date());
         return "formulario_historia_clinica.html";
     }
-
+    
     @Transactional
     @PostMapping("/registroHistoriaClinica")
     public String registroPaciente(@RequestParam String dni, @RequestParam String fecha,
-            @RequestParam String diagnostico, Principal principal) {
+            @RequestParam String diagnostico, HttpSession session) {
 
-        String userProfesionalName = principal.getName();
-
-        System.out.println("username " + userProfesionalName);
-
+        Paciente paciente = pacienteServicio.buscarPorDni(dni);
+        Profesional profesional = (Profesional) session.getAttribute("profesionalSession");
+        
         try {
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
             Date fechaConsulta = formato.parse(fecha);
 
             //MODIFICAR EL SERVICE crearHistoriaClinica PARA QUE RECIBA EL DNI Y LO USE PARA BUSCAR EN EL REPOSITORIO DE LOS PACIENTES, 
             //TRAIGA AL PACIENTE Y LOS ASIGNE A ESTA HISTORIA CLINICA
-            historiaClinicaService.crearHistoriaClinica(dni, fechaConsulta, userProfesionalName, diagnostico);
+            historiaClinicaService.crearHistoriaClinica(paciente, fechaConsulta, profesional, diagnostico);
             System.out.println("Ingreso de historia clinica exitoso");
             return "redirect:/inicio";
 
@@ -103,5 +106,7 @@ public class HistoriaClinicaControlador {
             return "formulario_historia_clinica.html";
         }
     }
+    
+    
 
 }

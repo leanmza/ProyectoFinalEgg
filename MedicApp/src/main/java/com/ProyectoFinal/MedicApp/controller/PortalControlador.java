@@ -1,6 +1,5 @@
 package com.ProyectoFinal.MedicApp.controller;
 
-
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;

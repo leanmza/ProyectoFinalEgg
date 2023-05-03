@@ -39,7 +39,7 @@ public class ObraSocialService {
         }
 
     @Transactional
-    public void modificarProfesional(String idObraSocial, String nombre) throws MiExcepcion {
+    public void modificarObraSocial(String idObraSocial, String nombre) throws MiExcepcion {
 
         validar(nombre);
 

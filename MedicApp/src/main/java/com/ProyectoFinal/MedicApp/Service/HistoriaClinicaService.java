@@ -39,21 +39,15 @@ public class HistoriaClinicaService {
     private ProfesionalRepositorio profesionalRepositorio;
 
     @Transactional
-    public void crearHistoriaClinica(String dni, Date fechaConsulta, String userProfesionalName, String diagnostico) throws MiExcepcion {
+    public void crearHistoriaClinica(Paciente paciente, Date fechaConsulta, Profesional profesional, String diagnostico) throws MiExcepcion {
 
-        validar(dni, userProfesionalName, diagnostico);
+        validar(paciente, profesional, diagnostico);
 
         HistoriaClinica historiaClinica = new HistoriaClinica();
 
-        Paciente paciente = pacienteRepositorio.buscarPorDni(dni); // ME TIRABA ERROR CON EL OPTIONAL
-
         historiaClinica.setPaciente(paciente);
-
-        Profesional profesional = profesionalRepositorio.buscarPorEmail(userProfesionalName); // ME TIRABA ERROR CON EL OPTIONAL
-
-        historiaClinica.setProfesional(profesional);
-
         historiaClinica.setFechaConsulta(fechaConsulta);
+        historiaClinica.setProfesional(profesional);
         historiaClinica.setDiagnostico(diagnostico);
 
         historiaClinicaRepositorio.save(historiaClinica);
@@ -107,24 +101,27 @@ public class HistoriaClinicaService {
     public List<HistoriaClinica> listar(String dniPaciente) {
         
         Paciente paciente = pacienteRepositorio.buscarPorDni(dniPaciente);
+        System.out.println("Paciente: " + paciente);
 
         String idPaciente = paciente.getId();
 
         List<HistoriaClinica> historiasClinicas; //= new ArrayList();
 
         historiasClinicas = historiaClinicaRepositorio.buscarPorPaciente(idPaciente);
-        
+        for (HistoriaClinica aux : historiasClinicas) {
+            System.out.println("Historia clinica: " + aux);
+        }
         return historiasClinicas;
     }
 
-    public void validar(String dni, String userProfesionalName, String diagnostico) throws MiExcepcion {
+    public void validar(Paciente paciente, Profesional profesional, String diagnostico) throws MiExcepcion {
 
         try {
-            if (dni == null || dni.isEmpty()) {
+            if (paciente == null) {
                 throw new MiExcepcion("El paciente no puede ser nulo o vacío");
             }
 
-            if (userProfesionalName == null || userProfesionalName.isEmpty()) {
+            if (profesional == null) {
                 throw new MiExcepcion("El profesional no puede ser nulo o vacío");
             }
 

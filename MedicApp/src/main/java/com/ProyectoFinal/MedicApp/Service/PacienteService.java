@@ -66,8 +66,10 @@ public class PacienteService implements UserDetailsService {
         paciente.setFechaNacimiento(fechaNacimiento);
         paciente.setSexo(sexo);
         
-        Imagen imagen = imagenServicio.guardar(archivo);
-        paciente.setImagen(imagen);
+        if(!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
+            Imagen imagen = imagenServicio.guardar(archivo);
+            paciente.setImagen(imagen);
+        }
         
         paciente.setRol(Rol.PACIENTE);
         paciente.setActivo(true);
@@ -110,6 +112,10 @@ public class PacienteService implements UserDetailsService {
     public Paciente getOne(String id) {
         return pacienteRepositorio.getOne(id);
     }
+    
+    public Paciente buscarPorDni(String dni) {
+        return pacienteRepositorio.buscarPorDni(dni);
+    } 
 
     @Transactional(readOnly = true)
     public List<Paciente> listar() {

@@ -70,10 +70,10 @@ public class ProfesionalControlador {
     @PostMapping("perfil/{id}")
     public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String correo, @RequestParam String telefono, @RequestParam(required = false) MultipartFile archivo, 
-            @RequestParam String password, @RequestParam String password2,  @RequestParam String especialidad,
+            @RequestParam(required = false) String password, @RequestParam(required = false) String password2,  @RequestParam String especialidad,
             @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,
             /*@RequestParam("obrasSociales[]") List<String> obrasSociales, @RequestParam("dias[]") List<String> dias,*/
-            @RequestParam LocalTime horaInicio, @RequestParam LocalTime horaFin
+            @RequestParam(required = false) LocalTime horaInicio, @RequestParam(required = false) LocalTime horaFin
             /*, @RequestParam(required = false) List<Turno>turnos*/, HttpSession session) {
         
         try {
@@ -91,32 +91,33 @@ public class ProfesionalControlador {
         }
     }
        
-    @PostMapping("/buscarespec")
-    public String buscarespec(@RequestParam("especialidad") String especialidad, ModelMap model) {
+    @Transactional
+    @PostMapping("/buscarEspececialidad")
+    public String buscarEspececialidad(@RequestParam String especialidad, ModelMap model) {
         System.out.println(especialidad);
         List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidad(especialidad);
         model.addAttribute("profesionales", profesionales);
-        model.addAttribute("espec", especialidad);
+        model.addAttribute("especialidad", especialidad);
         return "listaespecialidad.html";
     }
 
     @Transactional
-    @PostMapping("/buscarespechonorario")
-    public String buscarespechonorario(@RequestParam("especialidad") String especialidad, ModelMap model) {
+    @PostMapping("/buscarEspecialidadPorHonorario")
+    public String buscarEspecialidadPorHonorario(@RequestParam String especialidad, ModelMap model) {
         System.out.println(especialidad);
         List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidadOrdenadoHonorario(especialidad);
         model.addAttribute("profesionales", profesionales);
-        model.addAttribute("espec", especialidad);
+        model.addAttribute("especialidad", especialidad);
         return "listaespecialidad.html";
     }
 
     @Transactional
-    @PostMapping("/buscarespeccalificacion")
-    public String buscarespeccalificacion(@RequestParam("especialidad") String especialidad, ModelMap model) {
+    @PostMapping("/buscarEspecialidadPorCalificacion")
+    public String buscarEspecialidadPorCalificacion(@RequestParam String especialidad, ModelMap model) {
         System.out.println(especialidad);
         List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidadOrdenadoCalificacion(especialidad);
         model.addAttribute("profesionales", profesionales);
-        model.addAttribute("espec", especialidad);
+        model.addAttribute("especialidad", especialidad);
         return "listaespecialidad.html";
     }
     

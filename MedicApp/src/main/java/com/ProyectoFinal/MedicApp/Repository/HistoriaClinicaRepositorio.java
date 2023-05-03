@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface HistoriaClinicaRepositorio extends JpaRepository<HistoriaClinica, String> {
 
-    @Query("SELECT hc FROM HistoriaClinica hc WHERE hc.paciente = :idPaciente")
+    @Query("SELECT hc FROM HistoriaClinica hc JOIN hc.paciente hcp WHERE hcp.id = :idPaciente")
     public List<HistoriaClinica> buscarPorPaciente(@Param("idPaciente") String idPaciente);
 
 }

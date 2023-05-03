@@ -1,7 +1,6 @@
 package com.ProyectoFinal.MedicApp.Entity;
 
 import com.ProyectoFinal.MedicApp.Enum.Rol;
-import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -34,6 +33,5 @@ public class Persona {
     private Imagen imagen;
     private String password;
     private boolean activo = false;
-//
 
 }

@@ -41,6 +41,7 @@ public class PacienteControlador {
     PacienteService pacienteService;
 
     @Transactional
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_ADMINISTRADOR')")
     @GetMapping("/perfil")
     public String perfil(ModelMap modelo, HttpSession session) {
         Paciente paciente = (Paciente) session.getAttribute("pacienteSession");
@@ -50,10 +51,11 @@ public class PacienteControlador {
     }
     
     @Transactional
+    @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_ADMINISTRADOR')")
     @PostMapping("/perfil/{id}")
     public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,  
             @RequestParam String dni, @RequestParam String correo, @RequestParam String telefono,
-            @RequestParam String nacimiento, @RequestParam String password, @RequestParam String password2, 
+            @RequestParam(required = false) String nacimiento, @RequestParam(required = false) String password, @RequestParam(required = false) String password2, 
             @RequestParam String direccion, @RequestParam String sexo, @RequestParam(required = false) MultipartFile archivo, HttpSession session, ModelMap modelo ) {
         
         try {
@@ -85,5 +87,10 @@ public class PacienteControlador {
         pacienteService.darDeBaja(id);
         
         return "redirect:/";
+    }
+    
+    @GetMapping("/turno")
+    public String turno(){
+        return "sacar_turno.html";
     }
 }
