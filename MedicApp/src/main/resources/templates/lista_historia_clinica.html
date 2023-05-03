@@ -38,8 +38,8 @@
                     <tr>
                       <td th:text="${historiaClinica.fechaConsulta}"></td>
                       <td th:text="${historiaClinica.profesional.especialidad}"></td>
-                      <td th:text="${historiaClinica.profesional.nombre}"></td>
-                      <td th:text="${historiaClinica.profesional.diagnostico}"></td>
+                      <td th:text="${historiaClinica.profesional.apellido + ', ' + historiaClinica.profesional.nombre}"></td>
+                      <td th:text="${historiaClinica.diagnostico}"></td>
                       
                   </tbody>
                 </table>

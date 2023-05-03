@@ -112,6 +112,10 @@ public class PacienteService implements UserDetailsService {
     public Paciente getOne(String id) {
         return pacienteRepositorio.getOne(id);
     }
+    
+    public Paciente buscarPorDni(String dni) {
+        return pacienteRepositorio.buscarPorDni(dni);
+    } 
 
     @Transactional(readOnly = true)
     public List<Paciente> listar() {

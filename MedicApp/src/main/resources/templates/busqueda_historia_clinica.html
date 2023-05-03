@@ -17,18 +17,18 @@
                     <h3>HISTORIA CLÍNICA</h3>
                     <div class="col-12 text-center"></div>
 
-                    <form action="/historiaClinica/listar" method="POST" class="form-floating">
+                    <form th:action="@{/historiaClinica/listar}" method="POST" class="form-floating">
                         <div class="row rowDatosPersonales">
                             <div class="barraBusqueda col-xs-12">
-                                <!-- INPUT NOMBRE-->
+                                
+                                <!-- INPUT DNI-->
                                 <div class="form-floating">
-                                    <input
+                                    <input 
                                         type="text"
                                         class="form-control"
                                         id="dniPaciente"
                                         name="dniPaciente"
-                                        th:value="${dniPaciente}"
-                                        placeholder=""
+                                        placeholder="Ingrese el DNI"
                                         />
                                     <label for="dniPaciente">DNI del paciente</label>
                                 </div>

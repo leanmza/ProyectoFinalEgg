@@ -12,94 +12,93 @@
 
         <main>
             <div
-              id="divFormHistoriaClinica"
-              class="container-fluid divFormHistoriaClinica contenedorMain"
-            >
-              <div class="row titulo">
-                <h3>NUEVA DE ENTRADA DE HISTORIA CLÍNICA</h3>
-              </div>
-      
-              <form
-                class="form-floating row formulario formularioCrear"
-                id="formulario"
-                th:action="@{/historiaClinica/registroHistoriaClinica}"
-                method="POST"
-              >
-                <!-- DATOS PERSONALES -->
-                <div class="row rowDatosPersonales">
-                  <div class="tituloForm">
-                    <h4>Complete el formulario para crear un nuevo registro</h4>
-                  </div>
-                  <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
-                  <!-- INPUT OCULTO DEL ID -->
-                  <input hidden type="text" id="id" name="id" th:value="${id}" />
-                  <!-- INPUT FECHA-->
-                  <div class="col-xs-12 col-md-6 form-floating">
-                    <input
-                      type="date"
-                      class="form-control"
-                      id="fecha"
-                      name="fecha"
-                      th:value="${fecha}"
-                      placeholder=""
-                    />
-                    <label for="fecha">Fecha de la consulta</label>
-                  </div>
-      
-                  <!-- INPUT DNI PACIENTE-->
-                  <div class="col-xs-12 col-md-6 form-floating">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="dni"
-                      name="dni"
-                      th:value="${dni}"
-                      placeholder=""
-                    />
-                    <label for="dni">DNI del paciente</label>
-                  </div>
-      
-                  <!-- INPUT PROFESIONAL-->
-<!--                  <div class="col-xs-12 form-floating">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="profesional"
-                      name="profesional"
-                   
-                      placeholder=""
-                    />
-                    <label for="profesional">Profesional</label>
-                  </div>-->
-                  
-                  <!-- INPUT DIAGNOSTICO -->
-                  <div class="col-md-12 form-floating">
-                    <textarea
-                      type="text"
-                      class="form-control diagnostico"
-                      id="diagnostico"
-                      placeholder=""
-                      name="diagnostico"
-                      th:value="${diagnostico}"
-                    ></textarea>
-                    <label for="diagnostico">Diagnóstico y Tratamiento</label>
-                  </div>
+                id="divFormHistoriaClinica"
+                class="container-fluid divFormHistoriaClinica contenedorMain"
+                >
+                <div class="row titulo">
+                    <h3>NUEVA DE ENTRADA DE HISTORIA CLÍNICA</h3>
                 </div>
-      
-                <div class="col-xs-12 DivBtnEnviar">
-                  <button
-                    type="submit"
-                    name="submit"
-                    value="registrar"
-                    class="btn btn-primary btnEnviar botonesFormulario"
-                  >
-                    ¡Registrarme!
-                  </button>
-                </div>
-              </form>
+
+                <form
+                    class="form-floating row formulario formularioCrear"
+                    id="formulario"
+                    th:action="@{/historiaClinica/registroHistoriaClinica}"
+                    method="POST"
+                    >
+                    <!-- DATOS PERSONALES -->
+                    <div class="row rowDatosPersonales">
+                        <div class="tituloForm">
+                            <h4>Complete el formulario para crear un nuevo registro</h4>
+                        </div>
+                        <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
+                        <!-- INPUT OCULTO DEL ID -->
+                        <input hidden type="text" id="id" name="idPaciente" />
+                        <!-- INPUT FECHA-->
+                        <div class="col-xs-12 col-md-6 form-floating">
+                            <input
+                                type="date"
+                                class="form-control"
+                                id="fecha"
+                                name="fecha"
+                                placeholder=""
+                                />
+                            <label for="fecha">Fecha de la consulta</label>
+                        </div>
+
+                        <!-- INPUT DNI PACIENTE-->
+                        <div class="col-xs-12 col-md-6 form-floating">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="dni"
+                                name="dni"
+
+                                placeholder=""
+                                />
+                            <label for="dni">DNI del paciente</label>
+                        </div>
+
+                        <!-- INPUT PROFESIONAL-->
+                        <div class="col-xs-12 form-floating">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="profesional"
+                                name="nombreProfesional"
+                                th:value="${profesional.apellido + ',  ' + profesional.nombre}"
+                                placeholder=""
+                                />
+                            <label for="profesional">Profesional</label>
+                        </div>
+
+                        <!-- INPUT DIAGNOSTICO -->
+                        <div class="col-md-12 form-floating">
+                            <textarea
+                                type="text"
+                                class="form-control diagnostico"
+                                id="diagnostico"
+                                placeholder=""
+                                name="diagnostico"
+
+                                ></textarea>
+                            <label for="diagnostico">Diagnóstico y Tratamiento</label>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 DivBtnEnviar">
+                        <button
+                            type="submit"
+                            name="submit"
+                            value="registrar"
+                            class="btn btn-primary btnEnviar botonesFormulario"
+                            >
+                            Guardar
+                        </button>
+                    </div>
+                </form>
             </div>
-          </main>
-     <!--FOOTER-->
+        </main>
+        <!--FOOTER-->
         <div class="container-fluid pie">
             <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
         </div>
