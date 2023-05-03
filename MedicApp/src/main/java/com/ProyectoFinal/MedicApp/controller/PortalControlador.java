@@ -82,7 +82,7 @@ public class PortalControlador {
     public String registroPaciente(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni,
             @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
             @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
-            @RequestParam String sexo, @RequestParam(required = false) MultipartFile archivo) {
+            @RequestParam String sexo, @RequestParam(required = false) MultipartFile archivo, ModelMap modelo) {
        
         try {
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
@@ -91,12 +91,13 @@ public class PortalControlador {
             pacienteService.crearPaciente(nombre, apellido, dni, correo, telefono, password, password2, direccion, 
                     fechaNacimiento, sexo, archivo);
 
-            System.out.println("Ingreso de paciente exitoso");
+            modelo.put("exito","Se registro correctamente");
             return "redirect:/inicio";
+            
 
         } catch (MiExcepcion me) {
             System.out.println("Ingreso de paciente FALLIDO!\n" + me.getMessage());
-
+            modelo.put("error",me.getMessage());
             return "formulario_paciente.html";
 
         } catch (ParseException ex) {
@@ -104,6 +105,7 @@ public class PortalControlador {
             ex.printStackTrace();
             return "formulario_paciente.html";
         }
+        
     }
     
     
