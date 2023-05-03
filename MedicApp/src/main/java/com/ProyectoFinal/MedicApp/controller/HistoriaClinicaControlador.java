@@ -60,6 +60,7 @@ public class HistoriaClinicaControlador {
     public String listar(@RequestParam String dniPaciente, ModelMap model) {
         
         System.out.println(dniPaciente);
+        
         List<HistoriaClinica> historiasClinicas = historiaClinicaService.listar(dniPaciente);
         
         model.addAttribute("historiasClinicas", historiasClinicas);

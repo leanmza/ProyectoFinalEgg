@@ -100,11 +100,12 @@ public class HistoriaClinicaService {
     @Transactional(readOnly = true)
     public List<HistoriaClinica> listar(String dniPaciente) {
         
+        System.out.println(dniPaciente);
         Paciente paciente = pacienteRepositorio.buscarPorDni(dniPaciente);
         System.out.println("Paciente: " + paciente);
 
         String idPaciente = paciente.getId();
-
+        System.out.println("idPaciente");
         List<HistoriaClinica> historiasClinicas; //= new ArrayList();
 
         historiasClinicas = historiaClinicaRepositorio.buscarPorPaciente(idPaciente);
