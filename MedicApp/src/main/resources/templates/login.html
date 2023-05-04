@@ -11,17 +11,31 @@
         <!--MAIN-->
 
  <main>
-      <div class="container-fluid contenedorLogin contenedorMain">
+
+     <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito rounded-3 p-2 col-md-6 col-sm-10 mx-auto">
+         <div class="card-body">
+             <h5 class="card-title fs-5 fw-bold mb-3" style="font-family: Montserrat, sans-serif;">¡Éxito!</h5>
+             <p class="card-text fs-6 mb-0 custom-success-message" th:text="${exito}"></p>
+         </div>
+     </div>
+
+
+     <div class="container-fluid contenedorLogin contenedorMain">
         <div class="login">
+
           <h3 class="titulo">INICIAR SESIÓN</h3>
           <div class="loginFormulario">
-         
+
+
+
               <form
             th:action="@{/logincheck}"
             method="POST"
             class="form-floating row formulario"
             id="formLogin"
           >
+
+
             <div class="row rowLogin">
               <div class="col-xs-12 form-floating">
                 <input

@@ -455,6 +455,12 @@ padding: 0 !important;
 .contenedorCards{
     z-index: 0;
 }
+.custom-error-message {
+  font-family: Montserrat, sans-serif;
+}
+.custom-success-message {
+  font-family: Montserrat, sans-serif;
+}
 
 /* LOGIN*/
 

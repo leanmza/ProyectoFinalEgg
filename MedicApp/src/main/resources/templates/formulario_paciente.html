@@ -15,8 +15,8 @@
                 <div class="row titulo">
                     <h3>REGISTRATE EN NUESTRA APP</h3>
                 </div>
-                
-                    
+
+
                 <form
                     class="form-floating row formulario formularioCrear"
                     id="formulario"
@@ -90,7 +90,7 @@
                         <!-- INPUT SEXO-->
                         <div class="col-xs-12 col-md-6 divSexo form-floating">
                             <select name="sexo" id="sexo" class="sexo form-select">
-                                <option value="" selected disabled>Elegir opción...</option>
+                                <option value="Elegir Opcion" selected disabled>Elegir opción...</option>
                                 <option value="masculino">Masculino</option>
                                 <option value="femenino">Femenino</option>
                                 <option value="otro">Otro</option>
@@ -165,6 +165,16 @@
                                 />
                             <label for="password2">Repetir Contraseña</label>
                         </div>
+                        <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError rounded-3 p-2">
+                            <div class="card-body">
+                                <h5 class="card-title fs-5 fw-bold mb-3" style="font-family: Montserrat, sans-serif;">⚠️¡Ingreso de paciente FALLIDO!⚠️</h5>
+                                <p class="card-text fs-6 mb-0 custom-error-message" th:text="${error}"></p>
+                            </div>
+                        </div>
+
+
+
+
                     </div>
                     
                     <div class="col-xs-12 DivBtnEnviar">
