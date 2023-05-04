@@ -55,9 +55,9 @@ public class HistoriaClinicaService {
 
     @Transactional
 
-    public void modificarHistoriaClinica(String idHistoriaClinica, String dni, Date fechaConsulta, String idProfesional, String diagnostico) throws MiExcepcion {
+    public void modificarHistoriaClinica(String idHistoriaClinica, Paciente paciente, Date fechaConsulta, Profesional profesional, String diagnostico) throws MiExcepcion {
 
-        validar(dni, idProfesional, diagnostico);
+        validar(paciente, profesional, diagnostico);
 
         Optional<HistoriaClinica> respuesta = historiaClinicaRepositorio.findById(idHistoriaClinica); //busco la historia clinica
 
@@ -65,17 +65,8 @@ public class HistoriaClinicaService {
 
             HistoriaClinica historiaClinica = new HistoriaClinica();
 
-            Paciente paciente = pacienteRepositorio.buscarPorDni(dni); // Me tiraba error con el optional
-
             historiaClinica.setPaciente(paciente);
-
-            Optional<Profesional> respuestaProfesional = profesionalRepositorio.findById(idProfesional); // busco el profesional
-
-            if (respuestaProfesional.isPresent()) {
-                Profesional profesional = respuestaProfesional.get();
-                historiaClinica.setProfesional(profesional);
-            }
-
+            historiaClinica.setProfesional(profesional);
             historiaClinica.setFechaConsulta(fechaConsulta);
             historiaClinica.setDiagnostico(diagnostico);
 
@@ -83,34 +74,17 @@ public class HistoriaClinicaService {
         }
     }
 
-//    @Transactional(readOnly = true)
-//    public List<HistoriaClinica> listar(String dniPaciente) {
-//
-//        Paciente paciente = pacienteRepositorio.buscarPorDni(dniPaciente); //busco por dni para traer el id
-//
-//        String idPaciente = paciente.getId();
-//
-//        List<HistoriaClinica> historiasClinicas = new ArrayList();
-//
-//        historiasClinicas = historiaClinicaRepositorio.buscarPorPaciente(idPaciente);
-//
-//        return historiasClinicas;
-//    }
-    
     @Transactional(readOnly = true)
     public List<HistoriaClinica> listar(String dniPaciente) {
         
         Paciente paciente = pacienteRepositorio.buscarPorDni(dniPaciente);
-        System.out.println("Paciente: " + paciente);
 
         String idPaciente = paciente.getId();
 
         List<HistoriaClinica> historiasClinicas; //= new ArrayList();
 
         historiasClinicas = historiaClinicaRepositorio.buscarPorPaciente(idPaciente);
-        for (HistoriaClinica aux : historiasClinicas) {
-            System.out.println("Historia clinica: " + aux);
-        }
+        
         return historiasClinicas;
     }
 

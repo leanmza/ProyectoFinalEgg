@@ -1,5 +1,6 @@
 package com.ProyectoFinal.MedicApp.controller;
 
+import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Enum.Modalidad;
@@ -87,6 +88,9 @@ public class AdministradorControlador {
         }
         modelo.put("modalidades", modalidades);
 
+        List<ObraSocial> obrasSociales = obraSocialServicio.listar();
+        modelo.put("obrasSociales", obrasSociales);
+        
         return "formulario_profesional.html";
     }
 
