@@ -53,35 +53,35 @@ public class HistoriaClinicaService {
         historiaClinicaRepositorio.save(historiaClinica);
     }
 
-    @Transactional
-
-    public void modificarHistoriaClinica(String idHistoriaClinica, String dni, Date fechaConsulta, String idProfesional, String diagnostico) throws MiExcepcion {
-
-        validar(dni, idProfesional, diagnostico);
-
-        Optional<HistoriaClinica> respuesta = historiaClinicaRepositorio.findById(idHistoriaClinica); //busco la historia clinica
-
-        if (respuesta.isPresent()) {
-
-            HistoriaClinica historiaClinica = new HistoriaClinica();
-
-            Paciente paciente = pacienteRepositorio.buscarPorDni(dni); // Me tiraba error con el optional
-
-            historiaClinica.setPaciente(paciente);
-
-            Optional<Profesional> respuestaProfesional = profesionalRepositorio.findById(idProfesional); // busco el profesional
-
-            if (respuestaProfesional.isPresent()) {
-                Profesional profesional = respuestaProfesional.get();
-                historiaClinica.setProfesional(profesional);
-            }
-
-            historiaClinica.setFechaConsulta(fechaConsulta);
-            historiaClinica.setDiagnostico(diagnostico);
-
-            historiaClinicaRepositorio.save(historiaClinica);
-        }
-    }
+//    @Transactional
+//
+//    public void modificarHistoriaClinica(String idHistoriaClinica, String dni, Date fechaConsulta, String idProfesional, String diagnostico) throws MiExcepcion {
+//
+//        validar(dni, idProfesional, diagnostico);
+//
+//        Optional<HistoriaClinica> respuesta = historiaClinicaRepositorio.findById(idHistoriaClinica); //busco la historia clinica
+//
+//        if (respuesta.isPresent()) {
+//
+//            HistoriaClinica historiaClinica = new HistoriaClinica();
+//
+//            Paciente paciente = pacienteRepositorio.buscarPorDni(dni); // Me tiraba error con el optional
+//
+//            historiaClinica.setPaciente(paciente);
+//
+//            Optional<Profesional> respuestaProfesional = profesionalRepositorio.findById(idProfesional); // busco el profesional
+//
+//            if (respuestaProfesional.isPresent()) {
+//                Profesional profesional = respuestaProfesional.get();
+//                historiaClinica.setProfesional(profesional);
+//            }
+//
+//            historiaClinica.setFechaConsulta(fechaConsulta);
+//            historiaClinica.setDiagnostico(diagnostico);
+//
+//            historiaClinicaRepositorio.save(historiaClinica);
+//        }
+//    }
 
 //    @Transactional(readOnly = true)
 //    public List<HistoriaClinica> listar(String dniPaciente) {

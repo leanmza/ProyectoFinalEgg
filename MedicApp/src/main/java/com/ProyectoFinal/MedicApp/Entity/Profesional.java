@@ -47,10 +47,9 @@ public class Profesional extends Persona {
 
     
     private LocalTime horaInicio;
-    
-  
     private LocalTime horaFin;
-
+    
+//    private List<String> horas;
 
     private Integer cantVisitas;
     private Integer puntaje;
