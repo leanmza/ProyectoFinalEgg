@@ -24,7 +24,6 @@
                         id="formulario"
                         th:action="@{/turno/registroturno}"
                         method="POST"
-                        th:object="${profesional}"
                         > 
                         <!-- DATOS PERSONALES -->
                         <div class="row turno">
@@ -32,7 +31,7 @@
                             <div class="col-4">
 
                                 <!-- INPUT OCULTO DEL ID -->
-                                <input hidden type="text" id="id" name="id" th:value="${id}" />
+                                <input hidden type="text" id="id" name="id" th:value="${id}"/>
 
                                 <!-- INPUT ESPECIALIDAD-->
                                 <div class="col-xs-12 form-floating">
@@ -41,7 +40,7 @@
                                         class="form-control"
                                         id="especialidad"
                                         name="especialidad"
-                                        th:value="${especialidad}"
+                                        th:value="${profesional.especialidad}"
                                         placeholder=""
                                         />
                                     <label for="especialidad">Especialidad</label>
@@ -55,7 +54,7 @@
                                         class="form-control"
                                         id="profesional"
                                         name="profesional"
-                                        th:value="${profesional}"
+                                        th:value="${profesional.apellido + ',  ' + profesional.nombre}"
                                         placeholder=""
                                         />
                                     <label for="profesional">Profesional</label>
@@ -69,7 +68,6 @@
                                         id="motivo"
                                         placeholder=""
                                         name="motivo"
-                                        th:value="${motivo}"
                                         ></textarea>
                                     <label for="motivo"
                                            >Motivo de la consulta
@@ -115,46 +113,42 @@
 
                             <!-- COLUMNA DERECHA -->
 
-                            
-                            
+
+
                             <div class="col-4">
                                 <div class="col-xs-12 hora" id="hora">
                                     <div class="row selectorHora">
-                                        <div th:object="${profesional}" method="post">
+                                        <div th:object="${profesional}" method="post" >
+                                            
                                             <div th:each="horario : ${profesional.horas}">
                                                 <label th:text="${horario}"></label>
                                                 <input type="radio" th:field="*{horario}" th:value="${horario}" name="hora"  />
                                             </div>
+                                            
                                             <button type="submit">Guardar</button>
                                         </div>
-
-
-
-
-
-
 
                                     </div>
 
                                 </div>
                             </div>
                         </div>
-                </div>
-                </form> 
-            </div>
-        </div>
-    </main>
-    <!--FOOTER-->
-    <div class="container-fluid pie">
-        <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
-    </div>
 
-    <script src="../scripts.js"></script>
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
-        crossorigin="anonymous"
-    ></script> <!--NO MODIFICAR-->
-    <script src="../style.css"></script>
-</body>
+                    </form> 
+                </div>
+            </div>
+        </main>
+        <!--FOOTER-->
+        <div class="container-fluid pie">
+            <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
+        </div>
+
+        <script src="../scripts.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+            crossorigin="anonymous"
+        ></script> <!--NO MODIFICAR-->
+        <script src="../style.css"></script>
+    </body>
 </html>
