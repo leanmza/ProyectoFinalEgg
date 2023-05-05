@@ -30,7 +30,7 @@ textarea.addEventListener('input', function() {
 /////// GENERADOR DE CALENDARIO /////// 
 function generarCalendario() {
 
-  var fecha = new Date();
+
   // Obtener el elemento div del HTML
   let mes = document.getElementById("mes");
 
@@ -41,6 +41,11 @@ function generarCalendario() {
 
   // Obtener el número del mes actual (0-11)
   let mesActual = fechaActual.getMonth();
+  
+    // Obtener el año
+  let anioActual = fechaActual.getFullYear();
+  
+ 
 
   // Crear una matriz para almacenar los nombres de los meses
   let nombresMeses = [
@@ -104,15 +109,12 @@ function generarCalendario() {
         filaHTML += "<td class='celdaDias'></td>";
       } else if (contadorDias <= numDias) {
         filaHTML +=
-          "<td class='celdaDias'><label for=" +
+          "<td class='celdaDias' ><label for=" +
           contadorDias +
           ">" +
           contadorDias +
-          "</label> <input class='inputRadio' type='radio' name='dia' id=" +
-          contadorDias +
-          " value=" +
-          contadorDias +
-          "></td>";
+          "</label> <input class='inputRadio' type='radio' name='dia' id=" + contadorDias + " \n\
+            value=" + contadorDias + "-" + mesActual + "-" + anioActual +" ></td>";
 
         contadorDias++;
       } else {

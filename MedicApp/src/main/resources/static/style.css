@@ -494,6 +494,22 @@ padding: 0 2% 10% 2%;
 }
 
 
+.horariosInput{
+justify-content: center;
+display: inline-grid;
+text-align: center;
+padding-bottom: 1em;
+}
+
+.inputRadioHora{
+width: 1.5em;
+height: 1.5em;
+justify-content: center;
+display: grid;
+margin: auto;
+}
+
+
 /* MODAL */
 .btnCerrarModal{
   background-color: transparent !important;
@@ -506,6 +522,9 @@ padding: 0 2% 10% 2%;
 .contenedorCards{
   z-index: 0;
 }
+
+
+
 
 /* LOGIN*/
 
