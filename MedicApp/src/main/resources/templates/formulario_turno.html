@@ -24,14 +24,13 @@
                         id="formulario"
                         th:action="@{/turno/registroturno}"
                         method="POST"
+                        th:object="${profesional}"
                         > 
                         <!-- DATOS PERSONALES -->
                         <div class="row turno">
                             <!-- COLUMNA IZQUIERDA -->
                             <div class="col-4">
-                                <!--                <div>
-                                                  <button th:each=" : ${profesional.horas}" th:text="${profesional.horas}"></button>
-                                                </div>-->
+
                                 <!-- INPUT OCULTO DEL ID -->
                                 <input hidden type="text" id="id" name="id" th:value="${id}" />
 
@@ -116,12 +115,21 @@
 
                             <!-- COLUMNA DERECHA -->
 
+                            
+                            
                             <div class="col-4">
                                 <div class="col-xs-12 hora" id="hora">
-                                    <div class="row selectorMes">
+                                    <div class="row selectorHora">
+                                        <div th:object="${profesional}" method="post">
+                                            <div th:each="horario : ${profesional.horas}">
+                                                <label th:text="${horario}"></label>
+                                                <input type="radio" th:field="*{horario}" th:value="${horario}" name="hora"  />
+                                            </div>
+                                            <button type="submit">Guardar</button>
+                                        </div>
 
 
-                                       
+
 
 
 

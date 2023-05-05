@@ -84,7 +84,21 @@ public class ProfesionalService implements UserDetailsService {
         profesional.setCantVisitas(0);
         profesional.setPuntaje(0);
         profesional.setCalificacion(0.0);
+        
+            ArrayList<String> horario = new ArrayList();
+            System.out.println("horario" + horario);
+            while (horaInicio.isBefore(horaFin)) {
+                horario.add(horaInicio.format(DateTimeFormatter.ofPattern("HH:mm")));
+                horaInicio = horaInicio.plusMinutes(30);
+                System.out.println("Hora inicio" + horaInicio);
+            }
+            for (String horas : horario) {
+                System.out.println("horas" + horas);
+            }
 
+            profesional.setHoras(horario);
+        
+        
         profesionalRepositorio.save(profesional);
 
     }
@@ -98,6 +112,8 @@ public class ProfesionalService implements UserDetailsService {
 
         validar(nombre, apellido, correo, telefono, password, password2,
                 especialidad, ubicacion, modalidad, honorarios /*, obrasSociales, dias */, horaInicio, horaFin);
+        
+        
         Optional<Profesional> respuesta = profesionalRepositorio.findById(idProfesional);
 
         if (respuesta.isPresent()) {
@@ -128,10 +144,22 @@ public class ProfesionalService implements UserDetailsService {
 //        profesional.setDias(dias);
             profesional.setHoraInicio(horaInicio);
             profesional.setHoraFin(horaFin);
+            
+/////// CARGA EL ARRAYLIST DE HORAS //////
+            ArrayList<String> horario = new ArrayList();
+            System.out.println("horario" + horario);
+            while (horaInicio.isBefore(horaFin)) {
+                horario.add(horaInicio.format(DateTimeFormatter.ofPattern("HH:mm")));
+                horaInicio = horaInicio.plusMinutes(30);
+              
+            }
+            for (String horas : horario) { ///PARA VER QUE FUNCIONA
+                System.out.println("horas" + horas);
+            }
 
+            profesional.setHoras(horario);
             profesionalRepositorio.save(profesional);
 
-          
         }
 
     }

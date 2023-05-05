@@ -39,6 +39,13 @@ h3 {
     border-color: #012350 !important;
 }
 
+.btnQuieroTurno{
+    background-color: #012350 !important;
+    color: white;
+    border-color: #012350 !important;
+    font-size: 14px !important;
+}
+
 .contenedorMain{
     padding-inline: 5% !important;
     padding-top: 4%;
@@ -225,6 +232,9 @@ footer {
     justify-content: end;
 }
 
+.titulosTabla{
+    vertical-align: middle;
+}
 .contenedorLogin {
     justify-content: center;
     display: flex;

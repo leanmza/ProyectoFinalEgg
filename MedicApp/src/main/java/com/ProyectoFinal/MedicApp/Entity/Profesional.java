@@ -5,6 +5,7 @@
 package com.ProyectoFinal.MedicApp.Entity;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
@@ -49,7 +50,7 @@ public class Profesional extends Persona {
     private LocalTime horaInicio;
     private LocalTime horaFin;
     
-//    private List<String> horas;
+    private ArrayList<String> horas; //no me tomaba el List solo, por eso lo cambié a ArrayList
 
     private Integer cantVisitas;
     private Integer puntaje;
