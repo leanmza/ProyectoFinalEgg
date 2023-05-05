@@ -41,6 +41,7 @@
                                 id="fecha"
                                 name="fecha"
                                 placeholder=""
+                                th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
                                 />
                             <label for="fecha">Fecha de la consulta</label>
                         </div>
