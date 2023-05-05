@@ -53,8 +53,6 @@ public class HistoriaClinicaService {
         historiaClinicaRepositorio.save(historiaClinica);
     }
 
-    @Transactional
-
     public void modificarHistoriaClinica(String idHistoriaClinica, Paciente paciente, Date fechaConsulta, Profesional profesional, String diagnostico) throws MiExcepcion {
 
         validar(paciente, profesional, diagnostico);
@@ -77,10 +75,11 @@ public class HistoriaClinicaService {
     @Transactional(readOnly = true)
     public List<HistoriaClinica> listar(String dniPaciente) {
         
+        System.out.println(dniPaciente);
         Paciente paciente = pacienteRepositorio.buscarPorDni(dniPaciente);
 
         String idPaciente = paciente.getId();
-
+        System.out.println("idPaciente");
         List<HistoriaClinica> historiasClinicas; //= new ArrayList();
 
         historiasClinicas = historiaClinicaRepositorio.buscarPorPaciente(idPaciente);

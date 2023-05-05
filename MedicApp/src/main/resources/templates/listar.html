@@ -42,36 +42,46 @@
 
                 </form>
 
-                <table class="table table-light">
+                <table class="table row-col-12 table-light">
                     <thead>
-                        <tr>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellido</th>
-                            <th scope="col">Especialidad</th>
-                            <th scope="col">Valor de Consulta</th>
-                            <th scope="col">Calificación</th> 
-<!--                            <th scope="col" sec:authorize ="hasRole ('ADMINISTRADOR')" >Acciones</th>
+                        <tr class="row-col-12 titulosTabla">
+                            <th scope="col" class="col-2">Profesional</th>
+                            <th scope="col" class="col-2">Especialidad</th>
+                              <th scope="col" class="col-2">Horario de atención</th>
+                            <th scope="col" class="col-1">Valor de Consulta</th>
+                            <th scope="col" class="col-2">Calificación</th> 
+                             <th scope="col" class="col-1"></th> 
+                        </tr>
+<!--                            <th scope="col" class="col-1" sec:authorize ="hasRole ('ADMINISTRADOR')" >Acciones</th>
                         </tr>-->
                     </thead>
 
                     <tbody th:each="profesional : ${profesionales}">
                         <tr>
-                            <td th:text="${profesional.nombre}"></td>
-                            <td th:text="${profesional.apellido}"></td>
+                            <td th:text="${profesional.apellido} + ', ' + ${profesional.nombre}"></td>
+                        
                             <td th:text="${profesional.especialidad}"></td>
+                                <td th:text="${profesional.horaInicio} + ' / ' + ${profesional.horaFin}"></td>
                             <td th:text="'$ ' + ${profesional.honorario}"></td>
                             <td>
-                                <span th:if="${profesional.calificacion >= 0.00 and profesional.calificacion < 0.25}"> <img src="../../img/estrella00.jpg" height="20"> </span>
-                                <span th:if="${profesional.calificacion >= 0.25 and profesional.calificacion < 0.75}"> <img src="../../img/estrella05.jpg" height="20"> </span>
-                                <span th:if="${profesional.calificacion >= 0.75 and profesional.calificacion < 1.25}"> <img src="../../img/estrella10.jpg" height="20"> </span>
-                                <span th:if="${profesional.calificacion >= 1.25 and profesional.calificacion < 1.75}"> <img src="../../img/estrella15.jpg" height="20"> </span>
-                                <span th:if="${profesional.calificacion >= 1.75 and profesional.calificacion < 2.25}"> <img src="../../img/estrella20.jpg" height="20"> </span>
-                                <span th:if="${profesional.calificacion >= 2.25 and profesional.calificacion < 2.75}"> <img src="../../img/estrella25.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 0.00 and profesional.calificacion < 0.25}"> <img src="../../img/estrella00.jpg" class="imgEstrella"  height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 0.25 and profesional.calificacion < 0.75}"> <img src="../../img/estrella05.jpg" class="imgEstrella" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 0.75 and profesional.calificacion < 1.25}"> <img src="../../img/estrella10.jpg" class="imgEstrella" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 1.25 and profesional.calificacion < 1.75}"> <img src="../../img/estrella15.jpg" class="imgEstrella" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 1.75 and profesional.calificacion < 2.25}"> <img src="../../img/estrella20.jpg" class="imgEstrella" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 2.25 and profesional.calificacion < 2.75}"> <img src="../../img/estrella25.jpg" class="imgEstrella" height="20"> </span>
                                 <span th:if="${profesional.calificacion >= 2.75 and profesional.calificacion < 3.25}"> <img src="../../img/estrella30.jpg" height="20"> </span>
                                 <span th:if="${profesional.calificacion >= 3.25 and profesional.calificacion < 3.75}"> <img src="../../img/estrella35.jpg" height="20"> </span>
                                 <span th:if="${profesional.calificacion >= 3.75 and profesional.calificacion < 4.25}"> <img src="../../img/estrella40.jpg" height="20"> </span>
                                 <span th:if="${profesional.calificacion >= 4.25 and profesional.calificacion < 4.75}"> <img src="../../img/estrella45.jpg" height="20"> </span>
                                 <span th:if="${profesional.calificacion >= 4.75}"> <img src="../../img/estrella50.jpg" height="20"> </span>
+                                   <th scope="col" class="col-2" sec:authorize ="hasRole ('PACIENTE')"> 
+                             
+                                     
+                              <a th:href="@{/turno/formularioTurno/__${profesional.id}__}"><button class="btn btn-primary btnQuieroTurno">    <!--LA IDEA ES QUE MANDE EL ID AL FORMULARIO-->
+                               Quiero MiTurno
+                            </button></a>
+                                                                    </th>
                             </td>
 
 <!--                            <td>

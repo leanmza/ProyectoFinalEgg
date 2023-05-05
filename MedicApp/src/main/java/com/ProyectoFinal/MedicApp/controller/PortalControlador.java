@@ -126,6 +126,7 @@ public class PortalControlador {
         List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidad(especialidad);
         model.addAttribute("profesionales", profesionales);
         model.addAttribute("espec", especialidad);
+        
         return "listaespecialidad.html";
     }
 

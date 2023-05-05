@@ -89,8 +89,5 @@ public class PacienteControlador {
         return "redirect:/";
     }
     
-    @GetMapping("/turno")
-    public String turno(){
-        return "sacar_turno.html";
-    }
+
 }

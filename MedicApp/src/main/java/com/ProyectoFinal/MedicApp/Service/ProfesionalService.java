@@ -13,6 +13,7 @@ import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import java.util.Date;
@@ -43,7 +44,7 @@ public class ProfesionalService implements UserDetailsService {
 
     @Autowired
     private ProfesionalRepositorio profesionalRepositorio;
-    
+
     @Autowired
     private ImagenService imagenServicio;
 
@@ -64,12 +65,12 @@ public class ProfesionalService implements UserDetailsService {
 //        profesional.setDni(dni);
         profesional.setEmail(correo);
         profesional.setTelefono(telefono);
-        
-        if(!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
+
+        if (!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
             Imagen imagen = imagenServicio.guardar(archivo);
             profesional.setImagen(imagen);
         }
-        
+
         profesional.setPassword(new BCryptPasswordEncoder().encode(password));
         profesional.setRol(Rol.PROFESIONAL);
         profesional.setActivo(true);
@@ -85,6 +86,21 @@ public class ProfesionalService implements UserDetailsService {
         profesional.setCantVisitas(0);
         profesional.setPuntaje(0);
         profesional.setCalificacion(0.0);
+        
+            ArrayList<String> horario = new ArrayList();
+            System.out.println("horario" + horario);
+            while (horaInicio.isBefore(horaFin)) {
+                horario.add(horaInicio.format(DateTimeFormatter.ofPattern("HH:mm")));
+                horaInicio = horaInicio.plusMinutes(30);
+                System.out.println("Hora inicio" + horaInicio);
+            }
+            for (String horas : horario) {
+                System.out.println("horas" + horas);
+            }
+
+            profesional.setHoras(horario);
+        
+        
         profesionalRepositorio.save(profesional);
 
     }
@@ -98,6 +114,8 @@ public class ProfesionalService implements UserDetailsService {
 
         validar(nombre, apellido, correo, telefono, password, password2,
                 especialidad, ubicacion, modalidad, honorarios /*, obrasSociales, dias */, horaInicio, horaFin);
+        
+        
         Optional<Profesional> respuesta = profesionalRepositorio.findById(idProfesional);
 
         if (respuesta.isPresent()) {
@@ -108,14 +126,14 @@ public class ProfesionalService implements UserDetailsService {
 //        profesional.setDni(dni);
             profesional.setEmail(correo);
             profesional.setTelefono(telefono);
-            
+
             String idImagen = null;
             if (profesional.getImagen() != null) {
                 idImagen = profesional.getImagen().getId();
             }
             Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
             profesional.setImagen(imagen);
-            
+
             profesional.setPassword(new BCryptPasswordEncoder().encode(password));
             profesional.setRol(Rol.PROFESIONAL);
             profesional.setActivo(true);
@@ -128,9 +146,22 @@ public class ProfesionalService implements UserDetailsService {
 //        profesional.setDias(dias);
             profesional.setHoraInicio(horaInicio);
             profesional.setHoraFin(horaFin);
+            
+/////// CARGA EL ARRAYLIST DE HORAS //////
+            ArrayList<String> horario = new ArrayList();
+            System.out.println("horario" + horario);
+            while (horaInicio.isBefore(horaFin)) {
+                horario.add(horaInicio.format(DateTimeFormatter.ofPattern("HH:mm")));
+                horaInicio = horaInicio.plusMinutes(30);
+              
+            }
+            for (String horas : horario) { ///PARA VER QUE FUNCIONA
+                System.out.println("horas" + horas);
+            }
 
+            profesional.setHoras(horario);
             profesionalRepositorio.save(profesional);
-           
+
         }
 
     }
@@ -158,7 +189,7 @@ public class ProfesionalService implements UserDetailsService {
 
         return especialistas;
     }
-    
+
     @Transactional(readOnly = true)
     public List<Profesional> buscarProfesionalesPorEspecialidadOrdenadoHonorario(String especialidad) {
 
@@ -168,7 +199,7 @@ public class ProfesionalService implements UserDetailsService {
 
         return especialistas;
     }
-    
+
     @Transactional(readOnly = true)
     public List<Profesional> buscarProfesionalesPorEspecialidadOrdenadoCalificacion(String especialidad) {
 
