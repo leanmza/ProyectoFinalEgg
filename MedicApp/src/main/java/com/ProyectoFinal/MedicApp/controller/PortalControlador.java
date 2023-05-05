@@ -165,7 +165,7 @@ public class PortalControlador {
 
      @Transactional
     @PostMapping("/registroObraSocial")
-    public String registroObraSocial(@RequestParam String nombreObraSocial) {
+    public String registroObraSocial(@RequestParam("nombreObraSocial") String nombreObraSocial) {
        
         try {
             obraSocialService.crearObraSocial(nombreObraSocial);
@@ -181,5 +181,5 @@ public class PortalControlador {
         }  
         
     }
-
+    
 }

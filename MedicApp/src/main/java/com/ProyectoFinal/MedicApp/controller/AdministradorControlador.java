@@ -1,11 +1,14 @@
 package com.ProyectoFinal.MedicApp.controller;
 
+import com.ProyectoFinal.MedicApp.Entity.Imagen;
 import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Enum.Modalidad;
+import com.ProyectoFinal.MedicApp.Enum.Rol;
 import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
+import com.ProyectoFinal.MedicApp.Service.ImagenService;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -39,8 +44,11 @@ public class AdministradorControlador {
     @Autowired
     ProfesionalService profesionalServicio;
     
-       @Autowired
+    @Autowired
     ObraSocialService obraSocialServicio;
+    
+    @Autowired
+    ImagenService imagenServicio;
     
     @GetMapping("/dashboard")
     public String panelAdministrativo() {
@@ -98,8 +106,8 @@ public class AdministradorControlador {
     public String crearProfesional(@RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String correo, @RequestParam String telefono, @RequestParam(required = false) MultipartFile archivo,
             @RequestParam String password,@RequestParam String password2, @RequestParam String especialidad,
-            @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,/*
-           @RequestParam("obrasSociales[]") List<String> obrasSociales, @RequestParam("dias[]") List<String> dias,
+            @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,
+            @RequestParam String obraSocial, /*@RequestParam("dias[]") List<String> dias,
              */ @RequestParam String horaInicio, @RequestParam String horaFin
     /*, @RequestParam(required = false) List<Turno>turnos*/) throws IOException {
 
@@ -107,10 +115,13 @@ public class AdministradorControlador {
             
             LocalTime horaInicioLT = LocalTime.parse(horaInicio);
             LocalTime horaFinLT = LocalTime.parse(horaFin);
+            
+            ObraSocial claseObraSocial = obraSocialServicio.buscarPorNombre(nombre);
+            
             System.out.println(archivo.getBytes().toString());
             profesionalServicio.crearProfesional(nombre, apellido, correo, telefono,
                     archivo, password, password2, especialidad, ubicacion, modalidad,
-                    honorarios/*, obrasSociales, dias*/, horaInicioLT, horaFinLT);
+                    honorarios, claseObraSocial/*, dias*/, horaInicioLT, horaFinLT);
 
             return "redirect:/admin/profesionales";
 
@@ -151,5 +162,64 @@ public class AdministradorControlador {
         
     }
     
+    @PostMapping("/guardarDatosFormulario")
+    public String guardarDatosFormulario(@RequestParam String nombre, @RequestParam String apellido,
+            @RequestParam String correo, @RequestParam String telefono, @RequestParam(required = false) MultipartFile archivo,
+            @RequestParam String especialidad, @RequestParam String ubicacion, @RequestParam String modalidad, 
+            @RequestParam Double honorarios, @RequestParam String obraSocial, /*@RequestParam("dias[]") List<String> dias,
+            */ @RequestParam String horaInicio, @RequestParam String horaFin
+            /*, @RequestParam(required = false) List<Turno>turnos*/) throws IOException, MiExcepcion {
 
+        ObraSocial ClaseObraSocial = obraSocialServicio.buscarPorNombre(obraSocial);
+        
+        Profesional profesional = new Profesional();
+        
+        profesional.setNombre(nombre);
+        profesional.setApellido(apellido);
+//        profesional.setDni(dni);
+        profesional.setEmail(correo);
+        profesional.setTelefono(telefono);
+        
+        if(!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
+            Imagen imagen = imagenServicio.guardar(archivo);
+            profesional.setImagen(imagen);
+        }
+        
+        profesional.setRol(Rol.PROFESIONAL);
+        profesional.setActivo(true);
+        profesional.setEspecialidad(especialidad);
+
+        profesional.setModalidad(modalidad);
+        profesional.setUbicacion(ubicacion);
+        profesional.setHonorario(honorarios);
+        profesional.setObraSocial(ClaseObraSocial);
+//        profesional.setDias(dias);
+        if (!horaInicio.isEmpty()) {
+            LocalTime horaInicioLT = LocalTime.parse(horaInicio);
+            profesional.setHoraInicio(horaInicioLT);
+        }
+        if (!horaFin.isEmpty()) {
+            LocalTime horaFinLT = LocalTime.parse(horaFin);
+            profesional.setHoraFin(horaFinLT);
+        }
+        profesional.setCantVisitas(0);
+        profesional.setPuntaje(0);
+        profesional.setCalificacion(0.0);
+        
+        return "redirect:/admin/registroProfesional";
+    }
+    
+    @GetMapping("/actualizarOpcionesObraSocial")
+    @ResponseBody
+    public String actualizarOpcionesObraSocial() {
+        List<ObraSocial> obraSociales = obraSocialServicio.listar();
+
+        StringBuilder sb = new StringBuilder();
+        for (ObraSocial obraSocial : obraSociales) {
+            sb.append("<option value=\"").append(obraSocial.getId()).append("\">")
+                .append(obraSocial.getNombre()).append("</option>");
+        }
+
+        return sb.toString();
+    }
 }

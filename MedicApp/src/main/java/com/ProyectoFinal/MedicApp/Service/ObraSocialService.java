@@ -60,6 +60,10 @@ public class ObraSocialService {
         return obraSocialRepositorio.getOne(id);
     }
 
+    public ObraSocial buscarPorNombre(String nombre) {
+        return obraSocialRepositorio.buscarPorNombre(nombre);
+    }
+    
     @Transactional(readOnly = true)
     public List<ObraSocial> listar() {
 

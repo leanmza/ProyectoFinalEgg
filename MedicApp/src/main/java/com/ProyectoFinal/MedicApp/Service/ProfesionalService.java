@@ -5,6 +5,7 @@
 package com.ProyectoFinal.MedicApp.Service;
 
 import com.ProyectoFinal.MedicApp.Entity.Imagen;
+import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Enum.Modalidad;
 import com.ProyectoFinal.MedicApp.Enum.Rol;
@@ -49,7 +50,7 @@ public class ProfesionalService implements UserDetailsService {
     @Transactional
     public void crearProfesional(String nombre, String apellido, String correo, String telefono,
             MultipartFile archivo, String password, String password2, String especialidad, String ubicacion,
-            String modalidad, Double honorarios/*, List<String> obrasSociales, List<String> dias*/,
+            String modalidad, Double honorarios, ObraSocial obraSocial/*, List<String> dias*/,
             LocalTime horaInicio, LocalTime horaFin /*List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
     ) throws MiExcepcion {
 
@@ -77,6 +78,7 @@ public class ProfesionalService implements UserDetailsService {
         profesional.setModalidad(modalidad);
         profesional.setUbicacion(ubicacion);
         profesional.setHonorario(honorarios);
+        profesional.setObraSocial(obraSocial);
 //        profesional.setDias(dias);
         profesional.setHoraInicio(horaInicio);
         profesional.setHoraFin(horaFin);
