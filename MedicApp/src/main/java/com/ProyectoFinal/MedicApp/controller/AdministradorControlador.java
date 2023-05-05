@@ -92,10 +92,10 @@ public class AdministradorControlador {
     @PostMapping("/crearProfesional")
     public String crearProfesional(@RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String correo, @RequestParam String telefono, @RequestParam(required = false) MultipartFile archivo,
-            @RequestParam String password,@RequestParam String password2, @RequestParam String especialidad,
-            @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,/*
+            @RequestParam String password,@RequestParam String password2, @RequestParam(required = false) String especialidad,
+            @RequestParam(required = false) String ubicacion, @RequestParam(required = false) String modalidad, @RequestParam(required = false) Double honorarios,/*
            @RequestParam("obrasSociales[]") List<String> obrasSociales, @RequestParam("dias[]") List<String> dias,
-             */ @RequestParam String horaInicio, @RequestParam String horaFin
+             */ @RequestParam String horaInicio, @RequestParam String horaFin, ModelMap modelo
     /*, @RequestParam(required = false) List<Turno>turnos*/) {
 
         try {
@@ -107,12 +107,15 @@ public class AdministradorControlador {
                     archivo, password, password2, especialidad, ubicacion, modalidad,
                     honorarios/*, obrasSociales, dias*/, horaInicioLT, horaFinLT);
 
-            return "redirect:/admin/profesionales";
+            modelo.put("exito","¡Felicidades! Tu registro como profesional ha sido exitoso.");
+
+            return "redirect:/admin/dashboard";
 
         } catch (MiExcepcion e) {
             System.out.println("Error al cargar Profesional");
             System.out.println(e.getMessage());
             e.printStackTrace();
+            modelo.put("error", e.getMessage());
             return "formulario_profesional.html";
         }
 

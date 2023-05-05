@@ -6,12 +6,14 @@ import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -43,8 +45,12 @@ public class PortalControlador {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(@RequestParam(required = false) String error, ModelMap modelo) {
+        if (error != null) {
 
+            modelo.put("error", "Lo siento, no hemos podido iniciar sesión con las credenciales que proporcionaste." +
+                    " Intentalo nuevamente!");
+        }
         return "login.html"; //ver nombre de archivo
     }
 
@@ -85,9 +91,9 @@ public class PortalControlador {
     @Transactional
     @PostMapping("/registroPaciente")
     public String registroPaciente(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni,
-            @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
-            @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
-             @RequestParam(required = false) String sexo, @RequestParam(required = false) MultipartFile archivo, ModelMap modelo, HttpSession session) {
+                                   @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
+                                   @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
+                                   @RequestParam(required = false) String sexo, @RequestParam(required = false) MultipartFile archivo, ModelMap modelo, HttpSession session) {
 
         try {
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
@@ -100,9 +106,7 @@ public class PortalControlador {
             pacienteService.crearPaciente(nombre, apellido, dni, correo, telefono, password, password2, direccion,
                     fechaNacimiento, sexo, archivo);
 
-            modelo.put("exito","¡Gracias por registrarte en nuestra aplicación! Ahora puedes comenzar a utilizar nuestros servicios");
-
-
+            modelo.put("exito", "¡Gracias por registrarte en nuestra aplicación! Ahora puedes comenzar a utilizar nuestros servicios");
 
 
         } catch (MiExcepcion me) {
@@ -130,8 +134,8 @@ public class PortalControlador {
 
 
     }
-    
-    
+
+
     @Transactional
     @GetMapping("/listar")
     public String listar(ModelMap model) {

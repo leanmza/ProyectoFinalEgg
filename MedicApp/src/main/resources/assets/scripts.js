@@ -15,3 +15,16 @@ function exportToPdf() {
     doc.save(fileName);
   });
 }
+const texto = "¡Hola mundo!";
+let i = 0;
+const velocidadEscritura = 50; // velocidad en milisegundos
+
+function escribirTexto() {
+  if (i < texto.length) {
+    document.getElementById("texto").innerHTML += texto.charAt(i);
+    i++;
+    setTimeout(escribirTexto, velocidadEscritura);
+  }
+}
+
+escribirTexto();

@@ -134,9 +134,9 @@
                           th:src="@{/imagen/perfil/__${session.pacienteSession.id}__}" >
              
                              
-              <img class="imagen-perfil" 
+              <img class="imagen-perfil"
                    sec:authorize ="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')"
-                          th:if="${session.profesionalSession.imagen != null} AND ${session.profesionalSession != null}" 
+                          th:if="${session.profesionalSession.imagen != null} AND ${session.profesionalSession != null}"
                           th:src="@{/imagen/perfil/__${session.profesionalSession.id}__}" >
              
 <!--                  <img class="imagen-perfil" 
