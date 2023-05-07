@@ -37,6 +37,7 @@ public class PortalControlador {
     @Autowired
     ObraSocialService obraSocialService;
 
+    
     @GetMapping("/")
     public String index() {
 
@@ -48,6 +49,11 @@ public class PortalControlador {
 
         return "login.html"; //ver nombre de archivo
     }
+    @GetMapping("/mis_profesionales")
+    public String mis_profesionales() {
+        return "mis_profesionales.html"; //ver nombre de archivo
+    }
+    
 
     @Transactional
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_PROFESIONAL', 'ROLE_ADMINISTRADOR')")
