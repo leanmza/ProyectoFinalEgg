@@ -200,10 +200,36 @@
                             <label for="obraSocial" class="datosInput">Obra Social</label>
                             <script>
                                 function abrirModal() {
+                                    // Tomo la variable de la seccion Obra Social
                                     var select = document.getElementById("obraSocial");
                                     var value = select.options[select.selectedIndex].value;
-
+                                    
+                                    // En el caso que sea "Cargar otra..." guardo los datos precargados del formulario y abro el Modal
                                     if (value == "Cargar otra...") {
+                                        // Obtener los datos del formulario para recargarlos luego
+                                        var formulario = document.getElementById("formulario");
+                                        var datosFormulario = new FormData(formulario);
+
+                                        // Enviar los datos del formulario al PostMapping de PortalControlador
+                                        fetch('/datosFormProfesional', {
+                                            method: 'POST',
+                                            body: datosFormulario
+                                        })
+                                                .then(function (respuesta) {
+                                                    if (respuesta.ok) {
+                                                        // En caso de éxito, mostrar mensaje de confirmación
+                                                        alert("Formulario enviado con éxito");
+                                                    } else {
+                                                        // En caso de error, mostrar mensaje de error
+                                                        alert("Error al enviar el formulario");
+                                                    }
+                                                })
+                                                .catch(function (error) {
+                                                    // En caso de error, mostrar mensaje de error
+                                                    alert("Error al enviar el formulario: " + error.message);
+                                                });
+                                                
+                                        // Finalmente, envio la orden para abrir el Modal  
                                         var ventanaModal = document.getElementById("myModal");
                                         ventanaModal.style.display = "block";
                                     }
@@ -355,83 +381,87 @@
                         </button>
                     </div>
                 </form>
-            </div>
 
-            <!-- VENTANA MODAL PARA CARGA DE NUEVA OBRA SOCIAL -->
-            <div class="modal" id="myModal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form
-                            class="formulario formularioCrear"
-                            id="formularioModal"
-                            method="POST"
-                            >
-                            <!-- MODAL HEADER --> 
-                            <div class="modal-header">
-                                <h3 class="modal-title">REGISTRAR NUEVA OBRA SOCIAL</h3>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="cerrarModal()"></button>
-                            </div>
-                            <!-- MODAL BODY -->
-                            <div class="row rowDatosPersonales">
-                                <div class="tituloForm">
-                                    <h4>En caso que la obra social no tenga sigla, usar el nombre completo</h4>
+
+                <!-- VENTANA MODAL PARA CARGA DE NUEVA OBRA SOCIAL -->
+
+                <div class="modal" id="myModal">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <form
+                                class="formulario"
+                                id="formularioModal"
+                                th:action="@{/datosFormProfesional}"
+                                method="POST"
+                                enctype="multipart/form-data"
+                                >
+                                <!-- MODAL HEADER --> 
+                                <div class="modal-header">
+                                    <h3 class="modal-title">REGISTRAR NUEVA OBRA SOCIAL</h3>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="cerrarModal()"></button>
                                 </div>
-                                <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
+                                <!-- MODAL BODY -->
+                                <div class="row rowDatosPersonales">
+                                    <div class="tituloForm">
+                                        <h4>En caso que la obra social no tenga sigla, usar el nombre completo</h4>
+                                    </div>
+                                    <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
 
-                                <!-- INPUT NOMBRE-->
-                                <div class="col-xs-12  form-floating">
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="nombreObraSocial"
-                                        name="nombreObraSocial"
-                                        placeholder=""
-                                        />
-                                    <label for="nombreObraSocial">Sigla o nombre de la obra social</label>
+                                    <!-- INPUT NOMBRE-->
+                                    <div class="col-xs-12  form-floating">
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="nombreObraSocial"
+                                            name="nombreObraSocial"
+                                            placeholder=""
+                                            />
+                                        <label for="nombreObraSocial">Sigla o nombre de la obra social</label>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- MODAL FOOTER -->
-                            <div class="modal-footer mx-2">
-                                <button type="button" class="btn btn-primary"  onclick="cargarObraSocial()">Aceptar</button>
-                                <button type="button" class="btn btn-danger" onclick="cerrarModal()">Cancelar</button>
-                            </div>
-                        </form>
+                                <!-- MODAL FOOTER -->
+                                <div class="modal-footer mx-2">
+                                    <button type="button" class="btn btn-primary"  onclick="cargarObraSocial()">Aceptar</button>
+                                    <button type="button" class="btn btn-danger" onclick="cerrarModal()">Cancelar</button>
+                                </div>
+                            </form>
 
+                        </div>
                     </div>
                 </div>
-            </div>
-            <script>
-                function cerrarModal() {
-                    var ventanaModal = document.getElementById("myModal");
-                    ventanaModal.style.display = "none";
-                }
 
-                function cargarObraSocial() {
-                    var formulario = document.getElementById("formularioModal");
-                    var datosFormulario = new FormData();
-                    datosFormulario.append("nombreObraSocial", formulario.nombreObraSocial.value);
+                <script>
+                    function cerrarModal() {
+                        var ventanaModal = document.getElementById("myModal");
+                        ventanaModal.style.display = "none";
+                    }
 
-                    fetch('/registroObraSocial', {
-                        method: 'POST',
-                        body: datosFormulario
-                    })
-                            .then(function (respuesta) {
-                                if (respuesta.ok) {
-                                    //en caso de exito
-                                    cerrarModal();
-                                    location.reload();
-                                } else {
+                    function cargarObraSocial() {
+                        var formulario = document.getElementById("formularioModal");
+                        var datosFormulario = new FormData();
+                        datosFormulario.append("nombreObraSocial", formulario.nombreObraSocial.value);
+
+                        fetch('/registroObraSocial', {
+                            method: 'POST',
+                            body: datosFormulario
+                        })
+                                .then(function (respuesta) {
+                                    if (respuesta.ok) {
+                                        //en caso de exito
+                                        cerrarModal();
+                                    } else {
+                                        // En caso de error
+                                        console.log("Error en el envío del formulario.");
+                                    }
+                                })
+                                .catch(function (error) {
                                     // En caso de error
-                                    console.log("Error en el envío del formulario.");
-                                }
-                            })
-                            .catch(function (error) {
-                                // En caso de error
-                                console.log("Error en el envío del formulario: " + error.message);
-                            });
-                }
-            </script>
+                                    console.log("Error en el envío del formulario: " + error.message);
+                                });
+                    }
+                </script>
+            </div>
         </main>
         <!--FOOTER-->
         <div class="container-fluid pie">

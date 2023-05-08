@@ -9,9 +9,11 @@ import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 
 import java.util.Date;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -180,7 +183,41 @@ public class PortalControlador {
              return "formulario_obra_social.html";
             
         }  
+    }
+    
+    @PostMapping("/datosFormProfesional")
+    @ResponseBody
+    public String datosFormProfesional(HttpServletRequest request, HttpSession sessionForm) {
         
+        String nombre = request.getParameter("nombre");
+        String apellido = request.getParameter("apellido");
+        String correo = request.getParameter("correo");
+        String telefono = request.getParameter("telefono");
+        String especialidad = request.getParameter("especialidad");
+        String ubicacion = request.getParameter("ubicacion");
+        String modalidad = request.getParameter("modalidad");
+        String honorarios = request.getParameter("honorarios");
+        String horaInicio = request.getParameter("horaInicio");
+        String horaFin = request.getParameter("horaFin");
+        
+        sessionForm.setAttribute("nombre", nombre);
+        sessionForm.setAttribute("apellido", apellido);
+        sessionForm.setAttribute("correo", correo);
+        sessionForm.setAttribute("telefono", telefono);
+        sessionForm.setAttribute("especialidad", especialidad);
+        sessionForm.setAttribute("ubicacion", ubicacion);
+        sessionForm.setAttribute("modalidad", modalidad);
+        sessionForm.setAttribute("honorarios", honorarios);
+        sessionForm.setAttribute("horaInicio", horaInicio);
+        sessionForm.setAttribute("horaFin", horaFin);
+        
+        return "redirect:/admin/registroProfesional";
     }
     
 }
+
+/*@RequestParam("nombre") String nombre, @RequestParam("apellido") String apellido,
+            @RequestParam("correo") String correo, @RequestParam("telefono") String telefono,
+            @RequestParam("especialidad") String especialidad, @RequestParam("ubicacion") String ubicacion, @RequestParam("modalidad") String modalidad, 
+            @RequestParam("honorarios") Double honorarios, /*@RequestParam("dias[]") List<String> dias,
+             */ /*@RequestParam("horaInicio") String horaInicio, @RequestParam("horaFin") String horaFin*/
