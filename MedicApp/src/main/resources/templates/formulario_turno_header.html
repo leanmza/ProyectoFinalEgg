@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace= "/fragments/head :: head" </head>  <!--NO MODIFICAR-->
+
+    <body>
+        <!--HEADER-->
+        <div class="container-fluid cabecera">
+            <header th:replace="/fragments/header :: header"</header>  <!--NO MODIFICAR-->
+        </div>
+
+        <!--MAIN-->
+        <main>
+            <div
+                id="divFormTurno"
+                class="container-fluid divFormTurno contenedorMain"
+                >
+                <div class="row titulo">
+                    <h3>SACAR MITURNO</h3>
+                </div>
+
+                <div class="row formTurno">
+
+                    <!-- DATOS PERSONALES -->
+                    <div class="row turno">
+                        <!-- COLUMNA IZQUIERDA -->
+                        <div class="col-4">
+                            <!--INPUT OCULTO DEL ID--> 
+<!--                            <input
+                                hidden
+                                type="text"
+                                id="inputId"
+                                name="id"
+                                />-->
+                            <!--                             INPUT ESPECIALIDAD-->
+                            <div class="col-xs-12 form-floating">
+<!--                                
+                                <input
+                                    hidden
+                                    type="text"
+                                    class="form-control"
+                                    id="inputEspecialidad"
+                                    name="especialidad"
+                                    placeholder=""
+                                    />
+                                <label hidden for="especialidad" id="labelEspecialidad"
+                                       >Especialidad</label
+                                >-->
+                                <button
+                                    type="button"
+                                    id="btnEspecialidad"
+                                    class="btn btnModal"
+                                    name="especialidad"
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modalProfesionales"
+                                    >
+                                    <!--    
+                                    <label for="especialidad" id="labelEspecialidadSecundaria"  class="idProfesional"
+                                        >Especialidad</label >-->
+                                    <label for="profesional" id="labelEspecialidadPrimaria" class="labelPrimaria"
+                                           >Elegir Especialidad</label
+                                    >
+                                </button>
+                            </div>
+
+
+
+
+                            <!-- INPUT PROFESIONAL-->
+
+                            <div class="col-xs-12 form-floating">
+                                <!--
+                                <input
+                                    hidden
+                                    type="text"
+                                    class="form-control"
+                                    id="inputProfesional"
+                                    name="profesional"
+
+                                    placeholder=""
+                                    />
+                                <label hidden for="profesional" id="labelProfesional"
+                                       >Profesional</label
+                                >-->
+                                <button
+                                    type="button"
+                                    id="btnProfesional"
+                                    class="btn btnModal"
+                                    name="profesional"
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modalProfesionales"
+                                    >
+                                    <!--  <label for="profesional" id="labelProfesionalSecundaria"  class="idProfesional"
+                                      >Profesional</label >-->
+                                    <label for="profesional" id="labelProfesionalPrimaria" class="labelProfesionalPrimaria"
+                                           >Elegir Profesional</label
+                                    >
+                                </button>
+                            </div>
+
+
+                            <!-- MODAL LISTA PROFESIONALES -->
+
+                            <!-- Modal -->
+                            <div
+                                class="modal fade"
+                                id="modalProfesionales"
+
+                                >
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3>PROFESIONALES EN MITURNO</h3>
+                                            <!--SE PUEDE INYECTAR LA ESPECIALIDAD COMO TITULO CON THYMELEAF -->
+                                            <button
+                                                type="button"
+                                                class="btn-close"
+                                                id="btnCloseModal"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Close"
+                                                ></button>
+                                        </div>
+                                        <div class="modal-body" id="tablaProfesionales">
+                                            <table class="table table-light">
+                                                <thead>
+                                                    <tr>
+
+                                                        <th scope="col">Nombre</th>
+                                                        <th scope="col">Apellido</th>
+                                                        <th scope="col">Especialidad</th>
+                                                        <th scope="col">Valor de Consulta</th>
+                                                        <th scope="col">Calificación</th>
+                                                        <th scope="col" class="col-1"></th> 
+                                                    </tr>
+
+                                                </thead>
+
+                                                <tbody th:each="profesional : ${profesionales}">
+                                                    <tr>
+
+
+
+                                                        <td th:text="${profesional.nombre}"></td>
+                                                        <td th:text="${profesional.apellido}"></td>
+                                                        <td th:text="${profesional.especialidad}"></td>
+                                                        <td th:text="${profesional.honorario}"></td>
+                                                        <td>
+                                                            <span th:if="${profesional.calificacion >= 0.00 and profesional.calificacion < 0.25}"> <img src="../../img/estrella00.jpg" height="20"> </span>
+                                                            <span th:if="${profesional.calificacion >= 0.25 and profesional.calificacion < 0.75}"> <img src="../../img/estrella05.jpg" height="20"> </span>
+                                                            <span th:if="${profesional.calificacion >= 0.75 and profesional.calificacion < 1.25}"> <img src="../../img/estrella10.jpg" height="20"> </span>
+                                                            <span th:if="${profesional.calificacion >= 1.25 and profesional.calificacion < 1.75}"> <img src="../../img/estrella15.jpg" height="20"> </span>
+                                                            <span th:if="${profesional.calificacion >= 1.75 and profesional.calificacion < 2.25}"> <img src="../../img/estrella20.jpg" height="20"> </span>
+                                                            <span th:if="${profesional.calificacion >= 2.25 and profesional.calificacion < 2.75}"> <img src="../../img/estrella25.jpg" height="20"> </span>
+                                                            <span th:if="${profesional.calificacion >= 2.75 and profesional.calificacion < 3.25}"> <img src="../../img/estrella30.jpg" height="20"> </span>
+                                                            <span th:if="${profesional.calificacion >= 3.25 and profesional.calificacion < 3.75}"> <img src="../../img/estrella35.jpg" height="20"> </span>
+                                                            <span th:if="${profesional.calificacion >= 3.75 and profesional.calificacion < 4.25}"> <img src="../../img/estrella40.jpg" height="20"> </span>
+                                                            <span th:if="${profesional.calificacion >= 4.25 and profesional.calificacion < 4.75}"> <img src="../../img/estrella45.jpg" height="20"> </span>
+                                                            <span th:if="${profesional.calificacion >= 4.75}"> <img src="../../img/estrella50.jpg" height="20"> </span>
+                                                        </td>
+                                                        <td scope="col" class="col-2" sec:authorize ="hasRole ('PACIENTE')"><a th:href="@{/turno/formularioTurno/__${profesional.id}__}">
+                                                                <button class="btn btn-primary btnQuieroTurno"> Quiero MiTurno</button></a></td>
+                                                        <!--<button class="btn btn-primary btnQuieroTurno" id="btnProfesionalElegido"> Quiero MiTurno</button></a></td>-->
+                                                    </tr>
+                                                </tbody>
+                                            </table>  
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button
+                                                type="button"
+                                                class="btn btn-secondary"
+                                                id="btnCancelarModal"
+                                                data-bs-dismiss="modal" 
+                                                aria-label="Cancelar"
+                                                >
+                                                Cancelar
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <!-- INPUT MOTIVO -->
+                            <div class="col-xs-12 form-floating">
+                                <textarea
+                                    disabled
+                                    type="text"
+                                    class="form-control motivo"
+                                    id="motivo"
+                                    placeholder=""
+                                    name="motivo"
+                                    ></textarea>
+                                <label for="motivo"
+                                       >Motivo de la consulta
+                                    <span class="aclaracion">(opcional) <br>
+                                        (Primero elija un profesional)</span>
+                                    <!-- cambiar estilo del span -->
+                                </label>
+                                <p id="contador" class="contador"></p>
+                            </div>
+                            <div class="col-xs-12 DivBtnEnviar">
+                                <button
+                                    type="submit"
+                                    name="submit"
+                                    value="registrar"
+                                    class="btn btn-primary btnEnviar botonesFormulario"
+                                    >
+                                    ¡Sacar MiTurno!
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- COLUMNA CENTRO -->
+
+                        <div class="col-4">
+                            <!--CALENDARIO-->
+                            <div class="col-xs-12 fecha" id="fecha">
+                                <div class="row selectorMes">
+                                    <button
+                                        id="btn-mes-anterior"
+                                        class="col-2 btn btn-primary btnEnviar botonesFormulario"
+                                        >
+                                        <i class="fa-solid fa-caret-left"></i>
+                                    </button>
+
+                                    <h5 id="mes" class="col-6">
+                                        <!--ACA SE INYECTA CON JS EL NOMBRE DEL MES-->
+                                    </h5>
+                                    <button
+                                        id="btn-mes-siguiente"
+                                        class="col-2 btn btn-primary btnEnviar botonesFormulario"
+                                        >
+                                        <i class="fa-solid fa-caret-right"></i>
+                                    </button>
+                                </div>
+                                <div class="col-xs-12 calendario" id="calendario"></div>
+                                <!--ACA SE INYECTA CON JS EL CALENDARIO-->
+                            </div>
+                        </div>
+
+                        <!-- COLUMNA DERECHA -->
+
+                        <div class="col-4">
+                            <div class="col-xs-12 hora cardHora" id="hora">
+                                <div class="row selectorHora">
+                                    <h6>Elija un profesional para conocer sus horarios</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- </form> -->
+                </div>
+            </div>
+
+
+
+
+        </main>
+        <!--FOOTER-->
+        <div class="container-fluid pie">
+            <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
+        </div>
+
+        <script src="../../scripts.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+            crossorigin="anonymous"
+        ></script> <!--NO MODIFICAR-->
+
+    </body>
+</html>
