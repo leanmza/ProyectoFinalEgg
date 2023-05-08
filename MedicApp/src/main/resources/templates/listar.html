@@ -47,21 +47,21 @@
                         <tr class="row-col-12 titulosTabla">
                             <th scope="col" class="col-2">Profesional</th>
                             <th scope="col" class="col-2">Especialidad</th>
-                              <th scope="col" class="col-2">Horario de atención</th>
+                            <th scope="col" class="col-2">Horario de atención</th>
                             <th scope="col" class="col-1">Valor de Consulta</th>
                             <th scope="col" class="col-2">Calificación</th> 
-                             <th scope="col" class="col-1"></th> 
+                            <th scope="col" class="col-1"  sec:authorize ="hasRole ('PACIENTE')"></th> 
                         </tr>
-<!--                            <th scope="col" class="col-1" sec:authorize ="hasRole ('ADMINISTRADOR')" >Acciones</th>
-                        </tr>-->
+                        <!--                            <th scope="col" class="col-1" sec:authorize ="hasRole ('ADMINISTRADOR')" >Acciones</th>
+                                                </tr>-->
                     </thead>
 
                     <tbody th:each="profesional : ${profesionales}">
                         <tr>
                             <td th:text="${profesional.apellido} + ', ' + ${profesional.nombre}"></td>
-                        
+
                             <td th:text="${profesional.especialidad}"></td>
-                                <td th:text="${profesional.horaInicio} + ' / ' + ${profesional.horaFin}"></td>
+                            <td th:text="${profesional.horaInicio} + ' / ' + ${profesional.horaFin}"></td>
                             <td th:text="'$ ' + ${profesional.honorario}"></td>
                             <td>
                                 <span th:if="${profesional.calificacion >= 0.00 and profesional.calificacion < 0.25}"> <img src="../../img/estrella00.jpg" class="imgEstrella"  height="20"> </span>
@@ -75,29 +75,23 @@
                                 <span th:if="${profesional.calificacion >= 3.75 and profesional.calificacion < 4.25}"> <img src="../../img/estrella40.jpg" height="20"> </span>
                                 <span th:if="${profesional.calificacion >= 4.25 and profesional.calificacion < 4.75}"> <img src="../../img/estrella45.jpg" height="20"> </span>
                                 <span th:if="${profesional.calificacion >= 4.75}"> <img src="../../img/estrella50.jpg" height="20"> </span>
-                                   <th scope="col" class="col-2" sec:authorize ="hasRole ('PACIENTE')"> 
-                             
-                                     
-                              <a th:href="@{/turno/formularioTurno/__${profesional.id}__}"><button class="btn btn-primary btnQuieroTurno">    <!--LA IDEA ES QUE MANDE EL ID AL FORMULARIO-->
-                               Quiero MiTurno
-                            </button></a>
-                                                                    </th>
-                            </td>
+                            <td scope="col" class="col-2" sec:authorize ="hasRole ('PACIENTE')"><a th:href="@{/turno/formularioTurno/__${profesional.id}__}">
+                                    <button class="btn btn-primary btnQuieroTurno"> Quiero MiTurno</button></a></td>
 
-<!--                            <td>
-                                <a sec:authorize ="hasRole ('ADMINISTRADOR')" th:href= "@{/pro/perfil/__${profesional.id}__}"> Modificar </a>
-                            </td>-->
-                      
-                               
+                            <!--                            <td>
+                                                            <a sec:authorize ="hasRole ('ADMINISTRADOR')" th:href= "@{/pro/perfil/__${profesional.id}__}"> Modificar </a>
+                                                        </td>-->
+
+
                         </tr>
                     </tbody>
                 </table>
-                         
+
                 <a class="btn btn-primary botonesLista" href="/inicio" role="button" th:if="${session.pacienteSession != null} OR ${session.profesionalSession != null} ">Volver</a>
-                 <a class="btn btn-primary botonesLista" href="/" role="button" th:if="${session.pacienteSession == null} AND ${session.profesionalSession == null}">Volver</a>
+                <a class="btn btn-primary botonesLista" href="/" role="button" th:if="${session.pacienteSession == null} AND ${session.profesionalSession == null}">Volver</a>
             </div>
-     </main>
- 
+        </main>
+
         <!--FOOTER-->
         <div class="container-fluid pie">
             <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->

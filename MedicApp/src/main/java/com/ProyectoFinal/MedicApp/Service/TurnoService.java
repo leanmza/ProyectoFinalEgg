@@ -1,15 +1,19 @@
 package com.ProyectoFinal.MedicApp.Service;
 
+import com.ProyectoFinal.MedicApp.Entity.Paciente;
+import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Entity.Turno;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
 import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
 import com.ProyectoFinal.MedicApp.Repository.TurnoRepositorio;
+
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,22 +36,28 @@ public class TurnoService {
     TurnoRepositorio turnoRepositorio;
 
     @Transactional
-    public void crearTurno(Date fecha, LocalTime hora, String idProfesional, String idPaciente, 
+    public void crearTurno(Profesional profesional, Paciente paciente, Date fecha,  LocalTime hora,
             String motivo) throws MiExcepcion {
 
-        validar(fecha, hora, idProfesional, idPaciente, motivo);
+        validar(profesional, paciente, fecha, hora, motivo);
 
         Turno turno = new Turno();
+
+     
+
         turno.setFecha(fecha);
+
+    
         turno.setHora(hora);
-        turno.setProfesional(profesionalRepositorio.getById(idProfesional));
-        turno.setPaciente(pacienteRepositorio.getById(idPaciente));
+
+        turno.setProfesional(profesional);
+        turno.setPaciente(paciente);
         turno.setMotivo(motivo);
         turnoRepositorio.save(turno);
     }
 
     @Transactional
-    public void modificarTurno(String idTurno, Date fecha, LocalTime hora, String idProfesional, 
+    public void modificarTurno(String idTurno, Date fecha, LocalTime hora, String idProfesional,
             String idPaciente, String motivo) {
 
         Optional<Turno> respuesta = turnoRepositorio.findById(idTurno);
@@ -91,13 +101,13 @@ public class TurnoService {
     }
 
     @Transactional(readOnly = true)
-    public List<Turno>  buscarPorFechaYProfesional (Date fecha, String idProfesional) throws Exception {
+    public List<Turno> buscarPorFechaYProfesional(Date fecha, String idProfesional) throws Exception {
 
         try {
-                   List<Turno> turnos = new ArrayList<>();
-        turnos = turnoRepositorio.buscarPorFechaYProfesional(fecha, idProfesional);
-                return turnos; 
-                
+            List<Turno> turnos = new ArrayList<>();
+            turnos = turnoRepositorio.buscarPorFechaYProfesional(fecha, idProfesional);
+            return turnos;
+
         } catch (Exception e) {
             throw new Exception("No se encuentra turnos para esa fecha y profesional");
         }
@@ -122,26 +132,27 @@ public class TurnoService {
         return turnos;
     }
 
-    private void validar(Date fecha, LocalTime hora, String idProfesional, String idPaciente, String motivo) throws MiExcepcion {
+    private void validar(Profesional profesional, Paciente paciente, Date fecha, LocalTime hora,
+            String motivo) throws MiExcepcion {
 
-        if (fecha == null) {
-            throw new MiExcepcion("Debe elegir una fecha");
+        if (profesional == null) {
+            throw new MiExcepcion("El profesional no puede ser nulo");
         }
-        if(hora == null){
-            throw new MiExcepcion("Debe elegir un horario");
-        }
-
-        if (idProfesional == null || idProfesional.isEmpty()) {
-            throw new MiExcepcion("El profesional no puede ser nulo o vacío");
+        if (paciente == null) {
+            throw new MiExcepcion("El paciente no puede ser nulo");
         }
 
-        if (idPaciente == null || idPaciente.isEmpty()) {
-            throw new MiExcepcion("El paciente no puede ser nulo o vacío");
+        if (fecha == null ) {
+            throw new MiExcepcion("El día no puede ser nulo o vacío");
+        }
+
+        if (hora == null) {
+            throw new MiExcepcion("El horario no puede ser nulo o vacío");
         }
 
         if (motivo == null || motivo.isEmpty()) {
             throw new MiExcepcion("El paciente no puede ser nulo o vacío");
         }
-               
+
     }
 }

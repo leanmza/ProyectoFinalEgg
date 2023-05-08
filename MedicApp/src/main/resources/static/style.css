@@ -1,8 +1,8 @@
 /* GENERAL */
 
 body {
-    background-color: #517eb9 !important;
-    font-family: "Montserrat", sans-serif !important;
+  background-color: #517eb9 !important;
+  font-family: "Montserrat", sans-serif !important;
 }
 
 /*main {
@@ -11,21 +11,21 @@ padding-top: 4%;
 padding-bottom: 5%;
 }*/
 header {
-    padding-inline: 5%;
+  padding-inline: 5%;
 }
 
 footer {
-    padding-inline: 5%;
+  padding-inline: 5%;
 }
 
 p {
-    color: #222 !important;
+  color: #222 !important;
 }
 
 h1,
 h2,
 h3 {
-    font-weight: 900 !important; /* NEGRITA*/
+  font-weight: 900 !important; /* NEGRITA*/
 }
 
 .botonesHeader,
@@ -34,154 +34,147 @@ h3 {
 .botonesFormulario,
 .botonesLista,
 .botonesImagen {
-    background-color: #012350 !important;
-    color: white;
-    border-color: #012350 !important;
-}
-
-.btnQuieroTurno{
-    background-color: #012350 !important;
-    color: white;
-    border-color: #012350 !important;
-    font-size: 14px !important;
+  background-color: #012350 !important;
+  color: white;
+  border-color: #012350 !important;
 }
 
 .contenedorMain{
-    padding-inline: 5% !important;
-    padding-top: 4%;
-    padding-bottom: 5%;
+padding-inline: 5% !important;
+padding-top: 4%;
+padding-bottom: 5%;
 }
 
 /* HEADER */
 
 .cabecera {
-    padding: 0 !important;
+  padding: 0 !important;
 
-    /*    position: sticky;  ESTO HACE AL HEADER FLOTANTE 
-      top: 0;  ESTO HACE AL HEADER FLOTANTE */
+/*    position: sticky;  ESTO HACE AL HEADER FLOTANTE 
+  top: 0;  ESTO HACE AL HEADER FLOTANTE */
 }
 
 header {
-    background-color: #fff;
-    text-align: right;
-    align-items: center;
-    height: 95px !important;/* CENTRA VERTICALMENTE EL CONTENIDO */
-    /*    position: sticky;  ESTO HACE AL HEADER FLOTANTE 
-      top: 0;  ESTO HACE AL HEADER FLOTANTE */
+  background-color: #fff;
+  text-align: right;
+  align-items: center;
+     height: 95px !important;/* CENTRA VERTICALMENTE EL CONTENIDO */
+/*    position: sticky;  ESTO HACE AL HEADER FLOTANTE 
+  top: 0;  ESTO HACE AL HEADER FLOTANTE */
 }
 
 .logoHeader {
-    justify-items: start;
-    display: flex;
-    height: 5.5em;
+  justify-items: start;
+  display: flex;
+  height: 5.5em;
 }
 
 .navbar {
-    background-color: #fff;
-    display: flex;
-    justify-content: center;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
 
 }
 
 
 .navbar-collapse {
-    justify-content: center;
+  justify-content: center;
 }
 
 
 .navibar{
-    align-items: center;
+  align-items: center;
 }
 .link:link,
 .link:visited,
 .link:active {
-    text-decoration: none;
-    padding: 1.7em;
-    color: #17252a;
-    font-weight: 600;
+  text-decoration: none;
+  padding: 1.7em;
+  color: #17252a;
+  font-weight: 600;
 }
 
 .link:hover {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .linkDesplegable:link,
 .linkDesplegable:visited,
 .linkDesplegable:active {
-    text-decoration: none;
-    padding-left: 1em;
-    color: #17252a;
-    font-weight: 400;
+  text-decoration: none;
+  padding-left: 1em;
+  color: #17252a;
+  font-weight: 400;
 }
 
 .linkDesplegable:hover {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .navbar-toggler { /* MENÚ HAMBURGUESA */
-    text-decoration: none;
-    padding: 1.7em;
-    color: #17252a !important;
-    font-weight: 600 !important;
-    background-color: #fff !important;
-    border: none !important;
-    text-align: center;
+  text-decoration: none;
+  padding: 1.7em;
+  color: #17252a !important;
+  font-weight: 600 !important;
+  background-color: #fff !important;
+  border: none !important;
+  text-align: center;
 }
 
 .btnTurnoHeader {
-    margin-right: 1em;
+  margin-right: 1em;
 }
 
 .imagen-perfil {
-    width: 50px; /* ajustar según el tamaño deseado */
-    height: 50px; /* ajustar según el tamaño deseado */
-    border-radius: 50%;
-    overflow: hidden;
+  width: 50px; /* ajustar según el tamaño deseado */
+  height: 50px; /* ajustar según el tamaño deseado */
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .imagen-perfil img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .headerDiv{
-    justify-content: space-between;
+  justify-content: space-between;
 }
 
 .divLinksHeader{
-    z-index: 999;
+  z-index: 999;
 }
 /* FOOTER */
 
 footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: #fff;
-    color: white;
-    text-align: center;
-    padding: 1em;
-    display: flex;
-    justify-content: center;
-    padding-inline: 5%;
+  position: fixed;
+left: 0;
+bottom: 0;
+width: 100%;
+  background-color: #fff;
+  color: white;
+  text-align: center;
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  padding-inline: 5%;
 }
 
 .linkFooter {
-    margin-right: 5%;
+  margin-right: 5%;
 }
 
 .pie {
-    padding-inline: 0 !important;
+  padding-inline: 0 !important;
 }
 .logoFooter {
-    height: 35px;
+  height: 35px;
 }
 
 .iconoContacto {
-    font-size: 1.5em;
-    color: #17252a;
+  font-size: 1.5em;
+  color: #17252a;
 }
 
 /* FORMULARIO */
@@ -189,333 +182,349 @@ footer {
 .login,
 .divFormProfesional,
 .divFormPaciente,
-.divFormHistoriaClinica,
+.divFormHistoriaClinica, 
 .divFormTurno{
-    /* CENTRAR CONTEINER-FLUID */
-    display: grid;
-    justify-content: center;
-    align-content: center;
+  /* CENTRAR CONTEINER-FLUID */
+  display: grid;
+  justify-content: center;
+  align-content: center;
 }
 
 .formTurno{
-    width: 85vw;
+  width: 85vw;
 }
 .formularioTurno{
-    width: 80%;
-    padding-top: 3% !important;
-    background-color: transparent !important;
+  width: 80%;
+  padding-top: 3% !important;
+  background-color: transparent !important;
 }
 .motivo{
-    height: 8em !important;
+  height: 8em !important;
 }
-.colBtn{
-    justify-content: center;
-    display: flex;
-}
+
 .contador{
-    font-size: 12px;
-    text-align: end;
+  font-size: 12px;
+  text-align: end;
 }
 
 .fecha, .hora{
-    background-color: #fff;
-    border-radius: 8px;
+  background-color: #fff;
+  border-radius: 8px;
 }
 
 .selectorMes{
-    margin: 0 !important;
-    display: flex !important;
-    justify-content: space-evenly;
-    padding: 5% 5% 5% 5%;
+  margin: 0 !important;
+  display: flex !important;
+  justify-content: space-evenly;
+  padding: 5% 5% 5% 5%;
 }
 .rowFiltros{
-    justify-content: end;
+  justify-content: end;
 }
 
-.titulosTabla{
-    vertical-align: middle;
-}
 .contenedorLogin {
-    justify-content: center;
-    display: flex;
+  justify-content: center;
+  display: flex;
 }
 .titulo {
-    text-align: center;
-    padding: 2% 0 2% 0;
+  text-align: center;
+  padding: 2% 0 2% 0;
 }
 
 .formulario {
-    background-color: #feffff;
-    padding: 10% 5% 5% 5%;
-    border-radius: 8px;
-    justify-content: center;
-    align-content: center;
-    width: 40vw;
+  background-color: #feffff;
+  padding: 10% 5% 5% 5%;
+  border-radius: 8px;
+  justify-content: center;
+  align-content: center;
+  width: 40vw;
 }
 
 input {
-    font-size: 1em;
-    width: 25em;
-    max-width: 100% !important;
-    height: 2.5em;
-    margin: 0.5em;
-    border-radius: 5px;
-    border: solid #17252a;
-    box-sizing: border-box;
+  font-size: 1em;
+  width: 25em;
+  max-width: 100% !important;
+  height: 2.5em;
+  margin: 0.5em;
+  border-radius: 5px;
+  border: solid #17252a;
+  box-sizing: border-box;
+}
+.diagnostico, .tratamiento{
+  height: 10em !important;
 }
 
 .btn-submit {
-    display: flex;
-    justify-content: end;
+  display: flex;
+  justify-content: end;
 }
 .rowLogin {
-    justify-content: center;
+  justify-content: center;
 }
 
 .datosInput {
-    padding-left: 1em !important;
+  padding-left: 1em !important;
 }
 
 .form-floating:not(.form-control:disabled)::before {
-    top: 0 !important;
-    left: 0 !important;
-    width: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 0 !important;
 }
 
 .form-floating {
-    margin-bottom: 1em !important;
+  margin-bottom: 1em !important;
 }
 
 .bi {
-    padding-inline: 0.5em;
+  padding-inline: 0.5em;
 }
 
 .divCrearUsuario {
-    padding: 5% 0 5% 0;
-    text-align: center;
-    border-top: solid 1px #012350;
+  padding: 5% 0 5% 0;
+  text-align: center;
+  border-top: solid 1px #012350;
 }
 
 .loginFormulario {
-    background-color: #fff;
-    border-radius: 8px;
-    width: 40vw;
-    display: grid;
-    justify-content: center;
-    align-content: center;
+  background-color: #fff;
+  border-radius: 8px;
+  width: 40vw;
+  display: grid;
+  justify-content: center;
+  align-content: center;
 }
 
 /* FORMULARIO PERSONA Y PROFESIONAL */
 .tituloForm {
-    padding: 0 0 4% 0;
+  padding: 0 0 4% 0;
 }
 
 .tituloForm h4 {
-    text-align: center;
+  text-align: center;
 }
 .formularioCrear {
-    width: 70vw !important;
-    padding-top: 5% !important;
+  width: 70vw !important;
+  padding-top: 5% !important;
 }
 
 .divSexo {
-    align-items: center;
-    display: flex;
+  align-items: center;
+  display: flex;
 }
 .divObraSocial,
 .divDias {
-    display: flex !important;
-    align-items: center !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 .divObraSocial input,
 .divDias input {
-    height: auto !important;
+  height: auto !important;
 }
 
 .selectPro {
-    justify-content: space-evenly !important;
+  justify-content: space-evenly !important;
 }
 .especialidad {
-    /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+  /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
 
-    display: flex;
-    justify-content: start;
+  display: flex;
+  justify-content: start;
 }
 .ubicacion {
-    /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+  /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
 
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .modalidad {
-    /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+  /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
 
-    display: flex;
-    justify-content: end;
+  display: flex;
+  justify-content: end;
 }
 
 .rowHorario {
-    justify-content: center;
+  justify-content: center;
 }
 
 .rowHorario label {
-    display: flex;
-    justify-content: end;
+  display: flex;
+  justify-content: end;
 }
 
 .rowHorario .rowHoras {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .inputHora {
-    text-align: center !important;
+  text-align: center !important;
 }
 
 .DivBtnEnviar {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .labelObraSocial {
-    padding-left: 0 !important;
+  padding-left: 0 !important;
 }
 
 .rowObrasSociales {
-    justify-content: center;
+  justify-content: center;
 }
 
 h5 {
-    text-align: center;
-    padding-top: 2%;
-    padding-bottom: 2%;
+  text-align: center;
+  padding-top: 2%;
+  padding-bottom: 2%;
 }
 
 .tituloFormPro{
-    padding-top: 5%;
-    padding-bottom: 3%;
-    text-align: center;
+  padding-top: 5%;
+  padding-bottom: 3%;
+  text-align: center;
 }
 
 .tituloHoraFormPro{
-    padding-top: 5%;
-    padding-bottom: 1%;
-    text-align: center;
+  padding-top: 5%;
+  padding-bottom: 1%;
+  text-align: center;
 }
 
 .barraBusqueda{
-    padding-bottom: 0 !important;
-    align-items: center;
-    display: flex;
+  padding-bottom: 0 !important;
+  align-items: center;
+  display: flex;
 }
 
 .btnBuscar{
-    margin-left: 2em;
+  margin-left: 2em;
 
 }
 /* INDEX */
 
 
 .presentacionRow {
-    display: flex;
-    justify-content: space-between;
-    text-align: center;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
 
 
 }
 
 .index{
-    background-image: url(./doctor-estetoscopio-manos-fondo-transparente.png);
-    background-size: 60vw;
-    background-repeat: no-repeat;
-    background-position: top left ;
-    display: flex;
-
-    max-height: 100%;
-    height: 81vh;
-    /*width: 70vw;*/
-    justify-content: center;
-    align-items: center;
-    padding: 0 !important
+  background-image: url(./doctor-estetoscopio-manos-fondo-transparente.png);
+  background-size: 60vw;
+  background-repeat: no-repeat;
+  background-position: top left ;
+  display: flex;
+  
+  max-height: 100%;
+  height: 81vh;
+  /*width: 70vw;*/
+  justify-content: center;
+  align-items: center;
+  padding: 0 !important
 }
 .presentacion{
-    width: 100%;
-    padding-inline: 5%;
-    padding-top: 4%;
-    padding-bottom: 5%;
+  width: 100%;
+  padding-inline: 5%;
+  padding-top: 4%;
+  padding-bottom: 5%;
 
 }
 .divNosotros{
-    padding: 0 !important;
+padding: 0 !important;
 }
 .adorno1,
 .adorno2,
 .adorno3 {
-    font-size: 2.5em;
-    text-align: center;
-    padding: 0.5em 0 0.5em 0;
+  font-size: 2.5em;
+  text-align: center;
+  padding: 0.5em 0 0.5em 0;
 }
 .adorno1,
 .adorno3 {
-    color: #eaeaea;
+  color: #eaeaea;
 }
 
 .adorno2 {
-    color: #17252a !important  ;
+  color: #17252a !important  ;
 }
 
 .nosotros {
-    color: #17252a !important;
+  color: #17252a !important;
 }
 
 .btnIndex{
-    box-shadow: 0px 1px 4px #17252a;
+   box-shadow: 0px 1px 4px #17252a;
 }
 .textoIndex {
-    color: #fff !important;
-    padding-top: 5%;
-    padding-bottom: 5% ;
-    font-size: 1.2em;
-    font-weight: 600;
-    text-shadow: 0px 1px 4px #17252a;
+  color: #fff !important;
+  padding-top: 5%;
+  padding-bottom: 5% ;
+  font-size: 1.2em;
+  font-weight: 600;
+  text-shadow: 0px 1px 4px #17252a;
 
 }
 
 .tablaCalendario{
-    justify-content: center;
-    display: grid;
-    padding: 0 2% 10% 2%;
+justify-content: center;
+display: grid;
+padding: 0 2% 10% 2%;
 }
 
 .celdaDias{
-    justify-content: center;
-    display: inline-grid;
-    text-align: center;
-    width: 3em;
-    padding-bottom: 1em;
+  justify-content: center;
+  display: inline-grid;
+  text-align: center;
+  width: 3em;
+  padding-bottom: 1em;
 }
 
 .inputRadio{
-    width: 1em;
-    height: 1em;
+  width: 1em;
+  height: 1em;  
+}
+
+
+.horariosInput{
+justify-content: center;
+display: inline-grid;
+text-align: center;
+padding-bottom: 1em;
+}
+
+.inputRadioHora{
+width: 1.5em;
+height: 1.5em;
+justify-content: center;
+display: grid;
+margin: auto;
 }
 
 
 /* MODAL */
 .btnCerrarModal{
-    background-color: transparent !important;
+  background-color: transparent !important;
 }
 
 .DivBtnEnviar{
-    justify-content: space-evenly;
+  justify-content: space-evenly;
 }
 
 .contenedorCards{
-    z-index: 0;
+  z-index: 0;
 }
+
+
+
 
 /* LOGIN*/
 
