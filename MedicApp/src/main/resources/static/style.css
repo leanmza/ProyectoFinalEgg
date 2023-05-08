@@ -529,6 +529,13 @@ h6{
       opacity: .65;
   }
 
+.custom-error-message {
+  font-family: Montserrat, sans-serif;
+}
+.custom-success-message {
+  font-family: Montserrat, sans-serif;
+}
+
   
   .idProfesional{
       position: absolute;

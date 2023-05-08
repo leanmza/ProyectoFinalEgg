@@ -11,7 +11,14 @@
         <!--MAIN-->
 
         <main>
+
             <div id="divFormPaciente" class="container-fluid divFormPaciente contenedorMain">
+              <div th:if="${error != null}" class="card text-white bg-danger mb-3 mt-3 mensajeError rounded-3 p-2 col-md-6 col-sm-10 mx-auto">
+                <div class="card-body">
+                  <h5 class="card-title fs-5 fw-bold mb-3" style="font-family: Montserrat, sans-serif;">⚠️¡Ingreso de profesional FALLIDO!⚠️</h5>
+                  <p class="card-text fs-6 mb-0 custom-error-message" th:text="${error}"></p>
+                </div>
+              </div>
                 <div class="row titulo">
                     <h3>REGISTRAR PROFESIONAL</h3>
                 </div>
@@ -101,6 +108,7 @@
                                 id="password"
                                 name="password"
                                 placeholder=""
+                                minlength="8" required
                                 />
                             <label for="password" class="datosInput">Contraseña</label>
                         </div>
@@ -112,6 +120,7 @@
                                 id="password2"
                                 name="password2"
                                 placeholder=""
+                                minlength="8" required
                                 />
                             <label for="password2" class="datosInput"
                                    >Repetir Contraseña</label
