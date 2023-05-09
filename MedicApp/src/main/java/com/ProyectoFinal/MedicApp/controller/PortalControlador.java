@@ -7,6 +7,7 @@ import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -15,8 +16,11 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -26,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/")
@@ -40,6 +45,7 @@ public class PortalControlador {
     @Autowired
     ObraSocialService obraSocialService;
 
+    
     @GetMapping("/")
     public String index() {
 
@@ -47,10 +53,19 @@ public class PortalControlador {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(@RequestParam(required = false) String error, ModelMap modelo) {
+        if (error != null) {
 
+            modelo.put("error", "Lo siento, no hemos podido iniciar sesión con las credenciales que proporcionaste." +
+                    " Intentalo nuevamente!");
+        }
         return "login.html"; //ver nombre de archivo
     }
+    @GetMapping("/mis_profesionales")
+    public String mis_profesionales() {
+        return "mis_profesionales.html"; //ver nombre de archivo
+    }
+    
 
     @Transactional
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_PROFESIONAL', 'ROLE_ADMINISTRADOR')")
@@ -75,6 +90,8 @@ public class PortalControlador {
                 return "redirect:/admin/dashboard";
             }
         }
+
+
         return "inicio.html";
     }
 
@@ -87,33 +104,51 @@ public class PortalControlador {
     @Transactional
     @PostMapping("/registroPaciente")
     public String registroPaciente(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni,
-            @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
-            @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
-            @RequestParam String sexo, @RequestParam(required = false) MultipartFile archivo) {
-       
+                                   @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
+                                   @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
+                                   @RequestParam(required = false) String sexo, @RequestParam(required = false) MultipartFile archivo, ModelMap modelo, HttpSession session) {
+
         try {
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
             Date fechaNacimiento = formato.parse(nacimiento);
-            
-            pacienteService.crearPaciente(nombre, apellido, dni, correo, telefono, password, password2, direccion, 
+
+            if (sexo == null) {
+                sexo = "No especificado";
+            }
+
+            pacienteService.crearPaciente(nombre, apellido, dni, correo, telefono, password, password2, direccion,
                     fechaNacimiento, sexo, archivo);
 
-            System.out.println("Ingreso de paciente exitoso");
-            return "redirect:/inicio";
+            modelo.put("exito", "¡Gracias por registrarte en nuestra aplicación! Ahora puedes comenzar a utilizar nuestros servicios");
+
 
         } catch (MiExcepcion me) {
             System.out.println("Ingreso de paciente FALLIDO!\n" + me.getMessage());
-
+            modelo.put("error", me.getMessage());
             return "formulario_paciente.html";
 
         } catch (ParseException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
+            modelo.put("error", "La fecha ingresada es incorrecta, verifica que esté en formato DD/MM/AAAA");
             return "formulario_paciente.html";
         }
+
+        if (session.getAttribute("pacienteSession") != null) {
+            Paciente logueado = (Paciente) session.getAttribute("pacienteSession");
+            modelo.put("pacienteSession", logueado);
+
+            if (logueado.getRol().toString().equals("ADMINISTRADOR")) {
+
+                return "redirect:/inicio";
+            }
+        }
+        return "login.html";
+
+
     }
-    
-    
+
+
     @Transactional
     @GetMapping("/listar")
     public String listar(ModelMap model) {

@@ -11,10 +11,15 @@
         <!--MAIN-->
 
         <main>
+
+
+
             <div class="container-fluid contenedorDiv contenedorMain">
 
+
+
                 <div class="row titulo">
-                    <h3>LISTA DE PROFESIONALES</h3>
+                    <h3>PROFESIONALES EN MITURNO</h3>
                 </div>
                 <form action="/buscarespec" method="POST" class="form-floating">
                     <div class="row rowDatosPersonales">
@@ -47,6 +52,7 @@
                         <tr class="row-col-12 titulosTabla">
                             <th scope="col" class="col-2">Profesional</th>
                             <th scope="col" class="col-2">Especialidad</th>
+                            <!--<th scope="col" class="col-2">Obras Sociales</th>-->
                             <th scope="col" class="col-2">Horario de atención</th>
                             <th scope="col" class="col-1">Valor de Consulta</th>
                             <th scope="col" class="col-2">Calificación</th> 
@@ -61,6 +67,9 @@
                             <td th:text="${profesional.apellido} + ', ' + ${profesional.nombre}"></td>
 
                             <td th:text="${profesional.especialidad}"></td>
+
+                            <!--<td th:text="${profesional.obrasSociales}"></td>-->
+                            
                             <td th:text="${profesional.horaInicio} + ' / ' + ${profesional.horaFin}"></td>
                             <td th:text="'$ ' + ${profesional.honorario}"></td>
                             <td>

@@ -10,17 +10,20 @@ import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
 import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
+import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
 import com.ProyectoFinal.MedicApp.Service.TurnoService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +46,9 @@ public class TurnoControlador {
     @Autowired
     TurnoService turnoService;
 
+     @Autowired
+     ProfesionalService profesionalService;
+     
     @GetMapping("/formularioTurno/{idProfesional}")
     public String turno(@PathVariable String idProfesional, Model model) {
 
@@ -55,7 +61,19 @@ public class TurnoControlador {
 
         return "formulario_turno.html";
     }
+    
+        
 
+        @GetMapping("/formularioTurnoHeader")
+    public String turno(ModelMap model) {
+        List<Profesional> profesionales = profesionalService.listar();
+        model.addAttribute("profesionales", profesionales);
+       return "formulario_turno_header.html";
+    }
+    
+    
+    
+    
     @Transactional
     @PostMapping("/registroTurno")
     public String registroTurno(@ModelAttribute Profesional pro, @RequestParam String motivo,

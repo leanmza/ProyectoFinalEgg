@@ -11,7 +11,14 @@
         <!--MAIN-->
 
         <main>
+
             <div id="divFormPaciente" class="container-fluid divFormPaciente contenedorMain">
+              <div th:if="${error != null}" class="card text-white bg-danger mb-3 mt-3 mensajeError rounded-3 p-2 col-md-6 col-sm-10 mx-auto">
+                <div class="card-body">
+                  <h5 class="card-title fs-5 fw-bold mb-3" style="font-family: Montserrat, sans-serif;">⚠️¡Ingreso de profesional FALLIDO!⚠️</h5>
+                  <p class="card-text fs-6 mb-0 custom-error-message" th:text="${error}"></p>
+                </div>
+              </div>
                 <div class="row titulo">
                     <h3>REGISTRAR PROFESIONAL</h3>
                 </div>
@@ -102,6 +109,7 @@
                                 id="password"
                                 name="password"
                                 placeholder=""
+                                minlength="8" required
                                 />
                             <label for="password" class="datosInput">Contraseña</label>
                         </div>
@@ -113,6 +121,7 @@
                                 id="password2"
                                 name="password2"
                                 placeholder=""
+                                minlength="8" required
                                 />
                             <label for="password2" class="datosInput"
                                    >Repetir Contraseña</label
@@ -377,6 +386,7 @@
                     </div>
                 </form>
 
+<<<<<<< HEAD
 
                 <!-- VENTANA MODAL PARA CARGA DE NUEVA OBRA SOCIAL -->
 
@@ -392,6 +402,26 @@
                                 <div class="modal-header">
                                     <h3 class="modal-title">REGISTRAR NUEVA OBRA SOCIAL</h3>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="cerrarModal()"></button>
+=======
+            <!-- VENTANA MODAL PARA CARGA DE NUEVA OBRA SOCIAL -->
+            <div class="modal " id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form
+                            class="formulario formularioModal"
+                            id="formularioModal"
+                            method="POST"
+                            >
+                            <!-- MODAL HEADER --> 
+                            <div class="modal-header">
+                                <h3 class="modal-title">REGISTRAR NUEVA OBRA SOCIAL</h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="cerrarModal()"></button>
+                            </div>
+                            <!-- MODAL BODY -->
+                            <div class="row rowDatosPersonales">
+                                <div class="tituloForm">
+                                    <h4>En caso que la obra social no tenga sigla, usar el nombre completo</h4>
+>>>>>>> Developer
                                 </div>
                                 <!-- MODAL BODY -->
                                 <div class="row rowDatosPersonales">
