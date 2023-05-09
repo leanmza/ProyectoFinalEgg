@@ -169,13 +169,14 @@ public class PortalControlador {
 
      @Transactional
     @PostMapping("/registroObraSocial")
-    public String registroObraSocial(@RequestParam("nombreObraSocial") String nombreObraSocial) {
+    public String registroObraSocial(@RequestParam("nombreObraSocial") String nombreObraSocial, HttpSession obraSocialNueva) {
        
         try {
             obraSocialService.crearObraSocial(nombreObraSocial);
            
             System.out.println("Ingreso de obra social exitoso");
-            return "redirect:/admin/dashboard";
+            obraSocialNueva.setAttribute("nuevaObraSocial", nombreObraSocial);
+            return "formulario_obra_social.html";
             
         } catch (MiExcepcion me) {
             System.out.println("Ingreso de obra social FALLIDO!\n" + me.getMessage());
@@ -184,40 +185,4 @@ public class PortalControlador {
             
         }  
     }
-    
-    @PostMapping("/datosFormProfesional")
-    @ResponseBody
-    public String datosFormProfesional(HttpServletRequest request, HttpSession sessionForm) {
-        
-        String nombre = request.getParameter("nombre");
-        String apellido = request.getParameter("apellido");
-        String correo = request.getParameter("correo");
-        String telefono = request.getParameter("telefono");
-        String especialidad = request.getParameter("especialidad");
-        String ubicacion = request.getParameter("ubicacion");
-        String modalidad = request.getParameter("modalidad");
-        String honorarios = request.getParameter("honorarios");
-        String horaInicio = request.getParameter("horaInicio");
-        String horaFin = request.getParameter("horaFin");
-        
-        sessionForm.setAttribute("nombre", nombre);
-        sessionForm.setAttribute("apellido", apellido);
-        sessionForm.setAttribute("correo", correo);
-        sessionForm.setAttribute("telefono", telefono);
-        sessionForm.setAttribute("especialidad", especialidad);
-        sessionForm.setAttribute("ubicacion", ubicacion);
-        sessionForm.setAttribute("modalidad", modalidad);
-        sessionForm.setAttribute("honorarios", honorarios);
-        sessionForm.setAttribute("horaInicio", horaInicio);
-        sessionForm.setAttribute("horaFin", horaFin);
-        
-        return "redirect:/admin/registroProfesional";
-    }
-    
 }
-
-/*@RequestParam("nombre") String nombre, @RequestParam("apellido") String apellido,
-            @RequestParam("correo") String correo, @RequestParam("telefono") String telefono,
-            @RequestParam("especialidad") String especialidad, @RequestParam("ubicacion") String ubicacion, @RequestParam("modalidad") String modalidad, 
-            @RequestParam("honorarios") Double honorarios, /*@RequestParam("dias[]") List<String> dias,
-             */ /*@RequestParam("horaInicio") String horaInicio, @RequestParam("horaFin") String horaFin*/

@@ -43,8 +43,8 @@ public class Profesional extends Persona {
 
     private Double honorario;
 
-    @OneToMany
-    private List<Turno> turnos;
+//    @OneToMany
+//    private List<Turno> turnos;
 
     
     private LocalTime horaInicio;

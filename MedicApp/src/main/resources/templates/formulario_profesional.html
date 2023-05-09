@@ -22,6 +22,7 @@
                     th:action="@{/admin/crearProfesional}"
                     method="POST"
                     enctype="multipart/form-data"
+                    th:object="${recargaFormulario}"
                     >
                     <!-- PRESTAR ATENCIÓN A LA RUTA DE TH:ACTION CUANDO SE CREE EL CONTROLADOR -->
 
@@ -33,7 +34,7 @@
 
 
                         <!-- INPUT OCULTO DEL ID -->
-                        <input hidden type="text" id="id" name="id" th:value="${id}" />
+                        <input hidden type="text" id="id" name="id"/>
 
                         <!-- INPUT NOMBRE-->
                         <div class="col-xs-12 col-md-6 form-floating">  <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
@@ -42,7 +43,7 @@
                                 class="form-control"
                                 id="nombre"
                                 name="nombre"
-                                th:value="${nombre}"
+                                th:value="${recargaFormulario != null ? recargaFormulario.nombre : ''}"
                                 placeholder=""
                                 />
                             <label for="nombre" class="datosInput">Nombre</label>
@@ -54,7 +55,7 @@
                                 class="form-control"
                                 id="apellido"
                                 name="apellido"
-                                th:value="${apellido}"
+                                th:value="${recargaFormulario != null ? recargaFormulario.apellido : ''}"
                                 placeholder=""
                                 />
                             <label for="apellido" class="datosInput">Apellido</label>
@@ -66,7 +67,7 @@
                                 class="form-control"
                                 id="correo"
                                 name="correo"
-                                th:value="${email}"
+                                th:value="${recargaFormulario != null ? recargaFormulario.email : ''}"
                                 placeholder=""
                                 />
                             <label for="correo" class="datosInput">Email</label>
@@ -78,7 +79,7 @@
                                 class="form-control"
                                 id="telefono"
                                 name="telefono"
-                                th:value="${telefono}"
+                                th:value="${recargaFormulario != null ? recargaFormulario.telefono : ''}"
                                 placeholder=""
                                 />
                             <label for="telefono" class="datosInput">Telefono</label>
@@ -131,12 +132,13 @@
                                 name="especialidad"
                                 id="especialidad"
                                 class="especialidad form-select"
+                                th:value="${recargaFormulario != null ? recargaFormulario.especialidad : ''}"
                                 >
                                 <option value="" selected disabled>Eligir especialidad</option>
-                                <option value="Cardiologia">Cardiología</option>
-                                <option value="Clinica">Clínica</option>
-                                <option value="Ginecologia">Ginecología</option>
-                                <option value="Pediatria">Pediatría</option>
+                                <option value="Cardiologia" th:selected="${recargaFormulario != null and recargaFormulario.especialidad == 'Cardiologia'}">Cardiología</option>
+                                <option value="Clinica" th:selected="${recargaFormulario != null and recargaFormulario.especialidad == 'Clinica'}">Clínica</option>
+                                <option value="Ginecologia" th:selected="${recargaFormulario != null and recargaFormulario.especialidad == 'Ginecologia'}">Ginecología</option>
+                                <option value="Pediatria" th:selected="${recargaFormulario != null and recargaFormulario.especialidad == 'Pediatria'}">Pediatría</option>
                             </select>
                             <label for="especialidad" class="datosInput">Especialidad</label>
                         </div>
@@ -147,11 +149,10 @@
                                 name="ubicacion"
                                 id="ubicacion"
                                 class="ubicacion form-select"
+                                th:value="${recargaFormulario != null ? recargaFormulario.ubicacion : ''}"
                                 >
                                 <option value="" selected disabled>Eligir ubicación...</option>
-                                <div th:each="ubicacion : ${ubicaciones}">
-                                    <option th:text="${ubicacion}"></option>
-                                </div>
+                                <option th:each="ubicacion : ${ubicaciones}" th:value="${ubicacion}" th:selected="${recargaFormulario != null and ubicacion == recargaFormulario.ubicacion}" th:text="${ubicacion}"></option>
                             </select>
                             <label for="ubicacion" class="datosInput">Ubicación</label>
                         </div>
@@ -161,11 +162,10 @@
                                 name="modalidad"
                                 id="modalidad"
                                 class="modalidad form-select"
+                                th:value="${recargaFormulario != null ? recargaFormulario.modalidad : ''}"
                                 >
                                 <option value="" selected disabled>Eligir una modalidad</option>
-                                <div th:each="modalidad : ${modalidades}">
-                                    <option th:text="${modalidad}"></option>
-                                </div>
+                                <option th:each="modalidad : ${modalidades}" th:value="${modalidad}" th:selected="${recargaFormulario != null and modalidad == recargaFormulario.modalidad}" th:text="${modalidad}"></option>
                             </select>
                             <label for="modalidad" class="datosInput">Modalidad</label>
                         </div>
@@ -176,7 +176,7 @@
                                 class="form-control"
                                 id="honorarios"
                                 name="honorarios"
-                                th:value="${honorarios}"
+                                th:value="${recargaFormulario != null ? recargaFormulario.honorario : ''}"
                                 placeholder=""
                                 />
                             <label for="honorarios" class="datosInput">
@@ -185,40 +185,34 @@
                         </div>
                         <!-- INPUT OBRA SOCIAL-->
                         <div class="col-xs-12 col-md-6 form-floating">
-                            <select
-                                name="obraSocial"
-                                id="obraSocial"
-                                class="obraSocial form-select"
-                                onchange="abrirModal()"
-                                >
+                            <select name="obraSocial" id="obraSocial" class="obraSocial form-select"
+                                    th:value="${recargaFormulario != null ? recargaFormulario.obraSocial : ''}"
+                                    onchange="abrirModal()">
                                 <option value="" selected disabled>Eligir Obra Social</option>
                                 <th:block th:each="obraSocial : ${obrasSociales}">
-                                    <option th:value="${obraSocial.id}" th:text="${obraSocial.nombre}"></option>
+                                    <option th:value="${obraSocial.id}"
+                                            th:selected="${recargaFormulario != null and obraSocial == recargaFormulario.obraSocial}"
+                                            th:text="${obraSocial.nombre}"></option>
                                 </th:block>
                                 <option>Cargar otra...</option>
                             </select>
                             <label for="obraSocial" class="datosInput">Obra Social</label>
                             <script>
                                 function abrirModal() {
-                                    // Tomo la variable de la seccion Obra Social
                                     var select = document.getElementById("obraSocial");
                                     var value = select.options[select.selectedIndex].value;
-                                    
-                                    // En el caso que sea "Cargar otra..." guardo los datos precargados del formulario y abro el Modal
+
                                     if (value == "Cargar otra...") {
-                                        // Obtener los datos del formulario para recargarlos luego
                                         var formulario = document.getElementById("formulario");
                                         var datosFormulario = new FormData(formulario);
-
-                                        // Enviar los datos del formulario al PostMapping de PortalControlador
-                                        fetch('/datosFormProfesional', {
+                                        fetch('/admin/guardarDatosFormulario', {
                                             method: 'POST',
                                             body: datosFormulario
                                         })
                                                 .then(function (respuesta) {
                                                     if (respuesta.ok) {
                                                         // En caso de éxito, mostrar mensaje de confirmación
-                                                        alert("Formulario enviado con éxito");
+                                                        console.log("Formulario enviado con éxito");
                                                     } else {
                                                         // En caso de error, mostrar mensaje de error
                                                         alert("Error al enviar el formulario");
@@ -228,8 +222,7 @@
                                                     // En caso de error, mostrar mensaje de error
                                                     alert("Error al enviar el formulario: " + error.message);
                                                 });
-                                                
-                                        // Finalmente, envio la orden para abrir el Modal  
+
                                         var ventanaModal = document.getElementById("myModal");
                                         ventanaModal.style.display = "block";
                                     }
@@ -347,6 +340,7 @@
                                     class="form-control inputHora"
                                     id="horaInicio"
                                     name="horaInicio"
+                                    th:value="${recargaFormulario != null ? #temporals.format(recargaFormulario.horaInicio, 'HH:mm') : ''}"
                                     placeholder=""
                                     />
                                 <label for="horaInicio" class="datosInput inputHora">
@@ -361,6 +355,7 @@
                                     class="form-control inputHora"
                                     id="horaFin"
                                     name="horaFin"
+                                    th:value="${recargaFormulario != null ? #temporals.format(recargaFormulario.horaFin, 'HH:mm') : ''}"
                                     placeholder=""
                                     />
                                 <label for="horaFin" class="datosInput inputHora">
@@ -386,14 +381,12 @@
                 <!-- VENTANA MODAL PARA CARGA DE NUEVA OBRA SOCIAL -->
 
                 <div class="modal" id="myModal">
-                    <div class="modal-dialog modal-sm">
+                    <div class="container-fluid contenedorLogin contenedorMain modal-sm">
                         <div class="modal-content">
                             <form
-                                class="formulario"
+                                class="formulario formularioCrear"
                                 id="formularioModal"
-                                th:action="@{/datosFormProfesional}"
                                 method="POST"
-                                enctype="multipart/form-data"
                                 >
                                 <!-- MODAL HEADER --> 
                                 <div class="modal-header">
@@ -450,6 +443,7 @@
                                     if (respuesta.ok) {
                                         //en caso de exito
                                         cerrarModal();
+                                        location.reload();
                                     } else {
                                         // En caso de error
                                         console.log("Error en el envío del formulario.");
