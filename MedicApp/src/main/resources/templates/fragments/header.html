@@ -143,8 +143,8 @@
 
                     </a>
                     <ul class="dropdown-menu text-small">
-                        <li><a class="dropdown-item" href="#">Mis Turnos</a></li>
-                        <li><a class="dropdown-item" href="#">Mis Profesionles</a></li>
+                        <li><a class="dropdown-item" th:href="@{/pac/misTurnos}">Mis Turnos</a></li>
+                        <li><a class="dropdown-item" th:href="@{/pac/misProfesionales}">Mis Profesionles</a></li>
                         <li sec:authorize ="hasRole ('PACIENTE')">
                             <a th:href="@{/pac/perfil}" id="btn-contacto" class="linkDesplegable  divHeaderPerfil" >Perfil</a>
                         </li>

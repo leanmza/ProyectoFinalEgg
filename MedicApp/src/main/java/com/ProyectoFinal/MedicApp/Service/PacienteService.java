@@ -8,10 +8,12 @@ import com.ProyectoFinal.MedicApp.Entity.Imagen;
 import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
+import com.ProyectoFinal.MedicApp.Entity.Turno;
 import com.ProyectoFinal.MedicApp.Enum.Rol;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
 import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
+import com.ProyectoFinal.MedicApp.Repository.TurnoRepositorio;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +48,9 @@ public class PacienteService implements UserDetailsService {
     
     @Autowired
     private ImagenService imagenServicio;
+    
+     @Autowired
+    private TurnoRepositorio turnoRepositorio;
 
     @Transactional
 
@@ -243,5 +248,60 @@ public class PacienteService implements UserDetailsService {
             pacienteRepositorio.save(paciente);
         }
     }
+    
+    @Transactional(readOnly = true)
+    public List<Profesional> listarProfesionales(String idPaciente) {
+        System.out.println("id paciente " + idPaciente);
 
+        List<Profesional> profesionales;
+
+        profesionales = turnoRepositorio.buscarProfesionalPorPaciente(idPaciente);
+
+        return profesionales;
+    }
+    
+         @Transactional(readOnly = true)
+    public List<Turno> listarTurnos(String idPaciente) {
+         System.out.println("id paciente " + idPaciente);
+         
+        List<Turno> misTurnos;
+
+        misTurnos = turnoRepositorio.buscarPorPaciente(idPaciente);
+
+        return misTurnos;
+    }
+    
+
+    public void calificarProfesional(String id, String puntaje) {
+        Integer punt = 0;
+        switch (puntaje){
+            case "0":
+                punt = 0;
+            break;
+            case "1":
+                punt = 1;
+            break;
+            case "2":
+                punt = 2;
+            break;
+            case "3":
+                punt = 3;
+            break;
+            case "4":
+                punt = 4;
+            break;
+            case "5":
+                punt = 5;
+            break;
+        }
+                
+        Optional<Profesional> respuesta = profesionalRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            Profesional profesional = respuesta.get();
+            profesional.setCantVisitas(profesional.getCantVisitas() + 1);
+            profesional.setPuntaje(profesional.getPuntaje() + punt);
+            profesional.setCalificacion((double)profesional.getPuntaje() / (double)profesional.getCantVisitas());
+            profesionalRepositorio.save(profesional);
+        }
+    }
 }

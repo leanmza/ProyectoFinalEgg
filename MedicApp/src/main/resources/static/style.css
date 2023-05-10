@@ -557,6 +557,10 @@ opacity: .65;
 transform: scale(.85) translateY(-.5rem) translateX(.15rem);
   }
   
+  
+  .accordion{
+      width: 80vw !important;
+  }
   /* LOGIN*/
   
   /* MEDIAS QUERYS */

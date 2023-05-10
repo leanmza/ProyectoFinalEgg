@@ -1,10 +1,9 @@
 let btnMesAnterior = document.getElementById("btn-mes-anterior");
 let btnMesSiguiente = document.getElementById("btn-mes-siguiente");
 
+
+
 window.addEventListener("load", generarCalendario);
-
-
-
  
 /////// CONTADOR DE CARACTERES /////// 
 const textarea = document.getElementById('motivo');
@@ -115,7 +114,7 @@ function generarCalendario() {
                         ">" +
                         contadorDias +
                         "</label> <input class='inputRadio' type='radio' name='dia' id=" + contadorDias + " \n\
-            value=" + contadorDias + "-" + mesActual + "-" + anioActual + " ></td>";
+            value=" + contadorDias + "-" + (mesActual+1) + "-" + anioActual + " ></td>";
 
                 contadorDias++;
             } else {
@@ -156,5 +155,6 @@ btnMesSiguiente.addEventListener("click", function () { ///TODAVIA NO ANDA
     // Generar el calendario con el mes correspondiente
     generarCalendario();
 });
+
 
 

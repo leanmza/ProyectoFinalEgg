@@ -6,12 +6,17 @@ package com.ProyectoFinal.MedicApp.controller;
 
 import com.ProyectoFinal.MedicApp.Entity.Imagen;
 import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
+import com.ProyectoFinal.MedicApp.Entity.HistoriaClinica;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
+import com.ProyectoFinal.MedicApp.Entity.Profesional;
+import com.ProyectoFinal.MedicApp.Entity.Turno;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
 import com.ProyectoFinal.MedicApp.Service.ImagenService;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
+import com.ProyectoFinal.MedicApp.Repository.TurnoRepositorio;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
+import com.ProyectoFinal.MedicApp.Service.TurnoService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,12 +39,11 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author cmoro1
  */
-
 @Controller
 @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
 @RequestMapping("/pac")
 public class PacienteControlador {
-    
+
     @Autowired
     PacienteRepositorio pacienteRepositorio;
 
@@ -51,6 +55,9 @@ public class PacienteControlador {
     
     @Autowired
     ImagenService imagenServicio;
+
+    @Autowired
+    TurnoService turnoService;
 
     @Transactional
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_ADMINISTRADOR')")
@@ -66,7 +73,6 @@ public class PacienteControlador {
             paciente.setObraSocial(obraSocial);
         }
         modelo.put("paciente", paciente);
-        System.out.println("Fecha Editar Paciente: " + paciente.getFechaNacimiento());
         
         // CARFA DE LAS OBRAS SOCIALES
         List<ObraSocial> obrasSociales = obraSocialServicio.listar();
@@ -74,18 +80,18 @@ public class PacienteControlador {
         
         return "editar_paciente.html";
     }
-    
+
     @Transactional
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_ADMINISTRADOR')")
     @PostMapping("/perfil/{id}")
-    public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,  
+    public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String dni, @RequestParam String correo, @RequestParam String telefono,
             @RequestParam(required = false) String nacimiento, @RequestParam(required = false) String password, @RequestParam(required = false) String password2, 
             @RequestParam String direccion, @RequestParam String sexo, @RequestParam(required = false) MultipartFile archivo, @RequestParam String obraSocial,
             HttpSession session, ModelMap modelo ) {
-        
+       
         try {
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd"); //yyyy-MM-dd
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd"); // yyyy-MM-dd
             Date fechaNacimiento = formato.parse(nacimiento);
             
             ObraSocial claseObraSocial = obraSocialServicio.getOne(obraSocial); // A PARTIR DEL ID BUSCAMOS LA CLASE OBRAsOCIAL
@@ -95,25 +101,25 @@ public class PacienteControlador {
                     fechaNacimiento, sexo, archivo, claseObraSocial);
             session.setAttribute("pacienteSession", pacienteService.getOne(id));
             return "redirect:/inicio";
-            
+
         } catch (MiExcepcion me) {
             System.out.println("Ingreso de paciente FALLIDO!\n" + me.getMessage());
-            
+
             return "editar_paciente.html";
-            
+
         } catch (ParseException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
             return "editar_paciente.html";
         }
     }
-    
+
     @Transactional
     @GetMapping("/baja/{id}")
     public String bajaPaciente(@PathVariable String id) {
-        
+
         pacienteService.darDeBaja(id);
-        
+
         return "redirect:/";
     }
     
@@ -149,5 +155,47 @@ public class PacienteControlador {
         
         return "redirect:/pac/perfil";
     }
-    
+
+    @Transactional
+    @GetMapping("/misProfesionales")
+    public String listaProfesionales(ModelMap model, HttpSession session) {
+
+        Paciente paciente = (Paciente) session.getAttribute("pacienteSession");
+        String idPaciente = paciente.getId();
+
+        List<Profesional> profesionales = pacienteService.listarProfesionales(idPaciente);
+
+        model.addAttribute("profesionales", profesionales);
+        return "mis_profesionales.html";
+    }
+
+    @Transactional
+    @GetMapping("/misTurnos")
+    public String listaTurnos(ModelMap model, HttpSession session) {
+
+        Paciente paciente = (Paciente) session.getAttribute("pacienteSession");
+        String idPaciente = paciente.getId();
+
+        List<Turno> turnos = pacienteService.listarTurnos(idPaciente);
+
+        model.addAttribute("turnos", turnos);
+        return "mis_turnos.html";
+    }
+
+    @Transactional
+    @GetMapping("/anularTurno/{id}")
+    public String anularTurno(@PathVariable String id) throws MiExcepcion {
+
+        System.out.println("    id" + id);
+        turnoService.eliminarTurno(id);
+        return "redirect:/pac/misTurnos";
+    }
+
+    @Transactional
+    @PostMapping("/calificaProfesional/{id}")
+    public String calificaProfesional(@PathVariable String id, @RequestParam String puntaje) {
+        pacienteService.calificarProfesional(id, puntaje);
+        return "redirect:/";
+
+    }
 }
