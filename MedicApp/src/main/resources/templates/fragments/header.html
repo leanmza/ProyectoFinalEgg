@@ -143,8 +143,9 @@
 
                     </a>
                     <ul class="dropdown-menu text-small">
-                        <li><a class="dropdown-item" th:href="@{/pac/misTurnos}">Mis Turnos</a></li>
-                        <li><a class="dropdown-item" th:href="@{/pac/misProfesionales}">Mis Profesionles</a></li>
+                        <li><a class="dropdown-item" th:href="@{/pac/misTurnos}" sec:authorize ="hasRole ('PACIENTE')">Mis Turnos</a></li>
+                        <li><a class="dropdown-item" th:href="@{/pac/misProfesionales}" sec:authorize ="hasRole ('PACIENTE')">Mis Profesionles</a></li>
+                        <li><a class="dropdown-item" th:href="@{/profesional/agenda}" sec:authorize ="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')">Mis Turnos</a></li>
                         <li sec:authorize ="hasRole ('PACIENTE')">
                             <a th:href="@{/pac/perfil}" id="btn-contacto" class="linkDesplegable  divHeaderPerfil" >Perfil</a>
                         </li>

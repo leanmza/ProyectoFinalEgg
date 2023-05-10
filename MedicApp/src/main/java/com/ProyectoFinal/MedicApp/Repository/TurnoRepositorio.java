@@ -25,7 +25,7 @@ public interface TurnoRepositorio extends JpaRepository<Turno, String> {
     @Query("SELECT t  FROM Turno t JOIN t.paciente p WHERE p.id = :idPaciente AND t.fecha >= CURRENT_DATE" )  //A este lo usamos para Mis Turnos
     public List<Turno> buscarPorPaciente(@Param("idPaciente") String idPaciente);
 
-    @Query("SELECT t FROM Turno t JOIN t.paciente p WHERE p.id = :idProfesional AND t.fecha >= CURRENT_DATE" )  //A este lo usamos para Agenda
+    @Query("SELECT t FROM Turno t JOIN t.profesional pr WHERE pr.id = :idProfesional AND t.fecha >= CURRENT_DATE" )  //A este lo usamos para Agenda
     public List<Turno> buscarPorProfesional(@Param("idProfesional") String idProfesional);
 
     @Query("SELECT DISTINCT t.profesional FROM Turno t JOIN t.paciente p WHERE p.id = :idPaciente")

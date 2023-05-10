@@ -7,11 +7,13 @@ package com.ProyectoFinal.MedicApp.Service;
 import com.ProyectoFinal.MedicApp.Entity.Imagen;
 import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
+import com.ProyectoFinal.MedicApp.Entity.Turno;
 import com.ProyectoFinal.MedicApp.Enum.Modalidad;
 import com.ProyectoFinal.MedicApp.Enum.Rol;
 import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
+import com.ProyectoFinal.MedicApp.Repository.TurnoRepositorio;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -47,6 +49,9 @@ public class ProfesionalService implements UserDetailsService {
 
     @Autowired
     private ImagenService imagenServicio;
+
+    @Autowired
+    private TurnoRepositorio turnoRepositorio;
 
     @Transactional
     public void crearProfesional(String nombre, String apellido, String correo, String telefono,
@@ -86,21 +91,20 @@ public class ProfesionalService implements UserDetailsService {
         profesional.setCantVisitas(0);
         profesional.setPuntaje(0);
         profesional.setCalificacion(0.0);
-        
-            ArrayList<String> horario = new ArrayList();
-            System.out.println("horario" + horario);
-            while (horaInicio.isBefore(horaFin)) {
-                horario.add(horaInicio.format(DateTimeFormatter.ofPattern("HH:mm")));
-                horaInicio = horaInicio.plusMinutes(30);
-                System.out.println("Hora inicio" + horaInicio);
-            }
-            for (String horas : horario) {
-                System.out.println("horas" + horas);
-            }
 
-            profesional.setHoras(horario);
-        
-        
+        ArrayList<String> horario = new ArrayList();
+        System.out.println("horario" + horario);
+        while (horaInicio.isBefore(horaFin)) {
+            horario.add(horaInicio.format(DateTimeFormatter.ofPattern("HH:mm")));
+            horaInicio = horaInicio.plusMinutes(30);
+            System.out.println("Hora inicio" + horaInicio);
+        }
+        for (String horas : horario) {
+            System.out.println("horas" + horas);
+        }
+
+        profesional.setHoras(horario);
+
         profesionalRepositorio.save(profesional);
 
     }
@@ -114,7 +118,7 @@ public class ProfesionalService implements UserDetailsService {
 
         validar(nombre, apellido, correo, telefono, password, password2,
                 especialidad, ubicacion, modalidad, honorarios, obraSocial/*, dias */, horaInicio, horaFin);
-        
+
         Optional<Profesional> respuesta = profesionalRepositorio.findById(idProfesional);
 
         if (respuesta.isPresent()) {
@@ -125,8 +129,8 @@ public class ProfesionalService implements UserDetailsService {
 //        profesional.setDni(dni);
             profesional.setEmail(correo);
             profesional.setTelefono(telefono);
-            
-            if(archivo.getSize() == 0) {
+
+            if (archivo.getSize() == 0) {
                 profesional.setImagen(null);
             } else {
                 String idImagen = null;
@@ -140,10 +144,9 @@ public class ProfesionalService implements UserDetailsService {
             profesional.setPassword(new BCryptPasswordEncoder().encode(password));
             profesional.setActivo(true);
             profesional.setEspecialidad(especialidad);
-            
+
             // NO SETEAMOS ROL PORQUE MANTIENE EL QUE TENIA AL MODIFICAR PERFIL 
             //Falta ObrasSociales y Tunos, hay que crear las entidades
-            
             profesional.setModalidad(modalidad);
             profesional.setUbicacion(ubicacion);
             profesional.setHonorario(honorarios);
@@ -151,14 +154,14 @@ public class ProfesionalService implements UserDetailsService {
 //        profesional.setDias(dias);
             profesional.setHoraInicio(horaInicio);
             profesional.setHoraFin(horaFin);
-            
+
 /////// CARGA EL ARRAYLIST DE HORAS //////
             ArrayList<String> horario = new ArrayList();
             System.out.println("horario" + horario);
             while (horaInicio.isBefore(horaFin)) {
                 horario.add(horaInicio.format(DateTimeFormatter.ofPattern("HH:mm")));
                 horaInicio = horaInicio.plusMinutes(30);
-              
+
             }
             for (String horas : horario) { ///PARA VER QUE FUNCIONA
                 System.out.println("horas" + horas);
@@ -215,26 +218,6 @@ public class ProfesionalService implements UserDetailsService {
         return especialistas;
     }
 
-//    DESCOMENTAR CUANDO SE CREE ObrasSociales
-//            @Transactional
-//        public List<ObrasSociales>listarObrasSociales(String id) {
-// 
-//        List<ObrasSociales> obrasSociales = new ArrayList();
-//
-//        obrasSociales =profesionalRepositorio.findById(id);
-//
-//        return obrasSociales;
-//    }
-    //    DESCOMENTAR CUANDO SE CREE TURNOS
-//            @Transactional
-//        public List<Turnos>listaTurnos(String id) {
-// 
-//        List<Turnos> turnos = new ArrayList();
-//
-//        turnos =profesionalRepositorio.findById(id);
-//
-//        return turnos;
-//    }
     public void validar(String nombre, String apellido, String correo, String telefono,
             String password, String password2, String especialidad, String ubicacion,
             String modalidad, Double honorarios, ObraSocial obraSocial /*, List<String> dias*/,
@@ -326,4 +309,16 @@ public class ProfesionalService implements UserDetailsService {
             return null;
         }
     }
+
+    @Transactional(readOnly = true)
+    public List<Turno> listarTurnos(String idProfesional) {
+        System.out.println("id del profesional " + idProfesional);
+
+        List<Turno> misTurnos;
+
+        misTurnos = turnoRepositorio.buscarPorProfesional(idProfesional);
+
+        return misTurnos;
+    }
+
 }

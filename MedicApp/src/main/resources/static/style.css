@@ -626,6 +626,10 @@ flex-direction: row-reverse;
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
 }
+
+.diaDeshabilitado{
+  opacity: .65;
+}
 /* LOGIN*/
 
 /* MEDIAS QUERYS */
