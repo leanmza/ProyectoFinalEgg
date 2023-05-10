@@ -3,112 +3,129 @@
 body {
     background-color: #517eb9 !important;
     font-family: "Montserrat", sans-serif !important;
-  }
-  
-  /*main {
-  padding-inline: 5%;
-  padding-top: 4%;
-  padding-bottom: 5%;
-  }*/
-  header {
+}
+
+/*main {
+padding-inline: 5%;
+padding-top: 4%;
+padding-bottom: 5%;
+}*/
+header {
     padding-inline: 5%;
-  }
-  
-  footer {
+}
+
+footer {
     padding-inline: 5%;
-  }
-  
-  p {
+}
+
+p {
     color: #222 !important;
-  }
-  
-  h1,
-  h2,
-  h3 {
+}
+
+h1,
+h2,
+h3 {
     font-weight: 900 !important; /* NEGRITA*/
-  }
-  
-  .botonesHeader,
-  .botonesIndex,
-  .botonesLogin,
-  .botonesFormulario,
-  .botonesLista,
-  .botonesImagen {
+}
+
+.botonesHeader,
+.botonesIndex,
+.botonesLogin,
+.botonesFormulario,
+.botonesLista,
+.botonesImagen {
     background-color: #012350 !important;
     color: white;
     border-color: #012350 !important;
-  }
-  
-  .contenedorMain {
+}
+
+.contenedorMain {
     padding-inline: 5% !important;
     padding-top: 4%;
     padding-bottom: 5%;
-  }
-  
-  /* HEADER */
-  
-  .cabecera {
+}
+
+/*TABLAS*/
+th{
+    text-align: center !important;
+}
+
+.tdEspecialidad,
+.tdHorario,
+.tdHonorario,
+.tdCalificacion,
+.tdValorar,
+.tdTurno{
+    text-align: center !important;
+}
+
+
+
+
+/* HEADER */
+
+.cabecera {
     padding: 0 !important;
-  
+
     /*    position: sticky;  ESTO HACE AL HEADER FLOTANTE 
     top: 0;  ESTO HACE AL HEADER FLOTANTE */
-  }
-  
-  header {
+}
+
+header {
     background-color: #fff;
     text-align: right;
     align-items: center;
     height: 95px !important; /* CENTRA VERTICALMENTE EL CONTENIDO */
     /*    position: sticky;  ESTO HACE AL HEADER FLOTANTE 
     top: 0;  ESTO HACE AL HEADER FLOTANTE */
-  }
-  
-  .logoHeader {
+}
+
+.logoHeader {
     justify-items: start;
     display: flex;
     height: 5.5em;
-  }
-  
-  .navbar {
+}
+
+.navbar {
     background-color: #fff;
     display: flex;
     justify-content: center;
-  }
-  
-  .navbar-collapse {
+}
+
+.navbar-collapse {
     justify-content: center;
-  }
-  
-  .navibar {
+}
+
+.navibar {
     align-items: center;
-  }
-  .link:link,
-  .link:visited,
-  .link:active {
+}
+.link:link,
+.link:visited,
+.link:active {
     text-decoration: none;
     padding: 1.7em;
     color: #17252a;
     font-weight: 600;
-  }
-  
-  .link:hover {
+}
+
+.link:hover {
     font-weight: 700;
-  }
-  
-  .linkDesplegable:link,
-  .linkDesplegable:visited,
-  .linkDesplegable:active {
+}
+
+.linkDesplegable:link,
+.linkDesplegable:visited,
+.linkDesplegable:active {
     text-decoration: none;
     padding-left: 1em;
     color: #17252a;
     font-weight: 400;
-  }
-  
-  .linkDesplegable:hover {
+}
+
+.linkDesplegable:hover {
     font-weight: 600;
-  }
-  
-  .navbar-toggler {
+}
+
+.navbar-toggler {
     /* MENÚ HAMBURGUESA */
     text-decoration: none;
     padding: 1.7em;
@@ -117,35 +134,35 @@ body {
     background-color: #fff !important;
     border: none !important;
     text-align: center;
-  }
-  
-  .btnTurnoHeader {
+}
+
+.btnTurnoHeader {
     margin-right: 1em;
-  }
-  
-  .imagen-perfil {
+}
+
+.imagen-perfil {
     width: 50px; /* ajustar según el tamaño deseado */
     height: 50px; /* ajustar según el tamaño deseado */
     border-radius: 50%;
     overflow: hidden;
-  }
-  
-  .imagen-perfil img {
+}
+
+.imagen-perfil img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-  
-  .headerDiv {
+}
+
+.headerDiv {
     justify-content: space-between;
-  }
-  
-  .divLinksHeader {
+}
+
+.divLinksHeader {
     z-index: 999;
-  }
-  /* FOOTER */
-  
-  footer {
+}
+/* FOOTER */
+
+footer {
     position: fixed;
     left: 0;
     bottom: 0;
@@ -157,89 +174,89 @@ body {
     display: flex;
     justify-content: center;
     padding-inline: 5%;
-  }
-  
-  .linkFooter {
+}
+
+.linkFooter {
     margin-right: 5%;
-  }
-  
-  .pie {
+}
+
+.pie {
     padding-inline: 0 !important;
-  }
-  .logoFooter {
+}
+.logoFooter {
     height: 35px;
-  }
-  
-  .iconoContacto {
+}
+
+.iconoContacto {
     font-size: 1.5em;
     color: #17252a;
-  }
-  
-  /* FORMULARIO */
-  
-  .login,
-  .divFormProfesional,
-  .divFormPaciente,
-  .divFormHistoriaClinica,
-  .divFormTurno {
+}
+
+/* FORMULARIO */
+
+.login,
+.divFormProfesional,
+.divFormPaciente,
+.divFormHistoriaClinica,
+.divFormTurno {
     /* CENTRAR CONTEINER-FLUID */
     display: grid;
     justify-content: center;
     align-content: center;
-  }
-  
-  .formTurno {
+}
+
+.formTurno {
     width: 85vw;
-  }
-  .formularioTurno {
+}
+.formularioTurno {
     width: 80%;
     padding-top: 3% !important;
     background-color: transparent !important;
-  }
-  .motivo {
+}
+.motivo {
     height: 8em !important;
-  }
-  
-  .contador {
+}
+
+.contador {
     font-size: 12px;
     text-align: end;
-  }
-  
-  .fecha,
-  .hora {
+}
+
+.fecha,
+.hora {
     background-color: #fff;
     border-radius: 8px;
-  }
-  
-  .selectorMes {
+}
+
+.selectorMes {
     margin: 0 !important;
     display: flex !important;
     justify-content: space-evenly;
     padding: 5% 5% 5% 5%;
-  }
-  .rowFiltros {
+}
+.rowFiltros {
     justify-content: end;
-  }
-  
-  .contenedorLogin {
+}
+
+.contenedorLogin {
     justify-content: center;
     display: flex;
-  }
-  .titulo {
+}
+.titulo {
     text-align: center;
     padding: 2% 0 2% 0;
-  }
-  
-  .formulario {
+}
+
+.formulario {
     background-color: #feffff;
     padding: 10% 5% 5% 5%;
     border-radius: 8px;
     justify-content: center;
     align-content: center;
     width: 40vw;
-  }
-  
-  input {
+}
+
+input {
     font-size: 1em;
     width: 25em;
     max-width: 100% !important;
@@ -248,9 +265,9 @@ body {
     border-radius: 5px;
     border: solid #17252a;
     box-sizing: border-box;
-  }
-  
-  .btnModal {
+}
+
+.btnModal {
     background-color: #fff !important;
     font-size: 1em;
     width: 25em;
@@ -259,311 +276,358 @@ body {
     text-align: left !important;
     border-radius: 5px;
     border: solid #17252a;
-  }
-  .diagnostico,
-  .tratamiento {
+}
+.diagnostico,
+.tratamiento {
     height: 10em !important;
-  }
-  
-  .btn-submit {
+}
+
+.btn-submit {
     display: flex;
     justify-content: end;
-  }
-  .rowLogin {
+}
+.rowLogin {
     justify-content: center;
-  }
-  
-  .datosInput {
+}
+
+.datosInput {
     padding-left: 1em !important;
-  }
-  
-  .form-floating:not(.form-control:disabled)::before {
+}
+
+.form-floating:not(.form-control:disabled)::before {
     top: 0 !important;
     left: 0 !important;
     width: 0 !important;
-  }
-  
-  .form-floating {
+}
+
+.form-floating {
     margin-bottom: 1em !important;
-  }
-  
-  .bi {
+}
+
+.bi {
     padding-inline: 0.5em;
-  }
-  
-  .divCrearUsuario {
+}
+
+.divCrearUsuario {
     padding: 5% 0 5% 0;
     text-align: center;
     border-top: solid 1px #012350;
-  }
-  
-  .loginFormulario {
+}
+
+.loginFormulario {
     background-color: #fff;
     border-radius: 8px;
     width: 40vw;
     display: grid;
     justify-content: center;
     align-content: center;
-  }
-  
-  /* FORMULARIO PERSONA Y PROFESIONAL */
-  .tituloForm {
+}
+
+/* FORMULARIO PERSONA Y PROFESIONAL */
+.tituloForm {
     padding: 0 0 4% 0;
-  }
-  
-  .tituloForm h4 {
+}
+
+.tituloForm h4 {
     text-align: center;
-  }
-  .formularioCrear {
+}
+.formularioCrear {
     width: 70vw !important;
     padding-top: 5% !important;
-  }
-  
-  .divSexo {
+}
+
+.divSexo {
     align-items: center;
     display: flex;
-  }
-  .divObraSocial,
-  .divDias {
+}
+.divObraSocial,
+.divDias {
     display: flex !important;
     align-items: center !important;
-  }
-  
-  .divObraSocial input,
-  .divDias input {
+}
+
+.divObraSocial input,
+.divDias input {
     height: auto !important;
-  }
-  
-  .selectPro {
+}
+
+.selectPro {
     justify-content: space-evenly !important;
-  }
-  .especialidad {
+}
+.especialidad {
     /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
-  
+
     display: flex;
     justify-content: start;
-  }
-  .ubicacion {
+}
+.ubicacion {
     /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
-  
+
     display: flex;
     justify-content: center;
-  }
-  
-  .modalidad {
+}
+
+.modalidad {
     /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
-  
+
     display: flex;
     justify-content: end;
-  }
-  
-  .rowHorario {
+}
+
+.rowHorario {
     justify-content: center;
-  }
-  
-  .rowHorario label {
+}
+
+.rowHorario label {
     display: flex;
     justify-content: end;
-  }
-  
-  .rowHorario .rowHoras {
+}
+
+.rowHorario .rowHoras {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  .inputHora {
+}
+.inputHora {
     text-align: center !important;
-  }
-  
-  .DivBtnEnviar {
+}
+
+.DivBtnEnviar {
     display: flex;
     justify-content: center;
-  }
-  
-  .labelObraSocial {
+}
+
+.labelObraSocial {
     padding-left: 0 !important;
-  }
-  
-  .rowObrasSociales {
+}
+
+.rowObrasSociales {
     justify-content: center;
-  }
-  
-  h5 {
+}
+
+h5 {
     text-align: center;
     padding-top: 2%;
     padding-bottom: 2%;
-  }
-  
-  .tituloFormPro {
+}
+
+.tituloFormPro {
     padding-top: 5%;
     padding-bottom: 3%;
     text-align: center;
-  }
-  
-  .tituloHoraFormPro {
+}
+
+.tituloHoraFormPro {
     padding-top: 5%;
     padding-bottom: 1%;
     text-align: center;
-  }
-  
-  .barraBusqueda {
+}
+
+.barraBusqueda {
     padding-bottom: 0 !important;
     align-items: center;
     display: flex;
-  }
-  
-  .btnBuscar {
+}
+
+.btnBuscar {
     margin-left: 2em;
-  }
-  /* INDEX */
-  
-  .presentacionRow {
+}
+/* INDEX */
+
+.presentacionRow {
     display: flex;
     justify-content: space-between;
     text-align: center;
     align-items: center;
-  }
-  
-  .index {
+}
+
+.index {
     background-image: url(./doctor-estetoscopio-manos-fondo-transparente.png);
     background-size: 60vw;
     background-repeat: no-repeat;
     background-position: top left;
     display: flex;
-  
+
     max-height: 100%;
     height: 81vh;
     /*width: 70vw;*/
     justify-content: center;
     align-items: center;
     padding: 0 !important;
-  }
-  .presentacion {
+}
+.presentacion {
     width: 100%;
     padding-inline: 5%;
     padding-top: 4%;
     padding-bottom: 5%;
-  }
-  .divNosotros {
+}
+.divNosotros {
     padding: 0 !important;
-  }
-  .adorno1,
-  .adorno2,
-  .adorno3 {
+}
+.adorno1,
+.adorno2,
+.adorno3 {
     font-size: 2.5em;
     text-align: center;
     padding: 0.5em 0 0.5em 0;
-  }
-  .adorno1,
-  .adorno3 {
+}
+.adorno1,
+.adorno3 {
     color: #fff;
-  }
-  
-  .adorno2 {
+}
+
+.adorno2 {
     color: #17252a !important  ;
-  }
-  
-  .nosotros {
+}
+
+.nosotros {
     color: #17252a !important;
-  }
-  
-  .btnIndex {
+}
+
+.btnIndex {
     box-shadow: 0px 1px 4px #17252a;
-  }
-  .textoIndex {
+}
+.textoIndex {
     color: #fff !important;
     padding-top: 5%;
     padding-bottom: 5%;
     font-size: 1.2em;
     font-weight: 600;
     text-shadow: 0px 1px 4px #17252a;
-  }
-  
-  .tablaCalendario {
+}
+
+.tablaCalendario {
     justify-content: center;
     display: grid;
     padding: 0 2% 10% 2%;
-  }
-  
-  .celdaDias {
+}
+
+.celdaDias {
     justify-content: center;
     display: inline-grid;
     text-align: center;
     width: 3em;
     padding-bottom: 1em;
-  }
-  
-  .inputRadio {
+}
+
+.inputRadio {
     width: 1em;
     height: 1em;
-  }
-  
-  /* MODAL */
-  .formularioModal{
-        padding-top: 5% !important;
-  }
-  
-  .btnCerrarModal {
+}
+
+/* MODAL */
+.formularioModal{
+    padding-top: 5% !important;
+}
+
+.btnCerrarModal {
     background-color: transparent !important;
-  }
-  
-  .DivBtnEnviar {
+}
+
+.DivBtnEnviar {
     justify-content: space-evenly;
-  }
-  
-  .contenedorCards {
+}
+
+.contenedorCards {
     z-index: 0;
-  }
-  
-  .cardHora{
-      height: 446.733px;
-  }
-  
+}
+
+.cardHora{
+    height: 446.733px;
+}
+
 h6{
-      padding: 20% 10% !important;
-      text-align: center;
-  }
-  
-  .aclaracion{
-      font-size: 14px;
-      opacity: .65;
-  }
+    padding: 20% 10% !important;
+    text-align: center;
+}
+
+.aclaracion{
+    font-size: 14px;
+    opacity: .65;
+}
 
 .custom-error-message {
-  font-family: Montserrat, sans-serif;
+    font-family: Montserrat, sans-serif;
 }
 .custom-success-message {
-  font-family: Montserrat, sans-serif;
+    font-family: Montserrat, sans-serif;
 }
 
-  
-  .idProfesional{
-      position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-padding: 1rem .75rem !important;
-padding-left: 0.75rem;
-overflow: hidden;
-text-align: start;
-text-overflow: ellipsis;
-white-space: nowrap;
-pointer-events: none;
-border: var(--bs-border-width) solid transparent;
-transform-origin: 0 0;
-transition: opacity .1s ease-in-out,transform .1s ease-in-out;
-opacity: .65;
-transform: scale(.85) translateY(-.5rem) translateX(.15rem);
-  }
-  
-  
-  .accordion{
-      width: 80vw !important;
-  }
-  /* LOGIN*/
-  
-  /* MEDIAS QUERYS */
-  
-  /* TAMAÑO EXTRA PEQUEÑOS   */
-  
+
+.idProfesional{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 1rem .75rem !important;
+    padding-left: 0.75rem;
+    overflow: hidden;
+    text-align: start;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    pointer-events: none;
+    border: var(--bs-border-width) solid transparent;
+    transform-origin: 0 0;
+    transition: opacity .1s ease-in-out,transform .1s ease-in-out;
+    opacity: .65;
+    transform: scale(.85) translateY(-.5rem) translateX(.15rem);
+}
+
+
+.accordion{
+    width: 80vw !important;
+}
+
+.imgEstrella{
+    height: 20px;
+
+}
+
+
+/*CALIFICACION PROFESIONALES*/
+.formValorar{
+    display: none;
+}
+
+.estrellas{
+    justify-content: center;
+    display: grid;
+}
+
+.star-widget{
+    padding-bottom: 10%;
+    display: flex;
+flex-direction: row-reverse;
+}
+.container .star-widget input {
+    display: none;
+}
+
+.star-widget label {
+    font-size: 20px;
+    color: #444;
+    padding: 5px;
+    float: right;
+    transition: all 0.2s ease;
+}
+
+.star-widget input[type="radio"]:checked ~ label {
+    color: #fd4;
+}
+
+.star-widget input#rate-5:checked ~ label {
+    /*    color: #fe7;
+        text-shadow: 0 0 20px #952;*/
+}
+
+.star-widget input:checked ~ label:before {
+    content: '\f005';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+}
+/* LOGIN*/
+
+/* MEDIAS QUERYS */
+
+/* TAMAÑO EXTRA PEQUEÑOS   */
