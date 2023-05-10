@@ -147,7 +147,7 @@
                             <select name="obraSocial" id="obraSocial" class="obraSocial form-select"
                                     th:value="${paciente.obraSocial}"
                                     onchange="abrirModal()">
-                                <option value="" selected disabled>Eligir Obra Social</option>
+                                <option value="" selected disabled>Elegir Obra Social</option>
                                 <th:block th:each="obraSocial : ${obrasSociales}">
                                     <option th:text="${obraSocial.nombre}" th:selected="${obraSocial.id == paciente.obraSocial.id}"></option>
                                 </th:block>

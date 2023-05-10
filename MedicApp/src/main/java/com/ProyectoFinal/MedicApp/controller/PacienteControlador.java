@@ -94,9 +94,8 @@ public class PacienteControlador {
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd"); // yyyy-MM-dd
             Date fechaNacimiento = formato.parse(nacimiento);
             
-            ObraSocial claseObraSocial = obraSocialServicio.getOne(obraSocial); // A PARTIR DEL ID BUSCAMOS LA CLASE OBRAsOCIAL
+            ObraSocial claseObraSocial = obraSocialServicio.buscarPorNombre(obraSocial); // A PARTIR DEL ID BUSCAMOS LA CLASE OBRAsOCIAL
             
-            System.out.println("ARCHIVO " + archivo.getContentType());
             pacienteService.modificarPaciente(id, nombre, apellido, dni, correo, telefono, password, password2, direccion, 
                     fechaNacimiento, sexo, archivo, claseObraSocial);
             session.setAttribute("pacienteSession", pacienteService.getOne(id));

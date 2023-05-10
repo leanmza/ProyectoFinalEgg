@@ -94,7 +94,7 @@
                         class="form-control"
                         id="naciemiento"
                         name="nacimiento"
-                        th:value="${recargaFormulario != null ? #dates.format(recargaFormulario.fechaNacimiento, 'yyyy-MM-dd') : #dates.format(nacimiento, 'yyyy-MM-dd')}"
+                        th:value="${recargaFormulario != null ? #dates.format(recargaFormulario.fechaNacimiento, 'yyyy-MM-dd') : #dates.format(fechaNacimiento, 'yyyy-MM-dd')}"
                         />
                     <label for="naciemiento">Fecha de Nacimiento</label>
                 </div>
@@ -102,9 +102,9 @@
                 <div class="col-xs-12 col-md-6 divSexo form-floating">
                     <select name="sexo" id="sexo" class="sexo form-select" th:value="${recargaFormulario != null ? recargaFormulario.sexo : sexo}">
                         <option value="Elegir Opcion" selected disabled>Elegir opción...</option>
-                        <option value="masculino" th:selected="${recargaFormulario != null and recargaFormulario.sexo == 'Masculino'}">Masculino</option>
-                        <option value="femenino" th:selected="${recargaFormulario != null and recargaFormulario.sexo == 'Femenino'}">Femenino</option>
-                        <option value="otro" th:selected="${recargaFormulario != null and recargaFormulario.sexo == 'Otro'}">Otro</option>
+                        <option value="Masculino" th:selected="${recargaFormulario != null and recargaFormulario.sexo == 'Masculino'}">Masculino</option>
+                        <option value="Femenino" th:selected="${recargaFormulario != null and recargaFormulario.sexo == 'Femenino'}">Femenino</option>
+                        <option value="Otro" th:selected="${recargaFormulario != null and recargaFormulario.sexo == 'Otro'}">Otro</option>
                     </select>
                     <label for="sexo">Sexo</label>
                 </div>
@@ -127,7 +127,7 @@
                         class="form-control"
                         id="correo"
                         name="correo"
-                        th:value="${recargaFormulario != null ? recargaFormulario.email : correo}"
+                        th:value="${recargaFormulario != null ? recargaFormulario.email : email}"
                         placeholder=""
                         />
                     <label for="correo">Email</label>
@@ -159,7 +159,7 @@
                     <select name="obraSocial" id="obraSocial" class="obraSocial form-select"
                             th:value="${recargaFormulario != null ? recargaFormulario.obraSocial : ''}"
                             onchange="abrirModal()">
-                        <option value="" selected disabled>Eligir Obra Social</option>
+                        <option value="" selected disabled>Elegir Obra Social</option>
                         <th:block th:each="obraSocial : ${obrasSociales}">
                             <option th:value="${obraSocial.id}"
                                     th:selected="${recargaFormulario != null and obraSocial == recargaFormulario.obraSocial}"
@@ -176,7 +176,7 @@
                             if (value == "Cargar otra...") {
                                 var formulario = document.getElementById("formulario");
                                 var datosFormulario = new FormData(formulario);
-                                fetch('/pac/guardarDatosFormulario', {
+                                fetch('/guardarDatosFormulario', {
                                     method: 'POST',
                                     body: datosFormulario
                                 })
