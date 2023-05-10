@@ -63,15 +63,18 @@ public class PacienteControlador {
     @PostMapping("/perfil/{id}")
     public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String dni, @RequestParam String correo, @RequestParam String telefono,
-            @RequestParam(required = false) String nacimiento, @RequestParam(required = false) String password, @RequestParam(required = false) String password2,
-            @RequestParam String direccion, @RequestParam String sexo, @RequestParam(required = false) MultipartFile archivo, HttpSession session, ModelMap modelo) {
+            @RequestParam(required = false) String nacimiento, @RequestParam(required = false) String password,
+            @RequestParam(required = false) String password2,
+            @RequestParam String direccion, @RequestParam String sexo,
+            @RequestParam(required = false) MultipartFile archivo, HttpSession session, ModelMap modelo) {
 
         try {
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd"); //yyyy-MM-dd
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd"); // yyyy-MM-dd
             Date fechaNacimiento = formato.parse(nacimiento);
 
             System.out.println("ARCHIVO " + archivo.getContentType());
-            pacienteService.modificarPaciente(id, nombre, apellido, dni, correo, telefono, password, password2, direccion,
+            pacienteService.modificarPaciente(id, nombre, apellido, dni, correo, telefono, password, password2,
+                    direccion,
                     fechaNacimiento, sexo, archivo);
             session.setAttribute("pacienteSession", pacienteService.getOne(id));
             return "redirect:/inicio";
@@ -125,11 +128,18 @@ public class PacienteControlador {
 
     @Transactional
     @GetMapping("/anularTurno/{id}")
-    public String anularTurno(@PathVariable  String id) throws MiExcepcion {
+    public String anularTurno(@PathVariable String id) throws MiExcepcion {
 
-        System.out.println("    id" +id);
+        System.out.println("    id" + id);
         turnoService.eliminarTurno(id);
         return "redirect:/pac/misTurnos";
+    }
+
+    @Transactional
+    @PostMapping("/calificaProfesional/{id}")
+    public String calificaProfesional(@PathVariable String id, @RequestParam String puntaje) {
+        pacienteService.calificarProfesional(id, puntaje);
+        return "redirect:/";
 
     }
 }

@@ -51,6 +51,60 @@
             </div>
         </main>
         <!--FOOTER-->
+          </div>
+
+
+          <div class="col">
+            <div class="card h-100">
+              <img src="ilustracion-doctores.jpg" class="card-img-top imgCard" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title">Mis Profesionales</h5>
+                <p class="card-text">Lista de los profesionales que ya ha sacado
+                   turnos previamente en la APP. Sería para acelerar la busqueda</p>
+              </div>
+
+<!-- Agregado por Claudio para prueba de calificación -->              
+                <form
+                    th:action="@{/pac/calificaProfesional/__id__}"
+                    method="POST">
+                    
+                    <div class="row rowDatosPersonales">
+                        <div class="barraBusqueda col-xs-12">
+                            <div class="container">
+                                <div class="star-widget">
+                                    <input type="radio" name="puntaje" value="5" id="rate-5">
+                                        <label for="rate-5" class="fas fa-star"></label>
+                                    <input type="radio" name="puntaje" value="4" id="rate-4">
+                                        <label for="rate-4" class="fas fa-star"></label>
+                                    <input type="radio" name="puntaje" value="3" id="rate-3">
+                                        <label for="rate-3" class="fas fa-star"></label>
+                                    <input type="radio" name="puntaje" value="2" id="rate-2">
+                                        <label for="rate-2" class="fas fa-star"></label>
+                                        <input type="radio" name="puntaje" value="1" id="rate-1" checked>
+                                        <label for="rate-1" class="fas fa-star"></label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btnEnviar btnBuscar botonesLista">
+                                Calificar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+<!-- Agregado por Claudio para prueba de calificación -->
+
+            </div>
+          </div>
+
+          <div class="col">
+           
+          </div>
+
+
+        </div>
+      </div>
+    </main>
+     <!--FOOTER-->
         <div class="container-fluid pie">
             <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
         </div>

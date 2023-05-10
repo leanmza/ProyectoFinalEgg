@@ -261,4 +261,37 @@ public class PacienteService implements UserDetailsService {
         return misTurnos;
     }
     
+
+    public void calificarProfesional(String id, String puntaje) {
+        Integer punt = 0;
+        switch (puntaje){
+            case "0":
+                punt = 0;
+            break;
+            case "1":
+                punt = 1;
+            break;
+            case "2":
+                punt = 2;
+            break;
+            case "3":
+                punt = 3;
+            break;
+            case "4":
+                punt = 4;
+            break;
+            case "5":
+                punt = 5;
+            break;
+        }
+                
+        Optional<Profesional> respuesta = profesionalRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            Profesional profesional = respuesta.get();
+            profesional.setCantVisitas(profesional.getCantVisitas() + 1);
+            profesional.setPuntaje(profesional.getPuntaje() + punt);
+            profesional.setCalificacion((double)profesional.getPuntaje() / (double)profesional.getCantVisitas());
+            profesionalRepositorio.save(profesional);
+        }
+    }
 }
