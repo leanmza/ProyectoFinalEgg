@@ -157,4 +157,21 @@ btnMesSiguiente.addEventListener("click", function () { ///TODAVIA NO ANDA
     generarCalendario();
 });
 
+//PARA LISTAR PROFESIONALES
+function filtrarTabla() {
+        var filtro = document.getElementById("especialidad").value.toLowerCase();
+        var filas = document.querySelectorAll("#tabla-profesionales tbody tr");
 
+        filas.forEach(function(fila) {
+            var especialidad = fila.querySelector("td:nth-child(2)").textContent.toLowerCase();
+
+            if (filtro === "todas" || especialidad.includes(filtro)) {
+                fila.style.display = "";
+            } else {
+                fila.style.display = "none";
+            }
+        });
+    };
+
+
+//para dar estilo de escribir

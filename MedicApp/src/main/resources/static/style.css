@@ -528,6 +528,11 @@ h6{
       font-size: 14px;
       opacity: .65;
   }
+   #especialidad {
+
+          font-weight: bold;
+          border: 0px;
+      }
 
 .custom-error-message {
   font-family: Montserrat, sans-serif;
@@ -562,4 +567,31 @@ transform: scale(.85) translateY(-.5rem) translateX(.15rem);
   /* MEDIAS QUERYS */
   
   /* TAMAÑO EXTRA PEQUEÑOS   */
-  
+
+/* Para el efecto del index*/
+.typing {
+      animation: typingEffect 3s steps(30, end), deletingEffect 3s steps(30, end) 3s infinite;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 1px solid #000;
+      width: fit-content;
+      margin-bottom: 10px;
+    }
+
+    @keyframes typingEffect {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+      }
+    }
+
+    @keyframes deletingEffect {
+      from {
+        width: 100%;
+      }
+      to {
+        width: 0;
+      }
+    }
