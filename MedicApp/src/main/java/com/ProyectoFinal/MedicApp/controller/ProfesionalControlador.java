@@ -4,14 +4,20 @@
  */
 package com.ProyectoFinal.MedicApp.controller;
 
+import com.ProyectoFinal.MedicApp.Entity.Imagen;
+import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Persona;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Enum.Modalidad;
+import com.ProyectoFinal.MedicApp.Enum.Rol;
 import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import java.util.ArrayList;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
+import com.ProyectoFinal.MedicApp.Service.ImagenService;
+import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -44,41 +50,70 @@ public class ProfesionalControlador {
 
     @Autowired
     ProfesionalService profesionalService;
+    
+    @Autowired
+    ObraSocialService obraSocialServicio;
+    
+    @Autowired
+    ImagenService imagenServicio;
 
     @Transactional
     @GetMapping("/perfil")
-    public String perfil(Model modelo, HttpSession session) {
+    public String perfil(HttpSession session, Model modelo, HttpSession obraSocialNueva) {
+        
+        // CARGAMOS LOS DATOS DEL PROFESIONAL
         Profesional profesional = (Profesional) session.getAttribute("profesionalSession");
+        // EN EL CASO QUE HAYA AGREGADO UNA OBRA SOCIAL NUEVA, ACTUALIZAMOS LA LISTA DE OBRAS SOCIALES SETEADAS
+        if (obraSocialNueva.getAttribute("nuevaObraSocial") != null) {
+            String nombreOS = (String) obraSocialNueva.getAttribute("nuevaObraSocial");
+            ObraSocial obraSocial = obraSocialServicio.buscarPorNombre(nombreOS);
+            profesional.setObraSocial(obraSocial);
+        }
+        
         modelo.addAttribute("profesional", profesional);
         
+        
+        // CARGA DE LAS UBICACIONES
         List<String> ubicaciones = new ArrayList<>();
         for (Ubicacion aux : Ubicacion.values()) {
             ubicaciones.add(aux.toString());
         }
         modelo.addAttribute("ubicaciones", ubicaciones);
         
+        
+        // CARGA DE LAS MODALIDADES
         List<String> modalidades = new ArrayList<>();
         for (Modalidad aux : Modalidad.values()) {
             modalidades.add(aux.toString());
         }
         modelo.addAttribute("modalidades", modalidades);
         
+        
+        // CARFA DE LAS OBRAS SOCIALES
+        List<ObraSocial> obrasSociales = obraSocialServicio.listar();
+        modelo.addAttribute("obrasSociales", obrasSociales);
+        
+        
         return "editar_profesional.html";
     }
         
     @Transactional
-    @PostMapping("perfil/{id}")
+    @PostMapping("/editarPerfil/{id}")
     public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String correo, @RequestParam String telefono, @RequestParam(required = false) MultipartFile archivo, 
             @RequestParam(required = false) String password, @RequestParam(required = false) String password2,  @RequestParam String especialidad,
             @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,
-            /*@RequestParam("obrasSociales[]") List<String> obrasSociales, @RequestParam("dias[]") List<String> dias,*/
+            @RequestParam String obraSocial, /*@RequestParam("dias[]") List<String> dias,*/
             @RequestParam(required = false) LocalTime horaInicio, @RequestParam(required = false) LocalTime horaFin
             /*, @RequestParam(required = false) List<Turno>turnos*/, HttpSession session) {
         
         try {
+            
+            ObraSocial claseObraSocial = obraSocialServicio.buscarPorNombre(obraSocial); // A PARTIR DEL NOMBRE BUSCAMOS LA CLASE OBRAsOCIAL
+            System.out.println("OS: "+claseObraSocial.toString());
+            
             profesionalService.modificarProfesional(id, nombre, apellido, correo, telefono, archivo, password, password2, 
-                    especialidad, ubicacion, modalidad, honorarios, horaInicio, horaFin);
+                    especialidad, ubicacion, modalidad, honorarios, claseObraSocial, horaInicio, horaFin);
             session.setAttribute("profesionalSession", profesionalService.getOne(id));
             
             return "redirect:/inicio";
@@ -121,4 +156,52 @@ public class ProfesionalControlador {
         return "listaespecialidad.html";
     }
     
+    // GUARDADO DE DATOS DEL FORMULARIO PROFESIONAL EN UNA SESSION PARA INYECTAR LUEGO DE AGRGAR UNA OBRA SOCIAL NUEVA
+    @Transactional
+    @PostMapping("/guardarDatosFormulario")
+    public String guardarDatosFormulario(@RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido,
+            @RequestParam(required = false) String correo, @RequestParam(required = false) String telefono, @RequestParam(required = false) MultipartFile archivo,
+            @RequestParam(required = false, defaultValue = "") String especialidad, @RequestParam(required = false) String ubicacion, @RequestParam(required = false) String modalidad,
+            @RequestParam(required = false) Double honorarios, @RequestParam(required = false) String obraSocial, /*@RequestParam("dias[]") List<String> dias,
+             */ @RequestParam(required = false) String horaInicio, @RequestParam(required = false) String horaFin /*, @RequestParam(required = false) List<Turno>turnos*/,
+             HttpSession sessionFormulario) throws IOException, MiExcepcion {
+
+        ObraSocial ClaseObraSocial = obraSocialServicio.buscarPorNombre(obraSocial);
+
+        Profesional profesional = new Profesional();
+
+        profesional.setNombre(nombre);
+        profesional.setApellido(apellido);
+//        profesional.setDni(dni);
+        profesional.setEmail(correo);
+        profesional.setTelefono(telefono);
+
+        if (!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
+            Imagen imagen = imagenServicio.guardar(archivo);
+            profesional.setImagen(imagen);
+        }
+
+        System.out.println("Especialidad: " + especialidad);
+        if (!especialidad.isEmpty() || especialidad != null) {
+            profesional.setEspecialidad(especialidad);
+        }
+
+        profesional.setModalidad(modalidad);
+        profesional.setUbicacion(ubicacion);
+        profesional.setHonorario(honorarios);
+        profesional.setObraSocial(ClaseObraSocial);
+//        profesional.setDias(dias);
+        if (!horaInicio.isEmpty()) {
+            LocalTime horaInicioLT = LocalTime.parse(horaInicio);
+            profesional.setHoraInicio(horaInicioLT);
+        }
+        if (!horaFin.isEmpty()) {
+            LocalTime horaFinLT = LocalTime.parse(horaFin);
+            profesional.setHoraFin(horaFinLT);
+        }
+
+        sessionFormulario.setAttribute("datosFormulario", profesional);
+
+        return "redirect:/profesional/perfil";
+    }
 }

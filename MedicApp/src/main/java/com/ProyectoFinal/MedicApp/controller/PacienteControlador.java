@@ -4,12 +4,16 @@
  */
 package com.ProyectoFinal.MedicApp.controller;
 
+import com.ProyectoFinal.MedicApp.Entity.Imagen;
+import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.HistoriaClinica;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Entity.Turno;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
+import com.ProyectoFinal.MedicApp.Service.ImagenService;
+import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.Repository.TurnoRepositorio;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.TurnoService;
@@ -20,6 +24,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -44,6 +49,12 @@ public class PacienteControlador {
 
     @Autowired
     PacienteService pacienteService;
+    
+    @Autowired
+    ObraSocialService obraSocialServicio;
+    
+    @Autowired
+    ImagenService imagenServicio;
 
     @Autowired
     TurnoService turnoService;
@@ -51,10 +62,22 @@ public class PacienteControlador {
     @Transactional
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_ADMINISTRADOR')")
     @GetMapping("/perfil")
-    public String perfil(ModelMap modelo, HttpSession session) {
+    public String perfil(ModelMap modelo, HttpSession session, HttpSession obraSocialNueva) {
+        
+        // CARGAMOS LOS DATOS DEL PACIENTE
         Paciente paciente = (Paciente) session.getAttribute("pacienteSession");
+        // EN EL CASO QUE HAYA AGREGADO UNA OBRA SOCIAL NUEVA, ACTUALIZAMOS LA LISTA DE OBRAS SOCIALES SETEADAS
+        if (obraSocialNueva.getAttribute("nuevaObraSocial") != null) {
+            String nombreOS = (String) obraSocialNueva.getAttribute("nuevaObraSocial");
+            ObraSocial obraSocial = obraSocialServicio.buscarPorNombre(nombreOS);
+            paciente.setObraSocial(obraSocial);
+        }
         modelo.put("paciente", paciente);
-
+        
+        // CARFA DE LAS OBRAS SOCIALES
+        List<ObraSocial> obrasSociales = obraSocialServicio.listar();
+        modelo.put("obrasSociales", obrasSociales);
+        
         return "editar_paciente.html";
     }
 
@@ -63,19 +86,19 @@ public class PacienteControlador {
     @PostMapping("/perfil/{id}")
     public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String dni, @RequestParam String correo, @RequestParam String telefono,
-            @RequestParam(required = false) String nacimiento, @RequestParam(required = false) String password,
-            @RequestParam(required = false) String password2,
-            @RequestParam String direccion, @RequestParam String sexo,
-            @RequestParam(required = false) MultipartFile archivo, HttpSession session, ModelMap modelo) {
-
+            @RequestParam(required = false) String nacimiento, @RequestParam(required = false) String password, @RequestParam(required = false) String password2, 
+            @RequestParam String direccion, @RequestParam String sexo, @RequestParam(required = false) MultipartFile archivo, @RequestParam String obraSocial,
+            HttpSession session, ModelMap modelo ) {
+       
         try {
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd"); // yyyy-MM-dd
             Date fechaNacimiento = formato.parse(nacimiento);
-
+            
+            ObraSocial claseObraSocial = obraSocialServicio.getOne(obraSocial); // A PARTIR DEL ID BUSCAMOS LA CLASE OBRAsOCIAL
+            
             System.out.println("ARCHIVO " + archivo.getContentType());
-            pacienteService.modificarPaciente(id, nombre, apellido, dni, correo, telefono, password, password2,
-                    direccion,
-                    fechaNacimiento, sexo, archivo);
+            pacienteService.modificarPaciente(id, nombre, apellido, dni, correo, telefono, password, password2, direccion, 
+                    fechaNacimiento, sexo, archivo, claseObraSocial);
             session.setAttribute("pacienteSession", pacienteService.getOne(id));
             return "redirect:/inicio";
 
@@ -98,6 +121,39 @@ public class PacienteControlador {
         pacienteService.darDeBaja(id);
 
         return "redirect:/";
+    }
+    
+    @Transactional
+    @PostMapping("/guardarDatosFormulario")
+    public String guardarDatosFormulario (@RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido,
+            @RequestParam(required = false) String dni, @RequestParam(required = false) String email, @RequestParam(required = false) String telefono,
+            @RequestParam(required = false) String password, @RequestParam(required = false) String password2, @RequestParam(required = false) String direccion,
+            @RequestParam(required = false) Date fechaNacimiento, @RequestParam(required = false) String sexo,
+            @RequestParam(required = false) MultipartFile archivo, @RequestParam(required = false) String obraSocial, HttpSession sessionFormulario) throws MiExcepcion {
+        
+        ObraSocial ClaseObraSocial = obraSocialServicio.buscarPorNombre(obraSocial);
+        
+        Paciente paciente = new Paciente();
+
+        paciente.setNombre(nombre);
+        paciente.setApellido(apellido);
+        paciente.setDni(dni);
+        paciente.setEmail(email);
+        paciente.setTelefono(telefono);
+        paciente.setPassword(new BCryptPasswordEncoder().encode(password));
+        paciente.setDireccion(direccion);
+        paciente.setFechaNacimiento(fechaNacimiento);
+        paciente.setSexo(sexo);
+        paciente.setObraSocial(ClaseObraSocial);
+        
+        if(!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
+            Imagen imagen = imagenServicio.guardar(archivo);
+            paciente.setImagen(imagen);
+        }
+        
+        sessionFormulario.setAttribute("datosFormulario", paciente);
+        
+        return "redirect:/pac/perfil";
     }
 
     @Transactional
