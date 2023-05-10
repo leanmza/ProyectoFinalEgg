@@ -43,13 +43,10 @@ public class TurnoService {
 
         Turno turno = new Turno();
 
-     
-
         turno.setFecha(fecha);
 
-    
         turno.setHora(hora);
-
+        System.out.println("fecha " + fecha.toString());
         turno.setProfesional(profesional);
         turno.setPaciente(paciente);
         turno.setMotivo(motivo);
@@ -81,7 +78,7 @@ public class TurnoService {
     }
 
     @Transactional
-    public void eliminarTurno(@RequestParam String idTurno) {
+    public void eliminarTurno(String idTurno) {
 
         Optional<Turno> respuesta = turnoRepositorio.findById(idTurno);
 

@@ -11,6 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @Entity
@@ -21,6 +22,7 @@ public class Turno {
     private String id;
     
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yy")
     private Date fecha;
     
     private LocalTime hora;

@@ -1,5 +1,6 @@
 package com.ProyectoFinal.MedicApp.Repository;
 
+import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Entity.Turno;
 import java.util.Date;
 import java.util.List;
@@ -21,21 +22,13 @@ public interface TurnoRepositorio extends JpaRepository<Turno, String> {
     @Query("SELECT t FROM Turno t WHERE t.fecha = :fecha AND t.profesional = :idProfesional") 
     public List<Turno> buscarPorFechaYProfesional(@Param("fecha") Date fecha,  @Param ("idProfesional")String idProfesional); 
     
-    @Query("SELECT t FROM Turno t WHERE t.paciente = :idPaciente")  //A este lo usamos para Mis Turnos
+    @Query("SELECT t  FROM Turno t JOIN t.paciente p WHERE p.id = :idPaciente AND t.fecha >= CURRENT_DATE" )  //A este lo usamos para Mis Turnos
     public List<Turno> buscarPorPaciente(@Param("idPaciente") String idPaciente);
 
-    @Query("SELECT t FROM Turno t WHERE t.profesional = :idProfesional")  //A este lo usamos para Agenda
+    @Query("SELECT t FROM Turno t JOIN t.paciente p WHERE p.id = :idProfesional AND t.fecha >= CURRENT_DATE" )  //A este lo usamos para Agenda
     public List<Turno> buscarPorProfesional(@Param("idProfesional") String idProfesional);
 
-//    @Query("SELECT t FROM Turno t JOIN t.profesional tp WHERE tp.apellido = :apellidoProfesional")
-//    public List<Turno> buscarPorApellidoProfesional(@Param("apellidoProfesional") String apellidoProfesional); 
-//    
-//    @Query("SELECT t FROM Turno t JOIN t.profesional tp WHERE tp.nombre = :nombreProfesional")
-//    public List<Turno> buscarPorNombreProfesional(@Param("nombreProfesional") String nombreProfesional);
-//    
-//    @Query("SELECT t FROM Turno t JOIN t.paciente tp WHERE tp.apellido = :apellidoPaciente")
-//    public List<Turno> buscarPorApellidoPaciente(@Param("apellidoPaciente") String apellidoPaciente);
-//    
-//    @Query("SELECT t FROM Turno t JOIN t.paciente tp WHERE tp.nombre = :nombrePaciente")
-//    public List<Turno> buscarPorNombrePaciente(@Param("nombrePaciente") String nombrePaciente);
+    @Query("SELECT DISTINCT t.profesional FROM Turno t JOIN t.paciente p WHERE p.id = :idPaciente")
+    public List<Profesional> buscarProfesionalPorPaciente(@Param("idPaciente") String idPaciente);
+
 }

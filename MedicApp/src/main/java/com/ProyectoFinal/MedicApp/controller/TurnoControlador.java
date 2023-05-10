@@ -90,9 +90,9 @@ public class TurnoControlador {
         System.out.println(horario);
         try {
 
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
             Date fecha = formato.parse(dia);
-            System.out.println(fecha);
+            System.out.println("fecha " + fecha);
 
             LocalTime hora = LocalTime.parse(horario);
 
@@ -113,4 +113,6 @@ public class TurnoControlador {
 
     }
 
+
+    
 }

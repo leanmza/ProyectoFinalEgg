@@ -31,6 +31,7 @@
                       <th>Especialidad</th>
                       <th>Profesional</th>
                       <th>Diagnóstico</th>
+                      <th>Tratamiento</th>
                      
                     </tr>
                   </thead>
@@ -40,7 +41,7 @@
                       <td th:text="${historiaClinica.profesional.especialidad}"></td>
                       <td th:text="${historiaClinica.profesional.apellido + ', ' + historiaClinica.profesional.nombre}"></td>
                       <td th:text="${historiaClinica.diagnostico}"></td>
-                      
+                      <td th:text="${historiaClinica.tratamiento}"></td>
                   </tbody>
                 </table>
               </div>

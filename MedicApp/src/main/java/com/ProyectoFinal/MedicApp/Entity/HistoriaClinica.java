@@ -31,5 +31,7 @@ public class HistoriaClinica {
     private Profesional profesional; //Sacamos nombre y especialidad
 
     private String diagnostico;
+    
+    private String tratamiento;
 
 }

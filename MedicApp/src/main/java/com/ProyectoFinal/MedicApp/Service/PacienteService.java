@@ -7,10 +7,12 @@ package com.ProyectoFinal.MedicApp.Service;
 import com.ProyectoFinal.MedicApp.Entity.Imagen;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
+import com.ProyectoFinal.MedicApp.Entity.Turno;
 import com.ProyectoFinal.MedicApp.Enum.Rol;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
 import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
+import com.ProyectoFinal.MedicApp.Repository.TurnoRepositorio;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,6 +47,9 @@ public class PacienteService implements UserDetailsService {
     
     @Autowired
     private ImagenService imagenServicio;
+    
+     @Autowired
+    private TurnoRepositorio turnoRepositorio;
 
     @Transactional
 
@@ -233,5 +238,27 @@ public class PacienteService implements UserDetailsService {
             pacienteRepositorio.save(paciente);
         }
     }
+    
+    @Transactional(readOnly = true)
+    public List<Profesional> listarProfesionales(String idPaciente) {
+        System.out.println("id paciente " + idPaciente);
 
+        List<Profesional> profesionales;
+
+        profesionales = turnoRepositorio.buscarProfesionalPorPaciente(idPaciente);
+
+        return profesionales;
+    }
+    
+         @Transactional(readOnly = true)
+    public List<Turno> listarTurnos(String idPaciente) {
+         System.out.println("id paciente " + idPaciente);
+         
+        List<Turno> misTurnos;
+
+        misTurnos = turnoRepositorio.buscarPorPaciente(idPaciente);
+
+        return misTurnos;
+    }
+    
 }
