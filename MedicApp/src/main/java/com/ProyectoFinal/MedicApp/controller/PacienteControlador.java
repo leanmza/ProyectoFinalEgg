@@ -190,11 +190,12 @@ public class PacienteControlador {
         return "redirect:/pac/misTurnos";
     }
 
-    @Transactional
-    @PostMapping("/calificaProfesional/{id}")
-    public String calificaProfesional(@PathVariable String id, @RequestParam String puntaje) {
-        pacienteService.calificarProfesional(id, puntaje);
-        return "redirect:/";
 
+    @Transactional
+    @PostMapping("/calificarProfesional/{id}")
+    public String calificarProfesional(@PathVariable("id") String id, @RequestParam("puntaje") String puntaje) {
+        pacienteService.calificarProfesional(id, puntaje);
+        return "redirect:/pac/misProfesionales";
     }
+
 }

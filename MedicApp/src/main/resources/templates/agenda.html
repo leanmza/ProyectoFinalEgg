@@ -13,21 +13,20 @@
         <main>
             <div class="container-fluid contenedorMain ">
                 <div class="row titulo">
-                    <h3>MIS PROFESIONALES</h3>
+                    <h3>AGENDA DE TURNOS</h3>
                 </div>
                 <table class="table row-col-12 table-light">
                     <thead>
                         <tr class="row-col-12 titulosTabla">
                             <th scope="col" class="col-2">Fecha</th>
                             <th scope="col" class="col-2">Hora</th>
-                            <th scope="col" class="col-2">Especialidad</th>
-                            <th scope="col" class="col-2">Profesional</th>
+                            <th scope="col" class="col-2">Paciente</th>
                             <th scope="col" class="col-1">Motivo</th>
+                            <th scope="col" class="col-2">Telefono</th>
                             <th scope="col" class="col-2">Anular</th> 
 
                         </tr>
-                        <!--                            <th scope="col" class="col-1" sec:authorize ="hasRole ('ADMINISTRADOR')" >Acciones</th>
-                                                </tr>-->
+
                     </thead>
 
                     <tbody th:each="turno : ${turnos}">
@@ -35,9 +34,9 @@
                             <td th:text="${turno.fecha}"></td>
 
                             <td th:text="${turno.hora}"></td>
-                            <td th:text="${turno.profesional.especialidad}"></td>
 
-                            <td th:text="${turno.profesional.apellido + ', ' + turno.profesional.nombre}"></td>
+
+                            <td th:text="${turno.paciente.nombre + ', ' + turno.profesional.nombre}"></td>
                             <td th:text="${turno.motivo}"></td>
 
                             <td scope="col" class="col-2">  
