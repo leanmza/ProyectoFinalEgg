@@ -19,14 +19,13 @@
                 <form
                     class="form-floating row formulario formularioCrear"
                     id="formulario"
-
                     th:action="@{/pac/perfil/__${paciente.id}__}"
                     method="POST"
                     enctype="multipart/form-data"
                     >
                     <!-- DATOS PERSONALES -->
                     <div class="row rowDatosPersonales">
-  
+
                         <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
                         <!-- INPUT OCULTO DEL ID -->
                         <input
@@ -61,7 +60,7 @@
                                 />
                             <label for="apellido">Apellido</label>
                         </div>
-                         <!-- INPUT DNI-->
+                        <!-- INPUT DNI-->
                         <div class="col-xs-12 col-md-6 form-floating">
                             <input
                                 type="text"
@@ -80,21 +79,22 @@
                                 class="form-control"
                                 id="naciemiento"
                                 name="nacimiento"
+                                th:value="${#dates.format(paciente.fechaNacimiento, 'yyyy-MM-dd')}"
                                 />
                             <label for="naciemiento">Fecha de Nacimiento</label>
                         </div>
-                        
-                   <!-- INPUT SEXO-->
+
+                        <!-- INPUT SEXO-->
                         <div class="col-xs-12 col-md-6 divSexo form-floating">
-                            <select name="sexo" id="sexo" class="sexo form-select">
-                                <option th:value="${paciente.sexo}"  th:text="${paciente.sexo}"></option>
-                                <option value="masculino">Masculino</option>
-                                <option value="femenino">Femenino</option>
-                                <option value="otro">Otro</option>
+                            <select name="sexo" id="sexo" class="sexo form-select" th:value="${recargaFormulario != null ? recargaFormulario.sexo : paciente.sexo}">
+                                <option value="Elegir Opcion" selected disabled>Elegir opción...</option>
+                                <option value="Masculino" th:selected="${paciente.sexo == 'Masculino'}">Masculino</option>
+                                <option value="Femenino" th:selected="${paciente.sexo == 'Femenino'}">Femenino</option>
+                                <option value="Otro" th:selected="${paciente.sexo == 'Otro'}">Otro</option>
                             </select>
                             <label for="sexo">Sexo</label>
                         </div>
-     
+
                         <!-- INPUT DIRECCIÓN-->
                         <div class="col-xs-12 col-md-6 form-floating">
                             <input
@@ -138,8 +138,53 @@
                                 class="form-control" 
                                 id="foto" 
                                 name="archivo"
+                                th:value="${paciente.imagen}"
                                 />
                             <label for="foto">Foto de Perfil</label>
+                        </div>
+                        <!-- INPUT OBRA SOCIAL-->
+                        <div class="col-xs-12 col-md-6 form-floating">
+                            <select name="obraSocial" id="obraSocial" class="obraSocial form-select"
+                                    th:value="${paciente.obraSocial}"
+                                    onchange="abrirModal()">
+                                <option value="" selected disabled>Eligir Obra Social</option>
+                                <th:block th:each="obraSocial : ${obrasSociales}">
+                                    <option th:text="${obraSocial.nombre}" th:selected="${obraSocial.id == paciente.obraSocial.id}"></option>
+                                </th:block>
+                                <option>Cargar otra...</option>
+                            </select>
+                            <label for="obraSocial" class="datosInput">Obra Social</label>
+                            <script>
+                                function abrirModal() {
+                                    var select = document.getElementById("obraSocial");
+                                    var value = select.options[select.selectedIndex].value;
+
+                                    if (value == "Cargar otra...") {
+                                        var formulario = document.getElementById("formulario");
+                                        var datosFormulario = new FormData(formulario);
+                                        fetch('/pac/guardarDatosFormulario', {
+                                            method: 'POST',
+                                            body: datosFormulario
+                                        })
+                                                .then(function (respuesta) {
+                                                    if (respuesta.ok) {
+                                                        // En caso de éxito, mostrar mensaje de confirmación
+                                                        console.log("Formulario enviado con éxito");
+                                                    } else {
+                                                        // En caso de error, mostrar mensaje de error
+                                                        alert("Error al enviar el formulario");
+                                                    }
+                                                })
+                                                .catch(function (error) {
+                                                    // En caso de error, mostrar mensaje de error
+                                                    alert("Error al enviar el formulario: " + error.message);
+                                                });
+
+                                        var ventanaModal = document.getElementById("myModal");
+                                        ventanaModal.style.display = "block";
+                                    }
+                                }
+                            </script>
                         </div>
                         <!-- INPUT PASSWORD-->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -181,6 +226,84 @@
                         </a>
                     </div>
                 </form>
+
+                <!-- VENTANA MODAL PARA CARGA DE NUEVA OBRA SOCIAL -->
+                <div class="modal " id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form
+                                class="formulario formularioModal"
+                                id="formularioModal"
+                                method="POST"
+                                >
+                                <!-- MODAL HEADER --> 
+                                <div class="modal-header">
+                                    <h3 class="modal-title">REGISTRAR NUEVA OBRA SOCIAL</h3>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="cerrarModal()"></button>
+                                </div>
+                                <!-- MODAL BODY -->
+                                <div class="row rowDatosPersonales">
+                                    <div class="tituloForm">
+                                        <h4>En caso que la obra social no tenga sigla, usar el nombre completo</h4>
+
+                                    </div>
+                                    <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
+
+                                    <!-- INPUT NOMBRE-->
+                                    <div class="col-xs-12  form-floating">
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="nombreObraSocial"
+                                            name="nombreObraSocial"
+                                            placeholder=""
+                                            />
+                                        <label for="nombreObraSocial">Sigla o nombre de la obra social</label>
+                                    </div>
+                                </div>
+
+                                <!-- MODAL FOOTER -->
+                                <div class="modal-footer mx-2">
+                                    <button type="button" class="btn btn-primary"  onclick="cargarObraSocial()">Aceptar</button>
+                                    <button type="button" class="btn btn-danger" onclick="cerrarModal()">Cancelar</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    function cerrarModal() {
+                        var ventanaModal = document.getElementById("myModal");
+                        ventanaModal.style.display = "none";
+                    }
+
+                    function cargarObraSocial() {
+                        var formulario = document.getElementById("formularioModal");
+                        var datosFormulario = new FormData();
+                        datosFormulario.append("nombreObraSocial", formulario.nombreObraSocial.value);
+
+                        fetch('/registroObraSocial', {
+                            method: 'POST',
+                            body: datosFormulario
+                        })
+                                .then(function (respuesta) {
+                                    if (respuesta.ok) {
+                                        //en caso de exito
+                                        cerrarModal();
+                                        location.reload();
+                                    } else {
+                                        // En caso de error
+                                        console.log("Error en el envío del formulario.");
+                                    }
+                                })
+                                .catch(function (error) {
+                                    // En caso de error
+                                    console.log("Error en el envío del formulario: " + error.message);
+                                });
+                    }
+                </script>
             </div>
         </main>
 

@@ -1,12 +1,16 @@
 package com.ProyectoFinal.MedicApp.controller;
 
+import com.ProyectoFinal.MedicApp.Entity.Imagen;
 import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
+import com.ProyectoFinal.MedicApp.Enum.Rol;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
+import com.ProyectoFinal.MedicApp.Service.ImagenService;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
+import java.io.IOException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,6 +48,9 @@ public class PortalControlador {
     
     @Autowired
     ObraSocialService obraSocialService;
+    
+    @Autowired
+    ImagenService imagenService;
 
     
     @GetMapping("/")
@@ -97,7 +104,26 @@ public class PortalControlador {
 
     //FORMULARIO PARA REGISTRAR UN PACIENTE
     @GetMapping("/form_pac")
-    public String form_pac(ModelMap model) {
+    public String form_pac(ModelMap model, HttpSession sessionFormulario, HttpSession obraSocialNueva) {
+        
+        // EN EL CASO QUE HAYA AGREGADO UNA OBRA SOCIAL NUEVA, CARGAMOS LA SESSIONFORMULARIO
+        if (sessionFormulario.getAttribute("datosFormulario") != null) {
+
+            if (obraSocialNueva.getAttribute("nuevaObraSocial") != null) {
+
+                Paciente paciente = (Paciente) sessionFormulario.getAttribute("datosFormulario");
+                String nombreOS = (String) obraSocialNueva.getAttribute("nuevaObraSocial");
+                ObraSocial obraSocial = obraSocialService.buscarPorNombre(nombreOS);
+                paciente.setObraSocial(obraSocial);
+                sessionFormulario.setAttribute("datosFormulario", paciente);
+            }
+            model.put("recargaFormulario", sessionFormulario.getAttribute("datosFormulario"));
+        }
+        
+        // CARFA DE LAS OBRAS SOCIALES
+        List<ObraSocial> obrasSociales = obraSocialService.listar();
+        model.put("obrasSociales", obrasSociales);
+        
         return "formulario_paciente.html";
     }
 
@@ -106,18 +132,22 @@ public class PortalControlador {
     public String registroPaciente(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni,
                                    @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
                                    @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
-                                   @RequestParam(required = false) String sexo, @RequestParam(required = false) MultipartFile archivo, ModelMap modelo, HttpSession session) {
+                                   @RequestParam(required = false) String sexo, @RequestParam(required = false) MultipartFile archivo,
+                                   @RequestParam String obraSocial, ModelMap modelo, HttpSession session) {
 
         try {
+            System.out.println("Fecha Nacimiento: " + nacimiento);
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
             Date fechaNacimiento = formato.parse(nacimiento);
-
+            System.out.println("Date nacimiento: " + fechaNacimiento.toString());
             if (sexo == null) {
                 sexo = "No especificado";
             }
-
+            System.out.println("ObraSocial: " + obraSocial);
+            ObraSocial ClaseObraSocial = obraSocialService.getOne(obraSocial);
+            
             pacienteService.crearPaciente(nombre, apellido, dni, correo, telefono, password, password2, direccion,
-                    fechaNacimiento, sexo, archivo);
+                    fechaNacimiento, sexo, archivo, ClaseObraSocial);
 
             modelo.put("exito", "¡Gracias por registrarte en nuestra aplicación! Ahora puedes comenzar a utilizar nuestros servicios");
 
@@ -125,12 +155,28 @@ public class PortalControlador {
         } catch (MiExcepcion me) {
             System.out.println("Ingreso de paciente FALLIDO!\n" + me.getMessage());
             modelo.put("error", me.getMessage());
+            modelo.put("nombre", nombre);
+            modelo.put("apellido", apellido);
+            modelo.put("dni", dni);
+            modelo.put("correo", correo);
+            modelo.put("telefono", telefono);
+            modelo.put("nacimiento", nacimiento);
+            modelo.put("direccion", direccion);
+            modelo.put("sexo", sexo);
             return "formulario_paciente.html";
 
         } catch (ParseException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
             modelo.put("error", "La fecha ingresada es incorrecta, verifica que esté en formato DD/MM/AAAA");
+            modelo.put("nombre", nombre);
+            modelo.put("apellido", apellido);
+            modelo.put("dni", dni);
+            modelo.put("correo", correo);
+            modelo.put("telefono", telefono);
+            modelo.put("nacimiento", nacimiento);
+            modelo.put("direccion", direccion);
+            modelo.put("sexo", sexo);
             return "formulario_paciente.html";
         }
 
@@ -202,6 +248,7 @@ public class PortalControlador {
         return "formulario_obra_social.html";
     }
 
+    // GUARDADO DE OBRA SOCIAL NUEVA
      @Transactional
     @PostMapping("/registroObraSocial")
     public String registroObraSocial(@RequestParam("nombreObraSocial") String nombreObraSocial, HttpSession obraSocialNueva) {
@@ -220,4 +267,6 @@ public class PortalControlador {
             
         }  
     }
+
+    
 }

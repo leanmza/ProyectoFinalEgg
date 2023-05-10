@@ -92,8 +92,6 @@ public class AdministradorControlador {
             modelo.put("recargaFormulario", sessionFormulario.getAttribute("datosFormulario"));
         }
 
-        
-
         // CARGA DE LAS UBICACIONES
         List<String> ubicaciones = new ArrayList<>();
         for (Ubicacion aux : Ubicacion.values()) {
@@ -149,14 +147,7 @@ public class AdministradorControlador {
         }
 
     }
-
-    //FORMULARIO PARA CREAR UNA OBRA SOCIAL
-    @GetMapping("/form_obraSocial")
-    public String form_obraSocial() {
-
-        return "formulario_obra_social.html";
-    }
-
+    
     // GUARDADO DE DATOS DEL FORMULARIO PROFESIONAL EN UNA SESSION PARA INYECTAR LUEGO DE AGRGAR UNA OBRA SOCIAL NUEVA
     @Transactional
     @PostMapping("/guardarDatosFormulario")

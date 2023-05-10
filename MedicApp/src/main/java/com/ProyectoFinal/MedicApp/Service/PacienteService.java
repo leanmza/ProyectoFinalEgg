@@ -5,6 +5,7 @@
 package com.ProyectoFinal.MedicApp.Service;
 
 import com.ProyectoFinal.MedicApp.Entity.Imagen;
+import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Enum.Rol;
@@ -49,10 +50,10 @@ public class PacienteService implements UserDetailsService {
     @Transactional
 
     public void crearPaciente(String nombre, String apellido, String dni, String email, String telefono, String password,
-            String password2, String direccion, Date fechaNacimiento, String sexo, MultipartFile archivo) throws MiExcepcion {
+            String password2, String direccion, Date fechaNacimiento, String sexo, MultipartFile archivo, ObraSocial obraSocial) throws MiExcepcion {
 
 
-        validar(nombre, apellido, dni, email, telefono, password, password2, direccion, fechaNacimiento, sexo);
+        validar(nombre, apellido, dni, email, telefono, password, password2, direccion, fechaNacimiento, sexo, obraSocial);
 
         Paciente paciente = new Paciente();
 
@@ -65,6 +66,7 @@ public class PacienteService implements UserDetailsService {
         paciente.setDireccion(direccion);
         paciente.setFechaNacimiento(fechaNacimiento);
         paciente.setSexo(sexo);
+        paciente.setObraSocial(obraSocial);
         
         if(!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
             Imagen imagen = imagenServicio.guardar(archivo);
@@ -78,9 +80,9 @@ public class PacienteService implements UserDetailsService {
 
     @Transactional
     public void modificarPaciente(String id, String nombre, String apellido, String dni, String email, String telefono, String password,
-            String password2, String direccion, Date fechaNacimiento, String sexo, MultipartFile archivo) throws MiExcepcion {
+            String password2, String direccion, Date fechaNacimiento, String sexo, MultipartFile archivo, ObraSocial obraSocial) throws MiExcepcion {
 
-        validar(nombre, apellido, dni, email, telefono, password, password2, direccion, fechaNacimiento, sexo);
+        validar(nombre, apellido, dni, email, telefono, password, password2, direccion, fechaNacimiento, sexo, obraSocial);
 
         Optional<Paciente> respuesta = pacienteRepositorio.findById(id);
         if (respuesta.isPresent()) {
@@ -95,13 +97,18 @@ public class PacienteService implements UserDetailsService {
             paciente.setDireccion(direccion);
             paciente.setFechaNacimiento(fechaNacimiento);
             paciente.setSexo(sexo);
+            paciente.setObraSocial(obraSocial);
             
-            String idImagen = null;
-            if (paciente.getImagen() != null) {
-                idImagen = paciente.getImagen().getId();
+            if(archivo.getSize() == 0) {
+                paciente.setImagen(null);
+            } else {
+                String idImagen = null;
+                if (paciente.getImagen() != null) {
+                    idImagen = paciente.getImagen().getId();
+                }
+                Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+                paciente.setImagen(imagen);
             }
-            Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
-            paciente.setImagen(imagen);
         
             paciente.setRol(Rol.PACIENTE);
             paciente.setActivo(true);
@@ -128,7 +135,7 @@ public class PacienteService implements UserDetailsService {
     }
 
     public void validar(String nombre, String apellido, String dni, String email, String telefono, String password,
-            String password2, String direccion, Date fechaNacimiento, String sexo) throws MiExcepcion {
+            String password2, String direccion, Date fechaNacimiento, String sexo, ObraSocial obraSocial) throws MiExcepcion {
 
         try {
             if (nombre == null || nombre.isEmpty()) {
@@ -173,6 +180,9 @@ public class PacienteService implements UserDetailsService {
 
             if (sexo == null || sexo.isEmpty()) {
                 throw new MiExcepcion("El sexo no puede ser nulo o vacío");
+            }
+            if (obraSocial == null) {
+                throw new MiExcepcion("Las obras sociales no pueden ser nulas o vacías");
             }
 
         } catch (MiExcepcion ex) {

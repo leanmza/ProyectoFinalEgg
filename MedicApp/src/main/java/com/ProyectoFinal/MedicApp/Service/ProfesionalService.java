@@ -56,7 +56,7 @@ public class ProfesionalService implements UserDetailsService {
     ) throws MiExcepcion {
 
         validar(nombre, apellido, correo, telefono, password, password2,
-                especialidad, ubicacion, modalidad, honorarios /*, obrasSociales, dias*/, horaInicio, horaFin);
+                especialidad, ubicacion, modalidad, honorarios, obraSocial /*, dias*/, horaInicio, horaFin);
 
         Profesional profesional = new Profesional();
 
@@ -108,13 +108,12 @@ public class ProfesionalService implements UserDetailsService {
     @Transactional
     public void modificarProfesional(String idProfesional, String nombre, String apellido, String correo, String telefono,
             MultipartFile archivo, String password, String password2, String especialidad, String ubicacion,
-            String modalidad, Double honorarios/*, List<String> obrasSociales, List<String> dias*/,
+            String modalidad, Double honorarios, ObraSocial obraSocial, /* List<String> dias,*/
             LocalTime horaInicio, LocalTime horaFin/*, List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
     ) throws MiExcepcion {
 
         validar(nombre, apellido, correo, telefono, password, password2,
-                especialidad, ubicacion, modalidad, honorarios /*, obrasSociales, dias */, horaInicio, horaFin);
-        
+                especialidad, ubicacion, modalidad, honorarios, obraSocial/*, dias */, horaInicio, horaFin);
         
         Optional<Profesional> respuesta = profesionalRepositorio.findById(idProfesional);
 
@@ -126,23 +125,29 @@ public class ProfesionalService implements UserDetailsService {
 //        profesional.setDni(dni);
             profesional.setEmail(correo);
             profesional.setTelefono(telefono);
-
-            String idImagen = null;
-            if (profesional.getImagen() != null) {
-                idImagen = profesional.getImagen().getId();
+            
+            if(archivo.getSize() == 0) {
+                profesional.setImagen(null);
+            } else {
+                String idImagen = null;
+                if (profesional.getImagen() != null) {
+                    idImagen = profesional.getImagen().getId();
+                }
+                Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+                profesional.setImagen(imagen);
             }
-            Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
-            profesional.setImagen(imagen);
 
             profesional.setPassword(new BCryptPasswordEncoder().encode(password));
-            profesional.setRol(Rol.PROFESIONAL);
             profesional.setActivo(true);
             profesional.setEspecialidad(especialidad);
+            
+            // NO SETEAMOS ROL PORQUE MANTIENE EL QUE TENIA AL MODIFICAR PERFIL 
             //Falta ObrasSociales y Tunos, hay que crear las entidades
-
+            
             profesional.setModalidad(modalidad);
             profesional.setUbicacion(ubicacion);
             profesional.setHonorario(honorarios);
+            profesional.setObraSocial(obraSocial);
 //        profesional.setDias(dias);
             profesional.setHoraInicio(horaInicio);
             profesional.setHoraFin(horaFin);
@@ -232,7 +237,7 @@ public class ProfesionalService implements UserDetailsService {
 //    }
     public void validar(String nombre, String apellido, String correo, String telefono,
             String password, String password2, String especialidad, String ubicacion,
-            String modalidad, Double honorarios/*, List<String> obrasSociales, List<String> dias*/,
+            String modalidad, Double honorarios, ObraSocial obraSocial /*, List<String> dias*/,
             LocalTime horaInicio, LocalTime horaFin) throws MiExcepcion {
 
         try {
@@ -279,9 +284,9 @@ public class ProfesionalService implements UserDetailsService {
                 throw new MiExcepcion("El valor de la consulta no puede ser nulo");
             }
 
-//            if (obrasSociales == null || dias.isEmpty()) {
-//                throw new MiExcepcion("Las obras sociales no pueden ser nulas o vacías");
-//            }
+            if (obraSocial == null) {
+                throw new MiExcepcion("Las obras sociales no pueden ser nulas o vacías");
+            }
 //            if (dias == null || dias.isEmpty()) {
 //                throw new MiExcepcion("Los días no pueden ser nulos o vacíos");
 //            }
