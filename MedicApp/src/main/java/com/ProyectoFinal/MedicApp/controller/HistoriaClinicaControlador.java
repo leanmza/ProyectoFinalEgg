@@ -81,7 +81,7 @@ public class HistoriaClinicaControlador {
     @Transactional
     @PostMapping("/registroHistoriaClinica")
     public String registroPaciente(@RequestParam String dni, @RequestParam String fecha,
-            @RequestParam String diagnostico, HttpSession session) {
+            @RequestParam String diagnostico, HttpSession session, ModelMap modelo) {
 
         Paciente paciente = pacienteServicio.buscarPorDni(dni);
         Profesional profesional = (Profesional) session.getAttribute("profesionalSession");
@@ -94,11 +94,12 @@ public class HistoriaClinicaControlador {
             //TRAIGA AL PACIENTE Y LOS ASIGNE A ESTA HISTORIA CLINICA
             historiaClinicaService.crearHistoriaClinica(paciente, fechaConsulta, profesional, diagnostico);
             System.out.println("Ingreso de historia clinica exitoso");
+            modelo.put("exito","Ingreso de historia clinica exitoso");
             return "redirect:/inicio";
 
         } catch (MiExcepcion me) {
             System.out.println("Ingreso de paciente FALLIDO!\n" + me.getMessage());
-
+            modelo.put("error","Ingreso de paciente FALLIDO!\n" + me.getMessage());
             return "formulario_historia_clinica.html";
 
         } catch (ParseException ex) {
