@@ -45,18 +45,19 @@ public class PacienteService implements UserDetailsService {
 
     @Autowired
     private ProfesionalRepositorio profesionalRepositorio;
-    
+
     @Autowired
     private ImagenService imagenServicio;
-    
-     @Autowired
+
+    @Autowired
     private TurnoRepositorio turnoRepositorio;
 
+    @Autowired
+    private ObraSocialService obraSocialServicio;
+    
     @Transactional
-
     public void crearPaciente(String nombre, String apellido, String dni, String email, String telefono, String password,
             String password2, String direccion, Date fechaNacimiento, String sexo, MultipartFile archivo, ObraSocial obraSocial) throws MiExcepcion {
-
 
         validar(nombre, apellido, dni, email, telefono, password, password2, direccion, fechaNacimiento, sexo, obraSocial);
 
@@ -72,12 +73,12 @@ public class PacienteService implements UserDetailsService {
         paciente.setFechaNacimiento(fechaNacimiento);
         paciente.setSexo(sexo);
         paciente.setObraSocial(obraSocial);
-        
-        if(!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
+
+        if (!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
             Imagen imagen = imagenServicio.guardar(archivo);
             paciente.setImagen(imagen);
         }
-        
+
         paciente.setRol(Rol.PACIENTE);
         paciente.setActivo(true);
         pacienteRepositorio.save(paciente);
@@ -102,9 +103,10 @@ public class PacienteService implements UserDetailsService {
             paciente.setDireccion(direccion);
             paciente.setFechaNacimiento(fechaNacimiento);
             paciente.setSexo(sexo);
+
             paciente.setObraSocial(obraSocial);
-            
-            if(archivo.getSize() == 0) {
+
+            if (archivo.getSize() == 0) {
                 paciente.setImagen(null);
             } else {
                 String idImagen = null;
@@ -114,7 +116,7 @@ public class PacienteService implements UserDetailsService {
                 Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
                 paciente.setImagen(imagen);
             }
-        
+
             paciente.setRol(Rol.PACIENTE);
             paciente.setActivo(true);
             pacienteRepositorio.save(paciente);
@@ -124,10 +126,10 @@ public class PacienteService implements UserDetailsService {
     public Paciente getOne(String id) {
         return pacienteRepositorio.getOne(id);
     }
-    
+
     public Paciente buscarPorDni(String dni) {
         return pacienteRepositorio.buscarPorDni(dni);
-    } 
+    }
 
     @Transactional(readOnly = true)
     public List<Paciente> listar() {
@@ -248,7 +250,7 @@ public class PacienteService implements UserDetailsService {
             pacienteRepositorio.save(paciente);
         }
     }
-    
+
     @Transactional(readOnly = true)
     public List<Profesional> listarProfesionales(String idPaciente) {
         System.out.println("id paciente " + idPaciente);
@@ -259,48 +261,47 @@ public class PacienteService implements UserDetailsService {
 
         return profesionales;
     }
-    
-         @Transactional(readOnly = true)
+
+    @Transactional(readOnly = true)
     public List<Turno> listarTurnos(String idPaciente) {
-         System.out.println("id paciente " + idPaciente);
-         
+        System.out.println("id paciente " + idPaciente);
+
         List<Turno> misTurnos;
 
         misTurnos = turnoRepositorio.buscarPorPaciente(idPaciente);
 
         return misTurnos;
     }
-    
 
     public void calificarProfesional(String id, String puntaje) {
         Integer punt = 0;
-        switch (puntaje){
+        switch (puntaje) {
             case "0":
                 punt = 0;
-            break;
+                break;
             case "1":
                 punt = 1;
-            break;
+                break;
             case "2":
                 punt = 2;
-            break;
+                break;
             case "3":
                 punt = 3;
-            break;
+                break;
             case "4":
                 punt = 4;
-            break;
+                break;
             case "5":
                 punt = 5;
-            break;
+                break;
         }
-                
+
         Optional<Profesional> respuesta = profesionalRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Profesional profesional = respuesta.get();
             profesional.setCantVisitas(profesional.getCantVisitas() + 1);
             profesional.setPuntaje(profesional.getPuntaje() + punt);
-            profesional.setCalificacion((double)profesional.getPuntaje() / (double)profesional.getCantVisitas());
+            profesional.setCalificacion((double) profesional.getPuntaje() / (double) profesional.getCantVisitas());
             profesionalRepositorio.save(profesional);
         }
     }

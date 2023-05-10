@@ -18,6 +18,8 @@ import java.time.LocalTime;
 
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -25,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -136,14 +139,12 @@ public class PortalControlador {
                                    @RequestParam String obraSocial, ModelMap modelo, HttpSession session) {
 
         try {
-            System.out.println("Fecha Nacimiento: " + nacimiento);
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
             Date fechaNacimiento = formato.parse(nacimiento);
-            System.out.println("Date nacimiento: " + fechaNacimiento.toString());
             if (sexo == null) {
                 sexo = "No especificado";
             }
-            System.out.println("ObraSocial: " + obraSocial);
+            
             ObraSocial ClaseObraSocial = obraSocialService.getOne(obraSocial);
             
             pacienteService.crearPaciente(nombre, apellido, dni, correo, telefono, password, password2, direccion,
@@ -268,5 +269,44 @@ public class PortalControlador {
         }  
     }
 
-    
+    @Transactional
+    @PostMapping("/guardarDatosFormulario")
+    public String guardarDatosFormulario (@RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido,
+            @RequestParam(required = false) String dni, @RequestParam(required = false) String correo, @RequestParam(required = false) String telefono,
+            @RequestParam(required = false) String password, @RequestParam(required = false) String password2, @RequestParam(required = false) String direccion,
+            @RequestParam(required = false) String nacimiento, @RequestParam(required = false) String sexo,
+            @RequestParam(required = false) MultipartFile archivo, @RequestParam(required = false) String obraSocial, HttpSession sessionFormulario) throws MiExcepcion {
+        
+        try {
+            ObraSocial ClaseObraSocial = obraSocialService.buscarPorNombre(obraSocial);
+
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd"); // yyyy-MM-dd
+            Date fechaNacimiento = formato.parse(nacimiento);
+
+
+            Paciente paciente = new Paciente();
+
+            paciente.setNombre(nombre);
+            paciente.setApellido(apellido);
+            paciente.setDni(dni);
+            paciente.setEmail(correo);
+            paciente.setTelefono(telefono);
+            paciente.setPassword(new BCryptPasswordEncoder().encode(password));
+            paciente.setDireccion(direccion);
+            paciente.setFechaNacimiento(fechaNacimiento);
+            paciente.setSexo(sexo);
+            paciente.setObraSocial(ClaseObraSocial);
+
+            if(!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
+                Imagen imagen = imagenService.guardar(archivo);
+                paciente.setImagen(imagen);
+            }
+
+            sessionFormulario.setAttribute("datosFormulario", paciente);
+        
+        } catch (ParseException ex) {
+            Logger.getLogger(PortalControlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "redirect:/form_pac";
+    }
 }

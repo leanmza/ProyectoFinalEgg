@@ -55,6 +55,22 @@ public class ObraSocialService {
 
         }
     }
+    
+    @Transactional
+    public ObraSocial cambiarObraSocial(ObraSocial obraSocial, String idObraSocial) {
+        if(obraSocial != null) {
+            ObraSocial obraSocialActualizada = new ObraSocial();
+            if(idObraSocial != null) {
+                Optional<ObraSocial> respuesta = obraSocialRepositorio.findById(idObraSocial);
+                if(respuesta.isPresent()){
+                    obraSocialActualizada = respuesta.get();
+                }
+            }
+            obraSocialActualizada.setNombre(obraSocial.getNombre());
+            return obraSocialRepositorio.save(obraSocialActualizada);
+        }
+        return null;
+    }
 
     public ObraSocial getOne(String id) {
         return obraSocialRepositorio.getOne(id);
