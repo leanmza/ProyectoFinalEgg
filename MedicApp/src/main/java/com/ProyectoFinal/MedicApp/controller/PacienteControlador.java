@@ -88,4 +88,11 @@ public class PacienteControlador {
         
         return "redirect:/";
     }
+    
+    @Transactional
+    @PostMapping("/calificaProfesional/{id}")
+    public String calificaProfesional(@PathVariable String id, @RequestParam String puntaje) {
+        pacienteService.calificarProfesional(id, puntaje);
+        return "redirect:/";    
+    }
 }
