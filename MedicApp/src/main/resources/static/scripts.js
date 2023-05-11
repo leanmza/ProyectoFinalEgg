@@ -73,7 +73,7 @@ function generarCalendario() {
   // Agregar la tabla del calendario al HTML
   calendarioHTML += "<div class='col-xs-12'>"
   calendarioHTML += "<table class='col-xs-12 tablaCalendario'>";
-  calendarioHTML += "<thead>";
+  calendarioHTML += "<thead class='headCalendario'>";
 
   // Agregar la fila de los días de la semana al HTML
 
@@ -128,7 +128,7 @@ function generarCalendario() {
         filaHTML +=
           "<td class='celdaDias' ><label for=" +
           contadorDias +
-          ">" +
+          " class='diasCalendario'>" +
           contadorDias +
           "</label> <input class='inputRadio' type='radio' name='dia' id=" + contadorDias + " \n\
             value=" + contadorDias + "-" + mesActual + "-" + anioActual +" ></td>";
