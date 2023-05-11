@@ -3,6 +3,7 @@ package com.ProyectoFinal.MedicApp.controller;
 import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
+import com.ProyectoFinal.MedicApp.Entity.UsuarioDAO;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
@@ -33,6 +34,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/")
 public class PortalControlador {
 
+    @Autowired
+    private UsuarioDAO usuarioDAO;
     @Autowired
     PacienteService pacienteService;              //Agregado por Claudio el 16/04 - 17:40
 
@@ -104,33 +107,6 @@ public class PortalControlador {
                                    @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
                                    @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
                                    @RequestParam(required = false) String sexo, @RequestParam(required = false) MultipartFile archivo, ModelMap modelo, HttpSession session) {
-
-        try {
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-            Date fechaNacimiento = formato.parse(nacimiento);
-
-            if (sexo == null) {
-                sexo = "No especificado";
-            }
-
-            pacienteService.crearPaciente(nombre, apellido, dni, correo, telefono, password, password2, direccion,
-                    fechaNacimiento, sexo, archivo);
-
-            modelo.put("exito", "¡Gracias por registrarte en nuestra aplicación! Ahora puedes comenzar a utilizar nuestros servicios");
-
-
-        } catch (MiExcepcion me) {
-            System.out.println("Ingreso de paciente FALLIDO!\n" + me.getMessage());
-            modelo.put("error", me.getMessage());
-            return "formulario_paciente.html";
-
-        } catch (ParseException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-            modelo.put("error", "La fecha ingresada es incorrecta, verifica que esté en formato DD/MM/AAAA");
-            return "formulario_paciente.html";
-        }
-
         if (session.getAttribute("pacienteSession") != null) {
             Paciente logueado = (Paciente) session.getAttribute("pacienteSession");
             modelo.put("pacienteSession", logueado);
@@ -140,7 +116,40 @@ public class PortalControlador {
                 return "redirect:/inicio";
             }
         }
-        return "login.html";
+        try {
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            Date fechaNacimiento = formato.parse(nacimiento);
+
+            if (sexo == null) {
+                sexo = "No especificado";
+            }
+            boolean correoExiste = usuarioDAO.validarCorreo(correo);
+
+            if (!correoExiste) {
+                pacienteService.crearPaciente(nombre, apellido, dni, correo, telefono, password, password2, direccion,
+                        fechaNacimiento, sexo, archivo);
+
+                modelo.put("exito", "¡Gracias por registrarte en nuestra aplicación! Ahora puedes comenzar a utilizar nuestros servicios");
+                return "login.html";
+            } else {
+                modelo.put("error", "El correo electrónico ya está registrado");
+                return "formulario_paciente.html";
+            }
+
+
+
+
+        } catch (MiExcepcion me) {
+            modelo.put("error", me.getMessage());
+            return "formulario_paciente.html";
+
+        } catch (ParseException ex) {
+            modelo.put("error", "La fecha ingresada es incorrecta, verifica que esté en formato DD/MM/AAAA");
+            return "formulario_paciente.html";
+        }
+
+
+
 
 
     }

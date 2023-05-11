@@ -38,6 +38,14 @@
                     </div>
                 </div>
 
+                <div class="container">
+
+                    <div th:if="${correoExiste}" class="alert alert-danger" role="alert">
+                        El correo electrónico ya existe en la base de datos.
+                    </div>
+
+                </div>
+
                 <div class="tituloForm">
                     <h4>Completá el formulario y sé parte de MiTurno</h4>
                 </div>
