@@ -211,12 +211,12 @@ public class ProfesionalControlador {
 
         Profesional profesional = (Profesional) session.getAttribute("profesionalSession");
         String idProfesional = profesional.getId();
-        System.out.println("    idProfesional " + idProfesional);
+        
 
         List<Turno> turnos = profesionalService.listarTurnos(idProfesional);
 
         model.addAttribute("turnos", turnos);
-        return "mis_turnos.html";
+        return "agenda.html";
     }
 
     @Transactional
@@ -225,6 +225,14 @@ public class ProfesionalControlador {
 
         System.out.println("    id" + id);
         turnoService.eliminarTurno(id);
-        return "redirect:/pac/misTurnos";
+        return "redirect:/profesional/agenda";
     }
 }
+
+//    @Transactional
+//    @GetMapping("/listar")
+//    public String listar(ModelMap model) {
+//        List<Profesional> profesionales = profesionalService.listar();
+//        model.addAttribute("profesionales", profesionales);
+//        return "listar.html";
+//    }

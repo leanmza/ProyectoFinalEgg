@@ -14,7 +14,7 @@
 
 <main>
 
-    <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito rounded-3 p-2 col-md-6 col-sm-10 mx-auto">
+<!--    <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito rounded-3 p-2 col-md-6 col-sm-10 mx-auto">
         <div class="card-body">
             <h5 class="card-title fs-5 fw-bold mb-3" style="font-family: Montserrat, sans-serif;">¡Éxito!</h5>
             <p class="card-text fs-6 mb-0 custom-success-message" th:text="${exito}"></p>
@@ -27,7 +27,16 @@
                 de sesión FALLIDO!⚠️</h5>
             <p class="card-text fs-6 mb-0 custom-error-message" th:text="${error}"></p>
         </div>
-    </div>
+    </div>-->
+
+    <div class="alert alert-success mensajeExito" role="alert"  th:if="${exito != null}" >
+        <p class="custom-success-message mensaje" th:text="${exito}">
+             
+        </p>
+</div>
+    <div class="alert alert-danger mensajeError" role="alert"  th:if="${error != null}" >
+<p class="custom-error-message mensaje" th:text="${error}"></p>
+</div>
 
 
     <div class="container-fluid contenedorLogin contenedorMain">
@@ -45,9 +54,6 @@
                         class="form-floating row formulario"
                         id="formLogin"
                 >
-
-
-
 
                     <div class="row rowLogin">
                         <div class="col-xs-12 form-floating">
@@ -83,7 +89,7 @@
                                 Iniciar sesión
                             </button>
                         </div>
-                        <br><br>
+                  
                     </div>
 
 
