@@ -1,7 +1,7 @@
 /* GENERAL */
 
 body {
-    background-color: #517eb9 !important;
+    background-color: #5787E6   !important;
     font-family: "Montserrat", sans-serif !important;
 }
 
@@ -449,7 +449,7 @@ h5 {
     display: flex;
 
     max-height: 100%;
-    height: 81vh;
+    height: 100%;
     /*width: 70vw;*/
     justify-content: center;
     align-items: center;
@@ -545,6 +545,16 @@ h6{
     font-size: 14px;
     opacity: .65;
 }
+ 
+  .aclaracion{
+      font-size: 14px;
+      opacity: .65;
+  }
+   #especialidad {
+
+          font-weight: bold;
+          border: 0px;
+      }
 
 .custom-error-message {
     font-family: Montserrat, sans-serif;
@@ -626,8 +636,39 @@ flex-direction: row-reverse;
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
 }
+
+.diaDeshabilitado{
+  opacity: .65;
+}
 /* LOGIN*/
 
 /* MEDIAS QUERYS */
 
 /* TAMAÑO EXTRA PEQUEÑOS   */
+  
+  .idProfesional{
+      position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+padding: 1rem .75rem !important;
+padding-left: 0.75rem;
+overflow: hidden;
+text-align: start;
+text-overflow: ellipsis;
+white-space: nowrap;
+pointer-events: none;
+border: var(--bs-border-width) solid transparent;
+transform-origin: 0 0;
+transition: opacity .1s ease-in-out,transform .1s ease-in-out;
+opacity: .65;
+transform: scale(.85) translateY(-.5rem) translateX(.15rem);
+  }
+  
+  /* LOGIN*/
+  
+  /* MEDIAS QUERYS */
+  
+  /* TAMAÑO EXTRA PEQUEÑOS   */
+

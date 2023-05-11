@@ -5,6 +5,7 @@ import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Enum.Rol;
+import com.ProyectoFinal.MedicApp.Entity.UsuarioDAO;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Service.ImagenService;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
@@ -43,6 +44,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/")
 public class PortalControlador {
 
+    @Autowired
+    private UsuarioDAO usuarioDAO;
     @Autowired
     PacienteService pacienteService;              //Agregado por Claudio el 16/04 - 17:40
 
@@ -190,7 +193,40 @@ public class PortalControlador {
                 return "redirect:/inicio";
             }
         }
-        return "login.html";
+        try {
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            Date fechaNacimiento = formato.parse(nacimiento);
+
+            if (sexo == null) {
+                sexo = "No especificado";
+            }
+            boolean correoExiste = usuarioDAO.validarCorreo(correo);
+
+            if (!correoExiste) {
+                pacienteService.crearPaciente(nombre, apellido, dni, correo, telefono, password, password2, direccion,
+                        fechaNacimiento, sexo, archivo, ClaseObraSocial);
+
+                modelo.put("exito", "¡Gracias por registrarte en nuestra aplicación! Ahora puedes comenzar a utilizar nuestros servicios");
+                return "login.html";
+            } else {
+                modelo.put("error", "El correo electrónico ya está registrado");
+                return "formulario_paciente.html";
+            }
+
+
+
+
+        } catch (MiExcepcion me) {
+            modelo.put("error", me.getMessage());
+            return "formulario_paciente.html";
+
+        } catch (ParseException ex) {
+            modelo.put("error", "La fecha ingresada es incorrecta, verifica que esté en formato DD/MM/AAAA");
+            return "formulario_paciente.html";
+        }
+
+
+
 
 
     }
@@ -204,16 +240,16 @@ public class PortalControlador {
         return "listar.html";
     }
 
-    @Transactional
-    @PostMapping("/buscarespec")
-    public String buscarespec(@RequestParam("especialidad") String especialidad, ModelMap model) {
-        System.out.println(especialidad);
-        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidad(especialidad);
-        model.addAttribute("profesionales", profesionales);
-        model.addAttribute("espec", especialidad);
-        
-        return "listaespecialidad.html";
-    }
+//    @Transactional
+//    @PostMapping("/buscarespec")
+//    public String buscarespec(@RequestParam("especialidad") String especialidad, ModelMap model) {
+//        System.out.println(especialidad);
+//        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidad(especialidad);
+//        model.addAttribute("profesionales", profesionales);
+//        model.addAttribute("espec", especialidad);
+//
+//        return "listaespecialidad.html";
+//    }
 
     @Transactional
     @PostMapping("/buscarespechonorario")
