@@ -197,6 +197,8 @@ public class PortalControlador {
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
             Date fechaNacimiento = formato.parse(nacimiento);
 
+            ObraSocial ClaseObraSocial = obraSocialService.getOne(obraSocial);
+
             if (sexo == null) {
                 sexo = "No especificado";
             }
