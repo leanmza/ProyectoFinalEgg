@@ -4,14 +4,13 @@ import com.ProyectoFinal.MedicApp.Entity.Imagen;
 import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
-import com.ProyectoFinal.MedicApp.Enum.Rol;
-import com.ProyectoFinal.MedicApp.Entity.UsuarioDAO;
+
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Service.ImagenService;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
-import java.io.IOException;
+
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,11 +22,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,16 +32,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 @Controller
 @RequestMapping("/")
 public class PortalControlador {
 
-    @Autowired
-    private UsuarioDAO usuarioDAO;
     @Autowired
     PacienteService pacienteService;              //Agregado por Claudio el 16/04 - 17:40
 
@@ -133,103 +127,8 @@ public class PortalControlador {
         return "formulario_paciente.html";
     }
 
-    @Transactional
-    @PostMapping("/registroPaciente")
-    public String registroPaciente(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni,
-                                   @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
-                                   @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
-                                   @RequestParam(required = false) String sexo, @RequestParam(required = false) MultipartFile archivo,
-                                   @RequestParam String obraSocial, ModelMap modelo, HttpSession session) {
-
-        try {
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-            Date fechaNacimiento = formato.parse(nacimiento);
-            if (sexo == null) {
-                sexo = "No especificado";
-            }
-            
-            ObraSocial ClaseObraSocial = obraSocialService.getOne(obraSocial);
-            
-            pacienteService.crearPaciente(nombre, apellido, dni, correo, telefono, password, password2, direccion,
-                    fechaNacimiento, sexo, archivo, ClaseObraSocial);
-
-            modelo.put("exito", "¡Gracias por registrarte en nuestra aplicación! Ahora puedes comenzar a utilizar nuestros servicios");
 
 
-        } catch (MiExcepcion me) {
-            System.out.println("Ingreso de paciente FALLIDO!\n" + me.getMessage());
-            modelo.put("error", me.getMessage());
-            modelo.put("nombre", nombre);
-            modelo.put("apellido", apellido);
-            modelo.put("dni", dni);
-            modelo.put("correo", correo);
-            modelo.put("telefono", telefono);
-            modelo.put("nacimiento", nacimiento);
-            modelo.put("direccion", direccion);
-            modelo.put("sexo", sexo);
-            return "formulario_paciente.html";
-
-        } catch (ParseException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-            modelo.put("error", "La fecha ingresada es incorrecta, verifica que esté en formato DD/MM/AAAA");
-            modelo.put("nombre", nombre);
-            modelo.put("apellido", apellido);
-            modelo.put("dni", dni);
-            modelo.put("correo", correo);
-            modelo.put("telefono", telefono);
-            modelo.put("nacimiento", nacimiento);
-            modelo.put("direccion", direccion);
-            modelo.put("sexo", sexo);
-            return "formulario_paciente.html";
-        }
-
-        if (session.getAttribute("pacienteSession") != null) {
-            Paciente logueado = (Paciente) session.getAttribute("pacienteSession");
-            modelo.put("pacienteSession", logueado);
-
-            if (logueado.getRol().toString().equals("ADMINISTRADOR")) {
-
-                return "redirect:/inicio";
-            }
-        }
-        try {
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-            Date fechaNacimiento = formato.parse(nacimiento);
-
-            if (sexo == null) {
-                sexo = "No especificado";
-            }
-            boolean correoExiste = usuarioDAO.validarCorreo(correo);
-
-            if (!correoExiste) {
-                pacienteService.crearPaciente(nombre, apellido, dni, correo, telefono, password, password2, direccion,
-                        fechaNacimiento, sexo, archivo, ClaseObraSocial);
-
-                modelo.put("exito", "¡Gracias por registrarte en nuestra aplicación! Ahora puedes comenzar a utilizar nuestros servicios");
-                return "login.html";
-            } else {
-                modelo.put("error", "El correo electrónico ya está registrado");
-                return "formulario_paciente.html";
-            }
-
-
-
-
-        } catch (MiExcepcion me) {
-            modelo.put("error", me.getMessage());
-            return "formulario_paciente.html";
-
-        } catch (ParseException ex) {
-            modelo.put("error", "La fecha ingresada es incorrecta, verifica que esté en formato DD/MM/AAAA");
-            return "formulario_paciente.html";
-        }
-
-
-
-
-
-    }
 
 
     @Transactional
@@ -240,16 +139,6 @@ public class PortalControlador {
         return "listar.html";
     }
 
-//    @Transactional
-//    @PostMapping("/buscarespec")
-//    public String buscarespec(@RequestParam("especialidad") String especialidad, ModelMap model) {
-//        System.out.println(especialidad);
-//        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidad(especialidad);
-//        model.addAttribute("profesionales", profesionales);
-//        model.addAttribute("espec", especialidad);
-//
-//        return "listaespecialidad.html";
-//    }
 
     @Transactional
     @PostMapping("/buscarespechonorario")
