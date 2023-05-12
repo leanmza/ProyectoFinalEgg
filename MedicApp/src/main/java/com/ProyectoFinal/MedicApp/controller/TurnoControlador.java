@@ -77,7 +77,7 @@ public class TurnoControlador {
     @Transactional
     @PostMapping("/registroTurno")
     public String registroTurno(@ModelAttribute Profesional pro, @RequestParam String motivo,
-            @RequestParam String dia, @RequestParam String horario, HttpSession session) throws MiExcepcion {
+            @RequestParam String dia, @RequestParam String horario, HttpSession session, ModelMap modelo) throws MiExcepcion {
 
         Paciente paciente = (Paciente) session.getAttribute("pacienteSession");
         System.out.println(" pro " + pro);
@@ -99,7 +99,7 @@ public class TurnoControlador {
             turnoService.crearTurno(profesional, paciente, fecha, hora, motivo);
 
             System.out.println("Turno exitoso");
-            return "redirect:/inicio";
+            return "redirect:/inicio?exito=turnoExitoso" ;
 
         } catch (MiExcepcion me) {
             System.out.println("Registro de turno FALLIDO!\n" + me.getMessage());

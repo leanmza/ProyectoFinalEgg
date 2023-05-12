@@ -72,6 +72,7 @@
                                 />
                             <label for="dni">DNI (sin puntos ni espacios)</label>
                         </div>
+
                         <!-- INPUT FECHA NACIMIENTO -->
                         <div class="col-xs-12 col-md-6 form-floating">
                             <input
@@ -83,130 +84,133 @@
                                 />
                             <label for="naciemiento">Fecha de Nacimiento</label>
                         </div>
+                        <div class="divisorForm divBorder row">
+                            <!-- INPUT SEXO-->
+                            <div class="col-xs-12 col-md-6 divSexo form-floating">
+                                <select name="sexo" id="sexo" class="sexo form-select" th:value="${recargaFormulario != null ? recargaFormulario.sexo : paciente.sexo}">
+                                    <option value="Elegir Opcion" selected disabled>Elegir opción...</option>
+                                    <option value="Masculino" th:selected="${paciente.sexo == 'Masculino'}">Masculino</option>
+                                    <option value="Femenino" th:selected="${paciente.sexo == 'Femenino'}">Femenino</option>
+                                    <option value="Otro" th:selected="${paciente.sexo == 'Otro'}">Otro</option>
+                                </select>
+                                <label for="sexo">Sexo</label>
+                            </div>
 
-                        <!-- INPUT SEXO-->
-                        <div class="col-xs-12 col-md-6 divSexo form-floating">
-                            <select name="sexo" id="sexo" class="sexo form-select" th:value="${recargaFormulario != null ? recargaFormulario.sexo : paciente.sexo}">
-                                <option value="Elegir Opcion" selected disabled>Elegir opción...</option>
-                                <option value="Masculino" th:selected="${paciente.sexo == 'Masculino'}">Masculino</option>
-                                <option value="Femenino" th:selected="${paciente.sexo == 'Femenino'}">Femenino</option>
-                                <option value="Otro" th:selected="${paciente.sexo == 'Otro'}">Otro</option>
-                            </select>
-                            <label for="sexo">Sexo</label>
-                        </div>
+                            <!-- INPUT DIRECCIÓN-->
+                            <div class="col-xs-12 col-md-6 form-floating">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="direccion"
+                                    name="direccion"
+                                    th:value="${paciente.direccion}"
+                                    placeholder=""
+                                    />
+                                <label for="direccion">Dirección</label>
+                            </div>
+                            <!-- INPUT MAIL-->
+                            <div class="col-xs-12 col-md-6 form-floating">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="correo"
+                                    name="correo"
+                                    th:value="${paciente.email}"
+                                    placeholder=""
+                                    />
+                                <label for="correo">Email</label>
+                            </div>
+                            <!-- INPUT TELEFONO-->
+                            <div class="col-xs-12 col-md-6 form-floating">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="telefono"
+                                    name="telefono"
+                                    th:value="${paciente.telefono}"
+                                    placeholder=""
+                                    />
+                                <label for="telefono">Telefono</label>
+                            </div>
+                            <!-- INPUT IMAGEN -->
+                            <div class="col-xs-12 col-md-6 form-floating">
+                                <input 
+                                    type="file" 
+                                    class="form-control" 
+                                    id="foto" 
+                                    name="archivo"
+                                    th:value="${paciente.imagen}"
+                                    />
+                                <label for="foto">Foto de Perfil</label>
+                            </div>
+                            <!-- INPUT OBRA SOCIAL-->
+                            <div class="col-xs-12 col-md-6 form-floating">
+                                <select name="obraSocial" id="obraSocial" class="obraSocial form-select"
+                                        th:value="${paciente.obraSocial}"
+                                        onchange="abrirModal()">
+                                    <option value="" selected disabled>Elegir Obra Social</option>
+                                    <th:block th:each="obraSocial : ${obrasSociales}">
+                                        <option th:text="${obraSocial.nombre}" th:selected="${obraSocial.id == paciente.obraSocial.id}"></option>
+                                    </th:block>
+                                    <option>Cargar otra...</option>
+                                </select>
+                                <label for="obraSocial" class="datosInput">Obra Social</label>
+                                <script>
+                                    function abrirModal() {
+                                        var select = document.getElementById("obraSocial");
+                                        var value = select.options[select.selectedIndex].value;
 
-                        <!-- INPUT DIRECCIÓN-->
-                        <div class="col-xs-12 col-md-6 form-floating">
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="direccion"
-                                name="direccion"
-                                th:value="${paciente.direccion}"
-                                placeholder=""
-                                />
-                            <label for="direccion">Dirección</label>
-                        </div>
-                        <!-- INPUT MAIL-->
-                        <div class="col-xs-12 col-md-6 form-floating">
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="correo"
-                                name="correo"
-                                th:value="${paciente.email}"
-                                placeholder=""
-                                />
-                            <label for="correo">Email</label>
-                        </div>
-                        <!-- INPUT TELEFONO-->
-                        <div class="col-xs-12 col-md-6 form-floating">
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="telefono"
-                                name="telefono"
-                                th:value="${paciente.telefono}"
-                                placeholder=""
-                                />
-                            <label for="telefono">Telefono</label>
-                        </div>
-                        <!-- INPUT IMAGEN -->
-                        <div class="col-xs-12 col-md-6 form-floating">
-                            <input 
-                                type="file" 
-                                class="form-control" 
-                                id="foto" 
-                                name="archivo"
-                                th:value="${paciente.imagen}"
-                                />
-                            <label for="foto">Foto de Perfil</label>
-                        </div>
-                        <!-- INPUT OBRA SOCIAL-->
-                        <div class="col-xs-12 col-md-6 form-floating">
-                            <select name="obraSocial" id="obraSocial" class="obraSocial form-select"
-                                    th:value="${paciente.obraSocial}"
-                                    onchange="abrirModal()">
-                                <option value="" selected disabled>Elegir Obra Social</option>
-                                <th:block th:each="obraSocial : ${obrasSociales}">
-                                    <option th:text="${obraSocial.nombre}" th:selected="${obraSocial.id == paciente.obraSocial.id}"></option>
-                                </th:block>
-                                <option>Cargar otra...</option>
-                            </select>
-                            <label for="obraSocial" class="datosInput">Obra Social</label>
-                            <script>
-                                function abrirModal() {
-                                    var select = document.getElementById("obraSocial");
-                                    var value = select.options[select.selectedIndex].value;
-
-                                    if (value == "Cargar otra...") {
-                                        var formulario = document.getElementById("formulario");
-                                        var datosFormulario = new FormData(formulario);
-                                        fetch('/pac/guardarDatosFormulario', {
-                                            method: 'POST',
-                                            body: datosFormulario
-                                        })
-                                                .then(function (respuesta) {
-                                                    if (respuesta.ok) {
-                                                        // En caso de éxito, mostrar mensaje de confirmación
-                                                        console.log("Formulario enviado con éxito");
-                                                    } else {
+                                        if (value == "Cargar otra...") {
+                                            var formulario = document.getElementById("formulario");
+                                            var datosFormulario = new FormData(formulario);
+                                            fetch('/pac/guardarDatosFormulario', {
+                                                method: 'POST',
+                                                body: datosFormulario
+                                            })
+                                                    .then(function (respuesta) {
+                                                        if (respuesta.ok) {
+                                                            // En caso de éxito, mostrar mensaje de confirmación
+                                                            console.log("Formulario enviado con éxito");
+                                                        } else {
+                                                            // En caso de error, mostrar mensaje de error
+                                                            alert("Error al enviar el formulario");
+                                                        }
+                                                    })
+                                                    .catch(function (error) {
                                                         // En caso de error, mostrar mensaje de error
-                                                        alert("Error al enviar el formulario");
-                                                    }
-                                                })
-                                                .catch(function (error) {
-                                                    // En caso de error, mostrar mensaje de error
-                                                    alert("Error al enviar el formulario: " + error.message);
-                                                });
+                                                        alert("Error al enviar el formulario: " + error.message);
+                                                    });
 
-                                        var ventanaModal = document.getElementById("myModal");
-                                        ventanaModal.style.display = "block";
+                                            var ventanaModal = document.getElementById("myModal");
+                                            ventanaModal.style.display = "block";
+                                        }
                                     }
-                                }
-                            </script>
+                                </script>
+                            </div>
                         </div>
-                        <!-- INPUT PASSWORD-->
-                        <div class="col-xs-12 col-md-6 form-floating">
-                            <input
-                                type="password"
-                                class="form-control"
-                                id="password"
-                                name="password"
-                                placeholder=""
-                                />
-                            <label for="password">Contraseña</label>
-                        </div>
-                        <!-- INPUT PASSWORD2-->
-                        <div class="col-xs-12 col-md-6 form-floating">
-                            <input
-                                type="password"
-                                class="form-control"
-                                id="password2"
-                                name="password2"
-                                placeholder=""
-                                />
-                            <label for="password2">Repetir Contraseña</label>
+                        <div class="divisorForm divBorder row">
+                            <!-- INPUT PASSWORD-->
+                            <div class="col-xs-12 col-md-6 form-floating">
+                                <input
+                                    type="password"
+                                    class="form-control"
+                                    id="password"
+                                    name="password"
+                                    placeholder=""
+                                    />
+                                <label for="password">Contraseña</label>
+                            </div>
+                            <!-- INPUT PASSWORD2-->
+                            <div class="col-xs-12 col-md-6 form-floating">
+                                <input
+                                    type="password"
+                                    class="form-control"
+                                    id="password2"
+                                    name="password2"
+                                    placeholder=""
+                                    />
+                                <label for="password2">Repetir Contraseña</label>
+                            </div>
                         </div>
                     </div>
 
