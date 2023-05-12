@@ -10,41 +10,41 @@
 
         <!--MAIN-->
 
-           <main>
+        <main>
             <div class="container-fluid contenedorMain contenedorCards">
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     <div class="col">
-                        <a class="dropdown-item" th:href="@{/pac/misTurnos}">
+                        <a class="dropdown-item" th:href="@{/profesional/agenda}">
                             <div class="card ">
-                            <div class="card-body card1">
-                                <h3 class="card-title">AGENDA</h3>
+                                <div class="card-body card1">
+                                    <h3 class="card-title">AGENDA</h3>
+                                </div>
+
                             </div>
-                              
-                        </div>
-                              </a>
+                        </a>
                     </div>
 
 
                     <div class="col">
-                        <a class="dropdown-item" th:href="@{/pac/misProfesionales}">
-                        <div class="card">
-                            <div class="card-body card2">
-                                <h3 class="card-title">MIS PROFESIONALES</h3>
+                        <a class="dropdown-item" th:href="@{/historiaClinica/buscar}">
+                            <div class="card">
+                                <div class="card-body card2">
+                                    <h3 class="card-title">BUSCAR <br> HISTORIA CLINICA</h3>
 
+                                </div>
                             </div>
-                        </div>
-                            </a>
+                        </a>
                     </div>
 
                     <div class="col">
+                        <a class="dropdown-item" th:href="@{/historiaClinica/form_historia_clinica}">
+                            <div class="card">
+                                <div class="card-body card3">
+                                    <h3 class="card-title">NUEVA <br> HISTORIA CLINICA </h3>
 
-                       <div class="card">
-                            <div class="card-body card3">
-                                <h3 class="card-title">CONSEJOS </h3>
-
+                                </div>
                             </div>
-                        </div>
-
+                        </a>
 
                     </div>
 
@@ -54,7 +54,7 @@
 
 
         </main>
-     <!--FOOTER-->
+        <!--FOOTER-->
         <div class="container-fluid pie">
             <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
         </div>

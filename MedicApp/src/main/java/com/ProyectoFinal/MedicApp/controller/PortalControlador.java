@@ -77,8 +77,12 @@ public class PortalControlador {
     @Transactional
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_PROFESIONAL', 'ROLE_ADMINISTRADOR')")
     @GetMapping("/inicio")
-    public String inicio(HttpSession session, ModelMap modelo) {
+    public String inicio(HttpSession session, ModelMap modelo, @RequestParam (required = false) String exito) {
 
+        if("turnoExitoso".equals(exito)){
+            modelo.put("exito", "¡¡¡El turno se cargo exitosamente!!!");
+        }
+        
         if (session.getAttribute("pacienteSession") != null) {
             Paciente logueado = (Paciente) session.getAttribute("pacienteSession");
             modelo.put("pacienteSession", logueado);
