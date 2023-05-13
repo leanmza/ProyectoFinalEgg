@@ -181,4 +181,6 @@ function filtrarTabla() {
     };
 
 
+/////////ORDENAR POR VALOR///////////
+
 //para dar estilo de escribir

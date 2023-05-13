@@ -4,30 +4,21 @@ import com.ProyectoFinal.MedicApp.Entity.Imagen;
 import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
-import com.ProyectoFinal.MedicApp.Enum.Rol;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
 import com.ProyectoFinal.MedicApp.Service.ImagenService;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
-import java.io.IOException;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,9 +27,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/")
@@ -83,8 +72,12 @@ public class PortalControlador {
     @Transactional
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_PROFESIONAL', 'ROLE_ADMINISTRADOR')")
     @GetMapping("/inicio")
-    public String inicio(HttpSession session, ModelMap modelo) {
+    public String inicio(HttpSession session, ModelMap modelo, @RequestParam (required = false) String exito) {
 
+        if("turnoExitoso".equals(exito)){
+            modelo.put("exito", "¡¡¡El turno se cargo exitosamente!!!");
+        }
+        
         if (session.getAttribute("pacienteSession") != null) {
             Paciente logueado = (Paciente) session.getAttribute("pacienteSession");
             modelo.put("pacienteSession", logueado);
@@ -194,7 +187,7 @@ public class PortalControlador {
         return "formulario_paciente.html";
 
     }
-
+    
     @Transactional
     @GetMapping("/listar")
     public String listar(ModelMap model) {
@@ -202,6 +195,7 @@ public class PortalControlador {
         model.addAttribute("profesionales", profesionales);
         return "listar.html";
     }
+
 
 //    @Transactional
 //    @PostMapping("/buscarespec")
@@ -213,6 +207,7 @@ public class PortalControlador {
 //
 //        return "listaespecialidad.html";
 //    }
+
     @Transactional
     @PostMapping("/buscarespechonorario")
     public String buscarespechonorario(@RequestParam("especialidad") String especialidad, ModelMap model) {

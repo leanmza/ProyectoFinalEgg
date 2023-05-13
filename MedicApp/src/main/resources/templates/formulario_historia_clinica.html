@@ -32,7 +32,7 @@
             <div class="row turno">
 
                <!-- COLUMNA IZQUIERDA -->
-              <div class="col-5">
+              <div class="col-5 colIzquierdaHistoria">
                    <!-- DATOS PERSONALES -->
                 <div class="row rowDatosPersonales">
 
@@ -83,12 +83,25 @@
                     <label for="profesional">Profesional</label>
                 </div>
               </div>
-            </div>
+          <!-- INPUT ESPECIALIDAD-->
+                <div class="col-xs-12 form-floating">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="profesional"
+                      name="especialidadProfesional"
+                      th:value="${profesional.especialidad}"
+                      placeholder=""
+                      disabled />
+                    <label for="Especialidad">Especialidad</label>
+                </div>
+              </div>
+               
 
               <!-- COLUMNA CENTRO -->
             <div class="col-7">
               <!-- INPUT DIAGNOSTICO -->
-              <div class="row form-floating">
+              <div class="row form-floating colDerechaHistoria   ">
                 <textarea
                     type="text"
                     class="form-control diagnostico"
@@ -100,7 +113,7 @@
               </div>
 
               <!-- INPUT TRATAMIENTO -->
-              <div class="row form-floating">
+              <div class="row form-floating colDerechaHistoria">
                 <textarea
                     type="text"
                     class="form-control tratamiento"

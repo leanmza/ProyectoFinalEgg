@@ -136,7 +136,7 @@ public class AdministradorControlador {
 
             modelo.put("exito","¡Felicidades! Tu registro como profesional ha sido exitoso.");
 
-            return "redirect:/admin/dashboard";
+            return "redirect:/listar";
 
         } catch (MiExcepcion e) {
             System.out.println("Error al cargar Profesional");

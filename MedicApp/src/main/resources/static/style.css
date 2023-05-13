@@ -40,6 +40,13 @@ h3 {
     box-shadow: 0px 1px 4px #17252a;
 }
 
+.btnEnviar{
+        background-color: #012350 !important;
+    color: white;
+    border-color: #012350    !important;
+    box-shadow: 0px 1px 4px #17252a;
+}
+
 .contenedorMain {
     padding-inline: 5% !important;
     padding-top: 4%;
@@ -719,7 +726,7 @@ form label{
 }
 
 
-.card1, .card2, .card3 {
+.card1, .card2, .card3, .card4, .card5 {
     height: 400px;
 }
 
@@ -733,7 +740,7 @@ form label{
 }
 
 .card2{
-    background-image: url(./grupo-medicos5.jpg);
+    background-image: url(./archivo.jpg);
     background-size: cover;
     background-position: top;
     align-items: center;
@@ -742,6 +749,24 @@ form label{
 }
 
 .card3{
+    background-image: url(./mano-lapicera.jpg);
+    background-size: cover;
+    background-position: top;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.card4{
+    background-image: url(./grupo-medicos5.jpg);
+    background-size: cover;
+    background-position: top;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.card5{
     background-image: url(./manos_corazon_estetoscopio.jpg);
     background-size: cover;
     background-position: top;
@@ -764,18 +789,48 @@ form label{
     text-align: center !important;
 }
 
+.divisorFormPro{
+ margin-top: 2% !important;   
+}
 
 
 .btnQuieroTurno{
-     background-color: #012350 !important;
+        background-color: #012350 !important;
     color: white;
     border-color: #012350    !important;
     box-shadow: 0px 1px 4px #17252a;
+   
+}
+.btnAnular{
+        box-shadow: 0px 1px 4px #17252a;
 }
 
-.btnValorar{
+.btnValorar, .btnBaja{
      box-shadow: 0px 1px 4px #17252a;
 }
+
+.colIzquierdaHistoria{
+     border-right:  solid 1px #012350;
+}
+
+.colDerechaHistoria{
+    padding-left: 1em;
+}
+
+.check{
+    border: solid 1px #aaa !important   ;
+    
+
+}
+    .califica{
+        align-items: center;
+    }
+    
+    .DivBtnBaja{
+        display: flex;
+        justify-content: center;
+        margin-top: 2em !important;
+    }
 /* LOGIN*/
 
 /* MEDIAS QUERYS */
@@ -791,6 +846,8 @@ form label{
     width: fit-content;
     margin-bottom: 10px;
 }
+
+
 
 @keyframes typingEffect {
     from {
