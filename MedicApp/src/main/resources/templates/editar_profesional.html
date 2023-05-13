@@ -31,6 +31,23 @@
                             <h4>DATOS PERSONALES</h4>
                         </div>
 
+                        <!-- IMAGEN DE PERFIL -->
+                        <div class="d-flex justify-content-center">
+
+
+                            <img class="rounded-circle img-fluid" style="width: 150px; height: 150px;"
+                                 sec:authorize ="hasRole ('PACIENTE')"
+                                 th:src="${session.pacienteSession.imagen != null ? '/imagen/perfil/__${session.pacienteSession.id}__' : '../predeterminada_perfil.png'}" >
+
+                            <img class="rounded-circle img-fluid" style="width: 150px; height: 150px;"
+                                 sec:authorize ="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')"
+                                 th:src="${session.profesionalSession.imagen != null ? '/imagen/perfil/__${session.profesionalSession.id}__' : '../predeterminada_perfil.png'}" >
+
+                            <a href="#" class="position-absolute top-0 end-0" style="width: 40px; height: 40px;">
+                                <i class="fas fa-camera"></i>
+                            </a>
+
+                        </div>
 
                         <!-- INPUT OCULTO DEL ID -->
                         <input hidden type="text" id="id" name="id" th:value="${profesional.id}" />

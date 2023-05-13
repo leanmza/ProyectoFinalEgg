@@ -36,9 +36,25 @@
                     <!-- DATOS PERSONALES -->
                     <div class="row rowDatosPersonales">
                         <div class="tituloForm">
-                            <h4>DATOS PERSONALES</h4>
+                            <h4>DATOS PERSONALES</h4><br>
                         </div>
+                        
+                        <!-- IMAGEN DE PERFIL -->
+                        <div class="d-flex justify-content-center">
+                            <div class="rounded-circle img-fluid">
 
+                                <img 
+                                    sec:authorize ="hasRole ('PACIENTE')"
+                                    th:src="${session.pacienteSession.imagen != null ? '/imagen/perfil/__${session.pacienteSession.id}__' : '../predeterminada_perfil.png'}" >
+
+                                <img 
+                                    sec:authorize ="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')"
+                                    th:src="${session.profesionalSession.imagen != null ? '/imagen/perfil/__${session.profesionalSession.id}__' : '../predeterminada_perfil.png'}" >
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3">
+                            <button type="button" class="btn btn-primary">Cambiar imagen</button><br>
+                        </div>
 
                         <!-- INPUT OCULTO DEL ID -->
                         <input hidden type="text" id="id" name="id"/>

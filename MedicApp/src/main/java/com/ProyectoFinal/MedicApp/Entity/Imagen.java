@@ -9,7 +9,7 @@ import javax.persistence.Lob;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
-
+// CLASE PARA LAS IMAGENES DE LOS DIFERENTES USUARIOS
 @Data
 @Entity
 public class Imagen {
@@ -18,9 +18,12 @@ public class Imagen {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
+    // IDENTIFICA EL FORMATO DE LA IMAGEN
     private String mime;
+    
     private String nombre;
     
+    // ALMACENA LOS DATOS BINARIOS DE LA IMAGEN
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] contenido;
