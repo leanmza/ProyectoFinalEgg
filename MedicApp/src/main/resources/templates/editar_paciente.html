@@ -19,7 +19,7 @@
                 <form
                     class="form-floating row formulario formularioCrear"
                     id="formulario"
-                    th:action="@{/pac/perfil/__${paciente.id}__}"
+                    th:action="@{/paciente/perfil/__${paciente.id}__}"
                     method="POST"
                     enctype="multipart/form-data"
                     >
@@ -163,7 +163,7 @@
                                         if (value == "Cargar otra...") {
                                             var formulario = document.getElementById("formulario");
                                             var datosFormulario = new FormData(formulario);
-                                            fetch('/pac/guardarDatosFormulario', {
+                                            fetch('/paciente/guardarDatosFormulario', {
                                                 method: 'POST',
                                                 body: datosFormulario
                                             })
@@ -225,7 +225,7 @@
                         </button>
                     </div>
                     <div class="col-xs-12 mt-3 DivBtnEnviar">
-                        <a th:href="@{/pac/baja/__${paciente.id}__}" class="btn btn-danger">
+                        <a th:href="@{/paciente/baja/__${paciente.id}__}" class="btn btn-danger">
                             Darse de baja
                         </a>
                     </div>

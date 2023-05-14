@@ -54,7 +54,7 @@ public class PacienteService implements UserDetailsService {
 
     @Autowired
     private ObraSocialService obraSocialServicio;
-    
+
     @Transactional
     public void crearPaciente(String nombre, String apellido, String dni, String email, String telefono, String password,
             String password2, String direccion, Date fechaNacimiento, String sexo, MultipartFile archivo, ObraSocial obraSocial) throws MiExcepcion {
@@ -258,6 +258,14 @@ public class PacienteService implements UserDetailsService {
         List<Profesional> profesionales;
 
         profesionales = turnoRepositorio.buscarProfesionalPorPaciente(idPaciente);
+
+        Optional<Paciente> respuesta = pacienteRepositorio.findById(idPaciente);
+        if (respuesta.isPresent()) {
+            Paciente paciente = respuesta.get();
+            paciente.setProfesionales(profesionales);
+
+            pacienteRepositorio.save(paciente);
+        }
 
         return profesionales;
     }

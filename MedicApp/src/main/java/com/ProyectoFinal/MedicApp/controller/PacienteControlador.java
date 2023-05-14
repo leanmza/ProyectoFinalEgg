@@ -41,7 +41,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Controller
 @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
-@RequestMapping("/pac")
+@RequestMapping("/paciente")
 public class PacienteControlador {
 
     @Autowired
@@ -152,7 +152,7 @@ public class PacienteControlador {
         
         sessionFormulario.setAttribute("datosFormulario", paciente);
         
-        return "redirect:/pac/perfil";
+        return "redirect:/paciente/perfil";
     }
 
     @Transactional
@@ -187,7 +187,7 @@ public class PacienteControlador {
 
         System.out.println("    id" + id);
         turnoService.eliminarTurno(id);
-        return "redirect:/pac/misTurnos";
+        return "redirect:/paciente/misTurnos";
     }
 
 
@@ -195,7 +195,7 @@ public class PacienteControlador {
     @PostMapping("/calificarProfesional/{id}")
     public String calificarProfesional(@PathVariable("id") String id, @RequestParam("puntaje") String puntaje) {
         pacienteService.calificarProfesional(id, puntaje);
-        return "redirect:/pac/misProfesionales";
+        return "redirect:/paciente/misProfesionales";
     }
 
 }

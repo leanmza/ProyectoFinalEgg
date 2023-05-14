@@ -27,6 +27,9 @@ public class Paciente extends Persona {
     @OneToMany
     private List<Turno> turnos;
     
+    @OneToMany
+    private List<Profesional> profesionales;
+    
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
     private String sexo;
