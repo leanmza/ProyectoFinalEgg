@@ -1,44 +1,868 @@
-form {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0 auto;
-    width: 50%;
-  }
-  
-  label {
-    color: darkolivegreen;
-    font-size: 15px;
-    font-weight: 600;
-    display: inline-block;
-    width: 30%;
-    margin-bottom: 15px;
-  }
-  
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"],
-  select,
-  textarea {
-    width: 65%;
-    padding: 17px 10px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    margin-bottom: 10px;
-  }
-  
-  input[type="submit"] {
-    background-color: #4CAF50;
+/* GENERAL */
+
+body {
+    background-color: #5787E6   !important;
+    font-family: "Montserrat", sans-serif !important;
+}
+
+/*main {
+padding-inline: 5%;
+padding-top: 4%;
+padding-bottom: 5%;
+}*/
+header {
+    padding-inline: 5%;
+}
+
+footer {
+    padding-inline: 5%;
+}
+
+p {
+    color: #222 !important;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: 900 !important; /* NEGRITA*/
+}
+
+.botonesHeader,
+.botonesIndex,
+.botonesLogin,
+.botonesFormulario,
+.botonesLista,
+.botonesImagen {
+    background-color: #012350 !important;
     color: white;
-    padding: 17px 20px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-bottom: 20px;
-    border: 2px solid
+    border-color: #012350    !important;
+    box-shadow: 0px 1px 4px #17252a;
+}
+
+.btnEnviar{
+        background-color: #012350 !important;
+    color: white;
+    border-color: #012350    !important;
+    box-shadow: 0px 1px 4px #17252a;
+}
+
+.contenedorMain {
+    padding-inline: 5% !important;
+    padding-top: 4%;
+    padding-bottom: 5%;
+
+}
+
+/*TABLAS*/
+th{
+    text-align: center !important;
+    vertical-align: middle;
+}
+
+.tdEspecialidad,
+.tdHorario,
+.tdHonorario,
+.tdCalificacion,
+.tdValorar,
+.tdTurno{
+    text-align: center !important;
+}
+
+.mensaje{
+    text-align: center;
+}
+
+
+/* HEADER */
+
+.cabecera {
+    padding: 0 !important;
+
+    /*    position: sticky;  ESTO HACE AL HEADER FLOTANTE 
+    top: 0;  ESTO HACE AL HEADER FLOTANTE */
+}
+
+header {
+    background-color: #fff;
+    text-align: right;
+    align-items: center;
+    height: 95px !important; /* CENTRA VERTICALMENTE EL CONTENIDO */
+    /*    position: sticky;  ESTO HACE AL HEADER FLOTANTE 
+    top: 0;  ESTO HACE AL HEADER FLOTANTE */
+}
+
+.logoHeader {
+    justify-items: start;
+    display: flex;
+    height: 5.5em;
+}
+
+.navbar {
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-collapse {
+    justify-content: center;
+}
+
+.navibar {
+    align-items: center;
+}
+.link:link,
+.link:visited,
+.link:active {
+    text-decoration: none;
+    padding: 1.7em;
+    color: #17252a;
+    font-weight: 600;
+}
+
+.link:hover {
+    font-weight: 700;
+}
+
+.linkDesplegable:link,
+.linkDesplegable:visited,
+.linkDesplegable:active {
+    text-decoration: none;
+    padding-left: 1em;
+    color: #17252a;
+    font-weight: 400;
+}
+
+.linkDesplegable:hover {
+    font-weight: 600;
+}
+
+.navbar-toggler {
+    /* MENÚ HAMBURGUESA */
+    text-decoration: none;
+    padding: 1.7em;
+    color: #17252a !important;
+    font-weight: 600 !important;
+    background-color: #fff !important;
+    border: none !important;
+    text-align: center;
+}
+
+.btnTurnoHeader {
+    margin-right: 1em;
+      margin-left: 1em;
+}
+
+.imagen-perfil {
+    width: 50px; /* ajustar según el tamaño deseado */
+    height: 50px; /* ajustar según el tamaño deseado */
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.imagen-perfil img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.headerDiv {
+    justify-content: space-between;
+}
+
+.divLinksHeader {
+    z-index: 999;
+}
+/* FOOTER */
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    color: white;
+    text-align: center;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    padding-inline: 5%;
+}
+
+.linkFooter {
+    margin-right: 5%;
+}
+
+.pie {
+    padding-inline: 0 !important;
+}
+.logoFooter {
+    height: 35px;
+}
+
+.iconoContacto {
+    font-size: 1.5em;
+    color: #17252a;
+}
+
+/* FORMULARIO */
+
+.login,
+.divFormProfesional,
+.divFormPaciente,
+.divFormHistoriaClinica,
+.divFormTurno {
+    /* CENTRAR CONTEINER-FLUID */
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+
+.formTurno {
+    width: 85vw;
+}
+.formularioTurno {
+    width: 80%;
+    padding-top: 3% !important;
+    background-color: transparent !important;
+}
+.motivo {
+    height: 8em !important;
+}
+
+.contador {
+    font-size: 12px;
+    text-align: end;
+}
+
+.fecha,
+.hora {
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.selectorMes {
+    margin: 0 !important;
+    display: flex !important;
+    justify-content: space-evenly;
+    padding: 5% 5% 5% 5%;
+}
+.rowFiltros {
+    justify-content: end;
+}
+
+.contenedorLogin {
+    justify-content: center;
+    display: flex;
+}
+.titulo {
+    text-align: center;
+    padding: 2% 0 2% 0;
+}
+
+.formulario {
+    background-color: #feffff;
+    padding: 10% 5% 5% 5%;
+    border-radius: 8px;
+    justify-content: center;
+    align-content: center;
+    width: 40vw;
+}
+
+input {
+    font-size: 1em;
+    width: 25em;
+    max-width: 100% !important;
+    height: 2.5em;
+    margin: 0.5em;
+    border-radius: 5px;
+    border: solid #17252a;
+    box-sizing: border-box;
+}
+
+.btnModal {
+    background-color: #fff !important;
+    font-size: 1em;
+    width: 25em;
+    max-width: 100% !important;
+    height: 3.625em;
+    text-align: left !important;
+    border-radius: 5px;
+    border: solid #17252a;
+}
+.diagnostico,
+.tratamiento {
+    height: 10em !important;
+}
+
+.btn-submit {
+    display: flex;
+    justify-content: end;
+}
+.rowLogin {
+    justify-content: center;
+}
+
+.datosInput {
+    padding-left: 1em !important;
+}
+
+.form-floating:not(.form-control:disabled)::before {
+    top: 0 !important;
+    left: 0 !important;
+    width: 0 !important;
+}
+
+.form-floating {
+    margin-bottom: 1em !important;
+}
+
+.bi {
+    padding-inline: 0.5em;
+}
+
+.divCrearUsuario {
+    padding: 5% 0 5% 0;
+    text-align: center;
+    border-top: solid 1px #012350;
+}
+
+.divisorForm{
+    padding-top: 3%;
+    padding-bottom: 1%
+}
+.divBorder{
+    border-top: solid 1px #012350;
+}
+
+.loginFormulario {
+    background-color: #fff;
+    border-radius: 8px;
+    width: 40vw;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+
+/* FORMULARIO PERSONA Y PROFESIONAL */
+.tituloForm {
+    padding: 0 0 2% 0;
+}
+
+.tituloForm h4 {
+    text-align: center;
+}
+.formularioCrear {
+    width: 70vw !important;
+    padding-top: 5% !important;
+}
+
+.divSexo {
+    align-items: center;
+    display: flex;
+}
+.divObraSocial,
+.divDias {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.divObraSocial input,
+.divDias input {
+    height: auto !important;
+}
+
+.selectPro {
+    justify-content: space-evenly !important;
+}
+.especialidad {
+    /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+
+    display: flex;
+    justify-content: start;
+}
+.ubicacion {
+    /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+
+    display: flex;
+    justify-content: center;
+}
+
+.modalidad {
+    /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
+
+    display: flex;
+    justify-content: end;
+}
+
+.rowHorario {
+    justify-content: center;
+}
+
+.rowHorario label {
+    display: flex;
+    justify-content: end;
+}
+
+.rowHorario .rowHoras {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.inputHora {
+    text-align: center !important;
+}
+
+.DivBtnEnviar {
+    display: flex;
+    justify-content: center;
+}
+
+.labelObraSocial {
+    padding-left: 0 !important;
+}
+
+.rowObrasSociales {
+    justify-content: center;
+}
+
+h5 {
+    text-align: center;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.tituloFormPro {
+    padding-top: 5%;
+    padding-bottom: 3%;
+    text-align: center;
+}
+
+.tituloHoraFormPro {
+    padding-top: 5%;
+    padding-bottom: 1%;
+    text-align: center;
+}
+
+.barraBusqueda {
+    padding-bottom: 0 !important;
+    align-items: center;
+    display: flex;
+}
+
+.btnBuscar {
+    margin-left: 2em;
+}
+/* INDEX */
+
+.presentacionRow {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+}
+
+.index {
+    background-image: url(./doctor-estetoscopio-manos-fondo-transparente.png);
+    background-size: 60vw;
+    background-repeat: no-repeat;
+    background-position: top left;
+    display: flex;
+
+    max-height: 100%;
+    height: 100%;
+    /*width: 70vw;*/
+    justify-content: center;
+    align-items: center;
+    padding: 0 !important;
+}
+.presentacion {
+    width: 100%;
+    padding-inline: 5%;
+    padding-top: 4%;
+    padding-bottom: 5%;
+}
+.divNosotros {
+    padding: 0 !important;
+}
+.adorno1,
+.adorno2,
+.adorno3 {
+    font-size: 2.5em;
+    text-align: center;
+    padding: 0.5em 0 0.5em 0;
+}
+.adorno1,
+.adorno3 {
+    color: #fff;
+}
+
+.adorno2 {
+    color: #17252a !important  ;
+}
+
+.nosotros {
+    color: #17252a !important;
+}
+
+.btnIndex {
+    box-shadow: 0px 1px 4px #17252a;
+}
+.textoIndex {
+    color: #fff !important;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    font-size: 1.2em;
+    font-weight: 600;
+    text-shadow: 0px 1px 4px #17252a;
+}
+
+.tablaCalendario {
+    justify-content: center;
+    display: grid;
+    padding: 0 2% 5% 2%;
+    text-align: center;
+}
+
+.headCalendario{
+    justify-content: center;
+    display: flex;
+}
+.celdaDias {
+    justify-content: center;
+    display: inline-grid;
+    text-align: center;
+    width: 3em;
+
+}
+
+.inputRadio {
+    width: 1.4em;
+    height: 1.4em;
+}
+
+.labelHoraTurno{
+    justify-content: center;
+    display: flex;
+    padding-left: 0 !important;
+}
+
+.inputRadioHora{
+    width: 2em;
+    height: 2em;
+}
+
+.horariosDiv{
+    padding: 0 10% 5% 10% !important;
+    
+}
+.horariosInput{
+    justify-content: center;
+    display: grid;
+    padding-bottom: 8%;
+}
+
+/* MODAL */
+.formularioModal{
+    padding-top: 5% !important;
+}
+
+.btnCerrarModal {
+    background-color: transparent !important;
+}
+
+.DivBtnEnviar {
+    justify-content: space-evenly;
+}
+
+.contenedorCards {
+    z-index: 0;
+}
+
+.cardHora{
+    height: 446.733px;
+}
+
+h6{
+    padding: 20% 10% !important;
+    text-align: center;
+}
+
+.aclaracion{
+    font-size: 14px;
+    opacity: .65;
+}
+
+.aclaracion{
+    font-size: 14px;
+    opacity: .65;
+}
+.especialidad {
+    background: transparent;
+    font-weight: bold;
+    border: 0px;
+    display: inherit;
+}
+
+.custom-error-message {
+    font-family: Montserrat, sans-serif;
+}
+.custom-success-message {
+    font-family: Montserrat, sans-serif;
+}
+
+.colBtn{
+    justify-content: center;
+    display: flex;
+
+}
+form label{
+    padding-left: 4% !important;
+}
+.idProfesional{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 1rem .75rem !important;
+    padding-left: 0.75rem;
+    overflow: hidden;
+    text-align: start;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    pointer-events: none;
+    border: var(--bs-border-width) solid transparent;
+    transform-origin: 0 0;
+    transition: opacity .1s ease-in-out,transform .1s ease-in-out;
+    opacity: .65;
+    transform: scale(.85) translateY(-.5rem) translateX(.15rem);
+}
+
+
+.accordion{
+    width: 80vw !important;
+}
+
+.imgEstrella{
+    height: 20px;
+
+}
+
+
+/*CALIFICACION PROFESIONALES*/
+.formValorar{
+    display: none;
+}
+
+.estrellas{
+    justify-content: center;
+    display: grid;
+}
+
+.star-widget{
+    padding-bottom: 10%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+.container .star-widget input {
+    display: none;
+}
+
+.star-widget label {
+    font-size: 20px;
+    color: #444;
+    padding: 5px;
+    float: right;
+    transition: all 0.2s ease;
+}
+
+.star-widget input[type="radio"]:checked ~ label {
+    color: #fd4;
+}
+
+.star-widget input#rate-5:checked ~ label {
+    /*    color: #fe7;
+        text-shadow: 0 0 20px #952;*/
+}
+
+.star-widget input:checked ~ label:before {
+    content: '\f005';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+}
+
+.diaDeshabilitado{
+    opacity: .65;
+}
+
+.diasCalendario, .diaDeshabilitado{
+    padding-left: 0 !important;
+}
+/* LOGIN*/
+
+/* MEDIAS QUERYS */
+
+/* TAMAÑO EXTRA PEQUEÑOS   */
+
+.idProfesional{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 1rem .75rem !important;
+    padding-left: 0.75rem;
+    overflow: hidden;
+    text-align: start;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    pointer-events: none;
+    border: var(--bs-border-width) solid transparent;
+    transform-origin: 0 0;
+    transition: opacity .1s ease-in-out,transform .1s ease-in-out;
+    opacity: .65;
+    transform: scale(.85) translateY(-.5rem) translateX(.15rem);
+}
+
+
+.card1, .card2, .card3, .card4, .card5 {
+    height: 400px;
+}
+
+.card1{
+    background-image: url(./meeting.jpg);
+    background-size: cover;
+    background-position: top;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.card2{
+    background-image: url(./archivo.jpg);
+    background-size: cover;
+    background-position: top;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.card3{
+    background-image: url(./mano-lapicera.jpg);
+    background-size: cover;
+    background-position: top;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.card4{
+    background-image: url(./grupo-medicos5.jpg);
+    background-size: cover;
+    background-position: top;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.card5{
+    background-image: url(./manos_corazon_estetoscopio.jpg);
+    background-size: cover;
+    background-position: top;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.card-title{
+    text-align: center;
+    color: #17252a !important;
+    position: absolute;
+    top: 65%;
+}
+
+.card{
+     box-shadow: 0px 1px 4px #17252a;
+}
+.trTurnos, .trHistoria{
+    text-align: center !important;
+}
+
+.divisorFormPro{
+ margin-top: 2% !important;   
+}
+
+
+.btnQuieroTurno{
+        background-color: #012350 !important;
+    color: white;
+    border-color: #012350    !important;
+    box-shadow: 0px 1px 4px #17252a;
+   
+}
+.btnAnular{
+        box-shadow: 0px 1px 4px #17252a;
+}
+
+.btnValorar, .btnBaja{
+     box-shadow: 0px 1px 4px #17252a;
+}
+
+.colIzquierdaHistoria{
+     border-right:  solid 1px #012350;
+}
+
+.colDerechaHistoria{
+    padding-left: 1em;
+}
+
+.check{
+    border: solid 1px #aaa !important   ;
     
 
-  }
-  
-  input[type="submit"]:hover {
-    background-color: #3e8e41;
-  }
-  
+}
+    .califica{
+        align-items: center;
+    }
+    
+    .DivBtnBaja{
+        display: flex;
+        justify-content: center;
+        margin-top: 2em !important;
+    }
+/* LOGIN*/
+
+/* MEDIAS QUERYS */
+
+/* TAMAÑO EXTRA PEQUEÑOS   */
+
+/* Para el efecto del index*/
+.typing {
+    animation: typingEffect 3s steps(30, end), deletingEffect 3s steps(30, end) 3s infinite;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 1px solid #000;
+    width: fit-content;
+    margin-bottom: 10px;
+}
+
+
+
+@keyframes typingEffect {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes deletingEffect {
+    from {
+        width: 100%;
+    }
+    to {
+        width: 0;
+    }
+}

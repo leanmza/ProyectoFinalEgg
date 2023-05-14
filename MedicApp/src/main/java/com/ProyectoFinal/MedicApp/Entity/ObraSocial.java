@@ -10,8 +10,8 @@ import org.hibernate.annotations.GenericGenerator;
 @Data
 @Entity
 public class ObraSocial {
-    
-   @Id
+
+    @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
@@ -20,8 +20,4 @@ public class ObraSocial {
     public ObraSocial() {
     }
 
-    public ObraSocial(String id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
-    }
 }

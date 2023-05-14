@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace= "/fragments/head :: head" </head>  <!--NO MODIFICAR-->
+
+    <body>
+        <!--HEADER-->
+        <div class="container-fluid cabecera">
+            <header th:replace="/fragments/header :: header"</header>  <!--NO MODIFICAR-->
+        </div>
+
+        <!--MAIN-->
+
+        <main>
+          <!--TRABAJAR DENTRO DEL MAIN-->
+          <div class="container-fluid divHistoriaClinica contenedorMain contenedorMain">
+            <div class="row titulo">
+              <h3>HISTORIA CLÍNICA</h3>
+              <div class="col-12 text-center"></div>
+              <div class="row datosPaciente">
+<!--                  <h5 class="tituloListaHistoriaClinica" th:text=" ${session.paciente.nombre}+ ' ' + ${session.paciente.apellido} +
+                      ' ' + ${session.paciente.sexo} + ' ' + ${session.paciente.fechaNacimiento}">
+                   </h5>-->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <table class="table table-light">
+                  <thead>
+                    <tr>
+                      <th>Fecha de consulta</th>
+                      <th>Especialidad</th>
+                      <th>Profesional</th>
+                      <th>Diagnóstico</th>
+                      <th>Tratamiento</th>
+                     
+                    </tr>
+                  </thead>
+                  <tbody th:each="historiaClinica : ${historiasClinicas}">
+                      <tr class="trHistoria">
+                      <td th:text="${historiaClinica.fechaConsulta}"></td>
+                      <td th:text="${historiaClinica.profesional.especialidad}"></td>
+                      <td th:text="${historiaClinica.profesional.apellido + ', ' + historiaClinica.profesional.nombre}"></td>
+                      <td th:text="${historiaClinica.diagnostico}"></td>
+                      <td th:text="${historiaClinica.tratamiento}"></td>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-xs-12 ">
+              <a href="/historiaClinica">
+                <button
+                type="submit"
+                name="submit"
+                value="volver"
+                class="btn btn-primary btnEnviar botonesLista"
+              >
+                Volver
+              </button></a>
+            </div>
+    
+            <!-- <div class="row">
+              <div class="col-12 text-right">
+                <button
+                  type="button"
+                  class="btn btn-primary botonesLista"
+                  onclick="exportToPdf()"
+                >
+                 Generar resumen
+                </button>
+              </div>
+            </div> -->
+          </div>
+        </main>
+
+        
+     <!--FOOTER-->
+        <div class="container-fluid pie">
+            <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
+        </div>
+
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+            crossorigin="anonymous"
+        ></script> <!--NO MODIFICAR-->
+
+                  <!-- Agregar el script para exportar a PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <script src="script_hc.js"></script>
+
+    </body>
+</html>

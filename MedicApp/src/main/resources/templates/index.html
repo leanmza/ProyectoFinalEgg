@@ -1,255 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>MedicApp</title>
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
-            crossorigin="anonymous"
-            />
-    </head>
-
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+          <head th:replace= "/fragments/head :: head" </head>
 
     <body>
-        <header class="p-3 ">
-            <div class="container">
-                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
-                    <span
+        <!--HEADER-->
 
+        <div class="container-fluid cabecera">
+            <header th:replace="/fragments/header :: header"</header>
+        </div>
 
-                        class="d-flex align-items-center mb-2 mb-lg-0 -text-white text-decoration-none">
-                        <img src="logoclinica3.png"  
+        <!--MAIN-->
 
-
-                             height="90"
-
-
-                             alt="logo"
-
-                             />  
-
-                    </span> 
-
-                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-
-                        <li><a href="#" class="nav-link px-2 text-dark">inicio</a></li>
-                        <li><a href="#" class="nav-link px-2 text-dark">Quienes somos</a></li>
-                        <li><a href="#" class="nav-link px-2 text-dark">Servicios</a></li>
-                        <li><a href="/registrarProfesional" class="nav-link px-2 text-dark">Profesionales</a></li>
-                        <li><a href="#" class="nav-link px-2 text-dark">Contactanos</a></li>
-                    </ul>
-
-
-
-                    <div class="text-end">
-                        <button type="button" class="btn btn-outline-dark me-2">Registrarse</button>
-                        <button type="button" class="btn btn-warning">
-
-                        </button>
+        <main>
+            <div class="container-fluid index" id="index">
+              <div id="presentacion" class="row presentacion">
+                <!-- PRESENTACIÓN -->
+                <div class="col-12 contenedorPresentacion">
+                  <div class="row presentacionRow">
+                    <div class="col-xs-12 col-md-12 col-lg-7 divAdornos">
+<!--                      <h2 class="adorno1">ELEGÍS TU MEDICO/A</h2>
+                      <h2 class="adorno2">ELEGÍS EL DÍA Y LA HORA</h2>
+                      <h2 class="adorno3">Y LISTO!</h2>-->
                     </div>
+      
+                    <div class="col-xs-12 col-md-12 col-lg-6 col-xl-5 divNosotros">
+                      <!-- <h1 id="nosotros" class="nosotros">NUESTRA EMPRESA</h1> -->
+                        <h2 class="adorno1"->ELEGÍ TU MÉDICO/A</h2>
+                      <h2 class="adorno2">ELEGÍS EL DÍA Y LA HORA</h2>
+                      <h2 class="adorno3">Y LISTO!</h2>
+                      <p class="textoIndex" id="textoIndex">
+                        Descubrí todo lo que MiTurno te puede ofrecer
+                      </p>
+                      <a href="/login"> <button type="button" class="btn btn-primary botonesIndex btnIndex">Hacé click acá</button></a>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
-        </header>
-
-        
-                            <form action="/pro/buscarespec" method="POST">
-                                <input type="hidden" name="buscaespec" th:value="Clínico">
-<!--                                <input type="hidden" name="fecha" th:value="${#dates.format(noticia.fechaAlta,'dd-MM-yyyy')}"> -->
-                                <button type="submit">Buscar</button>
-                            </form>
-
-                            <form action="/pro/listar" method="GET">
-                                <button type="submit">Listar</button>
-                            </form>
-        
-
-
-        <main class="container py-5">
-
-
-            <hr class="my-5">
-
-            <div class="row" data-masonry='{"percentPosition": true }'>
-                <div class="col-sm-6 col-lg-4 mb-4">
-                    <div class="card">
+          </main>
 
 
 
-                        <div class="card-body">
-                            <span
 
 
-                                class="d-flex align-items-center mb-2 mb-lg-0 -text-white text-decoration-none">
-                                <img src="imagen1.jpg"  
-
-
-                                     height="220"
-
-
-                                     alt="imagen1"
-
-                                     />  
-
-                            </span> 
-
-                            <h5 class="card-title">Salud</h5>
-
-
-                            <p class="card-text">La salud (del latín salus, -utis)1​ es un estado de bienestar
-                                o de equilibrio que puede ser visto a nivel subjetivo (un ser humano asume como 
-                                aceptable el estado general en el que se encuentra) o a nivel objetivo (se constata 
-                                la ausencia de enfermedades o de factores dañinos en el sujeto en cuestión). El término
-                                salud se contrapone al de enfermedad, y es objeto de especial atención por parte de la }
-                                medicina y de las ciencias de la salud. .</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-5 col-lg-4 mb-4">
-                    <div class="card text-bg-primary p-5">
-                        <figure class="p-3 mb-0">
-                            <blockquote class="blockquote">
-                                <p>Salud plena e integral.</p>
-                            </blockquote>
-                            <figcaption class="blockquote-footer mb-0 text-white">
-                                Algunos proponen la denominación de “salud plena e integral”, que abarca todos los aspectos
-                                del ser humano, incluyendo lo ambiental y lo espiritual (intelectual y religioso), así como su
-                                interdependencia con el resto de los seres vivos que habitan el planeta.  <cite title="Source Title"></cite>
-                            </figcaption>
-                        </figure>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 mb-4">
-                    <div class="card">
-                        <span
-
-
-                            class="d-flex align-items-center mb-2 mb-lg-0 -text-white text-decoration-none">
-                            <img src="imagen2.jpg"  
-
-
-                                 height="199"
-
-
-                                 alt="imagen2"
-
-                                 />  
-
-                        </span> 
-
-                        <div class="card-body">
-                            <h5 class="card-title">Medicina Especializada</h5>
-                            <p class="card-text">Nuestro principal objetivo es lograr la satisfacción de las
-                                necesidades de nuestros pacientes y sus familiares, brindando atención personalizada,
-                                a través de profesionales de gran trayectoria, reconocimiento y compromiso ético. 
-                                Los recursos humanos, junto con tecnología de última generación, nos permiten ofrecer 
-                                a nuestros pacientes lo mejor de nuestra Institución para la prestación de servicios de salud
-                                asistencial, donde la calidad y la calidez son la base de nuestro quehacer diario..</p>
-                            <p class="card-text"><small class="text-muted"></small></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 mb-4">
-                    <div class="card text-bg-primary text-center p-5">
-                        <figure class="mb-0">
-                            <blockquote class="blockquote">
-                                <p>Tú eres la prioridad.</p>
-                            </blockquote>
-                            <figcaption class="blockquote-footer mb-0 text-white">
-                                El tratamiento en nuestro centro medico es una experiencia verdaderamente humana.  <cite title="Source Title"></cite>
-                            </figcaption>
-                        </figure>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 mb-4">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">Cual es nuestro objetivo hacia el paciente</h5>
-                            <p class="card-text">Procuramos constantemente brindar un servicio de salud 
-                                asistencial de alto nivel. Contamos con tecnología de avanzada, a la altura de
-                                los mejores centros a nivel nacional, en un ambiente diferenciado por el confort,
-                                donde la recuperación y el bienestar del paciente está bajo el cuidado de excelentes 
-                                profesionales de la salud.</p>
-                            <p class="card-text"><small class="text-muted"></small></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 mb-4">
-                    <div class="card">
-                        <span
-
-
-                            class="d-flex align-items-center mb-2 mb-lg-0 -text-white text-decoration-none">
-                            <img src="imagen3.jpg"  
-
-
-                                 height="275"
-
-
-                                 alt="imagen3"
-
-                                 />  
-
-                        </span> 
-
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 mb-4">
-                    <div class="card text-bg-primary p-4 text-end">
-                        <figure class="mb-0">
-                            <blockquote class="blockquote">
-                                <p>Las respuestas correctas.</p>
-                            </blockquote>
-                            <figcaption class="blockquote-footer mb-0 text-white">
-                                Confía en nuestros expertos para recibir un diagnóstico preciso y el plan adecuado para ti. <cite title="Source Title"></cite>
-                            </figcaption>
-                        </figure>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Más experiencia</h5>
-                            <p class="card-text">Los millones de pacientes a quienes brindamos tratamiento cada año 
-                                nos preparan para tratar a la persona que más importa: tú.</p>
-                            <p class="card-text"><small class="text-muted"></small></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </main>
-
-
-        
-        <div class="container">
-            <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-                <p class="col-md-4 mb-0 text-muted">&copy; 2022 Company, Inc</p>
-
-
-
-                <ul class="nav col-md-4 justify-content-end">
-                    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Inicio</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Servicios</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Profesionales</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Contacto</a></li>
-                </ul>
-            </footer>
+        <!--FOOTER-->
+        <div class="container-fluid pie">
+            <<footer  th:replace="/fragments/footer :: footer"</footer>
+                         
         </div>
 
 
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+            crossorigin="anonymous"
+        ></script>
 
-
-
-
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" 
-                crossorigin="anonymous">
-        </script>
     </body>
 </html>
+

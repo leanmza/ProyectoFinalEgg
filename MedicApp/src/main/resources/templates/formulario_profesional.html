@@ -1,92 +1,487 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profesionales</title>
-    <link rel="stylesheet" href-"style.css">
-</head>
-<form>
-  <label for="nombre">Nombre:</label>
-  <input type="text" id="nombre" name="nombre"><br>
-  <br><br>
-  <label for="apellido">Apellido:</label>
-  <input type="text" id="apellido" name="apellido"><br>
-  <br><br>
-  <label for="email">E-mail:</label>
-  <input type="email" id="email" name="email"><br>
-  <br><br>
-  <label for="telefono">Teléfono:</label>
-  <input type="tel" id="telefono" name="telefono"><br>
-  <br><br>
-  <label for="password">Contraseña:</label>
-  <input type="password" id="password" name="password"><br>
-  <br><br>
-  <label for="password2">Contraseña2:</label>
-  <input type="password2" id="password2" name="password2"><br>
-  <br><br>
-</form>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace= "/fragments/head :: head" </head>  <!--NO MODIFICAR-->
+
+    <body>
+        <!--HEADER-->
+        <div class="container-fluid cabecera">
+            <header th:replace="/fragments/header :: header"</header>  <!--NO MODIFICAR-->
+        </div>
+
+        <!--MAIN-->
+
+        <main>
+
+            <div id="divFormPaciente" class="container-fluid divFormPaciente contenedorMain">
+              <div th:if="${error != null}" class="card text-white bg-danger mb-3 mt-3 mensajeError rounded-3 p-2 col-md-6 col-sm-10 mx-auto">
+                <div class="card-body">
+                  <h5 class="card-title fs-5 fw-bold mb-3" style="font-family: Montserrat, sans-serif;">⚠️¡Ingreso de profesional FALLIDO!⚠️</h5>
+                  <p class="card-text fs-6 mb-0 custom-error-message" th:text="${error}"></p>
+                </div>
+              </div>
+                <div class="row titulo">
+                    <h3>REGISTRAR PROFESIONAL</h3>
+                </div>
+
+                <form
+                    class="form-floating row formulario formularioCrear"
+                    id="formulario"
+                    th:action="@{/admin/crearProfesional}"
+                    method="POST"
+                    enctype="multipart/form-data"
+                    th:object="${recargaFormulario}"
+                    >
+                    <!-- PRESTAR ATENCIÓN A LA RUTA DE TH:ACTION CUANDO SE CREE EL CONTROLADOR -->
+
+                    <!-- DATOS PERSONALES -->
+                    <div class="row rowDatosPersonales">
+                        <div class="tituloForm">
+                            <h4>DATOS PERSONALES</h4>
+                        </div>
+
+                        <div class="row">
+                        <!-- INPUT OCULTO DEL ID -->
+                        <input hidden type="text" id="id" name="id"/>
+
+                        <!-- INPUT NOMBRE-->
+                        <div class="col-xs-12 col-md-6 form-floating">  <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="nombre"
+                                name="nombre"
+                                th:value="${recargaFormulario != null ? recargaFormulario.nombre : ''}"
+                                placeholder=""
+                                />
+                            <label for="nombre" class="datosInput">Nombre</label>
+                        </div>
+                        <!-- INPUT APELLIDO-->
+                        <div class="col-xs-12 col-md-6 form-floating">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="apellido"
+                                name="apellido"
+                                th:value="${recargaFormulario != null ? recargaFormulario.apellido : ''}"
+                                placeholder=""
+                                />
+                            <label for="apellido" class="datosInput">Apellido</label>
+                        </div>
+                        <!-- INPUT MAIL-->
+                        <div class="col-xs-12 col-md-6 form-floating">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="correo"
+                                name="correo"
+                                th:value="${recargaFormulario != null ? recargaFormulario.email : ''}"
+                                placeholder=""
+                                />
+                            <label for="correo" class="datosInput">Email</label>
+                        </div>
+                        <!-- INPUT TELEFONO-->
+                        <div class="col-xs-12 col-md-6 form-floating">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="telefono"
+                                name="telefono"
+                                th:value="${recargaFormulario != null ? recargaFormulario.telefono : ''}"
+                                placeholder=""
+                                />
+                            <label for="telefono" class="datosInput">Telefono</label>
+                        </div>
+                        <!-- INPUT IMAGEN -->
+                        <div class="col-xs-12 col-md-6 form-floating">
+                            <input 
+                                type="file" 
+                                class="form-control" 
+                                id="foto" 
+                                name="archivo"
+                                />
+                            <label for="foto">Foto de Perfil</label>
+                        </div>
+                         </div>
+                        <div class="row">
+                        
+                        <!-- INPUT PASSWORD-->
+                        <div class="col-xs-12 col-md-6 form-floating">
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="password"
+                                name="password"
+                                placeholder=""
+                                minlength="8" required
+                                />
+                            <label for="password" class="datosInput">Contraseña</label>
+                        </div>
+                        <!-- INPUT PASSWORD2-->
+                        <div class="col-xs-12 col-md-6 form-floating">
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="password2"
+                                name="password2"
+                                placeholder=""
+                                minlength="8" required
+                                />
+                            <label for="password2" class="datosInput"
+                                   >Repetir Contraseña</label
+                            >
+                        </div>
+                        </div>
+                    </div>
+
+                    <!-- DATOS DEL PROFESIONAL -->
+                    <div class="row rowDatosProfesional divisorFormPro divBorder ">
+                        <div class="tituloFormPro">
+                            <h4>DATOS DEL PROFESIONAL</h4>
+                        </div>
+
+                        <!-- INPUT ESPECIALIDAD-->
+                        <div class="col-xs-12 col-md-6 form-floating">
+                            <select
+                                name="especialidad"
+                                id="especialidad"
+                                class="especialidad form-select"
+                                th:value="${recargaFormulario != null ? recargaFormulario.especialidad : ''}"
+                                >
+                                <option value="" selected disabled>Elegir especialidad</option>
+                                <option value="Cardiologia" th:selected="${recargaFormulario != null and recargaFormulario.especialidad == 'Cardiologia'}">Cardiología</option>
+                                <option value="Clinica" th:selected="${recargaFormulario != null and recargaFormulario.especialidad == 'Clinica'}">Clínica</option>
+                                <option value="Ginecologia" th:selected="${recargaFormulario != null and recargaFormulario.especialidad == 'Ginecologia'}">Ginecología</option>
+                                <option value="Pediatria" th:selected="${recargaFormulario != null and recargaFormulario.especialidad == 'Pediatria'}">Pediatría</option>
+                            </select>
+                            <label for="especialidad" class="datosInput">Especialidad</label>
+                        </div>
+
+                        <!-- INPUT UBICACIÓN-->
+                        <div class="col-xs-12 col-md-6 form-floating">
+                            <select
+                                name="ubicacion"
+                                id="ubicacion"
+                                class="ubicacion form-select"
+                                th:value="${recargaFormulario != null ? recargaFormulario.ubicacion : ''}"
+                                >
+                                <option value="" selected disabled>Eligir ubicación...</option>
+                                <option th:each="ubicacion : ${ubicaciones}" th:value="${ubicacion}" th:selected="${recargaFormulario != null and ubicacion == recargaFormulario.ubicacion}" th:text="${ubicacion}"></option>
+                            </select>
+                            <label for="ubicacion" class="datosInput">Ubicación</label>
+                        </div>
+                        <!-- INPUT MODALIDAD -->
+                        <div class="col-xs-12 col-md-6 form-floating">
+                            <select
+                                name="modalidad"
+                                id="modalidad"
+                                class="modalidad form-select"
+                                th:value="${recargaFormulario != null ? recargaFormulario.modalidad : ''}"
+                                >
+                                <option value="" selected disabled>Eligir una modalidad</option>
+                                <option th:each="modalidad : ${modalidades}" th:value="${modalidad}" th:selected="${recargaFormulario != null and modalidad == recargaFormulario.modalidad}" th:text="${modalidad}"></option>
+                            </select>
+                            <label for="modalidad" class="datosInput">Modalidad</label>
+                        </div>
+                        <!-- INPUT VALOR CONSULTA-->
+                        <div class="col-xs-12 col-md-6 form-floating">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="honorarios"
+                                name="honorarios"
+                                th:value="${recargaFormulario != null ? recargaFormulario.honorario : ''}"
+                                placeholder=""
+                                />
+                            <label for="honorarios" class="datosInput">
+                                <i class="bi bi-currency-dollar"></i>Valor de la consulta</label
+                            >
+                        </div>
+                        <!-- INPUT OBRA SOCIAL-->
+                        <div class="col-xs-12 col-md-6 form-floating">
+                            <select name="obraSocial" id="obraSocial" class="obraSocial form-select"
+                                    th:value="${recargaFormulario != null ? recargaFormulario.obraSocial : ''}"
+                                    onchange="abrirModal()">
+                                <option value="" selected disabled>Eligir Obra Social</option>
+                                <th:block th:each="obraSocial : ${obrasSociales}">
+                                    <option th:value="${obraSocial.id}"
+                                            th:selected="${recargaFormulario != null and obraSocial == recargaFormulario.obraSocial}"
+                                            th:text="${obraSocial.nombre}"></option>
+                                </th:block>
+                                <option>Cargar otra...</option>
+                            </select>
+                            <label for="obraSocial" class="datosInput">Obra Social</label>
+                            <script>
+                                function abrirModal() {
+                                    var select = document.getElementById("obraSocial");
+                                    var value = select.options[select.selectedIndex].value;
+
+                                    if (value == "Cargar otra...") {
+                                        var formulario = document.getElementById("formulario");
+                                        var datosFormulario = new FormData(formulario);
+                                        fetch('/admin/guardarDatosFormulario', {
+                                            method: 'POST',
+                                            body: datosFormulario
+                                        })
+                                                .then(function (respuesta) {
+                                                    if (respuesta.ok) {
+                                                        // En caso de éxito, mostrar mensaje de confirmación
+                                                        console.log("Formulario enviado con éxito");
+                                                    } else {
+                                                        // En caso de error, mostrar mensaje de error
+                                                        alert("Error al enviar el formulario");
+                                                    }
+                                                })
+                                                .catch(function (error) {
+                                                    // En caso de error, mostrar mensaje de error
+                                                    alert("Error al enviar el formulario: " + error.message);
+                                                });
+
+                                        var ventanaModal = document.getElementById("myModal");
+                                        ventanaModal.style.display = "block";
+                                    }
+                                }
+                            </script>
+                        </div>
+                    </div>
+
+                    <!-- DÍAS Y HORARIOS -->
+                    <div class="row rowDiasHorarios divisorFormPro divBorder">
+                        <div class="tituloHoraFormPro">
+                            <h4>DÍAS Y HORARIOS DE ATENCIÓN</h4>
+                        </div>
+
+                        <!-- INPUT DE DÍAS -->
+                        <div class="col-xs-12">
+                            <div class="col-12">
+                                <h5>Días de atención</h5>
+                            </div>
+                            <div class="row row ObrasSociales">
+                                <div
+                                    class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check "
+                                    >
+                                    <input
+                                        type="checkbox"
+                                        name="dias[]"
+                                        id="lunes"
+                                        class="form-check-input check"
+                                        />
+                                    <label for="lunes" class="form-check-label labelObraSocial"
+                                           >Lunes</label
+                                    >
+                                </div>
+
+                                <div
+                                    class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check"
+                                    >
+                                    <input
+                                        type="checkbox"
+                                        name="dias[]"
+                                        id="martes"
+                                        class="form-check-input check"
+                                        />
+                                    <label for="martes" class="form-check-label labelObraSocial"
+                                           >Martes</label
+                                    >
+                                </div>
+
+                                <div
+                                    class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check"
+                                    >
+                                    <input
+                                        type="checkbox"
+                                        name="dias[]"
+                                        id="miercoles"
+                                        class="form-check-input check"
+                                        />
+                                    <label
+                                        for="miercoles"
+                                        class="form-check-label labelObraSocial"
+                                        >Miércoles</label
+                                    >
+                                </div>
+
+                                <div
+                                    class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check"
+                                    >
+                                    <input
+                                        type="checkbox"
+                                        name="dias[]"
+                                        id="jueves"
+                                        class="form-check-input check"
+                                        />
+                                    <label for="jueves" class="form-check-label labelObraSocial"
+                                           >Jueves</label
+                                    >
+                                </div>
+                                <div
+                                    class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check "
+                                    >
+                                    <input
+                                        type="checkbox"
+                                        name="dias[]"
+                                        id="viernes"
+                                        class="form-check-input check"
+                                        />
+                                    <label for="viernes" class="form-check-label labelObraSocial"
+                                           >Viernes</label
+                                    >
+                                </div>
+                                <div
+                                    class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check"
+                                    >
+                                    <input
+                                        type="checkbox"
+                                        name="dias[]"
+                                        id="sabado"
+                                        class="form-check-input check"
+                                        />
+                                    <label for="sabado" class="form-check-label labelObraSocial"
+                                           >Sábado</label
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row rowHorario">
+                            <!-- INPUT HORA INICIO-->
+                            <div class="col-12">
+                                <h5>Horario de atención</h5>
+                            </div>
+                            <div class="col-xs-12 col-md-3 form-floating inputHora">
+                                <input
+                                    type="time"
+                                    class="form-control inputHora"
+                                    id="horaInicio"
+                                    name="horaInicio"
+                                    th:value="${recargaFormulario != null ? #temporals.format(recargaFormulario.horaInicio, 'HH:mm') : ''}"
+                                    placeholder=""
+                                    />
+                                <label for="horaInicio" class="datosInput inputHora">
+                                    <i class="bi bi-clock"></i>Hora de inicio</label
+                                >
+                            </div>
+
+                            <!-- INPUT HORA FIN-->
+                            <div class="col-xs-12 col-md-3 form-floating">
+                                <input
+                                    type="time"
+                                    class="form-control inputHora"
+                                    id="horaFin"
+                                    name="horaFin"
+                                    th:value="${recargaFormulario != null ? #temporals.format(recargaFormulario.horaFin, 'HH:mm') : ''}"
+                                    placeholder=""
+                                    />
+                                <label for="horaFin" class="datosInput inputHora">
+                                    <i class="bi bi-clock"></i>Hora de finalización</label
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 DivBtnEnviar">
+                        <button
+                            type="submit"
+                            name="submit"
+                            value="registrar"
+                            class="btn btn-primary btnEnviar"
+                            >
+                            ¡Registrar Profesional!
+                        </button>
+                    </div>
+                </form>
 
 
-    <form>
-        
-        <label for="especialidad">Especialidad:</label>
-        <select id="especialidad" name="especialidad">
-          <option value="cardiología">Cardiología</option>
-          <option value="dermatología">Dermatología</option>
-          <option value="endocrinología">Endocrinología</option>
-          <option value="neurología">Neurología</option>
-        </select><br>
-        <br><br>
-        <label for="modalidad">modalidad:</label>
-        <select id="modalidad" name="modalidad">
-          <option value="TELECONSULTA">Teleconsulta</option>
-          <option value="PRESENCIAL">Presencial</option>
-        </select><br>
-        <br><br>
-        <label for="Obra Social">Obra Social:</label>
-        <select id="Obra Social" name="Obra Social">
-          <option value="PAMI">PAMI</option>
-          <option value="OSDE">OSDE</option>
-          <option value="SWISSMEDICAL">SWISSMEDICAL</option>
-          <option value="OSCECAC">OSCECAC</option>
-        </select><br>
-        <br><br>
-        <form>
-          <label for="texto">Ubicacion:</label>
-          <input type="text" id="texto" name="texto">
-          <br><br>
-        </form>
-       
-     
-      <fieldset>
-        <legend>Selecciona los días disponibles:</legend>
-        <input type="checkbox" id="lunes" name="dias" value="lunes">
-        <label for="lunes">Lunes</label><br>
-        <input type="checkbox" id="martes" name="dias" value="martes">
-        <label for="martes">Martes</label><br>
-        <input type="checkbox" id="miercoles" name="dias" value="miercoles">
-        <label for="miercoles">Miércoles</label><br>
-        <input type="checkbox" id="jueves" name="dias" value="jueves">
-        <label for="jueves">Jueves</label><br>
-        <input type="checkbox" id="viernes" name="dias" value="viernes">
-        <label for="viernes">Viernes</label><br>
-        <input type="checkbox" id="sabado" name="dias" value="sabado">
-        <label for="sabado">Sábado</label><br>
-        <input type="checkbox" id="domingo" name="dias" value="domingo">
-        <label for="domingo">Domingo</label><br>
-      </fieldset>
-      <br>
+            <!-- VENTANA MODAL PARA CARGA DE NUEVA OBRA SOCIAL -->
+            <div class="modal " id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form
+                            class="formulario formularioModal"
+                            id="formularioModal"
+                            method="POST"
+                            >
+                            <!-- MODAL HEADER --> 
+                            <div class="modal-header">
+                                <h3 class="modal-title">REGISTRAR NUEVA OBRA SOCIAL</h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="cerrarModal()"></button>
+                            </div>
+                            <!-- MODAL BODY -->
+                            <div class="row rowDatosPersonales">
+                                <div class="tituloForm">
+                                    <h4>En caso que la obra social no tenga sigla, usar el nombre completo</h4>
 
-  <form>
-    <label for="inicio">Hora de inicio:</label>
-    <input type="time" id="inicio" name="inicio"><br>
-  
-    <label for="fin">Hora de fin:</label>
-    <input type="time" id="fin" name="fin"><br>
-  
-        <input type="submit" value="Enviar">
-      </form>
+                                    </div>
+                                    <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
 
-      
+                                    <!-- INPUT NOMBRE-->
+                                    <div class="col-xs-12  form-floating">
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="nombreObraSocial"
+                                            name="nombreObraSocial"
+                                            placeholder=""
+                                            />
+                                        <label for="nombreObraSocial">Sigla o nombre de la obra social</label>
+                                    </div>
+                                </div>
+
+                                <!-- MODAL FOOTER -->
+                                <div class="modal-footer mx-2">
+                                    <button type="button" class="btn btn-primary"  onclick="cargarObraSocial()">Aceptar</button>
+                                    <button type="button" class="btn btn-danger" onclick="cerrarModal()">Cancelar</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    function cerrarModal() {
+                        var ventanaModal = document.getElementById("myModal");
+                        ventanaModal.style.display = "none";
+                    }
+
+                    function cargarObraSocial() {
+                        var formulario = document.getElementById("formularioModal");
+                        var datosFormulario = new FormData();
+                        datosFormulario.append("nombreObraSocial", formulario.nombreObraSocial.value);
+
+                        fetch('/registroObraSocial', {
+                            method: 'POST',
+                            body: datosFormulario
+                        })
+                                .then(function (respuesta) {
+                                    if (respuesta.ok) {
+                                        //en caso de exito
+                                        cerrarModal();
+                                        location.reload();
+                                    } else {
+                                        // En caso de error
+                                        console.log("Error en el envío del formulario.");
+                                    }
+                                })
+                                .catch(function (error) {
+                                    // En caso de error
+                                    console.log("Error en el envío del formulario: " + error.message);
+                                });
+                    }
+                </script>
+            </div>
+        </main>
+        <!--FOOTER-->
+        <div class="container-fluid pie">
+            <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
+        </div>
+
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+            crossorigin="anonymous"
+        ></script> <!--NO MODIFICAR-->
+
+    </body>
+</html>
+

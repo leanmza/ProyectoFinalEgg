@@ -1,12 +1,11 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.ProyectoFinal.MedicApp.Entity;
 
-import com.ProyectoFinal.MedicApp.Enum.Modalidad;
-import com.ProyectoFinal.MedicApp.Enum.Rol;
-import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
@@ -27,53 +26,33 @@ import lombok.Data;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Profesional extends Persona {
-    
-    private  String especialidad;
-    
-//    @OneToOne
-    private Modalidad modalidad;
-    
-//    @OneToOne
-    private Ubicacion ubicacion;
-    
-    @Temporal(TemporalType.TIME)
-    private Date horario;
-    
-    @Temporal(TemporalType.DATE)
-    private Date dias;
-    
-    @OneToMany
-    private List<ObraSocial> obrasSociales;
-    
-    @OneToMany
-    private List<Turno> turnos;  
-    private double honorario;
+
+    private String especialidad;
+
+
+    private String modalidad;
+
+
+    private String ubicacion;
+
+   
+//    private List<String> dias;
+
+    @OneToOne
+    private ObraSocial obraSocial;
+
+    private Double honorario;
+
 //    @OneToMany
-//    private List<Integer> reputacion;
+//    private List<Turno> turnos;
+
+    
+    private LocalTime horaInicio;
+    private LocalTime horaFin;
+    
+    private ArrayList<String> horas; //no me tomaba el List solo, por eso lo cambié a ArrayList
+
     private Integer cantVisitas;
     private Integer puntaje;
-
-//    public Profesional() {
-//
-//    }
-//
-//
-//    public Profesional(String especialidad, Modalidad modalidad, Ubicacion ubicacion, Date horario, Date dias, List<ObraSocial> obrasSociales, List<Turno> turnos,
-//            double honorario, /*List<Integer> reputacion,*/ String id, String nombre, String apellido, String email, String telefono, Rol rol, String foto, String password, boolean activo,
-//            Integer cantVisitas, Integer puntaje) {
-//
-//        super(id, nombre, apellido, email, telefono, rol, foto, password, activo);
-//        this.especialidad = especialidad;
-//        this.modalidad = modalidad;
-//        this.ubicacion = ubicacion;
-//        this.horario = horario;
-//        this.dias = dias;
-//        this.obrasSociales = obrasSociales;
-//        this.turnos = turnos;
-//        this.honorario = honorario;
-////        this.reputacion = reputacion;
-//        this.cantVisitas = cantVisitas;
-//        this.puntaje = puntaje;
-//    }
-
+    private Double calificacion;
 }

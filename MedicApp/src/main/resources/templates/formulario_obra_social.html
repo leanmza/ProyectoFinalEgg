@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace= "/fragments/head :: head" </head>  <!--NO MODIFICAR-->
+
+    <body>
+        <!--HEADER-->
+        <div class="container-fluid cabecera">
+            <header th:replace="/fragments/header :: header"</header>  <!--NO MODIFICAR-->
+        </div>
+
+        <!--MAIN-->
+
+        <main>
+            <div id="divFormPaciente" class="container-fluid divFormPaciente contenedorMain">
+                <div class="row titulo">
+                    <h3>REGISTRAR NUEVA OBRA SOCIAL</h3>
+                </div>
+
+                <form
+                    class="form-floating row formulario formularioCrear"
+                    id="formulario"
+
+                    th:action="@{/admin/registroObraSocial}"
+                    method="POST"
+                    >
+                    <!-- DATOS PERSONALES -->
+                    <div class="row rowDatosPersonales">
+                        <div class="tituloForm">
+                            <h4>En caso que la obra social no tenga sigla, usar el nombre completo</h4>
+                        </div>
+                        <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
+                        <!-- INPUT NOMBRE-->
+                        <div class="col-xs-12  form-floating">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="nombreObraSocial"
+                                name="nombreObraSocial"
+                                placeholder=""
+                                />
+                            <label for="nombreObraSocial">Sigla o nombre de la obra social</label>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 DivBtnEnviar">
+                        <button
+                            type="submit"
+                            name="submit"
+                            id="botonRegistrar"
+                            value="registrar"
+                            class="btn btn-primary btnEnviar botonesFormulario"
+                            
+                            >
+                            Registrar obra social
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <!--FOOTER-->
+        <div class="container-fluid pie">
+            <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
+        </div>
+
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+            crossorigin="anonymous"
+        ></script> <!--NO MODIFICAR-->
+
+    </body>
+</html>
+

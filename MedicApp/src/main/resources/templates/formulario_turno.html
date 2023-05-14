@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace= "/fragments/head :: head" </head>  <!--NO MODIFICAR-->
+
+    <body>
+        <!--HEADER-->
+        <div class="container-fluid cabecera">
+            <header th:replace="/fragments/header :: header"</header>  <!--NO MODIFICAR-->
+        </div>
+
+        <!--MAIN-->
+        <main>
+            <div
+                id="divFormTurno"
+                class="container-fluid divFormTurno contenedorMain"
+                >
+                <div class="row titulo">
+                    <h3>SACAR MITURNO</h3>
+                </div>
+
+                <div class="row formTurno">
+                    <form
+                        class="form-floating row formulario formularioTurno"
+                        id="formulario"
+                        th:action="@{/turno/registroTurno}"
+                        method="POST"
+                        > 
+                        <!-- DATOS PERSONALES -->
+                        <div class="row turno">
+                            <!-- COLUMNA IZQUIERDA -->
+                            <div class="col-4">
+
+                                 <!--INPUT OCULTO DEL ID--> 
+                                <input hidden type="text" id="id" name="id" th:value="${profesional.id}"/>
+
+                                <!-- INPUT ESPECIALIDAD-->
+                                <div class="col-xs-12 form-floating">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="especialidad"
+                                        name="especialidad"
+                                        th:value="${profesional.especialidad}"
+                                        placeholder=""
+                                        />
+                                    <label for="especialidad">Especialidad</label>
+                                </div>
+
+                                <!-- INPUT PROFESIONAL-->
+
+                                <div class="col-xs-12 form-floating">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="profesional"
+                                        name="profesional"
+                                        th:value="${profesional.apellido + ',  ' + profesional.nombre}"
+                                        placeholder=""
+                                        />
+                                    <label for="profesional">Profesional</label>
+                                </div>
+
+                                <!-- INPUT MOTIVO -->
+                                <div class="col-xs-12 form-floating">
+                                    <textarea
+                                        type="text"
+                                        class="form-control motivo"
+                                        id="motivo"
+                                        placeholder=""
+                                        name="motivo"
+                                        ></textarea>
+                                    <label for="motivo"
+                                           >Motivo de la consulta
+                                        <span class="aclaracion">(opcional)</span> <!-- cambiar estilo del span -->
+                                    </label>
+                                    <p id="contador" class="contador"></p>
+                                </div>
+                                <div class="col-xs-12 DivBtnEnviar">
+                                    <button
+                                        type="submit"
+                                        name="submit"
+                                        value="registrar"
+                                        class="btn btn-primary btnEnviar botonesFormulario"
+                                        >
+                                        ¡Sacar MiTurno!
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- COLUMNA CENTRO -->
+
+                            <div class="col-4">
+                                <!--CALENDARIO-->
+                                <div class="col-xs-12 fecha" id="fecha">
+                                    <div class="row selectorMes">
+                                        <button
+                                            id="btn-mes-anterior"
+                                            class="col-2 btn btn-primary btnEnviar botonesFormulario"
+                                            disabled="  ">
+                                            <i class="fa-solid fa-caret-left"></i>
+                                        </button>
+                                  
+                                        <h5 id="mes" class="col-6">      <!--ACA SE INYECTA CON JS EL NOMBRE DEL MES--></h5>
+                                        <button
+                                            id="btn-mes-siguiente"
+                                            class="col-2 btn btn-primary btnEnviar botonesFormulario"
+                                            >
+                                            <i class="fa-solid fa-caret-right"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-12 calendario" id="calendario"></div>
+                                          <!--ACA SE INYECTA CON JS EL CALENDARIO-->
+                                </div>
+                            </div>
+
+                            <!-- COLUMNA DERECHA -->
+
+
+
+                            <div class="col-4">
+                                <div class="col-xs-12 hora" id="hora">
+                                    <div class="row selectorHora">
+                                   <div class="row selectorMes">
+                                    
+                                        <h5 id="mes" class="col-6"> Horarios <i class="fa-regular fa-clock fa-lg"></i> </h5>
+                                       
+                                    </div>
+                                            
+                                        <div class="horariosDiv row">
+                                            <div th:each="horario : ${profesional.horas}" class="horariosInput col-3">
+                                                <label th:text="${horario}" class="labelHoraTurno"></label>
+                                                <input type="radio"  th:value="${horario}"  name="horario"  class="inputRadioHora"/>
+                                            </div>
+                                            
+                                     </div>
+                           
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </form> 
+                </div>
+            </div>
+        </main>
+        <!--FOOTER-->
+        <div class="container-fluid pie">
+            <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
+        </div>
+
+        <script src="../../scripts.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+            crossorigin="anonymous"
+        ></script> <!--NO MODIFICAR-->
+
+    </body>
+</html>

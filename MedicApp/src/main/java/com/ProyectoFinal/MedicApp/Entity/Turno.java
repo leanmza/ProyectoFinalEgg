@@ -1,13 +1,17 @@
 package com.ProyectoFinal.MedicApp.Entity;
 
+import java.time.LocalTime;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @Entity
@@ -16,21 +20,20 @@ public class Turno {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
+    
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yy")
     private Date fecha;
     
-    @ManyToOne
-    Profesional profesional;
+    private LocalTime hora;
     
-    @ManyToOne
-    Paciente paciente;
+    @OneToOne
+    private Profesional profesional;
+    
+    @OneToOne
+    private Paciente paciente;
+    
+    private String motivo;
 
-    public Turno() {
-    }
 
-    public Turno(String id, Date fecha, Profesional profesional, Paciente paciente) {
-        this.id = id;
-        this.fecha = fecha;
-        this.profesional = profesional;
-        this.paciente = paciente;
-    }
 }

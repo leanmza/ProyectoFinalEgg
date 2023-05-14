@@ -1,35 +1,85 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace= "/fragments/head :: head" </head>  <!--NO MODIFICAR-->
 
-<!-- <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"> --> 
-    <head>
-        <title>Listado</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    </head>
     <body>
-        <br>
-        <h1>LISTA ESPECIALIDAD</h1>
-        <div class="container">
-            <hr><br>
-            <div th:each="profesional : ${profesionales}">
-                <div class="card w-50">
-                    <div class="card-body">
-                        <h5 th:text="${profesional.nombre}"></h5>
-                        <h5 th:text="${profesional.apellido}"></h5>
-                        <h5 th:text="${profesional.especialidad}"></h5>                        
+        <!--HEADER-->
+        <div class="container-fluid cabecera">
+            <header th:replace="/fragments/header :: header"</header>  <!--NO MODIFICAR-->
+        </div>
+
+        <!--MAIN-->
+
+        <main>
+
+
+            <div class="container-fluid contenedorDiv contenedorMain">
+                <h3>PROFESIONALES POR ESPECIALIDAD</h3>
+                <div class="row rowFiltros">
+                    <div class="col-3">
+                        <form action="/buscarespechonorario" method="POST">
+                            <input type="hidden" name="especialidad" th:value="${espec}" />
+                            <button type="submit" class="btn btn-primary    botonesLista">Ordenar por honorarios</button>
+                            <p>(De mayor a menor)</p>
+                        </form>
+                    </div>
+                    <div class="col-3">
+                        <form action="/buscarespeccalificacion" method="POST">
+                            <input type="hidden" name="especialidad" th:value="${espec}"/>
+                            <button type="submit" class="btn btn-primary botonesLista">Ordenar por calificación</button>
+                            <p>(De mayor a menor)</p>
+                        </form>
                     </div>
                 </div>
-                <br>
+                <table class="table table-light">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Especialidad</th>
+                            <th scope="col">Valor de Consulta</th>
+                            <th scope="col">Calificación</th>
+
+                    </thead>
+
+                    <tbody th:each="profesional : ${profesionales}">
+                        <tr>
+                            <td th:text="${profesional.nombre}"></td>
+                            <td th:text="${profesional.apellido}"></td>
+                            <td th:text="${profesional.especialidad}"></td>
+                            <td th:text="${profesional.honorario}"></td>
+                            <td>
+                                <span th:if="${profesional.calificacion >= 0.00 and profesional.calificacion < 0.25}"> <img src="../../img/estrella00.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 0.25 and profesional.calificacion < 0.75}"> <img src="../../img/estrella05.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 0.75 and profesional.calificacion < 1.25}"> <img src="../../img/estrella10.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 1.25 and profesional.calificacion < 1.75}"> <img src="../../img/estrella15.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 1.75 and profesional.calificacion < 2.25}"> <img src="../../img/estrella20.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 2.25 and profesional.calificacion < 2.75}"> <img src="../../img/estrella25.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 2.75 and profesional.calificacion < 3.25}"> <img src="../../img/estrella30.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 3.25 and profesional.calificacion < 3.75}"> <img src="../../img/estrella35.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 3.75 and profesional.calificacion < 4.25}"> <img src="../../img/estrella40.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 4.25 and profesional.calificacion < 4.75}"> <img src="../../img/estrella45.jpg" height="20"> </span>
+                                <span th:if="${profesional.calificacion >= 4.75}"> <img src="../../img/estrella50.jpg" height="20"> </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <a class="btn btn-primary botonesLista" href="/listar" role="button">Volver</a>
             </div>
-            <br><br>
-            <a class="btn btn-primary" href="/" role="button">Volver</a>
-            <br><br><hr><br>
+        </main>
+        
+        <!--FOOTER-->
+        <div class="container-fluid pie">
+            <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+            crossorigin="anonymous"
+        ></script> <!--NO MODIFICAR-->
+
     </body>
 </html>

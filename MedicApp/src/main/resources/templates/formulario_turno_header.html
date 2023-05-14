@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace= "/fragments/head :: head" </head>  <!--NO MODIFICAR-->
+
+    <body>
+        <!--HEADER-->
+        <div class="container-fluid cabecera">
+            <header th:replace="/fragments/header :: header"</header>  <!--NO MODIFICAR-->
+        </div>
+
+        <!--MAIN-->
+        <main>
+            <div
+                id="divFormTurno"
+                class="container-fluid divFormTurno contenedorMain"
+                >
+                <div class="row titulo">
+                    <h3>SACAR MITURNO</h3>
+                </div>
+
+                <div class="row formTurno">
+
+                    <!-- DATOS PERSONALES -->
+                    <div class="row turno">
+                        <!-- COLUMNA IZQUIERDA -->
+                        <div class="col-4">
+
+                            <div class="col-xs-12 form-floating">
+
+                                <button
+                                    type="button"
+                                    id="btnEspecialidad"
+                                    class="btn btnModal"
+                                    name="especialidad"
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modalProfesionales"
+                                    >
+                                    <!--    
+                                    <label for="especialidad" id="labelEspecialidadSecundaria"  class="idProfesional"
+                                        >Especialidad</label >-->
+                                    <label for="profesional" id="labelEspecialidadPrimaria" class="labelPrimaria"
+                                           >Elegir Especialidad</label
+                                    >
+                                </button>
+                            </div>
+
+
+
+
+                            <!-- INPUT PROFESIONAL-->
+
+                            <div class="col-xs-12 form-floating">
+                                <button
+                                    type="button"
+                                    id="btnProfesional"
+                                    class="btn btnModal"
+                                    name="profesional"
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modalProfesionales"
+                                    >
+                                    <!--  <label for="profesional" id="labelProfesionalSecundaria"  class="idProfesional"
+                                      >Profesional</label >-->
+                                    <label for="profesional" id="labelProfesionalPrimaria" class="labelProfesionalPrimaria"
+                                           >Elegir Profesional</label
+                                    >
+                                </button>
+                            </div>
+
+
+                            <!-- MODAL LISTA PROFESIONALES -->
+
+                            <!-- Modal -->
+                            <div
+                                class="modal fade"
+                                id="modalProfesionales"
+
+                                >
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            
+                                            <h3>PROFESIONALES EN MITURNO</h3>
+                                            <!--SE PUEDE INYECTAR LA ESPECIALIDAD COMO TITULO CON THYMELEAF -->
+                                            <button
+                                                type="button"
+                                                class="btn-close"
+                                                id="btnCloseModal"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Close"
+                                                ></button>
+                                        </div>
+
+                                            <table class="table row-col-12 table-light" id="tabla-profesionales">
+                                                <thead>
+                                                    <tr class="row-col-12 titulosTabla">
+                                                        <th scope="col" class="col-2">Profesional</th>
+                                                        <th scope="col" class="col-2">
+                                                            <select id="especialidad" class="especialidad" onchange="filtrarTabla()">
+                                                                <option value="todas">Especialidad</option>
+                                                                <option value="cardiologia">Cardiología</option>
+                                                                <option value="clinica">Clínica</option>
+                                                                <option value="ginecologia">Ginecología</option>
+                                                                <option value="pediatria">Pediatría</option>
+                                                            </select>
+                                                        </th>
+                                                        <th scope="col" class="col-2">Horario de atención</th>
+                                                        <th scope="col" class="col-2" onclick="ordenarPorValorConsulta()">Valor de Consulta <i class="fa-solid fa-sort"></i> </th>
+                                                        <th scope="col" class="col-2 califica" onclick="ordenarPorCalificacion()">Calificación <i class="fa-solid fa-sort"></i></th>
+                                                        <th scope="col" class="col-1" ></th>
+                                                    </tr>
+                                                    <!--                            <th scope="col" class="col-1" sec:authorize ="hasRole ('ADMINISTRADOR')" >Acciones</th>
+                                                                            </tr>-->
+                                                </thead>
+
+                                                <tbody th:each="profesional : ${profesionales}">
+                                                    <tr>
+                                                        <td th:text="${profesional.apellido} + ', ' + ${profesional.nombre}"></td>
+
+                                                        <td th:text="${profesional.especialidad}" class="tdEspecialidad"></td>
+
+                                                        <!--<td th:text="${profesional.obrasSociales}"></td>-->
+
+                                                        <td th:text="${profesional.horaInicio} + ' / ' + ${profesional.horaFin}" class="tdHorario"></td>
+                                                        <td th:text="'$ ' + ${profesional.honorario}" class="tdHonorario" data-valorconsulta="${profesional.honorario}"></td>
+                                                        <td class="tdCalificacion" >
+                                                            <span th:if="${profesional.calificacion >= 0.00 and profesional.calificacion < 1}" th:text="${'Aún no hay valoraciones'}"> </span>
+
+                                                            <span th:if="${profesional.calificacion >= 1 and profesional.calificacion < 1.25}"> <img src="../../img/estrella10.jpg" class="imgEstrella"> </span>
+                                                            <span th:if="${profesional.calificacion >= 1.25 and profesional.calificacion < 1.75}"> <img src="../../img/estrella15.jpg" class="imgEstrella" > </span>
+                                                            <span th:if="${profesional.calificacion >= 1.75 and profesional.calificacion < 2.25}"> <img src="../../img/estrella20.jpg" class="imgEstrella"> </span>
+                                                            <span th:if="${profesional.calificacion >= 2.25 and profesional.calificacion < 2.75}"> <img src="../../img/estrella25.jpg" class="imgEstrella" > </span>
+                                                            <span th:if="${profesional.calificacion >= 2.75 and profesional.calificacion < 3.25}"> <img src="../../img/estrella30.jpg"  class="imgEstrella"> </span>
+                                                            <span th:if="${profesional.calificacion >= 3.25 and profesional.calificacion < 3.75}"> <img src="../../img/estrella35.jpg"  class="imgEstrella"> </span>
+                                                            <span th:if="${profesional.calificacion >= 3.75 and profesional.calificacion < 4.25}"> <img src="../../img/estrella40.jpg"  class="imgEstrella"> </span>
+                                                            <span th:if="${profesional.calificacion >= 4.25 and profesional.calificacion < 4.75}"> <img src="../../img/estrella45.jpg"  class="imgEstrella"> </span>
+                                                            <span th:if="${profesional.calificacion >= 4.75}"> <img src="../../img/estrella50.jpg"  class="imgEstrella"> </span>
+                                                        <td scope="col" class="col-2" ><a th:href="@{/turno/formularioTurno/__${profesional.id}__}">
+                                                                <button class="btn btn-primary btnQuieroTurno"> Quiero MiTurno</button></a></td>
+
+
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+
+                                        </div>
+
+<!--                                        <div class="modal-footer">
+                                            <button
+                                                type="button"
+                                                class="btn btn-secondary"
+                                                id="btnCancelarModal"
+                                                data-bs-dismiss="modal" 
+                                                aria-label="Cancelar"
+                                                >
+                                                Cancelar
+                                            </button>
+
+                                        </div>-->
+                                    </div>
+                                </div>
+
+                       
+
+
+
+                            <!-- INPUT MOTIVO -->
+                            <div class="col-xs-12 form-floating">
+                                <textarea
+                                    disabled
+                                    type="text"
+                                    class="form-control motivo"
+                                    id="motivo"
+                                    placeholder=""
+                                    name="motivo"
+                                    ></textarea>
+                                <label for="motivo"
+                                       >Motivo de la consulta
+                                    <span class="aclaracion">(opcional) <br>
+                                        (Primero elija un profesional)</span>
+                                    <!-- cambiar estilo del span -->
+                                </label>
+                                <p id="contador" class="contador"></p>
+                            </div>
+                            <div class="col-xs-12 DivBtnEnviar">
+                                <button
+                                    type="submit"
+                                    name="submit"
+                                    value="registrar"
+                                    class="btn btn-primary btnEnviar botonesFormulario"
+                                    >
+                                    ¡Sacar MiTurno!
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- COLUMNA CENTRO -->
+
+                        <div class="col-4">
+                            <!--CALENDARIO-->
+                            <div class="col-xs-12 fecha" id="fecha">
+                                <div class="row selectorMes">
+                                    <button
+                                        id="btn-mes-anterior"
+                                        class="col-2 btn btn-primary btnEnviar botonesFormulario"
+                                        disabled="">
+                                        <i class="fa-solid fa-caret-left"></i>
+                                    </button>
+
+                                    <h5 id="mes" class="col-6">
+                                        <!--ACA SE INYECTA CON JS EL NOMBRE DEL MES-->
+                                    </h5>
+                                    <button
+                                        id="btn-mes-siguiente"
+                                        class="col-2 btn btn-primary btnEnviar botonesFormulario"
+                                        >
+                                        <i class="fa-solid fa-caret-right"></i>
+                                    </button>
+                                </div>
+                                <div class="col-xs-12 calendario" id="calendario"></div>
+                                <!--ACA SE INYECTA CON JS EL CALENDARIO-->
+                            </div>
+                        </div>
+
+                        <!-- COLUMNA DERECHA -->
+
+                        <div class="col-4">
+                            <div class="col-xs-12 hora cardHora" id="hora">
+                                <div class="row selectorHora">
+                                    <h6>Elija un profesional para conocer sus horarios</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- </form> -->
+                </div>
+            </div>
+
+
+
+
+        </main>
+        <!--FOOTER-->
+        <div class="container-fluid pie">
+            <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
+        </div>
+
+        <script>
+            //            ordena valor
+            var ordenAscendente = true;
+
+            function ordenarPorValorConsulta() {
+                var tabla = document.getElementById("tabla-profesionales");
+                var filas = Array.from(tabla.querySelectorAll("tbody tr"));
+
+                filas.sort(function (a, b) {
+                    var valorA = parseFloat(a.querySelector(".tdHonorario").textContent.replace('$ ', '').replace(',', '.'));
+                    var valorB = parseFloat(b.querySelector(".tdHonorario").textContent.replace('$ ', '').replace(',', '.'));
+
+                    if (ordenAscendente) {
+                        return valorA - valorB;
+                    } else {
+                        return valorB - valorA;
+                    }
+                });
+
+                filas.forEach(function (fila) {
+                    fila.parentNode.removeChild(fila);
+                });
+
+                var tbody = tabla.querySelector("tbody");
+                filas.forEach(function (fila) {
+                    tbody.appendChild(fila);
+                });
+
+                ordenAscendente = !ordenAscendente;
+            }
+
+        </script>
+        <script>
+            var ordenAscendenteCalificacion = true;
+
+            function ordenarPorCalificacion() {
+                var tabla = document.getElementById("tabla-profesionales");
+                var filas = Array.from(tabla.querySelectorAll("tbody tr"));
+
+                filas.sort(function (a, b) {
+                    var calificacionA = obtenerCalificacion(a.querySelector(".tdCalificacion"));
+                    var calificacionB = obtenerCalificacion(b.querySelector(".tdCalificacion"));
+
+                    if (ordenAscendenteCalificacion) {
+                        return calificacionA - calificacionB;
+                    } else {
+                        return calificacionB - calificacionA;
+                    }
+                });
+
+                filas.forEach(function (fila) {
+                    fila.parentNode.removeChild(fila);
+                });
+
+                var tbody = tabla.querySelector("tbody");
+                filas.forEach(function (fila) {
+                    tbody.appendChild(fila);
+                });
+
+                ordenAscendenteCalificacion = !ordenAscendenteCalificacion;
+            }
+
+            function obtenerCalificacion(elemento) {
+                var calificacion = 0;
+                var imgEstrellas = elemento.querySelectorAll("img.imgEstrella");
+
+                if (imgEstrellas.length > 0) {
+                    var src = imgEstrellas[0].getAttribute("src");
+                    var regex = /(\d+)/g;
+                    var matches = regex.exec(src);
+
+                    if (matches !== null && matches.length > 0) {
+                        calificacion = parseFloat(matches[0]) / 10;
+                    }
+                }
+
+                return calificacion;
+            }
+        </script>
+        <script src="../../scripts.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+            crossorigin="anonymous"
+        ></script> <!--NO MODIFICAR-->
+
+    </body>
+</html>
