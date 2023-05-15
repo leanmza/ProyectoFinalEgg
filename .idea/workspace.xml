@@ -6,9 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="13e64717-c6b6-4e6b-a095-96677ff0863a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/controller/PortalControlador.java" beforeDir="false" afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/controller/PortalControlador.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MedicApp/src/main/resources/templates/formulario_paciente.html" beforeDir="false" afterPath="$PROJECT_DIR$/MedicApp/src/main/resources/templates/formulario_paciente.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MedicApp/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/MedicApp/src/main/resources/templates/login.html" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Service/HistoriaClinicaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/MedicApp/src/main/java/com/ProyectoFinal/MedicApp/Service/HistoriaClinicaService.java" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +61,19 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.MedicAppApplication (1)">
+    <configuration name="MedicAppApplication (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.ProyectoFinal.MedicApp.MedicAppApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.ProyectoFinal.MedicApp.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="MedicAppApplication" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="C:\Program Files\Java\jdk1.8.0_111\jre" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -95,6 +111,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.MedicAppApplication (1)" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

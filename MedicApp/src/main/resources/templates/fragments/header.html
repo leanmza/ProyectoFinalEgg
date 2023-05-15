@@ -149,7 +149,7 @@
                         <li sec:authorize ="hasRole ('PACIENTE')">
                             <a th:href="@{/pac/perfil}" id="btn-contacto" class="linkDesplegable  divHeaderPerfil" >Perfil</a>
                         </li>
-                        <li  sec:authorize ="hasRole ('ADMINISTRADOR') OR hasRole('ADMINISTRADOR')">
+                        <li  sec:authorize ="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')">
                             <a th:href="@{/profesional/perfil}" id="btn-contacto" class="linkDesplegable  divHeaderPerfil">Perfil</a>
                         </li>
  

@@ -55,7 +55,13 @@ public class HistoriaClinicaService {
 
     public void modificarHistoriaClinica(String idHistoriaClinica, Paciente paciente, Date fechaConsulta, Profesional profesional, String diagnostico) throws MiExcepcion {
 
+<<<<<<< Updated upstream
         validar(paciente, profesional, diagnostico);
+=======
+    public void modificarHistoriaClinica(String idHistoriaClinica, String dni, Date fechaConsulta, String idProfesional, String diagnostico) throws MiExcepcion {
+
+//        validar(dni, idProfesional, diagnostico);
+>>>>>>> Stashed changes
 
         Optional<HistoriaClinica> respuesta = historiaClinicaRepositorio.findById(idHistoriaClinica); //busco la historia clinica
 

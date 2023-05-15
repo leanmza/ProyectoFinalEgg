@@ -127,7 +127,7 @@ public class AdministradorControlador {
             LocalTime horaInicioLT = LocalTime.parse(horaInicio);
             LocalTime horaFinLT = LocalTime.parse(horaFin);
 
-            ObraSocial claseObraSocial = obraSocialServicio.buscarPorNombre(nombre);
+            ObraSocial claseObraSocial = obraSocialServicio.getOne(obraSocial);
 
             System.out.println(archivo.getBytes().toString());
             profesionalServicio.crearProfesional(nombre, apellido, correo, telefono,
@@ -136,7 +136,7 @@ public class AdministradorControlador {
 
             modelo.put("exito","¡Felicidades! Tu registro como profesional ha sido exitoso.");
 
-            return "redirect:/admin/dashboard";
+            return "redirect:/listar";
 
         } catch (MiExcepcion e) {
             System.out.println("Error al cargar Profesional");
