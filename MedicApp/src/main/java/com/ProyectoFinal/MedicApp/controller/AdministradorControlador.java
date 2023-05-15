@@ -116,10 +116,10 @@ public class AdministradorControlador {
     @PostMapping("/crearProfesional")
     public String crearProfesional(@RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String correo, @RequestParam String telefono, @RequestParam(required = false) MultipartFile archivo,
-            @RequestParam String password, @RequestParam String password2, @RequestParam String especialidad,
-            @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,
-            @RequestParam String obraSocial, /*@RequestParam("dias[]") List<String> dias,
-             */ @RequestParam String horaInicio, @RequestParam String horaFin
+            @RequestParam String password, @RequestParam String password2, @RequestParam(required = false) String especialidad,
+            @RequestParam(required = false) String ubicacion, @RequestParam(required = false) String modalidad, @RequestParam(required = false) Double honorarios,
+            @RequestParam(required = false) String obraSocial, /*@RequestParam("dias[]") List<String> dias,
+             */ @RequestParam(required = false) String horaInicio, @RequestParam(required = false) String horaFin
     /*, @RequestParam(required = false) List<Turno>turnos*/,ModelMap modelo) throws IOException {
 
         try {
@@ -147,7 +147,7 @@ public class AdministradorControlador {
         }
 
     }
-    
+
     // GUARDADO DE DATOS DEL FORMULARIO PROFESIONAL EN UNA SESSION PARA INYECTAR LUEGO DE AGRGAR UNA OBRA SOCIAL NUEVA
     @Transactional
     @PostMapping("/guardarDatosFormulario")
