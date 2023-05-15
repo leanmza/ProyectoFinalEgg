@@ -36,7 +36,7 @@
                     </tr>
                   </thead>
                   <tbody th:each="historiaClinica : ${historiasClinicas}">
-                    <tr>
+                      <tr class="trHistoria">
                       <td th:text="${historiaClinica.fechaConsulta}"></td>
                       <td th:text="${historiaClinica.profesional.especialidad}"></td>
                       <td th:text="${historiaClinica.profesional.apellido + ', ' + historiaClinica.profesional.nombre}"></td>
