@@ -11,6 +11,7 @@ import com.ProyectoFinal.MedicApp.Service.ImagenService;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
+
 import java.io.IOException;
 
 import java.text.ParseException;
@@ -51,14 +52,14 @@ public class PortalControlador {
 
     @Autowired
     ProfesionalService profesionalService;
-    
+
     @Autowired
     ObraSocialService obraSocialService;
-    
+
     @Autowired
     ImagenService imagenService;
 
-    
+
     @GetMapping("/")
     public String index() {
 
@@ -74,11 +75,12 @@ public class PortalControlador {
         }
         return "login.html"; //ver nombre de archivo
     }
+
     @GetMapping("/mis_profesionales")
     public String mis_profesionales() {
         return "mis_profesionales.html"; //ver nombre de archivo
     }
-    
+
 
     @Transactional
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_PROFESIONAL', 'ROLE_ADMINISTRADOR')")
@@ -111,7 +113,7 @@ public class PortalControlador {
     //FORMULARIO PARA REGISTRAR UN PACIENTE
     @GetMapping("/form_pac")
     public String form_pac(ModelMap model, HttpSession sessionFormulario, HttpSession obraSocialNueva) {
-        
+
         // EN EL CASO QUE HAYA AGREGADO UNA OBRA SOCIAL NUEVA, CARGAMOS LA SESSIONFORMULARIO
         if (sessionFormulario.getAttribute("datosFormulario") != null) {
 
@@ -125,11 +127,11 @@ public class PortalControlador {
             }
             model.put("recargaFormulario", sessionFormulario.getAttribute("datosFormulario"));
         }
-        
+
         // CARFA DE LAS OBRAS SOCIALES
         List<ObraSocial> obrasSociales = obraSocialService.listar();
         model.put("obrasSociales", obrasSociales);
-        
+
         return "formulario_paciente.html";
     }
 
@@ -141,19 +143,37 @@ public class PortalControlador {
                                    @RequestParam(required = false) String sexo, @RequestParam(required = false) MultipartFile archivo,
                                    @RequestParam String obraSocial, ModelMap modelo, HttpSession session) {
 
+
+        if (session.getAttribute("pacienteSession") != null) {
+            Paciente logueado = (Paciente) session.getAttribute("pacienteSession");
+            modelo.put("pacienteSession", logueado);
+
+            if (logueado.getRol().toString().equals("ADMINISTRADOR")) {
+
+                return "redirect:/inicio";
+            }
+        }
         try {
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
             Date fechaNacimiento = formato.parse(nacimiento);
             if (sexo == null) {
                 sexo = "No especificado";
             }
-            
-            ObraSocial ClaseObraSocial = obraSocialService.getOne(obraSocial);
-            
-            pacienteService.crearPaciente(nombre, apellido, dni, correo, telefono, password, password2, direccion,
-                    fechaNacimiento, sexo, archivo, ClaseObraSocial);
 
-            modelo.put("exito", "¡Gracias por registrarte en nuestra aplicación! Ahora puedes comenzar a utilizar nuestros servicios");
+            ObraSocial ClaseObraSocial = obraSocialService.getOne(obraSocial);
+            boolean correoExiste = usuarioDAO.validarCorreo(correo);
+
+            if (!correoExiste) {
+                pacienteService.crearPaciente(nombre, apellido, dni, correo, telefono, password, password2, direccion,
+                        fechaNacimiento, sexo, archivo, ClaseObraSocial);
+
+                modelo.put("exito", "¡Gracias por registrarte en nuestra aplicación! Ahora puedes comenzar a " +
+                        "utilizar nuestros servicios");
+                return "login.html";
+            } else {
+                modelo.put("error", "El correo electrónico ya está registrado");
+                return "formulario_paciente.html";
+            }
 
 
         } catch (MiExcepcion me) {
@@ -183,53 +203,6 @@ public class PortalControlador {
             modelo.put("sexo", sexo);
             return "formulario_paciente.html";
         }
-
-        if (session.getAttribute("pacienteSession") != null) {
-            Paciente logueado = (Paciente) session.getAttribute("pacienteSession");
-            modelo.put("pacienteSession", logueado);
-
-            if (logueado.getRol().toString().equals("ADMINISTRADOR")) {
-
-                return "redirect:/inicio";
-            }
-        }
-        try {
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-            Date fechaNacimiento = formato.parse(nacimiento);
-
-            ObraSocial ClaseObraSocial = obraSocialService.getOne(obraSocial);
-
-            if (sexo == null) {
-                sexo = "No especificado";
-            }
-            boolean correoExiste = usuarioDAO.validarCorreo(correo);
-
-            if (!correoExiste) {
-                pacienteService.crearPaciente(nombre, apellido, dni, correo, telefono, password, password2, direccion,
-                        fechaNacimiento, sexo, archivo, ClaseObraSocial);
-
-                modelo.put("exito", "¡Gracias por registrarte en nuestra aplicación! Ahora puedes comenzar a utilizar nuestros servicios");
-                return "login.html";
-            } else {
-                modelo.put("error", "El correo electrónico ya está registrado");
-                return "formulario_paciente.html";
-            }
-
-
-
-
-        } catch (MiExcepcion me) {
-            modelo.put("error", me.getMessage());
-            return "formulario_paciente.html";
-
-        } catch (ParseException ex) {
-            modelo.put("error", "La fecha ingresada es incorrecta, verifica que esté en formato DD/MM/AAAA");
-            return "formulario_paciente.html";
-        }
-
-
-
-
 
     }
 
@@ -279,42 +252,42 @@ public class PortalControlador {
 
         return "preguntas_frecuentes.html"; //ver nombre de archivo
     }
-    
+
     //FORMULARIO PARA CREAR UNA OBRA SOCIAL
-     @GetMapping("/form_obraSocial")
+    @GetMapping("/form_obraSocial")
     public String form_obraSocial(ModelMap model) {
-        
+
         return "formulario_obra_social.html";
     }
 
     // GUARDADO DE OBRA SOCIAL NUEVA
-     @Transactional
+    @Transactional
     @PostMapping("/registroObraSocial")
     public String registroObraSocial(@RequestParam("nombreObraSocial") String nombreObraSocial, HttpSession obraSocialNueva) {
-       
+
         try {
             obraSocialService.crearObraSocial(nombreObraSocial);
-           
+
             System.out.println("Ingreso de obra social exitoso");
             obraSocialNueva.setAttribute("nuevaObraSocial", nombreObraSocial);
             return "formulario_obra_social.html";
-            
+
         } catch (MiExcepcion me) {
             System.out.println("Ingreso de obra social FALLIDO!\n" + me.getMessage());
-            
-             return "formulario_obra_social.html";
-            
-        }  
+
+            return "formulario_obra_social.html";
+
+        }
     }
 
     @Transactional
     @PostMapping("/guardarDatosFormulario")
-    public String guardarDatosFormulario (@RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido,
-            @RequestParam(required = false) String dni, @RequestParam(required = false) String correo, @RequestParam(required = false) String telefono,
-            @RequestParam(required = false) String password, @RequestParam(required = false) String password2, @RequestParam(required = false) String direccion,
-            @RequestParam(required = false) String nacimiento, @RequestParam(required = false) String sexo,
-            @RequestParam(required = false) MultipartFile archivo, @RequestParam(required = false) String obraSocial, HttpSession sessionFormulario) throws MiExcepcion {
-        
+    public String guardarDatosFormulario(@RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido,
+                                         @RequestParam(required = false) String dni, @RequestParam(required = false) String correo, @RequestParam(required = false) String telefono,
+                                         @RequestParam(required = false) String password, @RequestParam(required = false) String password2, @RequestParam(required = false) String direccion,
+                                         @RequestParam(required = false) String nacimiento, @RequestParam(required = false) String sexo,
+                                         @RequestParam(required = false) MultipartFile archivo, @RequestParam(required = false) String obraSocial, HttpSession sessionFormulario) throws MiExcepcion {
+
         try {
             ObraSocial ClaseObraSocial = obraSocialService.buscarPorNombre(obraSocial);
 
@@ -335,13 +308,13 @@ public class PortalControlador {
             paciente.setSexo(sexo);
             paciente.setObraSocial(ClaseObraSocial);
 
-            if(!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
+            if (!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
                 Imagen imagen = imagenService.guardar(archivo);
                 paciente.setImagen(imagen);
             }
 
             sessionFormulario.setAttribute("datosFormulario", paciente);
-        
+
         } catch (ParseException ex) {
             Logger.getLogger(PortalControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
