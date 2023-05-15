@@ -41,7 +41,7 @@ h3 {
 }
 
 .btnEnviar{
-        background-color: #012350 !important;
+    background-color: #012350 !important;
     color: white;
     border-color: #012350    !important;
     box-shadow: 0px 1px 4px #17252a;
@@ -150,7 +150,7 @@ header {
 
 .btnTurnoHeader {
     margin-right: 1em;
-      margin-left: 1em;
+    margin-left: 1em;
 }
 
 .imagen-perfil {
@@ -554,7 +554,7 @@ h5 {
 
 .horariosDiv{
     padding: 0 10% 5% 10% !important;
-    
+
 }
 .horariosInput{
     justify-content: center;
@@ -783,34 +783,34 @@ form label{
 }
 
 .card{
-     box-shadow: 0px 1px 4px #17252a;
+    box-shadow: 0px 1px 4px #17252a;
 }
 .trTurnos, .trHistoria{
     text-align: center !important;
 }
 
 .divisorFormPro{
- margin-top: 2% !important;   
+    margin-top: 2% !important;   
 }
 
 
 .btnQuieroTurno{
-        background-color: #012350 !important;
+    background-color: #012350 !important;
     color: white;
     border-color: #012350    !important;
     box-shadow: 0px 1px 4px #17252a;
-   
+
 }
 .btnAnular{
-        box-shadow: 0px 1px 4px #17252a;
+    box-shadow: 0px 1px 4px #17252a;
 }
 
 .btnValorar, .btnBaja{
-     box-shadow: 0px 1px 4px #17252a;
+    box-shadow: 0px 1px 4px #17252a;
 }
 
 .colIzquierdaHistoria{
-     border-right:  solid 1px #012350;
+    border-right:  solid 1px #012350;
 }
 
 .colDerechaHistoria{
@@ -819,18 +819,18 @@ form label{
 
 .check{
     border: solid 1px #aaa !important   ;
-    
+
 
 }
-    .califica{
-        align-items: center;
-    }
-    
-    .DivBtnBaja{
-        display: flex;
-        justify-content: center;
-        margin-top: 2em !important;
-    }
+.califica{
+    align-items: center;
+}
+
+.DivBtnBaja{
+    display: flex;
+    justify-content: center;
+    margin-top: 2em !important;
+}
 /* LOGIN*/
 
 /* MEDIAS QUERYS */

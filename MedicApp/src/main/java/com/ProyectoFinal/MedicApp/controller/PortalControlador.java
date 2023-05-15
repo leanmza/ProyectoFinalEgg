@@ -72,11 +72,15 @@ public class PortalControlador {
     @Transactional
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_PROFESIONAL', 'ROLE_ADMINISTRADOR')")
     @GetMapping("/inicio")
-    public String inicio(HttpSession session, ModelMap modelo, @RequestParam (required = false) String exito) {
+    public String inicio(HttpSession session, ModelMap modelo, @RequestParam(required = false) String exito) {
 
-        if("turnoExitoso".equals(exito)){
+        if ("turnoExitoso".equals(exito)) {
             modelo.put("exito", "¡¡¡El turno se cargo exitosamente!!!");
         }
+
+        if ("registroExitoso".equals(exito)) {
+            modelo.put("registroExitoso", "¡Gracias por registrarte en nuestra aplicación! Ahora puedes comenzar a utilizar nuestros servicios");
+        } 
         
         if (session.getAttribute("pacienteSession") != null) {
             Paciente logueado = (Paciente) session.getAttribute("pacienteSession");
@@ -102,11 +106,9 @@ public class PortalControlador {
 
     //FORMULARIO PARA REGISTRAR UN PACIENTE
     @GetMapping("/form_pac")
-    public String form_pac(@RequestParam(required = false) String error, ModelMap model, HttpSession sessionFormulario, HttpSession obraSocialNueva) {
+    public String form_pac(ModelMap model, HttpSession sessionFormulario, HttpSession obraSocialNueva) {
 
-        if ("correo_registrado".equals(error)) {
-            model.put("error", "El correo electrónico ya está registrado");
-        }
+        
         // EN EL CASO QUE HAYA AGREGADO UNA OBRA SOCIAL NUEVA, CARGAMOS LA SESSIONFORMULARIO
         if (sessionFormulario.getAttribute("datosFormulario") != null) {
 
@@ -134,48 +136,33 @@ public class PortalControlador {
             @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
             @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
             @RequestParam(required = false) String sexo, @RequestParam(required = false) MultipartFile archivo,
-            @RequestParam String obraSocial, ModelMap modelo, HttpSession session) {
+            @RequestParam(required = false) String obraSocial, ModelMap modelo, HttpSession session) {
 
         try {
-            // VERIFICAMOS QUE EL CORREO NO TENGA UNA CUENTA
-            if (pacienteRepositorio.buscarPorEmail(correo) == null) {
 
-                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-                Date fechaNacimiento = formato.parse(nacimiento);
+            
 
-                if (sexo == null) {
-                    sexo = "No especificado";
-                }
-
-                ObraSocial ClaseObraSocial = obraSocialService.getOne(obraSocial);
-
-                pacienteService.crearPaciente(nombre, apellido, dni, correo, telefono, password, password2, direccion,
-                        fechaNacimiento, sexo, archivo, ClaseObraSocial);
-
-                modelo.put("exito", "¡Gracias por registrarte en nuestra aplicación! Ahora puedes comenzar a utilizar nuestros servicios");
-                return "login.html";
-            } else {
-                return "redirect:/form_pac?error=correo_registrado" + 
-                        "&nombre=" + nombre +
-                        "&apellido=" + apellido +
-                        "&dni=" + dni +
-                        "&correo=" + correo +
-                        "&telefono=" + telefono +
-                        "&nacimiento=" + nacimiento +
-                        "&direccion=" + direccion +
-                        "&sexo=" + sexo;
+            if (sexo == null) {
+                sexo = "No especificado";
             }
+
+            
+
+            pacienteService.crearPaciente(nombre, apellido, dni, correo, telefono, password, password2, direccion,
+                    nacimiento, sexo, archivo, ClaseObraSocial);
+
+            return "redirect:/inicio?exito=registroExitoso" ;
 
         } catch (MiExcepcion me) {
             System.out.println("Ingreso de paciente FALLIDO!\n" + me.getMessage());
             modelo.put("error", me.getMessage());
-            
-        } catch (ParseException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-            modelo.put("error", "La fecha ingresada es incorrecta, verifica que esté en formato DD/MM/AAAA");
         }
-        
+//        } catch (ParseException ex) {
+//            System.out.println(ex.getMessage());
+//            ex.printStackTrace();
+//            modelo.put("error", "La fecha ingresada es incorrecta,\nVerifica que se haya ingresado");
+//        }
+
         modelo.put("nombre", nombre);
         modelo.put("apellido", apellido);
         modelo.put("dni", dni);
@@ -187,7 +174,7 @@ public class PortalControlador {
         return "formulario_paciente.html";
 
     }
-    
+
     @Transactional
     @GetMapping("/listar")
     public String listar(ModelMap model) {
@@ -195,7 +182,6 @@ public class PortalControlador {
         model.addAttribute("profesionales", profesionales);
         return "listar.html";
     }
-
 
 //    @Transactional
 //    @PostMapping("/buscarespec")
@@ -207,7 +193,6 @@ public class PortalControlador {
 //
 //        return "listaespecialidad.html";
 //    }
-
     @Transactional
     @PostMapping("/buscarespechonorario")
     public String buscarespechonorario(@RequestParam("especialidad") String especialidad, ModelMap model) {
