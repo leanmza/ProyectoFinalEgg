@@ -55,7 +55,12 @@ public class PortalControlador {
     }
 
     @GetMapping("/login")
-    public String login(@RequestParam(required = false) String error, ModelMap modelo) {
+    public String login(@RequestParam(required = false) String error, ModelMap modelo, @RequestParam(required = false) String exito) {
+        
+        if ("registroExitoso".equals(exito)) {
+            modelo.put("registroExitoso", "¡Gracias por registrarte en nuestra aplicación! Ahora puedes comenzar a utilizar nuestros servicios");
+        } 
+        
         if (error != null) {
 
             modelo.put("error", "Lo siento, no hemos podido iniciar sesión con las credenciales que proporcionaste."
@@ -77,10 +82,6 @@ public class PortalControlador {
         if ("turnoExitoso".equals(exito)) {
             modelo.put("exito", "¡¡¡El turno se cargo exitosamente!!!");
         }
-
-        if ("registroExitoso".equals(exito)) {
-            modelo.put("registroExitoso", "¡Gracias por registrarte en nuestra aplicación! Ahora puedes comenzar a utilizar nuestros servicios");
-        } 
         
         if (session.getAttribute("pacienteSession") != null) {
             Paciente logueado = (Paciente) session.getAttribute("pacienteSession");
@@ -136,20 +137,15 @@ public class PortalControlador {
             @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
             @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
             @RequestParam(required = false) String sexo, @RequestParam(required = false) MultipartFile archivo,
-            @RequestParam(required = false) String obraSocial, ModelMap modelo, HttpSession session) {
+            @RequestParam(required = false) String obraSocial, ModelMap modelo, HttpSession session) throws ParseException {
 
         try {
-
-            
-
             if (sexo == null) {
                 sexo = "No especificado";
             }
 
-            
-
-            pacienteService.crearPaciente(nombre, apellido, dni, correo, telefono, password, password2, direccion,
-                    nacimiento, sexo, archivo, ClaseObraSocial);
+            pacienteService.crearPaciente(nombre, apellido, dni, correo, direccion, telefono, nacimiento, sexo,
+                    obraSocial, password, password2, archivo);
 
             return "redirect:/inicio?exito=registroExitoso" ;
 
@@ -157,11 +153,6 @@ public class PortalControlador {
             System.out.println("Ingreso de paciente FALLIDO!\n" + me.getMessage());
             modelo.put("error", me.getMessage());
         }
-//        } catch (ParseException ex) {
-//            System.out.println(ex.getMessage());
-//            ex.printStackTrace();
-//            modelo.put("error", "La fecha ingresada es incorrecta,\nVerifica que se haya ingresado");
-//        }
 
         modelo.put("nombre", nombre);
         modelo.put("apellido", apellido);

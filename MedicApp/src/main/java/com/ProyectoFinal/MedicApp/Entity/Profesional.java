@@ -2,6 +2,7 @@ package com.ProyectoFinal.MedicApp.Entity;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -29,8 +30,7 @@ public class Profesional extends Persona {
     // SE GUARDA LA ZONA DE TRABAJO
     private String ubicacion;
 
-   
-//    private List<String> dias;
+    private String[] dias;
 
     // LISTADO DE LAS OBRAS SOCIALES CON LAS CUALES TRABAJA
     @OneToOne

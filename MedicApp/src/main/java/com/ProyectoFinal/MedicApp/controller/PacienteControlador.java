@@ -74,7 +74,7 @@ public class PacienteControlador {
         }
         modelo.put("paciente", paciente);
         
-        // CARFA DE LAS OBRAS SOCIALES
+        // CARGA DE LAS OBRAS SOCIALES
         List<ObraSocial> obrasSociales = obraSocialServicio.listar();
         modelo.put("obrasSociales", obrasSociales);
         
@@ -96,8 +96,7 @@ public class PacienteControlador {
             
             ObraSocial claseObraSocial = obraSocialServicio.buscarPorNombre(obraSocial); // A PARTIR DEL ID BUSCAMOS LA CLASE OBRAsOCIAL
             
-            pacienteService.modificarPaciente(id, nombre, apellido, dni, correo, telefono, password, password2, direccion, 
-                    fechaNacimiento, sexo, archivo, claseObraSocial);
+            pacienteService.modificarPaciente(id, nombre, apellido, dni, correo, direccion, telefono, nacimiento, sexo, obraSocial, password, password2, archivo);
             session.setAttribute("pacienteSession", pacienteService.getOne(id));
             return "redirect:/inicio";
 

@@ -50,8 +50,12 @@ public class AdministradorControlador {
     ImagenService imagenServicio;
 
     @GetMapping("/dashboard")
-    public String panelAdministrativo() {
+    public String panelAdministrativo(ModelMap modelo, @RequestParam(required = false) String exito) {
 
+        if ("registroExitoso".equals(exito)) {
+            modelo.put("registroExitoso", "¡Gracias por registrarte en nuestra aplicación! Ahora puedes comenzar a utilizar nuestros servicios");
+        }
+        
         return "panel.html";
     }
 
@@ -118,25 +122,29 @@ public class AdministradorControlador {
             @RequestParam String correo, @RequestParam String telefono, @RequestParam(required = false) MultipartFile archivo,
             @RequestParam String password, @RequestParam String password2, @RequestParam String especialidad,
             @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,
-            @RequestParam String obraSocial, /*@RequestParam("dias[]") List<String> dias,
-             */ @RequestParam String horaInicio, @RequestParam String horaFin
+            @RequestParam String obraSocial, @RequestParam("dias[]") String[] dias,
+            @RequestParam String horaInicio, @RequestParam String horaFin
     /*, @RequestParam(required = false) List<Turno>turnos*/,ModelMap modelo) throws IOException {
 
         try {
-
+            System.out.println("Horas: " + horaInicio + "  " + horaFin);
             LocalTime horaInicioLT = LocalTime.parse(horaInicio);
             LocalTime horaFinLT = LocalTime.parse(horaFin);
 
             ObraSocial claseObraSocial = obraSocialServicio.getOne(obraSocial);
-
+            
+            System.out.println("Dias: ");
+            for (String dia : dias) {
+                System.out.println(dia.toString());
+            }
+            System.out.println("DiasFin ");
+            
             System.out.println(archivo.getBytes().toString());
             profesionalServicio.crearProfesional(nombre, apellido, correo, telefono,
                     archivo, password, password2, especialidad, ubicacion, modalidad,
-                    honorarios, claseObraSocial/*, dias*/, horaInicioLT, horaFinLT);
+                    honorarios, claseObraSocial, dias, horaInicioLT, horaFinLT);
 
-            modelo.put("exito","¡Felicidades! Tu registro como profesional ha sido exitoso.");
-
-            return "redirect:/listar";
+            return "redirect:/dashboard?exito=registroExitoso";
 
         } catch (MiExcepcion e) {
             System.out.println("Error al cargar Profesional");
