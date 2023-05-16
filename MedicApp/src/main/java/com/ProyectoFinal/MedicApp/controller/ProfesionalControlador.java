@@ -63,8 +63,12 @@ public class ProfesionalControlador {
 
     @Transactional
     @GetMapping("/perfil")
-    public String perfil(HttpSession session, Model modelo, HttpSession obraSocialNueva) {
-
+    public String perfil(HttpSession session, ModelMap modelo, HttpSession obraSocialNueva, @RequestParam(required = false) String error) {
+        
+        if (error != null && error.equals("errorActualizacion")) {
+            String errorMessage = (String) modelo.getAttribute("error");
+            modelo.put("error", errorMessage);
+        }
         // CARGAMOS LOS DATOS DEL PROFESIONAL
         Profesional profesional = (Profesional) session.getAttribute("profesionalSession");
         // EN EL CASO QUE HAYA AGREGADO UNA OBRA SOCIAL NUEVA, ACTUALIZAMOS LA LISTA DE OBRAS SOCIALES SETEADAS
@@ -103,17 +107,20 @@ public class ProfesionalControlador {
             @RequestParam String correo, @RequestParam String telefono, @RequestParam(required = false) MultipartFile archivo,
             @RequestParam(required = false) String password, @RequestParam(required = false) String password2, @RequestParam String especialidad,
             @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,
-            @RequestParam String obraSocial, /*@RequestParam("dias[]") List<String> dias,*/
-            @RequestParam(required = false) LocalTime horaInicio, @RequestParam(required = false) LocalTime horaFin /*, @RequestParam(required = false) List<Turno>turnos*/,
-             HttpSession session) {
+            @RequestParam String obraSocial, @RequestParam(value = "dias[]", required = false) String[] diasSeleccionados,
+            @RequestParam(required = false) String horaInicio, @RequestParam(required = false) String horaFin, /*@RequestParam(required = false) List<Turno>turnos,*/
+            HttpSession session, Model modelo) {
 
         try {
 
+            LocalTime horaInicioLT = LocalTime.parse(horaInicio);
+            LocalTime horaFinLT = LocalTime.parse(horaFin);
+            
             ObraSocial claseObraSocial = obraSocialServicio.buscarPorNombre(obraSocial); // A PARTIR DEL NOMBRE BUSCAMOS LA CLASE OBRAsOCIAL
             System.out.println("OS: " + claseObraSocial.toString());
 
             profesionalService.modificarProfesional(id, nombre, apellido, correo, telefono, archivo, password, password2,
-                    especialidad, ubicacion, modalidad, honorarios, claseObraSocial, horaInicio, horaFin);
+                    especialidad, ubicacion, modalidad, honorarios, claseObraSocial, diasSeleccionados, horaInicioLT, horaFinLT);
             session.setAttribute("profesionalSession", profesionalService.getOne(id));
 
             return "redirect:/inicio";
@@ -122,7 +129,8 @@ public class ProfesionalControlador {
             System.out.println("Error al actualizar Profesional");
             System.out.println(e.getMessage());
             e.printStackTrace();
-            return "editar_profesional.html";
+            modelo.addAttribute("error", e.getMessage());
+            return "redirect:/perfil?error=errorActualizacion";
         }
     }
 

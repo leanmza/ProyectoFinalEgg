@@ -257,6 +257,8 @@
                                         type="checkbox"
                                         name="dias[]"
                                         id="lunes"
+                                        value="lunes"
+                                        th:checked="${recargaFormulario != null && #arrays.contains(recargaFormulario.dias, 'lunes')}"
                                         class="form-check-input check"
                                         />
                                     <label for="lunes" class="form-check-label labelObraSocial"
@@ -271,6 +273,8 @@
                                         type="checkbox"
                                         name="dias[]"
                                         id="martes"
+                                        value="martes"
+                                        th:checked="${recargaFormulario != null && #arrays.contains(recargaFormulario.dias, 'martes')}"
                                         class="form-check-input check"
                                         />
                                     <label for="martes" class="form-check-label labelObraSocial"
@@ -285,6 +289,8 @@
                                         type="checkbox"
                                         name="dias[]"
                                         id="miercoles"
+                                        value="miercoles"
+                                        th:checked="${recargaFormulario != null && #arrays.contains(recargaFormulario.dias, 'miercoles')}"
                                         class="form-check-input check"
                                         />
                                     <label
@@ -301,6 +307,8 @@
                                         type="checkbox"
                                         name="dias[]"
                                         id="jueves"
+                                        value="jueves"
+                                        th:checked="${recargaFormulario != null && #arrays.contains(recargaFormulario.dias, 'jueves')}"
                                         class="form-check-input check"
                                         />
                                     <label for="jueves" class="form-check-label labelObraSocial"
@@ -314,6 +322,8 @@
                                         type="checkbox"
                                         name="dias[]"
                                         id="viernes"
+                                        value="viernes"
+                                        th:checked="${recargaFormulario != null && #arrays.contains(recargaFormulario.dias, 'viernes')}"
                                         class="form-check-input check"
                                         />
                                     <label for="viernes" class="form-check-label labelObraSocial"
@@ -327,6 +337,8 @@
                                         type="checkbox"
                                         name="dias[]"
                                         id="sabado"
+                                        value="sabado"
+                                        th:checked="${recargaFormulario != null && #arrays.contains(recargaFormulario.dias, 'sabado')}"
                                         class="form-check-input check"
                                         />
                                     <label for="sabado" class="form-check-label labelObraSocial"

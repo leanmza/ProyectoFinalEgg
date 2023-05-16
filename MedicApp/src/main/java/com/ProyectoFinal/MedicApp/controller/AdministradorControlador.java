@@ -122,7 +122,7 @@ public class AdministradorControlador {
             @RequestParam String correo, @RequestParam String telefono, @RequestParam(required = false) MultipartFile archivo,
             @RequestParam String password, @RequestParam String password2, @RequestParam String especialidad,
             @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,
-            @RequestParam String obraSocial, @RequestParam("dias[]") String[] dias,
+            @RequestParam String obraSocial, @RequestParam(value = "dias[]", required = false) String[] diasSeleccionados,
             @RequestParam String horaInicio, @RequestParam String horaFin
     /*, @RequestParam(required = false) List<Turno>turnos*/,ModelMap modelo) throws IOException {
 
@@ -133,16 +133,10 @@ public class AdministradorControlador {
 
             ObraSocial claseObraSocial = obraSocialServicio.getOne(obraSocial);
             
-            System.out.println("Dias: ");
-            for (String dia : dias) {
-                System.out.println(dia.toString());
-            }
-            System.out.println("DiasFin ");
-            
             System.out.println(archivo.getBytes().toString());
             profesionalServicio.crearProfesional(nombre, apellido, correo, telefono,
                     archivo, password, password2, especialidad, ubicacion, modalidad,
-                    honorarios, claseObraSocial, dias, horaInicioLT, horaFinLT);
+                    honorarios, claseObraSocial, diasSeleccionados, horaInicioLT, horaFinLT);
 
             return "redirect:/dashboard?exito=registroExitoso";
 
@@ -162,9 +156,9 @@ public class AdministradorControlador {
     public String guardarDatosFormulario(@RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido,
             @RequestParam(required = false) String correo, @RequestParam(required = false) String telefono, @RequestParam(required = false) MultipartFile archivo,
             @RequestParam(required = false, defaultValue = "") String especialidad, @RequestParam(required = false) String ubicacion, @RequestParam(required = false) String modalidad,
-            @RequestParam(required = false) Double honorarios, @RequestParam(required = false) String obraSocial, /*@RequestParam("dias[]") List<String> dias,
-             */ @RequestParam(required = false) String horaInicio, @RequestParam(required = false) String horaFin /*, @RequestParam(required = false) List<Turno>turnos*/,
-             HttpSession sessionFormulario) throws IOException, MiExcepcion {
+            @RequestParam(required = false) Double honorarios, @RequestParam(required = false) String obraSocial, @RequestParam(value = "dias[]", required = false) String[] diasSeleccionados,
+            @RequestParam(required = false) String horaInicio, @RequestParam(required = false) String horaFin /*, @RequestParam(required = false) List<Turno>turnos*/,
+            HttpSession sessionFormulario) throws IOException, MiExcepcion {
 
         ObraSocial ClaseObraSocial = obraSocialServicio.buscarPorNombre(obraSocial);
 
@@ -192,7 +186,7 @@ public class AdministradorControlador {
         profesional.setUbicacion(ubicacion);
         profesional.setHonorario(honorarios);
         profesional.setObraSocial(ClaseObraSocial);
-//        profesional.setDias(dias);
+        profesional.setDias(diasSeleccionados);
         if (!horaInicio.isEmpty()) {
             LocalTime horaInicioLT = LocalTime.parse(horaInicio);
             profesional.setHoraInicio(horaInicioLT);
