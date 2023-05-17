@@ -285,7 +285,7 @@ public class PacienteService implements UserDetailsService {
         Optional<Paciente> respuesta = pacienteRepositorio.findById(idPaciente);
         if (respuesta.isPresent()) {
             Paciente paciente = respuesta.get();
-            paciente.setProfesionales(profesionales);
+
 
             pacienteRepositorio.save(paciente);
         }
