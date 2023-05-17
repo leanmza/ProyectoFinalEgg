@@ -193,7 +193,8 @@ public class PacienteControlador {
 
     @Transactional
     @PostMapping("/calificarProfesional/{id}")
-    public String calificarProfesional(@PathVariable("id") String id, @RequestParam("puntaje") String puntaje) {
+    public String calificarProfesional(@PathVariable("id") String id, @RequestParam("puntaje") String puntaje) { //recibe el id del profesional
+        System.out.println("puntaje " + puntaje);
         pacienteService.calificarProfesional(id, puntaje);
         return "redirect:/paciente/misProfesionales";
     }

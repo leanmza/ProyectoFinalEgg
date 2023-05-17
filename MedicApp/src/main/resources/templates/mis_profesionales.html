@@ -53,10 +53,10 @@
                                 <span th:if="${profesional.calificacion >= 4.75}"> <img src="../../img/estrella50.jpg"  class="imgEstrella"> </span>
 
                             <td scope="col" class="col-1 tdValorar">
-                           
-                                
+
+
                                 <button type="button"class="btn btn-warning btnValorar">Valorar</button>
-                         
+
                                 <div class="formValorar" id="formValorar">
                                     <form
                                         th:action="@{/paciente/calificarProfesional/__${profesional.id}__}"
@@ -65,36 +65,27 @@
                                         <div class="row rowDatosPersonales">
                                             <div class="barraBusqueda col-xs-12">
                                                 <div class="container ">
-                                                    <div class="star-widget">
-                                                        <input type="radio" name="puntaje" value="5" id="rate-5">
-                                                        <label for="rate-5" class="fas fa-star"></label>
-                                                        <input type="radio" name="puntaje" value="4" id="rate-4">
-                                                        <label for="rate-4" class="fas fa-star"></label>
-                                                        <input type="radio" name="puntaje" value="3" id="rate-3">
-                                                        <label for="rate-3" class="fas fa-star"></label>
-                                                        <input type="radio" name="puntaje" value="2" id="rate-2">
-                                                        <label for="rate-2" class="fas fa-star"></label>
-                                                        <input type="radio" name="puntaje" value="1" id="rate-1" checked>
-                                                        <label for="rate-1" class="fas fa-star"></label>
+                                                    <div class="rating" data-rating="0">
+                                                        <span class="star"></span>
+                                                        <span class="star"></span>
+                                                        <span class="star"></span>
+                                                        <span class="star"></span>
+                                                        <span class="star"></span>
+                                                        <input type="hidden" class="calificacion-input" name="puntaje" value="">
                                                     </div>
-                                               
                                                 
-                                                
-                                                <button type="submit" class="btn btn-primary  botonesLista btnCalificar">
-                                                    Calificar
-                                              
-                                                     </div>
+                                                    
+
+                                                    <button type="submit" class="btn btn-primary  botonesLista btnCalificar">
+                                                        Calificar
+
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
                                 </div>        
 
                             </td>
-
-
-
-
-
 
                             <td scope="col" class="col-2 tdTurno"><a th:href="@{/turno/formularioTurno/__${profesional.id}__}">
 
@@ -111,14 +102,6 @@
 
     </div>
 </div>
-
-
-
-
-
-
-
-
 
 </main>
 <!--FOOTER-->

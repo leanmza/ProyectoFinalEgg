@@ -660,36 +660,31 @@ form label{
     display: grid;
 }
 
-.star-widget{
-    padding-bottom: 10%;
-    display: flex;
-    flex-direction: row-reverse;
-}
-.container .star-widget input {
-    display: none;
+.rating {
+  cursor: pointer;
 }
 
-.star-widget label {
-    font-size: 20px;
-    color: #444;
-    padding: 5px;
-    float: right;
-    transition: all 0.2s ease;
+.star {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  transition-property: color;
+  transition-duration: 0.1s;
+  transition-delay: 0.05s;
+  background-image: url(estrella-gris.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 
-.star-widget input[type="radio"]:checked ~ label {
-    color: #fd4;
-}
-
-.star-widget input#rate-5:checked ~ label {
-    /*    color: #fe7;
-        text-shadow: 0 0 20px #952;*/
-}
-
-.star-widget input:checked ~ label:before {
-    content: '\f005';
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
+.star:hover,
+.star:hover ~ .star {
+  content: "\f005";
+  font-family: "Font Awesome 6 Solid";
+  font-weight: 900;
+  background-image: url(estrella-amarilla.png);
+  color: #ffc107;
+  flex-direction: row-reverse;
 }
 
 .diaDeshabilitado{
