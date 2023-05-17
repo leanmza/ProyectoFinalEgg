@@ -19,7 +19,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,12 +58,12 @@ public class ProfesionalService implements UserDetailsService {
     @Transactional
     public void crearProfesional(String nombre, String apellido, String correo, String telefono,
             MultipartFile archivo, String password, String password2, String especialidad, String ubicacion,
-            String modalidad, Double honorarios, ObraSocial obraSocial/*, List<String> dias*/,
+            String modalidad, Double honorarios, ObraSocial obraSocial, String[] dias,
             LocalTime horaInicio, LocalTime horaFin /*List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
     ) throws MiExcepcion {
 
         validar(nombre, apellido, correo, telefono, password, password2,
-                especialidad, ubicacion, modalidad, honorarios, obraSocial /*, dias*/, horaInicio, horaFin);
+                especialidad, ubicacion, modalidad, honorarios, obraSocial, dias, horaInicio, horaFin);
 
         Profesional profesional = new Profesional();
 
@@ -85,13 +87,8 @@ public class ProfesionalService implements UserDetailsService {
         profesional.setUbicacion(ubicacion);
         profesional.setHonorario(honorarios);
         profesional.setObraSocial(obraSocial);
-//        profesional.setDias(dias);
-        profesional.setHoraInicio(horaInicio);
-        profesional.setHoraFin(horaFin);
-        profesional.setCantVisitas(0);
-        profesional.setPuntaje(0);
-        profesional.setCalificacion(0.0);
-
+        
+        // CREAMOS LA LISTA DE HORARIOS SEPARADOS CADA 30 MINUTOS
         ArrayList<String> horario = new ArrayList();
         System.out.println("horario" + horario);
         while (horaInicio.isBefore(horaFin)) {
@@ -102,8 +99,17 @@ public class ProfesionalService implements UserDetailsService {
         for (String horas : horario) {
             System.out.println("horas" + horas);
         }
-
         profesional.setHoras(horario);
+        
+        // CREAMOS UN HASHMAP CON LOS DIAS DE TRABAJO Y LE INSERTAMOS EL HORARIO DE TRABAJO
+        
+        profesional.setDias(dias);
+        
+        profesional.setHoraInicio(horaInicio);
+        profesional.setHoraFin(horaFin);
+        profesional.setCantVisitas(0);
+        profesional.setPuntaje(0);
+        profesional.setCalificacion(0.0);      
 
         profesionalRepositorio.save(profesional);
 
@@ -112,12 +118,12 @@ public class ProfesionalService implements UserDetailsService {
     @Transactional
     public void modificarProfesional(String idProfesional, String nombre, String apellido, String correo, String telefono,
             MultipartFile archivo, String password, String password2, String especialidad, String ubicacion,
-            String modalidad, Double honorarios, ObraSocial obraSocial, /* List<String> dias,*/
+            String modalidad, Double honorarios, ObraSocial obraSocial, String[] dias,
             LocalTime horaInicio, LocalTime horaFin/*, List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
     ) throws MiExcepcion {
 
         validar(nombre, apellido, correo, telefono, password, password2,
-                especialidad, ubicacion, modalidad, honorarios, obraSocial/*, dias */, horaInicio, horaFin);
+                especialidad, ubicacion, modalidad, honorarios, obraSocial, dias , horaInicio, horaFin);
 
         Optional<Profesional> respuesta = profesionalRepositorio.findById(idProfesional);
 
@@ -220,7 +226,7 @@ public class ProfesionalService implements UserDetailsService {
 
     public void validar(String nombre, String apellido, String correo, String telefono,
             String password, String password2, String especialidad, String ubicacion,
-            String modalidad, Double honorarios, ObraSocial obraSocial /*, List<String> dias*/,
+            String modalidad, Double honorarios, ObraSocial obraSocial ,String[] dias,
             LocalTime horaInicio, LocalTime horaFin) throws MiExcepcion {
 
         try {
@@ -270,9 +276,9 @@ public class ProfesionalService implements UserDetailsService {
             if (obraSocial == null) {
                 throw new MiExcepcion("Las obras sociales no pueden ser nulas o vacías");
             }
-//            if (dias == null || dias.isEmpty()) {
-//                throw new MiExcepcion("Los días no pueden ser nulos o vacíos");
-//            }
+            if (dias == null) {
+                throw new MiExcepcion("Los días no pueden ser nulos o vacíos");
+            }
             if (horaInicio == null) {
                 throw new MiExcepcion("La hora de inicio no puede ser nula");
             }

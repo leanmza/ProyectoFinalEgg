@@ -11,6 +11,12 @@
         <!--MAIN-->
 
         <main>
+
+            <div class="alert alert-danger mensajeError" role="alert"  th:if="${error != null}" >
+                <p class="custom-error-message mensaje" th:text="${error}"></p>
+            </div>
+
+
             <div id="divFormPaciente" class="container-fluid divFormPaciente contenedorMain">
                 <div class="row titulo">
                     <h3>EDITAR PERFIL</h3>
@@ -31,6 +37,23 @@
                             <h4>DATOS PERSONALES</h4>
                         </div>
 
+                        <!-- IMAGEN DE PERFIL -->
+                        <div class="d-flex justify-content-center">
+
+
+                            <img class="rounded-circle img-fluid" style="width: 150px; height: 150px;"
+                                 sec:authorize ="hasRole ('PACIENTE')"
+                                 th:src="${session.pacienteSession.imagen != null ? '/imagen/perfil/__${session.pacienteSession.id}__' : '../predeterminada_perfil.png'}" >
+
+                            <img class="rounded-circle img-fluid" style="width: 150px; height: 150px;"
+                                 sec:authorize ="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')"
+                                 th:src="${session.profesionalSession.imagen != null ? '/imagen/perfil/__${session.profesionalSession.id}__' : '../predeterminada_perfil.png'}" >
+
+                            <a href="#" class="position-absolute top-0 end-0" style="width: 40px; height: 40px;">
+                                <i class="fas fa-camera"></i>
+                            </a>
+
+                        </div>
 
                         <!-- INPUT OCULTO DEL ID -->
                         <input hidden type="text" id="id" name="id" th:value="${profesional.id}" />
@@ -233,250 +256,257 @@
                         </div>
                     </div>
 
-                    <!-- DÍAS Y HORARIOS -->
-                    <div class="row rowDiasHorarios">
-                        <div class="tituloForm">
-                            <h4>DÍAS Y HORARIOS DE ATENCIÓN</h4>
+                    <!-- INPUT DE DÍAS -->
+                    <div class="col-xs-12">
+                        <div class="col-12">
+                            <h5>Días de atención</h5>
                         </div>
-
-                        <!-- INPUT DE DÍAS -->
-                        <div class="col-xs-12">
-                            <div class="col-12">
-                                <h5>Días de atención</h5>
-                            </div>
-                            <div class="row rowObrasSociales">
-                                <div
-                                    class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check form-switch"
-                                    >
-                                    <input
-                                        type="checkbox"
-                                        name="dias[]"
-                                        id="lunes"
-                                        class="form-check-input"
-                                        />
-                                    <label for="lunes" class="form-check-label labelObraSocial"
-                                           >Lunes</label
-                                    >
-                                </div>
-
-                                <div
-                                    class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check form-switch"
-                                    >
-                                    <input
-                                        type="checkbox"
-                                        name="dias[]"
-                                        id="martes"
-                                        class="form-check-input"
-                                        />
-                                    <label for="martes" class="form-check-label labelObraSocial"
-                                           >Martes</label
-                                    >
-                                </div>
-
-                                <div
-                                    class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check form-switch"
-                                    >
-                                    <input
-                                        type="checkbox"
-                                        name="dias[]"
-                                        id="miercoles"
-                                        class="form-check-input"
-                                        />
-                                    <label
-                                        for="miercoles"
-                                        class="form-check-label labelObraSocial"
-                                        >Miércoles</label
-                                    >
-                                </div>
-
-                                <div
-                                    class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check form-switch"
-                                    >
-                                    <input
-                                        type="checkbox"
-                                        name="dias[]"
-                                        id="jueves"
-                                        class="form-check-input"
-                                        />
-                                    <label for="jueves" class="form-check-label labelObraSocial"
-                                           >Jueves</label
-                                    >
-                                </div>
-                                <div
-                                    class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check form-switch"
-                                    >
-                                    <input
-                                        type="checkbox"
-                                        name="dias[]"
-                                        id="viernes"
-                                        class="form-check-input"
-                                        />
-                                    <label for="viernes" class="form-check-label labelObraSocial"
-                                           >Viernes</label
-                                    >
-                                </div>
-                                <div
-                                    class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check form-switch"
-                                    >
-                                    <input
-                                        type="checkbox"
-                                        name="dias[]"
-                                        id="sabado"
-                                        class="form-check-input"
-                                        />
-                                    <label for="sabado" class="form-check-label labelObraSocial"
-                                           >Sábado</label
-                                    >
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row rowHorario">
-                            <!-- INPUT HORA INICIO-->
-                            <div class="col-12">
-                                <h5>Horario de atención</h5>
-                            </div>
-                            <div class="col-xs-12 col-md-3 form-floating inputHora">
+                        <div class="row row ObrasSociales">
+                            <div
+                                class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check "
+                                >
                                 <input
-                                    type="time"
-                                    class="form-control inputHora"
-                                    id="horaInicio"
-                                    name="horaInicio"
-                                    th:value="${#temporals.format(profesional.horaInicio, 'HH:mm')}"
+                                    type="checkbox"
+                                    name="dias[]"
+                                    id="lunes"
+                                    value="lunes"
+                                    th:checked="${#arrays.contains(profesional.dias, 'lunes')}"
+                                    class="form-check-input check"
+                                    />
+                                <label for="lunes" class="form-check-label labelObraSocial"
+                                       >Lunes</label
+                                >
+                            </div>
+
+                            <div
+                                class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check"
+                                >
+                                <input
+                                    type="checkbox"
+                                    name="dias[]"
+                                    id="martes"
+                                    value="martes"
+                                    th:checked="${#arrays.contains(profesional.dias, 'martes')}"
+                                    class="form-check-input check"
+                                    />
+                                <label for="martes" class="form-check-label labelObraSocial"
+                                       >Martes</label
+                                >
+                            </div>
+
+                            <div
+                                class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check"
+                                >
+                                <input
+                                    type="checkbox"
+                                    name="dias[]"
+                                    id="miercoles"
+                                    value="miercoles"
+                                    th:checked="${#arrays.contains(profesional.dias, 'miercoles')}"
+                                    class="form-check-input check"
+                                    />
+                                <label
+                                    for="miercoles"
+                                    class="form-check-label labelObraSocial"
+                                    >Miércoles</label
+                                >
+                            </div>
+
+                            <div
+                                class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check"
+                                >
+                                <input
+                                    type="checkbox"
+                                    name="dias[]"
+                                    id="jueves"
+                                    value="jueves"
+                                    th:checked="${#arrays.contains(profesional.dias, 'jueves')}"
+                                    class="form-check-input check"
+                                    />
+                                <label for="jueves" class="form-check-label labelObraSocial"
+                                       >Jueves</label
+                                >
+                            </div>
+                            <div
+                                class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check "
+                                >
+                                <input
+                                    type="checkbox"
+                                    name="dias[]"
+                                    id="viernes"
+                                    value="viernes"
+                                    th:checked="${#arrays.contains(profesional.dias, 'viernes')}"
+                                    class="form-check-input check"
+                                    />
+                                <label for="viernes" class="form-check-label labelObraSocial"
+                                       >Viernes</label
+                                >
+                            </div>
+                            <div
+                                class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-check"
+                                >
+                                <input
+                                    type="checkbox"
+                                    name="dias[]"
+                                    id="sabado"
+                                    value="sabado"
+                                    th:checked="${#arrays.contains(profesional.dias, 'sabado')}"
+                                    class="form-check-input check"
+                                    />
+                                <label for="sabado" class="form-check-label labelObraSocial"
+                                       >Sábado</label
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row rowHorario">
+                        <!-- INPUT HORA INICIO-->
+                        <div class="col-12">
+                            <h5>Horario de atención</h5>
+                        </div>
+                        <div class="col-xs-12 col-md-3 form-floating inputHora">
+                            <input
+                                type="time"
+                                class="form-control inputHora"
+                                id="horaInicio"
+                                name="horaInicio"
+                                th:value="${#temporals.format(profesional.horaInicio, 'HH:mm')}"
+                                placeholder=""
+                                />
+                            <label for="horaInicio" class="datosInput inputHora">
+                                <i class="bi bi-clock"></i>Hora de inicio</label
+                            >
+                        </div>
+
+                        <!-- INPUT HORA FIN-->
+                        <div class="col-xs-12 col-md-3 form-floating">
+                            <input
+                                type="time"
+                                class="form-control inputHora"
+                                id="horaFin"
+                                name="horaFin"
+                                th:value="${#temporals.format(profesional.horaFin, 'HH:mm')}"
+                                placeholder=""
+                                />
+                            <label for="horaFin" class="datosInput inputHora">
+                                <i class="bi bi-clock"></i>Hora de finalización</label
+                            >
+                        </div>
+                    </div>
+            </div>
+
+            <div class="col-xs-12 DivBtnEnviar">
+                <button
+                    type="submit"
+                    name="submit"
+                    value="registrar"
+                    class="btn btn-primary btnEnviar botonesFormulario"
+                    >
+                    Actualizar
+                </button>
+            </div>
+            <div class="col-xs-12 DivBtnBaja">
+                <button
+                    class="btn btn-danger btnBaja "
+                    >
+                    Dar de baja
+                </button>
+            </div>
+        </form>
+
+        <!-- VENTANA MODAL PARA CARGA DE NUEVA OBRA SOCIAL -->
+        <div class="modal " id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form
+                        class="formulario formularioModal"
+                        id="formularioModal"
+                        method="POST"
+                        >
+                        <!-- MODAL HEADER --> 
+                        <div class="modal-header">
+                            <h3 class="modal-title">REGISTRAR NUEVA OBRA SOCIAL</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="cerrarModal()"></button>
+                        </div>
+                        <!-- MODAL BODY -->
+                        <div class="row rowDatosPersonales">
+                            <div class="tituloForm">
+                                <h4>En caso que la obra social no tenga sigla, usar el nombre completo</h4>
+
+                            </div>
+                            <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
+
+                            <!-- INPUT NOMBRE-->
+                            <div class="col-xs-12  form-floating">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="nombreObraSocial"
+                                    name="nombreObraSocial"
                                     placeholder=""
                                     />
-                                <label for="horaInicio" class="datosInput inputHora">
-                                    <i class="bi bi-clock"></i>Hora de inicio</label
-                                >
-                            </div>
-
-                            <!-- INPUT HORA FIN-->
-                            <div class="col-xs-12 col-md-3 form-floating">
-                                <input
-                                    type="time"
-                                    class="form-control inputHora"
-                                    id="horaFin"
-                                    name="horaFin"
-                                    th:value="${#temporals.format(profesional.horaFin, 'HH:mm')}"
-                                    placeholder=""
-                                    />
-                                <label for="horaFin" class="datosInput inputHora">
-                                    <i class="bi bi-clock"></i>Hora de finalización</label
-                                >
+                                <label for="nombreObraSocial">Sigla o nombre de la obra social</label>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-xs-12 DivBtnEnviar">
-                        <button
-                            type="submit"
-                            name="submit"
-                            value="registrar"
-                            class="btn btn-primary btnEnviar botonesFormulario"
-                            >
-                            Actualizar
-                        </button>
-                    </div>
-                    <div class="col-xs-12 DivBtnBaja">
-                        <button
-                            class="btn btn-danger btnBaja "
-                            >
-                            Dar de baja
-                        </button>
-                    </div>
-                </form>
-
-                <!-- VENTANA MODAL PARA CARGA DE NUEVA OBRA SOCIAL -->
-                <div class="modal " id="myModal">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <form
-                                class="formulario formularioModal"
-                                id="formularioModal"
-                                method="POST"
-                                >
-                                <!-- MODAL HEADER --> 
-                                <div class="modal-header">
-                                    <h3 class="modal-title">REGISTRAR NUEVA OBRA SOCIAL</h3>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="cerrarModal()"></button>
-                                </div>
-                                <!-- MODAL BODY -->
-                                <div class="row rowDatosPersonales">
-                                    <div class="tituloForm">
-                                        <h4>En caso que la obra social no tenga sigla, usar el nombre completo</h4>
-
-                                    </div>
-                                    <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
-
-                                    <!-- INPUT NOMBRE-->
-                                    <div class="col-xs-12  form-floating">
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="nombreObraSocial"
-                                            name="nombreObraSocial"
-                                            placeholder=""
-                                            />
-                                        <label for="nombreObraSocial">Sigla o nombre de la obra social</label>
-                                    </div>
-                                </div>
-
-                                <!-- MODAL FOOTER -->
-                                <div class="modal-footer mx-2">
-                                    <button type="button" class="btn btn-primary"  onclick="cargarObraSocial()">Aceptar</button>
-                                    <button type="button" class="btn btn-danger" onclick="cerrarModal()">Cancelar</button>
-                                </div>
-                            </form>
-
+                        <!-- MODAL FOOTER -->
+                        <div class="modal-footer mx-2">
+                            <button type="button" class="btn btn-primary"  onclick="cargarObraSocial()">Aceptar</button>
+                            <button type="button" class="btn btn-danger" onclick="cerrarModal()">Cancelar</button>
                         </div>
-                    </div>
+                    </form>
+
                 </div>
-
-                <script>
-                    function cerrarModal() {
-                        var ventanaModal = document.getElementById("myModal");
-                        ventanaModal.style.display = "none";
-                    }
-
-                    function cargarObraSocial() {
-                        var formulario = document.getElementById("formularioModal");
-                        var datosFormulario = new FormData();
-                        datosFormulario.append("nombreObraSocial", formulario.nombreObraSocial.value);
-
-                        fetch('/registroObraSocial', {
-                            method: 'POST',
-                            body: datosFormulario
-                        })
-                                .then(function (respuesta) {
-                                    if (respuesta.ok) {
-                                        //en caso de exito
-                                        cerrarModal();
-                                        location.reload();
-                                    } else {
-                                        // En caso de error
-                                        console.log("Error en el envío del formulario.");
-                                    }
-                                })
-                                .catch(function (error) {
-                                    // En caso de error
-                                    console.log("Error en el envío del formulario: " + error.message);
-                                });
-                    }
-                </script>
             </div>
         </div>
-    </main>
-    <!--FOOTER-->
-    <div class="container-fluid pie">
-        <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
+
+        <script>
+            function cerrarModal() {
+                var ventanaModal = document.getElementById("myModal");
+                ventanaModal.style.display = "none";
+            }
+
+            function cargarObraSocial() {
+                var formulario = document.getElementById("formularioModal");
+                var datosFormulario = new FormData();
+                datosFormulario.append("nombreObraSocial", formulario.nombreObraSocial.value);
+
+                fetch('/registroObraSocial', {
+                    method: 'POST',
+                    body: datosFormulario
+                })
+                        .then(function (respuesta) {
+                            if (respuesta.ok) {
+                                //en caso de exito
+                                cerrarModal();
+                                location.reload();
+                            } else {
+                                // En caso de error
+                                console.log("Error en el envío del formulario.");
+                            }
+                        })
+                        .catch(function (error) {
+                            // En caso de error
+                            console.log("Error en el envío del formulario: " + error.message);
+                        });
+            }
+        </script>
     </div>
+</div>
+</main>
+<!--FOOTER-->
+<div class="container-fluid pie">
+    <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
+</div>
 
 
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
-        crossorigin="anonymous"
-    ></script> <!--NO MODIFICAR-->
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+    crossorigin="anonymous"
+></script> <!--NO MODIFICAR-->
 
 </body>
 </html>

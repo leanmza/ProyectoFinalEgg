@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
+// CLASE PARA LAS OBRAS SOCIALES CON LAS QUE TRABAJARAN LOS 
+// PROFESIONALES Y DE LAS QUE DISPONEN LOS USUARIOS
 @Data
 @Entity
 public class ObraSocial {
