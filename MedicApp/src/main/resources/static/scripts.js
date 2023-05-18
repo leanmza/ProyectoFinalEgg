@@ -150,7 +150,7 @@ function generarCalendario() {
     // Insertar el HTML del calendario dentro del div
     divCalendario.innerHTML = calendarioHTML;
 
-    mes.innerHTML = nombresMeses[mesActual];
+    mes.innerHTML = "<i class='fa-solid fa-calendar-days iconForm'></i>" + nombresMeses[mesActual];
 
 
 }

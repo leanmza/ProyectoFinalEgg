@@ -64,7 +64,7 @@
                                 th:value="${profesional.nombre}"
                                 placeholder=""
                                 />
-                            <label for="nombre" class="datosInput">Nombre</label>
+                          <label for="nombre"><i class="fa-solid fa-user iconForm"></i>Nombre</label>
                         </div>
                         <!-- INPUT APELLIDO-->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -76,7 +76,7 @@
                                 th:value="${profesional.apellido}"
                                 placeholder=""
                                 />
-                            <label for="apellido" class="datosInput">Apellido</label>
+                             <label for="apellido"><i class="fa-solid fa-circle-exclamation iconForm"></i>Apellido</label>
                         </div>
                         <!-- INPUT MAIL-->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -88,7 +88,7 @@
                                 th:value="${profesional.email}"
                                 placeholder=""
                                 />
-                            <label for="correo" class="datosInput">Email</label>
+                              <label for="correo"><i class="fa-solid fa-envelope iconForm"></i>Email</label>
                         </div>
                         <!-- INPUT TELEFONO-->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -100,7 +100,7 @@
                                 th:value="${profesional.telefono}"
                                 placeholder=""
                                 />
-                            <label for="telefono" class="datosInput">Telefono</label>
+                           <label for="telefono"><i class="fa-solid fa-phone iconForm"></i>Telefono</label>
                         </div>
                         <!-- INPUT IMAGEN -->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -111,7 +111,7 @@
                                 name="archivo"
                                 th:value="${profesional.imagen}"
                                 />
-                            <label for="foto">Foto de Perfil</label>
+                              <label for="foto"><i class="fa-solid fa-camera iconForm"></i>Foto de Perfil</label>
                         </div>
                         <!-- INPUT PASSWORD-->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -122,7 +122,7 @@
                                 name="password"
                                 placeholder=""
                                 />
-                            <label for="password" class="datosInput">Contraseña</label>
+                            <label for="password"><i class="fa-solid fa-lock iconForm"></i>Contraseña</label>
                         </div>
                         <!-- INPUT PASSWORD2-->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -133,9 +133,7 @@
                                 name="password2"
                                 placeholder=""
                                 />
-                            <label for="password2" class="datosInput"
-                                   >Repetir Contraseña</label
-                            >
+                            <<label for="password2"><i class="fa-solid fa-circle-check iconForm" id="iconoCheck"></i>Repetir Contraseña</label>
                         </div>
                     </div>
 
@@ -159,7 +157,7 @@
                                 <option value="Ginecologia" th:selected="${profesional.especialidad == 'Ginecologia'}">Ginecología</option>
                                 <option value="Pediatria" th:selected="${profesional.especialidad == 'Pediatria'}">Pediatría</option>
                             </select>
-                            <label for="especialidad" class="datosInput">Especialidad</label>
+                             <label for="especialidad"><i class="fa-solid fa-suitcase-medical iconForm"></i>Especialidad</label>
                         </div>
 
                         <!-- INPUT UBICACIÓN-->
@@ -175,7 +173,7 @@
                                     <option th:text="${ubicacion}" th:selected="${ubicacion == profesional.ubicacion}"></option>
                                 </div>
                             </select>
-                            <label for="ubicacion" class="datosInput">Ubicación</label>
+                            <label for="ubicacion"><i class="fa-solid fa-location-dot iconForm"></i>Ubicación</label>
                         </div>
                         <!-- INPUT MODALIDAD -->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -190,7 +188,7 @@
                                     <option th:text="${modalidad}" th:selected="${modalidad == profesional.modalidad}"></option>
                                 </div>
                             </select>
-                            <label for="modalidad" class="datosInput">Modalidad</label>
+                           <label for="modalidad"><i class="fa-solid fa-house-medical iconForm"></i>Modalidad</label>
                         </div>
                         <!-- INPUT VALOR CONSULTA-->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -202,9 +200,7 @@
                                 th:value="${profesional.honorario}"
                                 placeholder=""
                                 />
-                            <label for="honorarios" class="datosInput">
-                                <i class="bi bi-currency-dollar"></i>Valor de la consulta</label
-                            >
+                           <label for="honorarios"><i class="fa-solid fa-dollar-sign iconForm"></i>Valor de la consulta</label>
                         </div>
                         <!-- INPUT OBRA SOCIAL-->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -217,7 +213,7 @@
                                 </th:block>
                                 <option>Cargar otra...</option>
                             </select>
-                            <label for="obraSocial" class="datosInput">Obra Social</label>
+                           <label for="obraSocial"><i class="fa-solid fa-book-medical iconForm"></i>Obra Social</label>
                             <script>
                                 function abrirModal() {
                                     var select = document.getElementById("obraSocial");
@@ -255,7 +251,7 @@
                     <!-- INPUT DE DÍAS -->
                     <div class="col-xs-12">
                         <div class="col-12">
-                            <h5>Días de atención</h5>
+                             <h5><i class="fa-solid fa-calendar-days iconForm"></i>Días de atención</h5>
                         </div>
                         <div class="row row ObrasSociales">
                             <div
@@ -360,7 +356,7 @@
                     <div class="row rowHorario">
                         <!-- INPUT HORA INICIO-->
                         <div class="col-12">
-                            <h5>Horario de atención</h5>
+                            <h5><i class="fa-solid fa-clock iconForm"></i>Horario de atención</h5>
                         </div>
                         <div class="col-xs-12 col-md-3 form-floating inputHora">
                             <input
@@ -371,9 +367,9 @@
                                 th:value="${#temporals.format(profesional.horaInicio, 'HH:mm')}"
                                 placeholder=""
                                 />
-                            <label for="horaInicio" class="datosInput inputHora">
-                                <i class="bi bi-clock"></i>Hora de inicio</label
-                            >
+                            <label for="horaInicio" class="inputHora">
+                                    <i class="fa-solid fa-clock iconForm"></i>Hora de inicio
+                                </label>
                         </div>
 
                         <!-- INPUT HORA FIN-->
@@ -386,9 +382,9 @@
                                 th:value="${#temporals.format(profesional.horaFin, 'HH:mm')}"
                                 placeholder=""
                                 />
-                            <label for="horaFin" class="datosInput inputHora">
-                                <i class="bi bi-clock"></i>Hora de finalización</label
-                            >
+                             <label for="horaFin" class="inputHora">
+                                    <i class="fa-solid fa-clock iconForm"></i>Hora de finalización
+                                </label>
                         </div>
                     </div>
             </div>
@@ -443,7 +439,7 @@
                                     name="nombreObraSocial"
                                     placeholder=""
                                     />
-                                <label for="nombreObraSocial">Sigla o nombre de la obra social</label>
+                                <label for="nombreObraSocial"><i class="fa-solid fa-file-medical iconForm"></i>Sigla o nombre de la obra social</label>
                             </div>
                         </div>
 

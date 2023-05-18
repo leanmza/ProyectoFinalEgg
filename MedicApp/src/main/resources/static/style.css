@@ -79,6 +79,10 @@ th{
     text-align: center;
 }
 
+.iconForm{
+    padding-right: 0.5em;
+    color: #555
+}
 
 /* HEADER */
 
@@ -198,9 +202,7 @@ footer {
     text-align: start;
     margin: 0 !important;
 }
-.linkFooter {
-    margin-right: 5%;
-}
+
 
 .pie {
     padding-inline: 0 !important;
@@ -312,9 +314,6 @@ input {
     justify-content: center;
 }
 
-.datosInput {
-    padding-left: 1em !important;
-}
 
 .form-floating:not(.form-control:disabled)::before {
     top: 0 !important;
@@ -326,9 +325,7 @@ input {
     margin-bottom: 1em !important;
 }
 
-.bi {
-    padding-inline: 0.5em;
-}
+
 
 .divCrearUsuario {
     padding: 5% 0 5% 0;
@@ -420,6 +417,7 @@ input {
 }
 .inputHora {
     text-align: center !important;
+    align-items: center;    
 }
 
 .DivBtnEnviar {
@@ -593,7 +591,7 @@ h5 {
 }
 
 h6{
-    padding: 20% 10% !important;
+    padding: 10% 10% !important;
     text-align: center;
 }
 
@@ -602,10 +600,6 @@ h6{
     opacity: .65;
 }
 
-.aclaracion{
-    font-size: 14px;
-    opacity: .65;
-}
 .especialidad {
     background: transparent;
     font-weight: bold;
@@ -861,6 +855,10 @@ form label{
     text-decoration: none;
     color: #17252a;
 
+}
+
+.labelArea{
+    padding-left: 0 !important;
 }
 /* LOGIN*/
 
