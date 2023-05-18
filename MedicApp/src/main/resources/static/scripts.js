@@ -119,7 +119,7 @@ function generarCalendario() {
                 filaHTML += "<td class='celdaDias' ><label for=" + contadorDias + " class='diaDeshabilitado'>" +
                         contadorDias +
                         "</label> <input class='inputRadio' type='radio' name='dia' id=" + contadorDias + " \n\
-          value=" + contadorDias + "-" + mesActual + "-" + anioActual + " disabled></td>";
+          value=" + contadorDias + "-" +  (mesActual +1 ) + "-" + anioActual + " disabled></td>";
                 filaHTML += "<td class='celdaDias'></td>";
 
             } else if ((contadorDias >= hoy) && (contadorDias <= numDias)) {
@@ -129,7 +129,7 @@ function generarCalendario() {
                         " class='diasCalendario'>" +
                         contadorDias +
                         "</label> <input class='inputRadio' type='radio' name='dia' id=" + contadorDias + " \n\
-            value=" + contadorDias + "-" + mesActual + "-" + anioActual + " ></td>";
+            value=" + contadorDias + "-" + (mesActual +1 )  + "-" + anioActual + " ></td>";
 
 
             } else {

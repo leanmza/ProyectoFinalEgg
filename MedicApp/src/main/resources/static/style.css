@@ -12,10 +12,16 @@ padding-bottom: 5%;
 }*/
 header {
     padding-inline: 5%;
+    align-items: center;
+    align-content: center;
+    display: grid;
 }
 
 footer {
     padding-inline: 5%;
+    align-items: center;
+    align-content: center;
+    display: grid;
 }
 
 p {
@@ -95,7 +101,7 @@ header {
 .logoHeader {
     justify-items: start;
     display: flex;
-    height: 5.5em;
+    height: 4.5em;
 }
 
 .navbar {
@@ -188,7 +194,10 @@ footer {
     justify-content: center;
     padding-inline: 5%;
 }
-
+.textoFooter{
+    text-align: start;
+    margin: 0 !important;
+}
 .linkFooter {
     margin-right: 5%;
 }
@@ -661,30 +670,30 @@ form label{
 }
 
 .rating {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .star {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  transition-property: color;
-  transition-duration: 0.1s;
-  transition-delay: 0.05s;
-  background-image: url(estrella-gris.png);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    transition-property: color;
+    transition-duration: 0.1s;
+    transition-delay: 0.05s;
+    background-image: url(estrella-gris.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
 }
 
 .star:hover,
 .star:hover ~ .star {
-  content: "\f005";
-  font-family: "Font Awesome 6 Solid";
-  font-weight: 900;
-  background-image: url(estrella-amarilla.png);
-  color: #ffc107;
-  flex-direction: row-reverse;
+    content: "\f005";
+    font-family: "Font Awesome 6 Solid";
+    font-weight: 900;
+    background-image: url(estrella-amarilla.png);
+    color: #ffc107;
+    flex-direction: row-reverse;
 }
 
 .diaDeshabilitado{
@@ -785,7 +794,7 @@ form label{
 }
 
 .divisorFormPro{
-    margin-top: 2% !important;   
+    margin-top: 2% !important;
 }
 
 
@@ -825,6 +834,33 @@ form label{
     display: flex;
     justify-content: center;
     margin-top: 2em !important;
+}
+
+
+.imagenPerfil{
+    height: 150px;
+    width: 150px;
+    border-radius: 50%
+}
+
+.rowImagenPerfil{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5%;
+}
+
+.linkIconoCamara{
+    align-items: end;
+    display: flex;
+    justify-content: end;
+}
+
+.linkIconoCamara:link,
+.linkIconoCamara:visited,
+.linkIconoCamara:active {
+    text-decoration: none;
+    color: #17252a;
+
 }
 /* LOGIN*/
 

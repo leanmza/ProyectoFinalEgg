@@ -32,7 +32,7 @@
 
                     <tbody th:each="turno : ${turnos}">
                         <tr class="trTurnos">
-                            <td th:text="${turno.fecha}"></td>
+                            <td th:text="${#dates.format(turno.fecha, 'dd-MM-yyyy')}"></td>
 
                             <td th:text="${turno.hora}"></td>
                             <td th:text="${turno.profesional.especialidad}"></td>

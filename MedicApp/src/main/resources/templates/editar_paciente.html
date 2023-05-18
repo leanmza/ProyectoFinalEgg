@@ -23,6 +23,18 @@
                     method="POST"
                     enctype="multipart/form-data"
                     >
+                    <!-- IMAGEN DE PERFIL -->
+                    <div class="rowImagenPerfil">
+                        <div class="col-2 divImagenPerfil">                          
+
+                            <img class="imagenPerfil"
+                                 th:src="${session.pacienteSession.imagen != null ? '/imagen/perfil/__${session.pacienteSession.id}__' : '../predeterminada_perfil.png'}" >
+                  <a href="#" class="linkIconoCamara" >
+                                <i class="fa-solid fa-camera fa-xl"></i>
+                            </a>
+                        </div>
+
+                    </div>
                     <!-- DATOS PERSONALES -->
                     <div class="row rowDatosPersonales">
 

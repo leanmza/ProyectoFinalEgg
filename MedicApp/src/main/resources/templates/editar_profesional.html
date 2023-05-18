@@ -38,21 +38,17 @@
                         </div>
 
                         <!-- IMAGEN DE PERFIL -->
-                        <div class="d-flex justify-content-center">
+                        <div class="rowImagenPerfil">
+                            <div class="col-2 divImagenPerfil">                          
 
-
-                            <img class="rounded-circle img-fluid" style="width: 150px; height: 150px;"
-                                 sec:authorize ="hasRole ('PACIENTE')"
-                                 th:src="${session.pacienteSession.imagen != null ? '/imagen/perfil/__${session.pacienteSession.id}__' : '../predeterminada_perfil.png'}" >
-
-                            <img class="rounded-circle img-fluid" style="width: 150px; height: 150px;"
-                                 sec:authorize ="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')"
+                        
+                            <img class="imagenPerfil"
                                  th:src="${session.profesionalSession.imagen != null ? '/imagen/perfil/__${session.profesionalSession.id}__' : '../predeterminada_perfil.png'}" >
-
-                            <a href="#" class="position-absolute top-0 end-0" style="width: 40px; height: 40px;">
-                                <i class="fas fa-camera"></i>
+                                 <a href="#" class="linkIconoCamara" >
+                                <i class="fa-solid fa-camera fa-xl"></i>
                             </a>
-
+                        </div>
+              
                         </div>
 
                         <!-- INPUT OCULTO DEL ID -->
