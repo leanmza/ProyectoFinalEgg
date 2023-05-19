@@ -246,17 +246,6 @@ public class ProfesionalService implements UserDetailsService {
                 throw new MiExcepcion("El teléfono no puede ser nulo o vacío");
             }
 
-            if (password == null || password.isEmpty()) {
-                throw new MiExcepcion("La contraseña no puede ser nula o vacía");
-            }
-            if (password2 == null || password2.isEmpty()) {
-                throw new MiExcepcion("Es campo no puede ser nulo o vacío");
-            }
-
-            if (!(password.equals(password2))) {
-                throw new MiExcepcion("Las contraseñas no coinciden");
-
-            }
             if (especialidad == null || especialidad.isEmpty()) {
                 throw new MiExcepcion("La especilidad no puede ser nula o vacía");
             }
@@ -285,10 +274,68 @@ public class ProfesionalService implements UserDetailsService {
             if (horaFin == null) {
                 throw new MiExcepcion("Los hora de finalización no puede ser nula");
             }
+            
+            if (password == null || password.isEmpty()) {
+                throw new MiExcepcion("La contraseña no puede ser nula o vacía");
+            }
+            if (password2 == null || password2.isEmpty()) {
+                throw new MiExcepcion("Es campo no puede ser nulo o vacío");
+            }
+
+            if (!(password.equals(password2))) {
+                throw new MiExcepcion("Las contraseñas no coinciden");
+
+            }
+                  if (validarNumero(password) == false) {
+                throw new MiExcepcion("La contraseña tiene que tener al menos un un número");
+            }
+            if (validarMayuscula(password) == false) {
+                throw new MiExcepcion("La contraseña tiene que tener al menos una mayúscula");
+            }
+            if (validarMinuscula(password) == false) {
+                throw new MiExcepcion("La contraseña tiene que tener al menos una minúscula");
+            }
 
         } catch (MiExcepcion ex) {
             throw ex;
         }
+    }
+    
+    
+    private boolean validarNumero(String password) {
+        boolean cumple = false;
+        for (int i = 0; i < password.length(); i++) {
+            if ((password.charAt(i) >= 48) && (password.charAt(i) <= 57)) {
+                cumple = true;
+                System.out.println("tiene numero");
+                break;
+            }
+        }
+        return cumple;
+    }
+
+    private boolean validarMayuscula(String password) {
+        boolean cumple = false;
+        for (int i = 0; i < password.length(); i++) {
+            if ((password.charAt(i) >= 65) && (password.charAt(i) <= 90)) {
+                System.out.println("tiene mayuscula");
+                cumple = true;
+                break;
+            }
+        }
+        return cumple;
+    }
+
+    private boolean validarMinuscula(String password) {
+        boolean cumple = false;
+        for (int i = 0; i < password.length(); i++) {
+            if ((password.charAt(i) >= 97) && (password.charAt(i) <= 122)) {
+                System.out.println("tiene minuscula");
+                cumple = true;
+                break;
+            }
+        }
+        return cumple;
     }
 
     @Override
