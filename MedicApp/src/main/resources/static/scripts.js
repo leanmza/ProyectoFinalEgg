@@ -109,7 +109,7 @@ function generarCalendario() {
         // Crear las celdas de la fila
         for (let j = 1; j <= 7; j++) {
 
-            let esDomingo = (j === 7);
+            let esDomingo = (j === 7); //posicion 7 corresponde a domingo
 
             // Si la celda corresponde a un día del mes actual, agregar el número del día
 
@@ -182,6 +182,5 @@ function filtrarTabla() {
 
 /////////ORDENAR POR VALOR///////////
 
-
-
+/////////ORDENAR POR CALIFICACIÓN///////////
 

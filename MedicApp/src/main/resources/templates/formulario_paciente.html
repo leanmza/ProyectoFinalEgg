@@ -63,7 +63,7 @@
                             th:value="${recargaFormulario != null ? recargaFormulario.nombre : nombre}"
                             placeholder=""
                             />
-                        <label for="nombre"><i class="fa-solid fa-user iconForm"></i>Nombre</label>
+                        <label for="nombre" ><i class="fa-solid fa-user iconForm"></i>Nombre</label>
                     </div>
                     <!-- INPUT APELLIDO-->
                     <div class="col-xs-12 col-md-6 form-floating">
@@ -87,8 +87,9 @@
                             th:value="${recargaFormulario != null ? recargaFormulario.dni : dni}"
                             placeholder=""
                             />
-                        <label for="dni"><i class="fa-solid fa-id-card iconForm"></i>DNI (sin puntos ni espacios)</label>
+                        <label for="dni"><i class="fa-solid fa-id-card iconForm"></i>DNI <span class="aclaracion"> (sin puntos ni espacios)</span> </label>
                     </div>
+                 
                     <!-- INPUT MAIL-->
                     <div class="col-xs-12 col-md-6 form-floating">
                         <input
@@ -96,7 +97,7 @@
                             class="form-control"
                             id="correo"
                             name="correo"
-                            th:value="${recargaFormulario != null ? recargaFormulario.email : email}"
+                            th:value="${recargaFormulario != null ? recargaFormulario.correo : correo}"
                             placeholder=""
                             />
                         <label for="correo"><i class="fa-solid fa-envelope iconForm"></i>Email</label>
@@ -135,7 +136,7 @@
                             class="form-control"
                             id="naciemiento"
                             name="nacimiento"
-                            th:value="${recargaFormulario != null ? #dates.format(recargaFormulario.fechaNacimiento, 'yyyy-MM-dd') : #dates.format(fechaNacimiento, 'yyyy-MM-dd')}"
+                            th:value="${recargaFormulario != null ? #dates.format(recargaFormulario.nacimiento, 'yyyy-MM-dd') : #dates.format(fechaNacimiento, 'yyyy-MM-dd')}"
                             />
                         <label for="naciemiento"><i class="fa-solid fa-calendar-days iconForm"></i>Fecha de Nacimiento</label>
                     </div>
@@ -160,7 +161,7 @@
                                         th:selected="${recargaFormulario != null and obraSocial == recargaFormulario.obraSocial}"
                                         th:text="${obraSocial.nombre}"></option>
                             </th:block>
-                            <option>Cargar otra...</option>
+                            <option id="optionCargarOtra">Cargar otra...</option>
                         </select>
                         <label for="obraSocial"><i class="fa-solid fa-book-medical iconForm"></i>Obra Social</label>
                         <script>
@@ -203,7 +204,8 @@
                             id="foto"
                             name="archivo"
                             />
-                        <label for="foto"><i class="fa-solid fa-camera iconForm"></i>Foto de Perfil</label>
+                        <label for="foto"><i class="fa-solid fa-camera iconForm"></i>Foto de Perfil  
+                    <span class="aclaracion">(opcional)</span> </label>
                     </div>
                 </div>
                 <div class="divisorForm divBorder row">
@@ -215,7 +217,7 @@
                             id="password"
                             name="password"
                             placeholder=""
-                            minlength="8" required
+                           
                             />
                         <label for="password"><i class="fa-solid fa-lock iconForm"></i>Contraseña</label>
                     </div>
@@ -227,7 +229,7 @@
                             id="password2"
                             name="password2"
                             placeholder=""
-                            minlength="8" required
+                       
                             />
                         <label for="password2"><i class="fa-solid fa-circle-check iconForm" id="iconoCheck"></i>Repetir Contraseña</label>
                     </div>
@@ -334,7 +336,7 @@
 </footer><!--NO MODIFICAR-->
 </div>
 
-
+        <script src="../../scriptsFormularios.js"></script>
 <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"

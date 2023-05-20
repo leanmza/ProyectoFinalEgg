@@ -860,6 +860,17 @@ form label{
 .labelArea{
     padding-left: 0 !important;
 }
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+.input-error {
+  border-color: #ff8181  !important; /* Cambia el color del borde a rojo */
+
+}
 /* LOGIN*/
 
 /* MEDIAS QUERYS */
