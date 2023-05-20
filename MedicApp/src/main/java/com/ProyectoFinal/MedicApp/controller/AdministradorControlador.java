@@ -138,7 +138,7 @@ public class AdministradorControlador {
                     archivo, password, password2, especialidad, ubicacion, modalidad,
                     honorarios, claseObraSocial, diasSeleccionados, horaInicioLT, horaFinLT);
 
-            return "redirect:/dashboard?exito=registroExitoso";
+            return "redirect:/listar?exito=registroExitoso";
 
         } catch (MiExcepcion e) {
             System.out.println("Error al cargar Profesional");
