@@ -49,6 +49,7 @@ public class AdministradorControlador {
     @Autowired
     ImagenService imagenServicio;
 
+    ////DASHBOARD
     @GetMapping("/dashboard")
     public String panelAdministrativo(ModelMap modelo, @RequestParam(required = false) String exito) {
 
@@ -59,9 +60,9 @@ public class AdministradorControlador {
         return "panel.html";
     }
 
-    //FORMULARIO PARA CREAR UN PACIENTE
+
     //LISTA DE PACIENTES
-    @GetMapping("/pacientes")
+    @GetMapping("/pacientes")  /// NO SE USA ////
     public String mostrarPacientes(ModelMap modelo) {
         List<Paciente> pacientes = pacienteServicio.listar();
         modelo.put("pacientes", pacientes);
@@ -69,14 +70,6 @@ public class AdministradorControlador {
         return "listar_paciente.html";
     }
 
-    //LISTA DE PROFESIONALES
-    @GetMapping("/profesionales")
-    public String mostrarProfesionales(ModelMap modelo) {
-        List<Profesional> profesionales = profesionalServicio.listar();
-        modelo.put("profesionales", profesionales);
-
-        return "listar.html";
-    }
 
     //FORMULARIO PARA CREAR UN PROFESIONAL
     @GetMapping("/registroProfesional")
@@ -117,14 +110,14 @@ public class AdministradorControlador {
         return "formulario_profesional.html";
     }
 
+    ///REGISTRA PROFESIONAL
     @PostMapping("/crearProfesional")
     public String crearProfesional(@RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String correo, @RequestParam String telefono, @RequestParam(required = false) MultipartFile archivo,
             @RequestParam String password, @RequestParam String password2, @RequestParam String especialidad,
             @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,
             @RequestParam String obraSocial, @RequestParam(value = "dias[]", required = false) String[] diasSeleccionados,
-            @RequestParam String horaInicio, @RequestParam String horaFin
-    /*, @RequestParam(required = false) List<Turno>turnos*/,ModelMap modelo) throws IOException {
+            @RequestParam String horaInicio, @RequestParam String horaFin, ModelMap modelo) throws IOException {
 
         try {
             System.out.println("Horas: " + horaInicio + "  " + horaFin);

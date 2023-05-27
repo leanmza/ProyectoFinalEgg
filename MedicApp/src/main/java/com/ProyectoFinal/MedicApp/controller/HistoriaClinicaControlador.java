@@ -47,7 +47,7 @@ public class HistoriaClinicaControlador {
     @Autowired
     PacienteService pacienteServicio;
 
-    
+    ////BUSCAR HISTORIA
     @GetMapping("/buscar")
     public String listar(ModelMap model) {
 
@@ -55,6 +55,7 @@ public class HistoriaClinicaControlador {
     }
     
     
+    ////LISTA DE HISTORIAS
     @Transactional
     @PostMapping("/listar")
     public String listar(@RequestParam String dniPaciente, ModelMap model) {
@@ -67,6 +68,8 @@ public class HistoriaClinicaControlador {
         return "lista_historia_clinica.html";
     }
     
+    
+    ////CREAR HISTORIA
     @Transactional
     @GetMapping("/form_historia_clinica")
     public String crearHistoriaClinica(ModelMap modelo, HttpSession session) {
@@ -78,6 +81,8 @@ public class HistoriaClinicaControlador {
         return "formulario_historia_clinica.html";
     }
     
+    
+    ////REGISTRAR HISTORIA
     @Transactional
     @PostMapping("/registroHistoriaClinica")
     public String registroPaciente(@RequestParam String dni, @RequestParam String fecha,

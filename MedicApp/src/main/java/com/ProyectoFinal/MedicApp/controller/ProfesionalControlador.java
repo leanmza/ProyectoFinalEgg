@@ -61,6 +61,7 @@ public class ProfesionalControlador {
     @Autowired
     TurnoService turnoService;
 
+    ////PERFIL
     @Transactional
     @GetMapping("/perfil")
     public String perfil(HttpSession session, ModelMap modelo, HttpSession obraSocialNueva, @RequestParam(required = false) String error) {
@@ -94,13 +95,14 @@ public class ProfesionalControlador {
         }
         modelo.addAttribute("modalidades", modalidades);
 
-        // CARFA DE LAS OBRAS SOCIALES
+        // CARGA DE LAS OBRAS SOCIALES
         List<ObraSocial> obrasSociales = obraSocialServicio.listar();
         modelo.addAttribute("obrasSociales", obrasSociales);
 
         return "editar_profesional.html";
     }
 
+    ////EDITAR PERFIL
     @Transactional
     @PostMapping("/editarPerfil/{id}")
     public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
@@ -134,35 +136,18 @@ public class ProfesionalControlador {
         }
     }
 
-    @Transactional
-    @PostMapping("/buscarEspececialidad")
-    public String buscarEspececialidad(@RequestParam String especialidad, ModelMap model) {
-        System.out.println(especialidad);
-        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidad(especialidad);
-        model.addAttribute("profesionales", profesionales);
-        model.addAttribute("especialidad", especialidad);
-        return "listaespecialidad.html";
-    }
+    
+    
+//    @Transactional
+//    @PostMapping("/buscarEspececialidad")
+//    public String buscarEspececialidad(@RequestParam String especialidad, ModelMap model) {
+//        System.out.println(especialidad);
+//        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidad(especialidad);
+//        model.addAttribute("profesionales", profesionales);
+//        model.addAttribute("especialidad", especialidad);
+//        return "listaespecialidad.html";
+//    }
 
-    @Transactional
-    @PostMapping("/buscarEspecialidadPorHonorario")
-    public String buscarEspecialidadPorHonorario(@RequestParam String especialidad, ModelMap model) {
-        System.out.println(especialidad);
-        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidadOrdenadoHonorario(especialidad);
-        model.addAttribute("profesionales", profesionales);
-        model.addAttribute("especialidad", especialidad);
-        return "listaespecialidad.html";
-    }
-
-    @Transactional
-    @PostMapping("/buscarEspecialidadPorCalificacion")
-    public String buscarEspecialidadPorCalificacion(@RequestParam String especialidad, ModelMap model) {
-        System.out.println(especialidad);
-        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidadOrdenadoCalificacion(especialidad);
-        model.addAttribute("profesionales", profesionales);
-        model.addAttribute("especialidad", especialidad);
-        return "listaespecialidad.html";
-    }
 
     // GUARDADO DE DATOS DEL FORMULARIO PROFESIONAL EN UNA SESSION PARA INYECTAR LUEGO DE AGRGAR UNA OBRA SOCIAL NUEVA
     @Transactional
@@ -213,6 +198,7 @@ public class ProfesionalControlador {
         return "redirect:/profesional/perfil";
     }
 
+    ////AGENDA
     @Transactional
     @GetMapping("/agenda")
     public String listaTurnos(ModelMap model, HttpSession session) {
@@ -227,6 +213,8 @@ public class ProfesionalControlador {
         return "agenda.html";
     }
 
+    
+    ////ANULAR TURNO
     @Transactional
     @GetMapping("/anularTurno/{id}")
     public String anularTurno(@PathVariable String id) throws MiExcepcion {
@@ -237,10 +225,3 @@ public class ProfesionalControlador {
     }
 }
 
-//    @Transactional
-//    @GetMapping("/listar")
-//    public String listar(ModelMap model) {
-//        List<Profesional> profesionales = profesionalService.listar();
-//        model.addAttribute("profesionales", profesionales);
-//        return "listar.html";
-//    }

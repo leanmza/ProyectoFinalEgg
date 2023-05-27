@@ -6,7 +6,7 @@ package com.ProyectoFinal.MedicApp.controller;
 
 import com.ProyectoFinal.MedicApp.Entity.Imagen;
 import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
-import com.ProyectoFinal.MedicApp.Entity.HistoriaClinica;
+
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Entity.Turno;
@@ -14,7 +14,7 @@ import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
 import com.ProyectoFinal.MedicApp.Service.ImagenService;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
-import com.ProyectoFinal.MedicApp.Repository.TurnoRepositorio;
+
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.TurnoService;
 import java.text.ParseException;
@@ -44,8 +44,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/paciente")
 public class PacienteControlador {
 
-    @Autowired
-    PacienteRepositorio pacienteRepositorio;
 
     @Autowired
     PacienteService pacienteService;
@@ -81,6 +79,7 @@ public class PacienteControlador {
         return "editar_paciente.html";
     }
 
+    ////EDITAR PERFIL
     @Transactional
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_ADMINISTRADOR')")
     @PostMapping("/perfil/{id}")
@@ -112,6 +111,7 @@ public class PacienteControlador {
         }
     }
 
+    ////BAJA DE PACIENTE
     @Transactional
     @GetMapping("/baja/{id}")
     public String bajaPaciente(@PathVariable String id) {
@@ -121,6 +121,8 @@ public class PacienteControlador {
         return "redirect:/";
     }
     
+    
+   ////ALMACENA DATOS DE FORMULARIOS SI SE REFRESCA LA PÁGINA
     @Transactional
     @PostMapping("/guardarDatosFormulario")
     public String guardarDatosFormulario (@RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido,
@@ -153,7 +155,8 @@ public class PacienteControlador {
         
         return "redirect:/paciente/perfil";
     }
-
+    
+////LISTA MIS PROFESIONALES
     @Transactional
     @GetMapping("/misProfesionales")
     public String listaProfesionales(ModelMap model, HttpSession session) {
@@ -167,6 +170,8 @@ public class PacienteControlador {
         return "mis_profesionales.html";
     }
 
+    
+    ////LISTA MIS TURNOS
     @Transactional
     @GetMapping("/misTurnos")
     public String listaTurnos(ModelMap model, HttpSession session) {
@@ -180,6 +185,7 @@ public class PacienteControlador {
         return "mis_turnos.html";
     }
 
+    /////ANULAR TURNO
     @Transactional
     @GetMapping("/anularTurno/{id}")
     public String anularTurno(@PathVariable String id) throws MiExcepcion {
@@ -190,6 +196,7 @@ public class PacienteControlador {
     }
 
 
+    ////CALIFICAR PROFESIONAL
     @Transactional
     @PostMapping("/calificarProfesional/{id}")
     public String calificarProfesional(@PathVariable("id") String id, @RequestParam("puntaje") String puntaje) { //recibe el id del profesional

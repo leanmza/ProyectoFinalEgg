@@ -49,6 +49,7 @@ public class TurnoControlador {
      @Autowired
      ProfesionalService profesionalService;
      
+     ////TURNERO DESDE LA LISTA DE PROFESIONALES
     @GetMapping("/formularioTurno/{idProfesional}")
     public String turno(@PathVariable String idProfesional, Model model) {
 
@@ -63,7 +64,7 @@ public class TurnoControlador {
     }
     
         
-
+////TURNERO DESDE EL HEADER
         @GetMapping("/formularioTurnoHeader")
     public String turno(ModelMap model) {
         List<Profesional> profesionales = profesionalService.listar();
@@ -73,7 +74,7 @@ public class TurnoControlador {
     
     
     
-    
+    ///REGISTRO DE TURNO
     @Transactional
     @PostMapping("/registroTurno")
     public String registroTurno(@ModelAttribute Profesional pro, @RequestParam String motivo,

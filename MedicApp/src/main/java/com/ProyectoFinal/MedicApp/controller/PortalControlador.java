@@ -54,6 +54,7 @@ public class PortalControlador {
         return "index.html";
     }
 
+    ////LOGIN
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo, @RequestParam(required = false) String exito) {
         
@@ -68,12 +69,7 @@ public class PortalControlador {
         }
         return "login.html"; //ver nombre de archivo
     }
-
-    @GetMapping("/mis_profesionales")
-    public String mis_profesionales() {
-        return "mis_profesionales.html"; //ver nombre de archivo
-    }
-
+    
     @Transactional
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_PROFESIONAL', 'ROLE_ADMINISTRADOR')")
     @GetMapping("/inicio")
@@ -166,6 +162,7 @@ public class PortalControlador {
 
     }
 
+    ////LISTA DE PROFESIONALES HEADER
     @Transactional
     @GetMapping("/listar")
     public String listar(ModelMap model) {
@@ -173,27 +170,30 @@ public class PortalControlador {
         model.addAttribute("profesionales", profesionales);
         return "listar.html";
     }
+    
 
-    @Transactional
-    @PostMapping("/buscarespechonorario")
-    public String buscarespechonorario(@RequestParam("especialidad") String especialidad, ModelMap model) {
-        System.out.println(especialidad);
-        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidadOrdenadoHonorario(especialidad);
-        model.addAttribute("profesionales", profesionales);
-        model.addAttribute("espec", especialidad);
-        return "listaespecialidad.html";
-    }
+//    @Transactional
+//    @PostMapping("/buscarespechonorario")
+//    public String buscarespechonorario(@RequestParam("especialidad") String especialidad, ModelMap model) {
+//        System.out.println(especialidad);
+//        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidadOrdenadoHonorario(especialidad);
+//        model.addAttribute("profesionales", profesionales);
+//        model.addAttribute("espec", especialidad);
+//        return "listaespecialidad.html";
+//    }
+//
+//    @Transactional
+//    @PostMapping("/buscarespeccalificacion")
+//    public String buscarespeccalificacion(@RequestParam("especialidad") String especialidad, ModelMap model) {
+//        System.out.println(especialidad);
+//        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidadOrdenadoCalificacion(especialidad);
+//        model.addAttribute("profesionales", profesionales);
+//        model.addAttribute("espec", especialidad);
+//        return "listaespecialidad.html";
+//    }
 
-    @Transactional
-    @PostMapping("/buscarespeccalificacion")
-    public String buscarespeccalificacion(@RequestParam("especialidad") String especialidad, ModelMap model) {
-        System.out.println(especialidad);
-        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidadOrdenadoCalificacion(especialidad);
-        model.addAttribute("profesionales", profesionales);
-        model.addAttribute("espec", especialidad);
-        return "listaespecialidad.html";
-    }
-
+    
+    ////PREGUNTAS FRECUENTES
     @GetMapping("/preguntasFrecuentes")
     public String preguntasFrecuentes() {
 
@@ -226,7 +226,10 @@ public class PortalControlador {
 
         }
     }
+    
 
+    
+    ////ALMACENA DATOS DE FORMULARIOS SI SE REFRESCA LA PÁGINA
     @Transactional
     @PostMapping("/guardarDatosFormulario")
     public String guardarDatosFormulario(@RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido,
