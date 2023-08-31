@@ -1,4 +1,4 @@
-package com.ProyectoFinal.MedicApp.Exception;
+package com.ProyectoFinal.MedicApp.exception;
 
 public class MiExcepcion extends Exception {
     

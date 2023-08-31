@@ -1,4 +1,4 @@
-package com.ProyectoFinal.MedicApp.Entity;
+package com.ProyectoFinal.MedicApp.entity;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;

@@ -1,15 +1,15 @@
 package com.ProyectoFinal.MedicApp.controller;
 
-import com.ProyectoFinal.MedicApp.Entity.Imagen;
-import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
-import com.ProyectoFinal.MedicApp.Entity.Paciente;
-import com.ProyectoFinal.MedicApp.Entity.Profesional;
-import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
-import com.ProyectoFinal.MedicApp.Service.ImagenService;
-import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
-import com.ProyectoFinal.MedicApp.Service.PacienteService;
-import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
+import com.ProyectoFinal.MedicApp.entity.Imagen;
+import com.ProyectoFinal.MedicApp.entity.ObraSocial;
+import com.ProyectoFinal.MedicApp.entity.Paciente;
+import com.ProyectoFinal.MedicApp.entity.Profesional;
+import com.ProyectoFinal.MedicApp.exception.MiExcepcion;
+import com.ProyectoFinal.MedicApp.repository.PacienteRepositorio;
+import com.ProyectoFinal.MedicApp.service.ImagenService;
+import com.ProyectoFinal.MedicApp.service.ObraSocialService;
+import com.ProyectoFinal.MedicApp.service.PacienteService;
+import com.ProyectoFinal.MedicApp.service.ProfesionalService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -171,27 +171,6 @@ public class PortalControlador {
         return "listar.html";
     }
     
-
-//    @Transactional
-//    @PostMapping("/buscarespechonorario")
-//    public String buscarespechonorario(@RequestParam("especialidad") String especialidad, ModelMap model) {
-//        System.out.println(especialidad);
-//        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidadOrdenadoHonorario(especialidad);
-//        model.addAttribute("profesionales", profesionales);
-//        model.addAttribute("espec", especialidad);
-//        return "listaespecialidad.html";
-//    }
-//
-//    @Transactional
-//    @PostMapping("/buscarespeccalificacion")
-//    public String buscarespeccalificacion(@RequestParam("especialidad") String especialidad, ModelMap model) {
-//        System.out.println(especialidad);
-//        List<Profesional> profesionales = profesionalService.buscarProfesionalesPorEspecialidadOrdenadoCalificacion(especialidad);
-//        model.addAttribute("profesionales", profesionales);
-//        model.addAttribute("espec", especialidad);
-//        return "listaespecialidad.html";
-//    }
-
     
     ////PREGUNTAS FRECUENTES
     @GetMapping("/preguntasFrecuentes")

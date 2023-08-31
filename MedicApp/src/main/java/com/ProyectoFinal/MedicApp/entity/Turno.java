@@ -1,4 +1,4 @@
-package com.ProyectoFinal.MedicApp.Entity;
+package com.ProyectoFinal.MedicApp.entity;
 
 import java.time.LocalTime;
 import java.util.Date;
@@ -10,6 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.Data;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 

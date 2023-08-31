@@ -2,18 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.ProyectoFinal.MedicApp.Service;
+package com.ProyectoFinal.MedicApp.service;
 
-import com.ProyectoFinal.MedicApp.Entity.Imagen;
-import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
-import com.ProyectoFinal.MedicApp.Entity.Paciente;
-import com.ProyectoFinal.MedicApp.Entity.Profesional;
-import com.ProyectoFinal.MedicApp.Entity.Turno;
-import com.ProyectoFinal.MedicApp.Enum.Rol;
-import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
-import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
-import com.ProyectoFinal.MedicApp.Repository.TurnoRepositorio;
+import com.ProyectoFinal.MedicApp.entity.Imagen;
+import com.ProyectoFinal.MedicApp.entity.ObraSocial;
+import com.ProyectoFinal.MedicApp.entity.Paciente;
+import com.ProyectoFinal.MedicApp.entity.Profesional;
+import com.ProyectoFinal.MedicApp.entity.Turno;
+import com.ProyectoFinal.MedicApp.enums.Rol;
+import com.ProyectoFinal.MedicApp.exception.MiExcepcion;
+import com.ProyectoFinal.MedicApp.repository.PacienteRepositorio;
+import com.ProyectoFinal.MedicApp.repository.ProfesionalRepositorio;
+import com.ProyectoFinal.MedicApp.repository.TurnoRepositorio;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

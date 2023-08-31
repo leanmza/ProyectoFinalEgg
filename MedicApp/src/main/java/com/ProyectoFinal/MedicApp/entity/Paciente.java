@@ -1,4 +1,4 @@
-package com.ProyectoFinal.MedicApp.Entity;
+package com.ProyectoFinal.MedicApp.entity;
 
 import java.util.Date;
 import java.util.List;

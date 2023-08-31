@@ -4,14 +4,14 @@
  */
 package com.ProyectoFinal.MedicApp.controller;
 
-import com.ProyectoFinal.MedicApp.Entity.Paciente;
-import com.ProyectoFinal.MedicApp.Entity.Profesional;
-import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
-import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
-import com.ProyectoFinal.MedicApp.Service.PacienteService;
-import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
-import com.ProyectoFinal.MedicApp.Service.TurnoService;
+import com.ProyectoFinal.MedicApp.entity.Paciente;
+import com.ProyectoFinal.MedicApp.entity.Profesional;
+import com.ProyectoFinal.MedicApp.exception.MiExcepcion;
+import com.ProyectoFinal.MedicApp.repository.PacienteRepositorio;
+import com.ProyectoFinal.MedicApp.repository.ProfesionalRepositorio;
+import com.ProyectoFinal.MedicApp.service.PacienteService;
+import com.ProyectoFinal.MedicApp.service.ProfesionalService;
+import com.ProyectoFinal.MedicApp.service.TurnoService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -46,10 +46,10 @@ public class TurnoControlador {
     @Autowired
     TurnoService turnoService;
 
-     @Autowired
-     ProfesionalService profesionalService;
-     
-     ////TURNERO DESDE LA LISTA DE PROFESIONALES
+    @Autowired
+    ProfesionalService profesionalService;
+
+    ////TURNERO DESDE LA LISTA DE PROFESIONALES
     @GetMapping("/formularioTurno/{idProfesional}")
     public String turno(@PathVariable String idProfesional, Model model) {
 
@@ -62,30 +62,28 @@ public class TurnoControlador {
 
         return "formulario_turno.html";
     }
-    
-        
+
 ////TURNERO DESDE EL HEADER
-        @GetMapping("/formularioTurnoHeader")
+    @GetMapping("/formularioTurnoHeader")
     public String turno(ModelMap model) {
         List<Profesional> profesionales = profesionalService.listar();
         model.addAttribute("profesionales", profesionales);
-       return "formulario_turno_header.html";
+        return "formulario_turno_header.html";
     }
-    
-    
-    
+
     ///REGISTRO DE TURNO
     @Transactional
     @PostMapping("/registroTurno")
     public String registroTurno(@ModelAttribute Profesional pro, @RequestParam String motivo,
-            @RequestParam String dia, @RequestParam String horario, HttpSession session, ModelMap modelo) throws MiExcepcion {
+            @RequestParam String dia, @RequestParam String horario, HttpSession session,
+            ModelMap modelo) throws MiExcepcion {
 
         Paciente paciente = (Paciente) session.getAttribute("pacienteSession");
-        System.out.println(" pro " + pro);
+
         String idProfesional = pro.getId();
-        System.out.println("    id " + idProfesional );
+
         Profesional profesional = profesionalRepositorio.findById(idProfesional).orElse(null);
-        
+
         System.out.println("idPro " + idProfesional);
         System.out.println("");
         System.out.println(horario);
@@ -100,7 +98,7 @@ public class TurnoControlador {
             turnoService.crearTurno(profesional, paciente, fecha, hora, motivo);
 
             System.out.println("Turno exitoso");
-            return "redirect:/inicio?exito=turnoExitoso" ;
+            return "redirect:/inicio?exito=turnoExitoso";
 
         } catch (MiExcepcion me) {
             System.out.println("Registro de turno FALLIDO!\n" + me.getMessage());
@@ -114,6 +112,4 @@ public class TurnoControlador {
 
     }
 
-
-    
 }

@@ -1,6 +1,6 @@
-package com.ProyectoFinal.MedicApp.Entity;
+package com.ProyectoFinal.MedicApp.entity;
 
-import com.ProyectoFinal.MedicApp.Enum.Rol;
+import com.ProyectoFinal.MedicApp.enums.Rol;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;

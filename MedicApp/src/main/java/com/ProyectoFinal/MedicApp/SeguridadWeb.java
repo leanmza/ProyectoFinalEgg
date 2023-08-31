@@ -4,8 +4,9 @@
  */
 package com.ProyectoFinal.MedicApp;
 
-import com.ProyectoFinal.MedicApp.Service.PacienteService;
-import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
+
+import com.ProyectoFinal.MedicApp.service.PacienteService;
+import com.ProyectoFinal.MedicApp.service.ProfesionalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -43,7 +44,7 @@ public class SeguridadWeb extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .and().formLogin()
                     .loginPage("/login")
-                    .loginProcessingUrl("/logincheck")
+                    .loginProcessingUrl("/loginCheck")
                     .usernameParameter("email")
                     .passwordParameter("password")
                     .defaultSuccessUrl("/inicio")

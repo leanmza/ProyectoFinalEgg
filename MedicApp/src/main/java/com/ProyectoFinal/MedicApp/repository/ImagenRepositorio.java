@@ -1,7 +1,7 @@
-package com.ProyectoFinal.MedicApp.Repository;
+package com.ProyectoFinal.MedicApp.repository;
 
 
-import com.ProyectoFinal.MedicApp.Entity.Imagen;
+import com.ProyectoFinal.MedicApp.entity.Imagen;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

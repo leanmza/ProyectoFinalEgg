@@ -122,7 +122,7 @@
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 
                         <img class="imagen-perfil" 
-                             sec:authorize ="hasRole ('PACIENTE')"
+                             sec:authorize ="hasRole ('PACIENTE') "
                              th:src="${session.pacienteSession.imagen != null ? '/imagen/perfil/__${session.pacienteSession.id}__' : '../predeterminada_perfil.png'}" >
 
 

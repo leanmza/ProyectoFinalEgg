@@ -55,9 +55,13 @@ h3 {
 
 .contenedorMain {
     padding-inline: 5% !important;
-    padding-top: 4%;
+    padding-top: 2rem;
     padding-bottom: 5%;
+}
 
+.contenedorCards {
+    z-index: 0;
+    padding-top: 4%;
 }
 
 /*TABLAS*/
@@ -475,7 +479,7 @@ h5 {
     background-repeat: no-repeat;
     background-position: top left;
     display: flex;
-
+    min-height: 40vw;
     max-height: 100%;
     height: 100%;
     /*width: 70vw;*/
@@ -582,9 +586,7 @@ h5 {
     justify-content: space-evenly;
 }
 
-.contenedorCards {
-    z-index: 0;
-}
+
 
 .cardHora{
     height: 446.733px;

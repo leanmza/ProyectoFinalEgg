@@ -1,4 +1,4 @@
-package com.ProyectoFinal.MedicApp.Enum;
+package com.ProyectoFinal.MedicApp.enums;
 
 public enum Rol {
     PACIENTE,

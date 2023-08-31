@@ -1,8 +1,8 @@
-package com.ProyectoFinal.MedicApp.Entity;
+package com.ProyectoFinal.MedicApp.entity;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Map;
+
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
