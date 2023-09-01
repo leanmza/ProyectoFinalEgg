@@ -16,6 +16,12 @@
                     <h3>EDITAR PERFIL</h3>
                 </div>
 
+                <!-- th:action="@{/reader/profile/__${reader.id}__}"
+                method="POST"
+                class="form"
+                id="formLogin"
+                enctype="multipart/form-data" -->
+
                 <form
                     class="form-floating row formulario formularioCrear"
                     id="formulario"
@@ -28,7 +34,7 @@
                         <div class="col-2 divImagenPerfil">                          
 
                             <img class="imagenPerfil"
-                                 th:src="${session.pacienteSession.imagen != null ? '/imagen/perfil/__${session.pacienteSession.id}__' : '../predeterminada_perfil.png'}" >
+                                 th:src="${session.userSession.imagen != null ? '/imagen/perfil/__${session.userSession.id}__' : '../predeterminada_perfil.png'}" >
                             <a href="#" class="linkIconoCamara" >
                                 <i class="fa-solid fa-camera fa-xl"></i>
                             </a>
@@ -39,15 +45,7 @@
                     <div class="row rowDatosPersonales">
 
                         <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
-                        <!-- INPUT OCULTO DEL ID -->
-                        <input
-                            hidden
-                            type="text"
-                            id="id"
-                            name="id"
-                            th:value="${paciente.id}"
-                            />
-
+              
                         <!-- INPUT NOMBRE-->
                         <div class="col-xs-12 col-md-6 form-floating">
                             <input
@@ -81,6 +79,7 @@
                                 name="dni"
                                 th:value="${paciente.dni}"
                                 placeholder=""
+                                disabled>
                                 <label for="dni"><i class="fa-solid fa-id-card iconForm"></i>DNI (sin puntos ni espacios)</label>
                         </div>
 
@@ -91,7 +90,8 @@
                                 class="form-control"
                                 id="naciemiento"
                                 name="nacimiento"
-                                th:value="${#dates.format(paciente.fechaNacimiento, 'yyyy-MM-dd')}"
+                                th:value="${(paciente.fechaNacimiento)}"
+                                disabled
                                 />
                                      <label for="naciemiento"><i class="fa-solid fa-calendar-days iconForm"></i>Fecha de Nacimiento</label>
                         </div>
@@ -128,6 +128,7 @@
                                     name="correo"
                                     th:value="${paciente.email}"
                                     placeholder=""
+                                    disabled
                                     />
                                 <label for="correo"><i class="fa-solid fa-envelope iconForm"></i>Email</label>
                             </div>

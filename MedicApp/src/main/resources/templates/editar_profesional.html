@@ -43,7 +43,7 @@
 
                         
                             <img class="imagenPerfil"
-                                 th:src="${session.profesionalSession.imagen != null ? '/imagen/perfil/__${session.profesionalSession.id}__' : '../predeterminada_perfil.png'}" >
+                                 th:src="${session.userSession.imagen != null ? '/imagen/perfil/__${session.userSession.id}__' : '../predeterminada_perfil.png'}" >
                                  <a href="#" class="linkIconoCamara" >
                                 <i class="fa-solid fa-camera fa-xl"></i>
                             </a>
@@ -51,10 +51,7 @@
               
                         </div>
 
-                        <!-- INPUT OCULTO DEL ID -->
-                        <input hidden type="text" id="id" name="id" th:value="${profesional.id}" />
-
-                        <!-- INPUT NOMBRE-->
+                            <!-- INPUT NOMBRE-->
                         <div class="col-xs-12 col-md-6 form-floating">  <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
                             <input
                                 type="text"
@@ -364,7 +361,7 @@
                                 class="form-control inputHora"
                                 id="horaInicio"
                                 name="horaInicio"
-                                th:value="${#temporals.format(profesional.horaInicio, 'HH:mm')}"
+                                th:value="${profesional.horaInicio}"
                                 placeholder=""
                                 />
                             <label for="horaInicio" class="inputHora">
@@ -379,7 +376,7 @@
                                 class="form-control inputHora"
                                 id="horaFin"
                                 name="horaFin"
-                                th:value="${#temporals.format(profesional.horaFin, 'HH:mm')}"
+                                th:value="${profesional.horaFin}"
                                 placeholder=""
                                 />
                              <label for="horaFin" class="inputHora">

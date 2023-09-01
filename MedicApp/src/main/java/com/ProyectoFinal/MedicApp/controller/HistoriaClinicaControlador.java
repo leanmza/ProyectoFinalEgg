@@ -74,7 +74,7 @@ public class HistoriaClinicaControlador {
     @GetMapping("/form_historia_clinica")
     public String crearHistoriaClinica(ModelMap modelo, HttpSession session) {
         
-        Profesional profesional = (Profesional) session.getAttribute("profesionalSession");
+        Profesional profesional = (Profesional) session.getAttribute("userSession");
         modelo.put("profesional", profesional);
 
         modelo.put("dia", new Date());
@@ -89,7 +89,7 @@ public class HistoriaClinicaControlador {
             @RequestParam String diagnostico, HttpSession session, ModelMap modelo) {
 
         Paciente paciente = pacienteServicio.buscarPorDni(dni);
-        Profesional profesional = (Profesional) session.getAttribute("profesionalSession");
+        Profesional profesional = (Profesional) session.getAttribute("userSession");
         
         try {
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");

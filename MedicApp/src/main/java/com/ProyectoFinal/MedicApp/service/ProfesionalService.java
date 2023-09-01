@@ -17,26 +17,12 @@ import com.ProyectoFinal.MedicApp.repository.TurnoRepositorio;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import javax.servlet.http.HttpSession;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -44,7 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Lean
  */
 @Service
-public class ProfesionalService implements UserDetailsService {
+public class ProfesionalService{
 
     @Autowired
     private ProfesionalRepositorio profesionalRepositorio;
@@ -58,18 +44,16 @@ public class ProfesionalService implements UserDetailsService {
     @Transactional
     public void crearProfesional(String nombre, String apellido, String correo, String telefono,
             MultipartFile archivo, String password, String password2, String especialidad, String ubicacion,
-            String modalidad, Double honorarios, ObraSocial obraSocial, String[] dias,
-            LocalTime horaInicio, LocalTime horaFin /*List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
-    ) throws MiExcepcion {
+            String modalidad, Double honorarios, ObraSocial obraSocial, String[] dias, LocalTime horaInicio,
+            LocalTime horaFin /*List<ObrasSociales> obrasSociales*/) throws MiExcepcion {                       /// HACER FUNCIONAR LISTA DE OBRA SOCIALES
 
-        validar(nombre, apellido, correo, telefono, password, password2,
-                especialidad, ubicacion, modalidad, honorarios, obraSocial, dias, horaInicio, horaFin);
+        validar(nombre, apellido, correo, telefono, password, password2, especialidad, ubicacion,
+                modalidad, honorarios, obraSocial, dias, horaInicio, horaFin);
 
         Profesional profesional = new Profesional();
 
         profesional.setNombre(nombre);
         profesional.setApellido(apellido);
-//        profesional.setDni(dni);
         profesional.setEmail(correo);
         profesional.setTelefono(telefono);
 
@@ -79,51 +63,59 @@ public class ProfesionalService implements UserDetailsService {
         }
 
         profesional.setPassword(new BCryptPasswordEncoder().encode(password));
+
         profesional.setRol(Rol.PROFESIONAL);
+
         profesional.setActivo(true);
         profesional.setEspecialidad(especialidad);
 
-        profesional.setModalidad(modalidad);
-        profesional.setUbicacion(ubicacion);
+        profesional.setModalidad(Modalidad.valueOf(modalidad));
+
+        profesional.setUbicacion(Ubicacion.valueOf(ubicacion));
+
         profesional.setHonorario(honorarios);
+
+        ///TIENE QUE SER UN ARRAYLIST DE OBRAS SOCIALES
         profesional.setObraSocial(obraSocial);
-        
+
         // CREAMOS LA LISTA DE HORARIOS SEPARADOS CADA 30 MINUTOS
         ArrayList<String> horario = new ArrayList();
+
         System.out.println("horario" + horario);
+
         while (horaInicio.isBefore(horaFin)) {
             horario.add(horaInicio.format(DateTimeFormatter.ofPattern("HH:mm")));
             horaInicio = horaInicio.plusMinutes(30);
             System.out.println("Hora inicio" + horaInicio);
         }
+
         for (String horas : horario) {
             System.out.println("horas" + horas);
         }
+
         profesional.setHoras(horario);
-        
+
         // CREAMOS UN HASHMAP CON LOS DIAS DE TRABAJO Y LE INSERTAMOS EL HORARIO DE TRABAJO
-        
         profesional.setDias(dias);
-        
+
         profesional.setHoraInicio(horaInicio);
         profesional.setHoraFin(horaFin);
         profesional.setCantVisitas(0);
         profesional.setPuntaje(0);
-        profesional.setCalificacion(0.0);      
+        profesional.setCalificacion(0.0);
 
         profesionalRepositorio.save(profesional);
 
     }
 
     @Transactional
-    public void modificarProfesional(String idProfesional, String nombre, String apellido, String correo, String telefono,
-            MultipartFile archivo, String password, String password2, String especialidad, String ubicacion,
-            String modalidad, Double honorarios, ObraSocial obraSocial, String[] dias,
-            LocalTime horaInicio, LocalTime horaFin/*, List<ObrasSociales> obrasSociales, List<Turno>turnos,*/
-    ) throws MiExcepcion {
+    public void modificarProfesional(String idProfesional, String nombre, String apellido, String correo,
+            String telefono, MultipartFile archivo, String password, String password2, String especialidad,
+            String ubicacion, String modalidad, Double honorarios, ObraSocial obraSocial, String[] dias,
+            LocalTime horaInicio, LocalTime horaFin/*, List<ObrasSociales> obrasSociales*/) throws MiExcepcion {
 
-        validar(nombre, apellido, correo, telefono, password, password2,
-                especialidad, ubicacion, modalidad, honorarios, obraSocial, dias , horaInicio, horaFin);
+        validar(nombre, apellido, correo, telefono, password, password2, especialidad, ubicacion,
+                modalidad, honorarios, obraSocial, dias, horaInicio, horaFin);
 
         Optional<Profesional> respuesta = profesionalRepositorio.findById(idProfesional);
 
@@ -132,7 +124,6 @@ public class ProfesionalService implements UserDetailsService {
 
             profesional.setNombre(nombre);
             profesional.setApellido(apellido);
-//        profesional.setDni(dni);
             profesional.setEmail(correo);
             profesional.setTelefono(telefono);
 
@@ -153,9 +144,11 @@ public class ProfesionalService implements UserDetailsService {
 
             // NO SETEAMOS ROL PORQUE MANTIENE EL QUE TENIA AL MODIFICAR PERFIL 
             //Falta ObrasSociales y Tunos, hay que crear las entidades
-            profesional.setModalidad(modalidad);
-            profesional.setUbicacion(ubicacion);
+            profesional.setModalidad(Modalidad.valueOf(modalidad));
+            profesional.setUbicacion(Ubicacion.valueOf(ubicacion));
             profesional.setHonorario(honorarios);
+
+            ///TIENE QUE SER UN ARRAYLIST DE OBRAS SOCIALES
             profesional.setObraSocial(obraSocial);
 //        profesional.setDias(dias);
             profesional.setHoraInicio(horaInicio);
@@ -226,10 +219,9 @@ public class ProfesionalService implements UserDetailsService {
 
     public void validar(String nombre, String apellido, String correo, String telefono,
             String password, String password2, String especialidad, String ubicacion,
-            String modalidad, Double honorarios, ObraSocial obraSocial ,String[] dias,
+            String modalidad, Double honorarios, ObraSocial obraSocial, String[] dias,
             LocalTime horaInicio, LocalTime horaFin) throws MiExcepcion {
-
-        try {
+       
             if (nombre == null || nombre.isEmpty()) {
                 throw new MiExcepcion("El nombre no puede ser nulo o vacío");
             }
@@ -274,7 +266,7 @@ public class ProfesionalService implements UserDetailsService {
             if (horaFin == null) {
                 throw new MiExcepcion("Los hora de finalización no puede ser nula");
             }
-            
+
             if (password == null || password.isEmpty()) {
                 throw new MiExcepcion("La contraseña no puede ser nula o vacía");
             }
@@ -286,7 +278,7 @@ public class ProfesionalService implements UserDetailsService {
                 throw new MiExcepcion("Las contraseñas no coinciden");
 
             }
-                  if (validarNumero(password) == false) {
+            if (validarNumero(password) == false) {
                 throw new MiExcepcion("La contraseña tiene que tener al menos un un número");
             }
             if (validarMayuscula(password) == false) {
@@ -295,17 +287,13 @@ public class ProfesionalService implements UserDetailsService {
             if (validarMinuscula(password) == false) {
                 throw new MiExcepcion("La contraseña tiene que tener al menos una minúscula");
             }
-
-        } catch (MiExcepcion ex) {
-            throw ex;
-        }
+   
     }
-    
-    
+
     private boolean validarNumero(String password) {
         boolean cumple = false;
         for (int i = 0; i < password.length(); i++) {
-            if ((password.charAt(i) >= 48) && (password.charAt(i) <= 57)) {
+            if (Character.isDigit(password.charAt(i))) {
                 cumple = true;
                 System.out.println("tiene numero");
                 break;
@@ -317,7 +305,7 @@ public class ProfesionalService implements UserDetailsService {
     private boolean validarMayuscula(String password) {
         boolean cumple = false;
         for (int i = 0; i < password.length(); i++) {
-            if ((password.charAt(i) >= 65) && (password.charAt(i) <= 90)) {
+            if (Character.isUpperCase(password.charAt(i))) {
                 System.out.println("tiene mayuscula");
                 cumple = true;
                 break;
@@ -329,38 +317,13 @@ public class ProfesionalService implements UserDetailsService {
     private boolean validarMinuscula(String password) {
         boolean cumple = false;
         for (int i = 0; i < password.length(); i++) {
-            if ((password.charAt(i) >= 97) && (password.charAt(i) <= 122)) {
+            if (Character.isLowerCase(password.charAt(i))) {
                 System.out.println("tiene minuscula");
                 cumple = true;
                 break;
             }
         }
         return cumple;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Profesional profesional = profesionalRepositorio.buscarPorEmail(email);
-        System.out.println("Profesional desde UserDetail: " + profesional);
-
-        if (profesional != null) {
-
-            List<GrantedAuthority> permisos = new ArrayList();
-
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + profesional.getRol().toString());
-
-            permisos.add(p);
-
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-
-            HttpSession session = attr.getRequest().getSession(true);
-
-            session.setAttribute("profesionalSession", profesional);
-
-            return new User(profesional.getEmail(), profesional.getPassword(), permisos);
-        } else {
-            return null;
-        }
     }
 
     @Transactional(readOnly = true)

@@ -1,13 +1,18 @@
 package com.ProyectoFinal.MedicApp.entity;
 
+import com.ProyectoFinal.MedicApp.enums.Modalidad;
+import com.ProyectoFinal.MedicApp.enums.Ubicacion;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  *
@@ -16,19 +21,24 @@ import lombok.Data;
 
 // CLASE QUE HEREDA DE "PERSONA" Y AGREGA ATRIBUTOS ESPECIALES PARA EL 
 // DESARROLLO DEL PROFESIONAL EN LA PLATAFORMA
-@Data
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Getter
+@Setter
+
 public class Profesional extends Persona {
     
     // "CLINICA", "PEDIATRIA", "CARDIOLOGIA", ETC
     private String especialidad;
 
     // PUEDE SER PRESENCIAL O A DISTANCIA
-    private String modalidad;
+    @Enumerated(EnumType.STRING)
+    private Modalidad modalidad;
 
     // SE GUARDA LA ZONA DE TRABAJO
-    private String ubicacion;
+    @Enumerated(EnumType.STRING)
+    private Ubicacion ubicacion;
 
     private String[] dias;
 

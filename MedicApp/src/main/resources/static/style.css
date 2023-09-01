@@ -172,6 +172,7 @@ header {
     height: 50px; /* ajustar según el tamaño deseado */
     border-radius: 50%;
     overflow: hidden;
+    object-fit: cover;
 }
 
 .imagen-perfil img {
@@ -836,7 +837,9 @@ form label{
 .imagenPerfil{
     height: 150px;
     width: 150px;
-    border-radius: 50%
+    border-radius: 50%;
+    overflow: hidden;
+    object-fit: cover;
 }
 
 .rowImagenPerfil{

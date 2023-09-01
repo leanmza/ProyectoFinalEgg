@@ -10,14 +10,13 @@ import com.ProyectoFinal.MedicApp.entity.Paciente;
 import com.ProyectoFinal.MedicApp.entity.Profesional;
 import com.ProyectoFinal.MedicApp.entity.Turno;
 import com.ProyectoFinal.MedicApp.exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.repository.PacienteRepositorio;
 import com.ProyectoFinal.MedicApp.service.ImagenService;
 import com.ProyectoFinal.MedicApp.service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.service.PacienteService;
 import com.ProyectoFinal.MedicApp.service.TurnoService;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,13 +41,12 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/paciente")
 public class PacienteControlador {
 
-
     @Autowired
     PacienteService pacienteService;
-    
+
     @Autowired
     ObraSocialService obraSocialServicio;
-    
+
     @Autowired
     ImagenService imagenServicio;
 
@@ -59,21 +57,23 @@ public class PacienteControlador {
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_ADMINISTRADOR')")
     @GetMapping("/perfil")
     public String perfil(ModelMap modelo, HttpSession session, HttpSession obraSocialNueva) {
-        
+
         // CARGAMOS LOS DATOS DEL PACIENTE
-        Paciente paciente = (Paciente) session.getAttribute("pacienteSession");
+        Paciente paciente = (Paciente) session.getAttribute("userSession");
+
         // EN EL CASO QUE HAYA AGREGADO UNA OBRA SOCIAL NUEVA, ACTUALIZAMOS LA LISTA DE OBRAS SOCIALES SETEADAS
         if (obraSocialNueva.getAttribute("nuevaObraSocial") != null) {
             String nombreOS = (String) obraSocialNueva.getAttribute("nuevaObraSocial");
             ObraSocial obraSocial = obraSocialServicio.buscarPorNombre(nombreOS);
             paciente.setObraSocial(obraSocial);
         }
+
         modelo.put("paciente", paciente);
-        
+
         // CARGA DE LAS OBRAS SOCIALES
         List<ObraSocial> obrasSociales = obraSocialServicio.listar();
         modelo.put("obrasSociales", obrasSociales);
-        
+
         return "editar_paciente.html";
     }
 
@@ -81,20 +81,17 @@ public class PacienteControlador {
     @Transactional
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_ADMINISTRADOR')")
     @PostMapping("/perfil/{id}")
+
     public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
-            @RequestParam String dni, @RequestParam String correo, @RequestParam String telefono,
-            @RequestParam(required = false) String nacimiento, @RequestParam(required = false) String password, @RequestParam(required = false) String password2, 
+            @RequestParam String telefono,  @RequestParam(required = false) String password, @RequestParam(required = false) String password2,
             @RequestParam String direccion, @RequestParam String sexo, @RequestParam(required = false) MultipartFile archivo, @RequestParam String obraSocial,
-            HttpSession session, ModelMap modelo ) {
-       
+            HttpSession session, ModelMap modelo) {
+
         try {
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd"); // yyyy-MM-dd
-            Date fechaNacimiento = formato.parse(nacimiento);
+          
+            pacienteService.modificarPaciente(id, nombre, apellido, direccion, telefono, sexo, obraSocial, password, password2, archivo);
             
-            ObraSocial claseObraSocial = obraSocialServicio.buscarPorNombre(obraSocial); // A PARTIR DEL ID BUSCAMOS LA CLASE OBRAsOCIAL
-            
-            pacienteService.modificarPaciente(id, nombre, apellido, dni, correo, direccion, telefono, nacimiento, sexo, obraSocial, password, password2, archivo);
-            session.setAttribute("pacienteSession", pacienteService.getOne(id));
+            session.setAttribute("userSession", pacienteService.getOne(id));
             return "redirect:/inicio";
 
         } catch (MiExcepcion me) {
@@ -118,19 +115,20 @@ public class PacienteControlador {
 
         return "redirect:/";
     }
+
+    ////ALMACENA DATOS DE FORMULARIOS SI SE REFRESCA LA PÁGINA
     
-    
-   ////ALMACENA DATOS DE FORMULARIOS SI SE REFRESCA LA PÁGINA
+    /// ***************** ESTO HAY QUE SACARLO DEL CONTROLADOR Y MANDARLO AL SERVICIO***********************************
     @Transactional
     @PostMapping("/guardarDatosFormulario")
-    public String guardarDatosFormulario (@RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido,
+    public String guardarDatosFormulario(@RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido,
             @RequestParam(required = false) String dni, @RequestParam(required = false) String email, @RequestParam(required = false) String telefono,
             @RequestParam(required = false) String password, @RequestParam(required = false) String password2, @RequestParam(required = false) String direccion,
-            @RequestParam(required = false) Date fechaNacimiento, @RequestParam(required = false) String sexo,
+            @RequestParam(required = false) String fechaNacimiento, @RequestParam(required = false) String sexo,
             @RequestParam(required = false) MultipartFile archivo, @RequestParam(required = false) String obraSocial, HttpSession sessionFormulario) throws MiExcepcion {
-        
+
         ObraSocial ClaseObraSocial = obraSocialServicio.buscarPorNombre(obraSocial);
-        
+
         Paciente paciente = new Paciente();
 
         paciente.setNombre(nombre);
@@ -140,26 +138,29 @@ public class PacienteControlador {
         paciente.setTelefono(telefono);
         paciente.setPassword(new BCryptPasswordEncoder().encode(password));
         paciente.setDireccion(direccion);
-        paciente.setFechaNacimiento(fechaNacimiento);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fechaDeNacimiento = LocalDate.parse(fechaNacimiento, formatter);
+        paciente.setFechaNacimiento(fechaDeNacimiento);
         paciente.setSexo(sexo);
         paciente.setObraSocial(ClaseObraSocial);
-        
-        if(!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
+
+        if (!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
             Imagen imagen = imagenServicio.guardar(archivo);
             paciente.setImagen(imagen);
         }
-        
+
         sessionFormulario.setAttribute("datosFormulario", paciente);
-        
+
         return "redirect:/paciente/perfil";
     }
-    
+
 ////LISTA MIS PROFESIONALES
     @Transactional
     @GetMapping("/misProfesionales")
     public String listaProfesionales(ModelMap model, HttpSession session) {
 
-        Paciente paciente = (Paciente) session.getAttribute("pacienteSession");
+        Paciente paciente = (Paciente) session.getAttribute("userSession");
         String idPaciente = paciente.getId();
 
         List<Profesional> profesionales = pacienteService.listarProfesionales(idPaciente);
@@ -168,13 +169,12 @@ public class PacienteControlador {
         return "mis_profesionales.html";
     }
 
-    
     ////LISTA MIS TURNOS
     @Transactional
     @GetMapping("/misTurnos")
     public String listaTurnos(ModelMap model, HttpSession session) {
 
-        Paciente paciente = (Paciente) session.getAttribute("pacienteSession");
+        Paciente paciente = (Paciente) session.getAttribute("userSession");
         String idPaciente = paciente.getId();
 
         List<Turno> turnos = pacienteService.listarTurnos(idPaciente);
@@ -192,7 +192,6 @@ public class PacienteControlador {
         turnoService.eliminarTurno(id);
         return "redirect:/paciente/misTurnos";
     }
-
 
     ////CALIFICAR PROFESIONAL
     @Transactional

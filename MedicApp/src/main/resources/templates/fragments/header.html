@@ -9,7 +9,7 @@
                 <a
                     href="/inicio"
                     class="logo"
-                    th:if="${session.pacienteSession != null} OR ${session.profesionalSession != null} "
+                    th:if="${session.userSession != null}"
                     >
                     <img
                         src="../../logo2_App.png"
@@ -22,7 +22,7 @@
                 <a
                     href="/"
                     class="logo"
-                    th:if="${session.pacienteSession == null} AND ${session.profesionalSession == null}"
+                    th:if="${session.userSession == null}"
                     >
                     <img
                         src="../../logo2_App.png"
@@ -52,7 +52,7 @@
                                 <!--SI  HAY LOGUEADO-->
                                 <a
                                     href="/inicio"
-                                    th:if="${session.pacienteSession != null} OR ${session.profesionalSession != null} "
+                                    th:if="${session.userSession != null}"
                                     id="btn-inicio" class="link">Inicio
                                 </a>
 
@@ -60,7 +60,7 @@
                                 <!--SI NO  HAY LOGUEADO-->
                                 <a
                                     href="/"
-                                    th:if="${session.pacienteSession == null} AND ${session.profesionalSession == null}"
+                                    th:if="${session.userSession == null}"
                                     id="btn-inicio" class="link">Inicio
                                 </a>
                             </li>
@@ -69,9 +69,11 @@
                                    >Profesionales</a
                                 >
                             </li>
+
                             <li class="nav-item">
-                                <a  th:if="${session.profesionalSession == null}" href="/preguntasFrecuentes" id="btn-contacto" class="link">Preguntas Frecuentes</a>
+                                <a  href="/preguntasFrecuentes" id="btn-contacto" class="link">Preguntas Frecuentes</a>
                             </li>
+
                             <li class="nav-item dropdown">
                                 <a sec:authorize ="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')" class="nav-link dropdown-toggle link" 
                                    href="#" data-bs-toggle="dropdown" aria-expanded="false">Historia Clínica</a>
@@ -90,6 +92,7 @@
                                 </ul>
                             </li>
                         </ul>
+
                         <!--ESTO TIENE QUE APARECER SOLO EN EL INICIO.HTML-->
                         <a th:href="@{/turno/formularioTurnoHeader}"><button
                                 type="button"
@@ -114,33 +117,18 @@
             </nav>
 
             <div class="col-xs-12 col-md-2 divLinksHeader">
-                <div th:if="${session.pacienteSession == null && session.profesionalSession == null}">
+                <div th:if="${session.userSession == null}">
                     <a href="/login"> <button type="button" class="btn btn-primary botonesHeader">Iniciar Sesión</button></a>
                 </div>
 
-                <div class="dropdown text-end" th:if="${session.pacienteSession != null || session.profesionalSession != null}">
+                <div class="dropdown text-end" th:if="${session.userSession != null}">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 
                         <img class="imagen-perfil" 
-                             sec:authorize ="hasRole ('PACIENTE') "
-                             th:src="${session.pacienteSession.imagen != null ? '/imagen/perfil/__${session.pacienteSession.id}__' : '../predeterminada_perfil.png'}" >
+                             
+                             th:src="${session.userSession.imagen != null ? '/imagen/perfil/__${session.userSession.id}__' : '../predeterminada_perfil.png'}" >
 
-
-
-
-                        <img class="imagen-perfil" 
-                             sec:authorize ="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')"
-                             th:src="${session.profesionalSession.imagen != null ? '/imagen/perfil/__${session.profesionalSession.id}__' : '../predeterminada_perfil.png'}" >
-
-                        <!--                  <img class="imagen-perfil" 
-                                                sec:authorize ="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR') OR hasRole('PACIENTE')"
-                                                  th:if="${session.profesionalSession.imagen == null} OR ${session.profesionalSession == null}" 
-                                                  src="../../predeterminada_perfil.png" >-->
-
-
-                        <!--                  <img class="imagen-perfil" 
-                                               th:src="${session.pacienteSession.imagen != null} ? @{/imagen/perfil/${session.pacienteSession.id}} : @{../../predeterminada_perfil.png}" >-->
-
+           
                     </a>
                     <ul class="dropdown-menu text-small">
                         <li><a class="dropdown-item" th:href="@{/paciente/misTurnos}" sec:authorize ="hasRole ('PACIENTE')">Mis Turnos</a></li>

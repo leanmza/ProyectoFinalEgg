@@ -11,28 +11,20 @@ import com.ProyectoFinal.MedicApp.entity.Profesional;
 import com.ProyectoFinal.MedicApp.entity.Turno;
 import com.ProyectoFinal.MedicApp.enums.Rol;
 import com.ProyectoFinal.MedicApp.exception.MiExcepcion;
+import com.ProyectoFinal.MedicApp.repository.ObraSocialRepositorio;
 import com.ProyectoFinal.MedicApp.repository.PacienteRepositorio;
 import com.ProyectoFinal.MedicApp.repository.ProfesionalRepositorio;
 import com.ProyectoFinal.MedicApp.repository.TurnoRepositorio;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -40,7 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author cmoro1
  */
 @Service
-public class PacienteService implements UserDetailsService {
+public class PacienteService {
 
     @Autowired
     private PacienteRepositorio pacienteRepositorio;
@@ -57,6 +49,9 @@ public class PacienteService implements UserDetailsService {
     @Autowired
     private ObraSocialService obraSocialServicio;
 
+    @Autowired
+    private ObraSocialRepositorio obraSocialRepositorio;
+
     @Transactional
     public void crearPaciente(String nombre, String apellido, String dni, String email, String direccion, String telefono,
             String nacimiento, String sexo, String obraSocial, String password, String password2, MultipartFile archivo) throws MiExcepcion, ParseException {
@@ -72,8 +67,8 @@ public class PacienteService implements UserDetailsService {
         paciente.setDireccion(direccion);
         paciente.setTelefono(telefono);
 
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-        Date fechaNacimiento = formato.parse(nacimiento);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fechaNacimiento = LocalDate.parse(nacimiento, formatter);
         paciente.setFechaNacimiento(fechaNacimiento);
 
         paciente.setSexo(sexo);
@@ -94,10 +89,10 @@ public class PacienteService implements UserDetailsService {
     }
 
     @Transactional
-    public void modificarPaciente(String id, String nombre, String apellido, String dni, String email, String direccion, String telefono,
-            String nacimiento, String sexo, String obraSocial, String password, String password2, MultipartFile archivo) throws MiExcepcion, ParseException {
+    public void modificarPaciente(String id, String nombre, String apellido, String direccion, String telefono,
+            String sexo, String obraSocial, String password, String password2, MultipartFile archivo) throws MiExcepcion, ParseException {
 
-        validar(nombre, apellido, dni, email, direccion, telefono, nacimiento, sexo, obraSocial, password, password2);
+        validarModificar(nombre, apellido, direccion, telefono, sexo, obraSocial, password, password2);
 
         Optional<Paciente> respuesta = pacienteRepositorio.findById(id);
         if (respuesta.isPresent()) {
@@ -105,23 +100,19 @@ public class PacienteService implements UserDetailsService {
 
             paciente.setNombre(nombre);
             paciente.setApellido(apellido);
-            paciente.setDni(dni);
-            paciente.setEmail(email);
             paciente.setDireccion(direccion);
             paciente.setTelefono(telefono);
 
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-            Date fechaNacimiento = formato.parse(nacimiento);
-            paciente.setFechaNacimiento(fechaNacimiento);
-
             paciente.setSexo(sexo);
 
-            ObraSocial ClaseObraSocial = obraSocialServicio.getOne(obraSocial);
-            paciente.setObraSocial(ClaseObraSocial);
+            ObraSocial obraSoci = obraSocialRepositorio.buscarPorNombre(obraSocial);
+
+            paciente.setObraSocial(obraSoci);
 
             paciente.setPassword(new BCryptPasswordEncoder().encode(password));
 
-            if (archivo.getSize() == 0) {
+           
+              if (archivo.getSize() == 0) {
                 paciente.setImagen(null);
             } else {
                 String idImagen = null;
@@ -135,6 +126,7 @@ public class PacienteService implements UserDetailsService {
             paciente.setRol(Rol.PACIENTE);
             paciente.setActivo(true);
             pacienteRepositorio.save(paciente);
+
         }
     }
 
@@ -145,7 +137,7 @@ public class PacienteService implements UserDetailsService {
     public Paciente buscarPorDni(String dni) {
         return pacienteRepositorio.buscarPorDni(dni);
     }
-
+ 
     @Transactional(readOnly = true)
     public List<Paciente> listar() {
 
@@ -158,83 +150,133 @@ public class PacienteService implements UserDetailsService {
 
     public void validar(String nombre, String apellido, String dni, String email, String direccion, String telefono,
             String nacimiento, String sexo, String obraSocial, String password, String password2) throws MiExcepcion {
-
-        try {
-            if (nombre == null || nombre.isEmpty()) {
-                throw new MiExcepcion("El nombre no puede ser nulo o vacío");
-            }
-
-            if (apellido == null || apellido.isEmpty()) {
-                throw new MiExcepcion("El apellido no puede ser nulo o vacío");
-            }
-
-            if (dni == null || dni.isEmpty()) {
-                throw new MiExcepcion("El DNI no puede ser nulo o vacío");
-            }
-
-            if (pacienteRepositorio.buscarPorDni(dni) != null) {
-                throw new MiExcepcion("El DNI ingresado ya se encuentra registrado");
-            }
-
-            if (email == null || email.isEmpty()) {
-                throw new MiExcepcion("El correo electrónico no puede ser nulo o vacío");
-            }
-
-            if (pacienteRepositorio.buscarPorEmail(email) != null) {
-                throw new MiExcepcion("El correo ingresado ya se encuentra registrado");
-            }
-
-            if (direccion == null || direccion.isEmpty()) {
-                throw new MiExcepcion("La dirección no puede ser nula o vacía");
-            }
-
-            if (telefono == null || telefono.isEmpty()) {
-                throw new MiExcepcion("El teléfono no puede ser nulo o vacío");
-            }
-
-            if (nacimiento.isEmpty()) {
-                throw new MiExcepcion("La fecha no puede ser nula");
-            }
-
-            if (sexo == null || sexo.isEmpty()) {
-                throw new MiExcepcion("El sexo no puede ser nulo o vacío");
-            }
-
-            if (obraSocial == null) {
-                throw new MiExcepcion("Las obras sociales no pueden ser nulas o vacías");
-            }
-
-            if (password == null || password.isEmpty()) {
-                throw new MiExcepcion("La contraseña no puede ser nula o vacía");
-            }
-
-            if (password2 == null || password2.isEmpty()) {
-                throw new MiExcepcion("La segunda contraseña no puede ser nula o vacía");
-            }
-
-            if (!(password.equals(password2))) {
-                throw new MiExcepcion("Las contraseñas no coinciden");
-            }
-            if (validarNumero(password) == false) {
-                throw new MiExcepcion("La contraseña tiene que tener al menos un un número");
-            }
-            if (validarMayuscula(password) == false) {
-                throw new MiExcepcion("La contraseña tiene que tener al menos una mayúscula");
-            }
-            if (validarMinuscula(password) == false) {
-                throw new MiExcepcion("La contraseña tiene que tener al menos una minúscula");
-            }
-        } catch (MiExcepcion ex) {
-            throw ex;
+        if (emailChecker(email) == true) {
+            throw new MiExcepcion("El email " + email + " ya se encuentra registrado");
         }
+        if (nombre == null || nombre.isEmpty()) {
+            throw new MiExcepcion("El nombre no puede ser nulo o vacío");
+        }
+
+        if (apellido == null || apellido.isEmpty()) {
+            throw new MiExcepcion("El apellido no puede ser nulo o vacío");
+        }
+
+        if (dni == null || dni.isEmpty()) {
+            throw new MiExcepcion("El DNI no puede ser nulo o vacío");
+        }
+
+        if (email == null || email.isEmpty()) {
+            throw new MiExcepcion("El correo electrónico no puede ser nulo o vacío");
+        }
+
+        if (direccion == null || direccion.isEmpty()) {
+            throw new MiExcepcion("La dirección no puede ser nula o vacía");
+        }
+
+        if (telefono == null || telefono.isEmpty()) {
+            throw new MiExcepcion("El teléfono no puede ser nulo o vacío");
+        }
+
+        if (nacimiento.isEmpty()) {
+            throw new MiExcepcion("La fecha no puede ser nula");
+        }
+
+        if (sexo == null || sexo.isEmpty()) {
+            throw new MiExcepcion("El sexo no puede ser nulo o vacío");
+        }
+
+        if (obraSocial == null) {
+            throw new MiExcepcion("Las obras sociales no pueden ser nulas o vacías");
+        }
+
+        if (password == null || password.isEmpty()) {
+            throw new MiExcepcion("La contraseña no puede ser nula o vacía");
+        }
+
+        if (password2 == null || password2.isEmpty()) {
+            throw new MiExcepcion("La segunda contraseña no puede ser nula o vacía");
+        }
+
+        if (!(password.equals(password2))) {
+            throw new MiExcepcion("Las contraseñas no coinciden");
+        }
+        if (validarNumero(password) == false) {
+            throw new MiExcepcion("La contraseña tiene que tener al menos un un número");
+        }
+        if (validarMayuscula(password) == false) {
+            throw new MiExcepcion("La contraseña tiene que tener al menos una mayúscula");
+        }
+        if (validarMinuscula(password) == false) {
+            throw new MiExcepcion("La contraseña tiene que tener al menos una minúscula");
+        }
+
+    }
+
+    public void validarModificar(String nombre, String apellido, String direccion, String telefono,
+            String sexo, String obraSocial, String password, String password2) throws MiExcepcion {
+
+        if (nombre == null || nombre.isEmpty()) {
+            throw new MiExcepcion("El nombre no puede ser nulo o vacío");
+        }
+
+        if (apellido == null || apellido.isEmpty()) {
+            throw new MiExcepcion("El apellido no puede ser nulo o vacío");
+        }
+
+        if (direccion == null || direccion.isEmpty()) {
+            throw new MiExcepcion("La dirección no puede ser nula o vacía");
+        }
+
+        if (telefono == null || telefono.isEmpty()) {
+            throw new MiExcepcion("El teléfono no puede ser nulo o vacío");
+        }
+
+        if (sexo == null || sexo.isEmpty()) {
+            throw new MiExcepcion("El sexo no puede ser nulo o vacío");
+        }
+
+        if (obraSocial == null) {
+            throw new MiExcepcion("Las obras sociales no pueden ser nulas o vacías");
+        }
+
+        if (password == null || password.isEmpty()) {
+            throw new MiExcepcion("La contraseña no puede ser nula o vacía");
+        }
+
+        if (password2 == null || password2.isEmpty()) {
+            throw new MiExcepcion("La segunda contraseña no puede ser nula o vacía");
+        }
+
+        if (!(password.equals(password2))) {
+            throw new MiExcepcion("Las contraseñas no coinciden");
+        }
+        if (validarNumero(password) == false) {
+            throw new MiExcepcion("La contraseña tiene que tener al menos un un número");
+        }
+        if (validarMayuscula(password) == false) {
+            throw new MiExcepcion("La contraseña tiene que tener al menos una mayúscula");
+        }
+        if (validarMinuscula(password) == false) {
+            throw new MiExcepcion("La contraseña tiene que tener al menos una minúscula");
+        }
+
+    }
+
+    private boolean emailChecker(String email) { // Verifica si el email ya existe en la BD
+        boolean check = false;
+        Paciente paciente = pacienteRepositorio.buscarPorEmail(email);
+        if (paciente != null) {
+            check = true;
+        }
+        return check;
     }
 
     private boolean validarNumero(String password) {
         boolean cumple = false;
         for (int i = 0; i < password.length(); i++) {
-            if ((password.charAt(i) >= 48) && (password.charAt(i) <= 57)) {
+            if (Character.isDigit(password.charAt(i))) {
                 cumple = true;
-                System.out.println("tiene numero");
+
                 break;
             }
         }
@@ -244,8 +286,8 @@ public class PacienteService implements UserDetailsService {
     private boolean validarMayuscula(String password) {
         boolean cumple = false;
         for (int i = 0; i < password.length(); i++) {
-            if ((password.charAt(i) >= 65) && (password.charAt(i) <= 90)) {
-                System.out.println("tiene mayuscula");
+            if (Character.isUpperCase(password.charAt(i))) {
+
                 cumple = true;
                 break;
             }
@@ -256,57 +298,13 @@ public class PacienteService implements UserDetailsService {
     private boolean validarMinuscula(String password) {
         boolean cumple = false;
         for (int i = 0; i < password.length(); i++) {
-            if ((password.charAt(i) >= 97) && (password.charAt(i) <= 122)) {
-                System.out.println("tiene minuscula");
+            if (Character.isLowerCase(password.charAt(i))) {
+
                 cumple = true;
                 break;
             }
         }
         return cumple;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
-        Paciente paciente = pacienteRepositorio.buscarPorEmail(email);
-        Profesional profesional = profesionalRepositorio.buscarPorEmail(email);
-
-        if (paciente != null) {
-
-            List<GrantedAuthority> permisos = new ArrayList();
-
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + paciente.getRol().toString());
-
-            permisos.add(p);
-
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-
-            HttpSession session = attr.getRequest().getSession(true);
-
-            session.setAttribute("pacienteSession", paciente);
-
-            return new User(paciente.getEmail(), paciente.getPassword(), permisos);
-
-        } else if (profesional != null) {
-
-            List<GrantedAuthority> permisos = new ArrayList();
-
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + profesional.getRol().toString());
-
-            permisos.add(p);
-
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-
-            HttpSession session = attr.getRequest().getSession(true);
-
-            session.setAttribute("profesionalSession", profesional);
-
-            return new User(profesional.getEmail(), profesional.getPassword(), permisos);
-
-        } else {
-            return null;
-        }
-
     }
 
     public void darDeBaja(String id) {

@@ -1,11 +1,13 @@
 package com.ProyectoFinal.MedicApp.entity;
 
 import com.ProyectoFinal.MedicApp.enums.Rol;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 
 import lombok.Data;
@@ -14,8 +16,9 @@ import org.hibernate.annotations.GenericGenerator;
 // CLASE PADRE DE LOS USUARIOS DE LA PLATAFORMA, TIENE COMO HIJAS LAS
 // CLASES "PACIENTE" Y "PROFESIONAL"
 // CONTIENE LOS ATRIBUTOS COMUNES A AMBAS CLASES HIJAS
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Data
-@MappedSuperclass
 public class Persona {
 
     @Id

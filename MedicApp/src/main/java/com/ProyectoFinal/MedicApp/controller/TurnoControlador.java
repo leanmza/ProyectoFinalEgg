@@ -78,7 +78,7 @@ public class TurnoControlador {
             @RequestParam String dia, @RequestParam String horario, HttpSession session,
             ModelMap modelo) throws MiExcepcion {
 
-        Paciente paciente = (Paciente) session.getAttribute("pacienteSession");
+        Paciente paciente = (Paciente) session.getAttribute("userSession");
 
         String idProfesional = pro.getId();
 

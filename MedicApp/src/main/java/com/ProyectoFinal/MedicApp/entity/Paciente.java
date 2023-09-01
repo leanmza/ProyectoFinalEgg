@@ -1,21 +1,22 @@
 package com.ProyectoFinal.MedicApp.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 // CLASE QUE HEREDA DE "PERSONA" Y AGREGA ATRIBUTOS ESPECIALES PARA EL 
 // DESARROLLO DEL PACIENTE EN LA PLATAFORMA
-@Data
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Getter
+@Setter
 public class Paciente extends Persona {
     
     private String direccion;
@@ -33,8 +34,7 @@ public class Paciente extends Persona {
     private List<Turno> turnos;
     
     // ATRIBUTO UTLIZADO PARA CALCULAR LA EDAD DEL PACIENTE
-    @Temporal(TemporalType.DATE)
-    private Date fechaNacimiento;
+    private LocalDate fechaNacimiento;
     
     private String sexo;
 

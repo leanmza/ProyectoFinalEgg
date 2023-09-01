@@ -5,8 +5,8 @@
 package com.ProyectoFinal.MedicApp;
 
 
-import com.ProyectoFinal.MedicApp.service.PacienteService;
-import com.ProyectoFinal.MedicApp.service.ProfesionalService;
+
+import com.ProyectoFinal.MedicApp.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -21,17 +21,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SeguridadWeb extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    public PacienteService pacienteServicio;
+      @Autowired
+    public PersonaService personaServicio;
     
     @Autowired
-    public ProfesionalService profesionalServicio;
-
-    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(pacienteServicio)
-                .passwordEncoder(new BCryptPasswordEncoder());
-        auth.userDetailsService(profesionalServicio)
+        auth.userDetailsService(personaServicio)
                 .passwordEncoder(new BCryptPasswordEncoder());
     }
 

@@ -81,27 +81,24 @@ public class AdministradorControlador {
             if (obraSocialNueva.getAttribute("nuevaObraSocial") != null) {
 
                 Profesional profesional = (Profesional) sessionFormulario.getAttribute("datosFormulario");
+                
                 String nombreOS = (String) obraSocialNueva.getAttribute("nuevaObraSocial");
+                
                 ObraSocial obraSocial = obraSocialServicio.buscarPorNombre(nombreOS);
+                
                 profesional.setObraSocial(obraSocial);
+                
                 sessionFormulario.setAttribute("datosFormulario", profesional);
             }
+            
             modelo.put("recargaFormulario", sessionFormulario.getAttribute("datosFormulario"));
         }
 
         // CARGA DE LAS UBICACIONES
-        List<String> ubicaciones = new ArrayList<>();
-        for (Ubicacion aux : Ubicacion.values()) {
-            ubicaciones.add(aux.toString());
-        }
-        modelo.put("ubicaciones", ubicaciones);
-
+         modelo.put("ubicaciones", Ubicacion.values());
+  
         // CARGA DE LAS MODALIDADES
-        List<String> modalidades = new ArrayList<>();
-        for (Modalidad aux : Modalidad.values()) {
-            modalidades.add(aux.toString());
-        }
-        modelo.put("modalidades", modalidades);
+        modelo.put("modalidades", Modalidad.values());
 
         // CARFA DE LAS OBRAS SOCIALES
         List<ObraSocial> obrasSociales = obraSocialServicio.listar();
@@ -143,57 +140,57 @@ public class AdministradorControlador {
 
     }
     
-    // GUARDADO DE DATOS DEL FORMULARIO PROFESIONAL EN UNA SESSION PARA INYECTAR LUEGO DE AGRGAR UNA OBRA SOCIAL NUEVA
-    @Transactional
-    @PostMapping("/guardarDatosFormulario")
-    public String guardarDatosFormulario(@RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido,
-            @RequestParam(required = false) String correo, @RequestParam(required = false) String telefono, @RequestParam(required = false) MultipartFile archivo,
-            @RequestParam(required = false, defaultValue = "") String especialidad, @RequestParam(required = false) String ubicacion, @RequestParam(required = false) String modalidad,
-            @RequestParam(required = false) Double honorarios, @RequestParam(required = false) String obraSocial, @RequestParam(value = "dias[]", required = false) String[] diasSeleccionados,
-            @RequestParam(required = false) String horaInicio, @RequestParam(required = false) String horaFin /*, @RequestParam(required = false) List<Turno>turnos*/,
-            HttpSession sessionFormulario) throws IOException, MiExcepcion {
-
-        ObraSocial ClaseObraSocial = obraSocialServicio.buscarPorNombre(obraSocial);
-
-        Profesional profesional = new Profesional();
-
-        profesional.setNombre(nombre);
-        profesional.setApellido(apellido);
-//        profesional.setDni(dni);
-        profesional.setEmail(correo);
-        profesional.setTelefono(telefono);
-
-        if (!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
-            Imagen imagen = imagenServicio.guardar(archivo);
-            profesional.setImagen(imagen);
-        }
-
-        profesional.setRol(Rol.PROFESIONAL);
-        profesional.setActivo(true);
-        System.out.println("Especialidad: " + especialidad);
-        if (!especialidad.isEmpty() || especialidad != null) {
-            profesional.setEspecialidad(especialidad);
-        }
-
-        profesional.setModalidad(modalidad);
-        profesional.setUbicacion(ubicacion);
-        profesional.setHonorario(honorarios);
-        profesional.setObraSocial(ClaseObraSocial);
-        profesional.setDias(diasSeleccionados);
-        if (!horaInicio.isEmpty()) {
-            LocalTime horaInicioLT = LocalTime.parse(horaInicio);
-            profesional.setHoraInicio(horaInicioLT);
-        }
-        if (!horaFin.isEmpty()) {
-            LocalTime horaFinLT = LocalTime.parse(horaFin);
-            profesional.setHoraFin(horaFinLT);
-        }
-        profesional.setCantVisitas(0);
-        profesional.setPuntaje(0);
-        profesional.setCalificacion(0.0);
-
-        sessionFormulario.setAttribute("datosFormulario", profesional);
-
-        return "redirect:/admin/registroProfesional";
-    }
+//    // GUARDADO DE DATOS DEL FORMULARIO PROFESIONAL EN UNA SESSION PARA INYECTAR LUEGO DE AGRGAR UNA OBRA SOCIAL NUEVA
+//    @Transactional
+//    @PostMapping("/guardarDatosFormulario")
+//    public String guardarDatosFormulario(@RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido,
+//            @RequestParam(required = false) String correo, @RequestParam(required = false) String telefono, @RequestParam(required = false) MultipartFile archivo,
+//            @RequestParam(required = false, defaultValue = "") String especialidad, @RequestParam(required = false) String ubicacion, @RequestParam(required = false) String modalidad,
+//            @RequestParam(required = false) Double honorarios, @RequestParam(required = false) String obraSocial, @RequestParam(value = "dias[]", required = false) String[] diasSeleccionados,
+//            @RequestParam(required = false) String horaInicio, @RequestParam(required = false) String horaFin /*, @RequestParam(required = false) List<Turno>turnos*/,
+//            HttpSession sessionFormulario) throws IOException, MiExcepcion {
+//
+//        ObraSocial ClaseObraSocial = obraSocialServicio.buscarPorNombre(obraSocial);
+//
+//        Profesional profesional = new Profesional();
+//
+//        profesional.setNombre(nombre);
+//        profesional.setApellido(apellido);
+////        profesional.setDni(dni);
+//        profesional.setEmail(correo);
+//        profesional.setTelefono(telefono);
+//
+//        if (!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
+//            Imagen imagen = imagenServicio.guardar(archivo);
+//            profesional.setImagen(imagen);
+//        }
+//
+//        profesional.setRol(Rol.PROFESIONAL);
+//        profesional.setActivo(true);
+//        System.out.println("Especialidad: " + especialidad);
+//        if (!especialidad.isEmpty() || especialidad != null) {
+//            profesional.setEspecialidad(especialidad);
+//        }
+//
+//        profesional.setModalidad(modalidad);
+//        profesional.setUbicacion(ubicacion);
+//        profesional.setHonorario(honorarios);
+//        profesional.setObraSocial(ClaseObraSocial);
+//        profesional.setDias(diasSeleccionados);
+//        if (!horaInicio.isEmpty()) {
+//            LocalTime horaInicioLT = LocalTime.parse(horaInicio);
+//            profesional.setHoraInicio(horaInicioLT);
+//        }
+//        if (!horaFin.isEmpty()) {
+//            LocalTime horaFinLT = LocalTime.parse(horaFin);
+//            profesional.setHoraFin(horaFinLT);
+//        }
+//        profesional.setCantVisitas(0);
+//        profesional.setPuntaje(0);
+//        profesional.setCalificacion(0.0);
+//
+//        sessionFormulario.setAttribute("datosFormulario", profesional);
+//
+//        return "redirect:/admin/registroProfesional";
+//    }
 }

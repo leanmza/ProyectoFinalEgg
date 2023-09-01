@@ -5,31 +5,31 @@
         <p class="text-muted textoFooter">&copy; MiTurno</p>
     </div>
     <div class="col-md-4">
-                  <!--SI  HAY LOGUEADO-->
-                <a
-                    href="/inicio"
-                    class="logo"
-                    th:if="${session.pacienteSession != null} OR ${session.profesionalSession != null} "
-                    >
-                    <img
-                        src="../../logo2_App.png"
-                        alt="logo"
-                        class="logoFooter"
-                        />
-                </a>
+        <!--SI  HAY LOGUEADO-->
+        <a
+            href="/inicio"
+            class="logo"
+            th:if="${session.userSession != null}"
+            >
+            <img
+                src="../../logo2_App.png"
+                alt="logo"
+                class="logoFooter"
+                />
+        </a>
 
-                <!--SI NO  HAY LOGUEADO-->
-                <a
-                    href="/"
-                    class="logo"
-                    th:if="${session.pacienteSession == null} AND ${session.profesionalSession == null}"
-                    >
-                    <img
-                        src="../../logo2_App.png"
-                        alt="logo"
-                        class="logoFooter"
-                        />
-                </a>
+        <!--SI NO  HAY LOGUEADO-->
+        <a
+            href="/"
+            class="logo"
+            th:if="${session.userSession == null}"
+            >
+            <img
+                src="../../logo2_App.png"
+                alt="logo"
+                class="logoFooter"
+                />
+        </a>
     </div>       
 
 

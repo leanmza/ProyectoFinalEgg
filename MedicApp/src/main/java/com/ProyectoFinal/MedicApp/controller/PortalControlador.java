@@ -3,19 +3,17 @@ package com.ProyectoFinal.MedicApp.controller;
 import com.ProyectoFinal.MedicApp.entity.Imagen;
 import com.ProyectoFinal.MedicApp.entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.entity.Paciente;
+import com.ProyectoFinal.MedicApp.entity.Persona;
 import com.ProyectoFinal.MedicApp.entity.Profesional;
 import com.ProyectoFinal.MedicApp.exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.repository.PacienteRepositorio;
 import com.ProyectoFinal.MedicApp.service.ImagenService;
 import com.ProyectoFinal.MedicApp.service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.service.PacienteService;
 import com.ProyectoFinal.MedicApp.service.ProfesionalService;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,9 +30,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/")
 public class PortalControlador {
-
-    @Autowired
-    private PacienteRepositorio pacienteRepositorio;
 
     @Autowired
     PacienteService pacienteService;              //Agregado por Claudio el 16/04 - 17:40
@@ -57,11 +52,11 @@ public class PortalControlador {
     ////LOGIN
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo, @RequestParam(required = false) String exito) {
-        
+
         if ("registroExitoso".equals(exito)) {
             modelo.put("registroExitoso", "¡Gracias por registrarte en nuestra aplicación! Ahora puedes comenzar a utilizar nuestros servicios");
-        } 
-        
+        }
+
         if (error != null) {
 
             modelo.put("error", "Lo siento, no hemos podido iniciar sesión con las credenciales que proporcionaste."
@@ -69,7 +64,7 @@ public class PortalControlador {
         }
         return "login.html"; //ver nombre de archivo
     }
-    
+
     @Transactional
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_PROFESIONAL', 'ROLE_ADMINISTRADOR')")
     @GetMapping("/inicio")
@@ -78,25 +73,25 @@ public class PortalControlador {
         if ("turnoExitoso".equals(exito)) {
             modelo.put("exito", "¡¡¡El turno se cargo exitosamente!!!");
         }
-        
-        if (session.getAttribute("pacienteSession") != null) {
-            Paciente logueado = (Paciente) session.getAttribute("pacienteSession");
-            modelo.put("pacienteSession", logueado);
 
-            if (logueado.getRol().toString().equals("ADMINISTRADOR")) {
+        if (session.getAttribute("userSession") != null) {
+            Persona logueado = (Persona) session.getAttribute("userSession");
+            modelo.put("userSession", logueado);
 
-                return "redirect:/admin/dashboard";
-            }
+//            if (logueado.getRol().toString().equals("ADMINISTRADOR")) {
+//
+//                return "redirect:/admin/dashboard";
+//            }
         }
 
-        if (session.getAttribute("profesionalSession") != null) {
-            Profesional logueado = (Profesional) session.getAttribute("profesionalSession");
-            modelo.put("profesionalSession", logueado);
-
-            if (logueado.getRol().toString().equals("ADMINISTRADOR")) {
-                return "redirect:/admin/dashboard";
-            }
-        }
+//        if (session.getAttribute("userSession") != null) {
+//            Profesional logueado = (Profesional) session.getAttribute("userSession");
+//            modelo.put("profesionalSession", logueado);
+//
+//            if (logueado.getRol().toString().equals("ADMINISTRADOR")) {
+//                return "redirect:/admin/dashboard";
+//            }
+//        }
 
         return "inicio.html";
     }
@@ -105,7 +100,6 @@ public class PortalControlador {
     @GetMapping("/form_pac")
     public String form_pac(ModelMap model, HttpSession sessionFormulario, HttpSession obraSocialNueva) {
 
-        
         // EN EL CASO QUE HAYA AGREGADO UNA OBRA SOCIAL NUEVA, CARGAMOS LA SESSIONFORMULARIO
         if (sessionFormulario.getAttribute("datosFormulario") != null) {
 
@@ -143,7 +137,7 @@ public class PortalControlador {
             pacienteService.crearPaciente(nombre, apellido, dni, correo, direccion, telefono, nacimiento, sexo,
                     obraSocial, password, password2, archivo);
 
-            return "redirect:/inicio?exito=registroExitoso" ;
+            return "redirect:/inicio?exito=registroExitoso";
 
         } catch (MiExcepcion me) {
             System.out.println("Ingreso de paciente FALLIDO!\n" + me.getMessage());
@@ -170,8 +164,7 @@ public class PortalControlador {
         model.addAttribute("profesionales", profesionales);
         return "listar.html";
     }
-    
-    
+
     ////PREGUNTAS FRECUENTES
     @GetMapping("/preguntasFrecuentes")
     public String preguntasFrecuentes() {
@@ -205,9 +198,7 @@ public class PortalControlador {
 
         }
     }
-    
 
-    
     ////ALMACENA DATOS DE FORMULARIOS SI SE REFRESCA LA PÁGINA
     @Transactional
     @PostMapping("/guardarDatosFormulario")
@@ -217,11 +208,8 @@ public class PortalControlador {
             @RequestParam(required = false) String nacimiento, @RequestParam(required = false) String sexo,
             @RequestParam(required = false) MultipartFile archivo, @RequestParam(required = false) String obraSocial, HttpSession sessionFormulario) throws MiExcepcion {
 
-        try {
+    
             ObraSocial ClaseObraSocial = obraSocialService.buscarPorNombre(obraSocial);
-
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd"); // yyyy-MM-dd
-            Date fechaNacimiento = formato.parse(nacimiento);
 
             Paciente paciente = new Paciente();
 
@@ -232,7 +220,9 @@ public class PortalControlador {
             paciente.setTelefono(telefono);
             paciente.setPassword(new BCryptPasswordEncoder().encode(password));
             paciente.setDireccion(direccion);
-            paciente.setFechaNacimiento(fechaNacimiento);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate fechaDeNacimiento = LocalDate.parse(nacimiento, formatter);
+            paciente.setFechaNacimiento(fechaDeNacimiento);
             paciente.setSexo(sexo);
             paciente.setObraSocial(ClaseObraSocial);
 
@@ -243,10 +233,7 @@ public class PortalControlador {
 
             sessionFormulario.setAttribute("datosFormulario", paciente);
 
-        } catch (ParseException ex) {
-            Logger.getLogger(PortalControlador.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
+ 
         return "redirect:/form_pac";
     }
 }
