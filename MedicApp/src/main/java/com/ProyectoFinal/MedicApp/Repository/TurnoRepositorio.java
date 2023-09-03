@@ -1,7 +1,7 @@
-package com.ProyectoFinal.MedicApp.repository;
+package com.ProyectoFinal.MedicApp.Repository;
 
-import com.ProyectoFinal.MedicApp.entity.Profesional;
-import com.ProyectoFinal.MedicApp.entity.Turno;
+import com.ProyectoFinal.MedicApp.Entity.Profesional;
+import com.ProyectoFinal.MedicApp.Entity.Turno;
 import java.util.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;

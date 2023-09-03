@@ -125,8 +125,24 @@
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 
                         <img class="imagen-perfil" 
-                             
-                             th:src="${session.userSession.imagen != null ? '/imagen/perfil/__${session.userSession.id}__' : '../predeterminada_perfil.png'}" >
+                             sec:authorize ="hasRole ('PACIENTE')"
+                             th:src="${session.pacienteSession.imagen != null ? '/imagen/perfil/__${session.pacienteSession.id}__' : '../predeterminada_perfil.png'}" >
+
+
+
+
+                        <img class="imagen-perfil" 
+                             sec:authorize ="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')"
+                             th:src="${session.profesionalSession.imagen != null ? '/imagen/perfil/__${session.profesionalSession.id}__' : '../predeterminada_perfil.png'}" >
+
+                        <!--                  <img class="imagen-perfil" 
+                                                sec:authorize ="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR') OR hasRole('PACIENTE')"
+                                                  th:if="${session.profesionalSession.imagen == null} OR ${session.profesionalSession == null}" 
+                                                  src="../../predeterminada_perfil.png" >-->
+
+
+                        <!--                  <img class="imagen-perfil" 
+                                               th:src="${session.pacienteSession.imagen != null} ? @{/imagen/perfil/${session.pacienteSession.id}} : @{../../predeterminada_perfil.png}" >-->
 
            
                     </a>

@@ -2,19 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.ProyectoFinal.MedicApp.service;
+package com.ProyectoFinal.MedicApp.Service;
 
-import com.ProyectoFinal.MedicApp.entity.HistoriaClinica;
-import com.ProyectoFinal.MedicApp.entity.Paciente;
-import com.ProyectoFinal.MedicApp.entity.Profesional;
-import com.ProyectoFinal.MedicApp.repository.HistoriaClinicaRepositorio;
+import com.ProyectoFinal.MedicApp.Entity.HistoriaClinica;
+import com.ProyectoFinal.MedicApp.Entity.Paciente;
+
+import com.ProyectoFinal.MedicApp.Entity.Profesional;
+import com.ProyectoFinal.MedicApp.Repository.HistoriaClinicaRepositorio;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.ProyectoFinal.MedicApp.exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.repository.PacienteRepositorio;
-import com.ProyectoFinal.MedicApp.repository.ProfesionalRepositorio;
+import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
+import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
+
+import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
 
 import java.util.ArrayList;
 import java.util.List;

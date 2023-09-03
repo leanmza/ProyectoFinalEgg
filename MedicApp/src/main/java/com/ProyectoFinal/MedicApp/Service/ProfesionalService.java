@@ -2,18 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.ProyectoFinal.MedicApp.service;
+package com.ProyectoFinal.MedicApp.Service;
 
-import com.ProyectoFinal.MedicApp.entity.Imagen;
-import com.ProyectoFinal.MedicApp.entity.ObraSocial;
-import com.ProyectoFinal.MedicApp.entity.Profesional;
-import com.ProyectoFinal.MedicApp.entity.Turno;
-import com.ProyectoFinal.MedicApp.enums.Modalidad;
-import com.ProyectoFinal.MedicApp.enums.Rol;
-import com.ProyectoFinal.MedicApp.enums.Ubicacion;
-import com.ProyectoFinal.MedicApp.exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.repository.ProfesionalRepositorio;
-import com.ProyectoFinal.MedicApp.repository.TurnoRepositorio;
+import com.ProyectoFinal.MedicApp.Entity.Imagen;
+import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
+import com.ProyectoFinal.MedicApp.Entity.Profesional;
+import com.ProyectoFinal.MedicApp.Entity.Turno;
+import com.ProyectoFinal.MedicApp.Enum.Modalidad;
+import com.ProyectoFinal.MedicApp.Enum.Rol;
+import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
+import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
+import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
+import com.ProyectoFinal.MedicApp.Repository.TurnoRepositorio;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

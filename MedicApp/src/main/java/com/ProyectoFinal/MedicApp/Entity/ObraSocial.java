@@ -1,4 +1,4 @@
-package com.ProyectoFinal.MedicApp.entity;
+package com.ProyectoFinal.MedicApp.Entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

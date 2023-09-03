@@ -1,4 +1,4 @@
-package com.ProyectoFinal.MedicApp.entity;
+package com.ProyectoFinal.MedicApp.Entity;
 
 import java.util.Date;
 import javax.persistence.Entity;

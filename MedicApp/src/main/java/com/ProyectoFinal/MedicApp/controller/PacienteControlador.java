@@ -4,16 +4,19 @@
  */
 package com.ProyectoFinal.MedicApp.controller;
 
-import com.ProyectoFinal.MedicApp.entity.Imagen;
-import com.ProyectoFinal.MedicApp.entity.ObraSocial;
-import com.ProyectoFinal.MedicApp.entity.Paciente;
-import com.ProyectoFinal.MedicApp.entity.Profesional;
-import com.ProyectoFinal.MedicApp.entity.Turno;
-import com.ProyectoFinal.MedicApp.exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.service.ImagenService;
-import com.ProyectoFinal.MedicApp.service.ObraSocialService;
-import com.ProyectoFinal.MedicApp.service.PacienteService;
-import com.ProyectoFinal.MedicApp.service.TurnoService;
+import com.ProyectoFinal.MedicApp.Entity.Imagen;
+import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
+
+import com.ProyectoFinal.MedicApp.Entity.Paciente;
+import com.ProyectoFinal.MedicApp.Entity.Profesional;
+import com.ProyectoFinal.MedicApp.Entity.Turno;
+import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
+import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
+import com.ProyectoFinal.MedicApp.Service.ImagenService;
+import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
+
+import com.ProyectoFinal.MedicApp.Service.PacienteService;
+import com.ProyectoFinal.MedicApp.Service.TurnoService;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

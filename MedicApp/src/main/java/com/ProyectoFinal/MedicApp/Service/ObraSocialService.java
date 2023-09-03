@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.ProyectoFinal.MedicApp.service;
+package com.ProyectoFinal.MedicApp.Service;
 
-import com.ProyectoFinal.MedicApp.entity.ObraSocial;
-import com.ProyectoFinal.MedicApp.exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.repository.ObraSocialRepositorio;
+import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
+import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
+import com.ProyectoFinal.MedicApp.Repository.ObraSocialRepositorio;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

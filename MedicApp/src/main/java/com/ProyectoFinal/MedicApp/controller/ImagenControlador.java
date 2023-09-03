@@ -1,25 +1,22 @@
 package com.ProyectoFinal.MedicApp.controller;
 
-
-import com.ProyectoFinal.MedicApp.entity.Paciente;
-import com.ProyectoFinal.MedicApp.entity.Persona;
-import com.ProyectoFinal.MedicApp.entity.Profesional;
-import com.ProyectoFinal.MedicApp.service.ImagenService;
-import com.ProyectoFinal.MedicApp.service.PacienteService;
-import com.ProyectoFinal.MedicApp.service.PersonaService;
-import com.ProyectoFinal.MedicApp.service.ProfesionalService;
-
+import com.ProyectoFinal.MedicApp.Entity.Paciente;
+import com.ProyectoFinal.MedicApp.Entity.Profesional;
+import com.ProyectoFinal.MedicApp.Service.ImagenService;
+import com.ProyectoFinal.MedicApp.Service.PacienteService;
+import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpSession;
-
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller

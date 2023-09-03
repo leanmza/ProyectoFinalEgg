@@ -1,10 +1,10 @@
-package com.ProyectoFinal.MedicApp.entity;
+package com.ProyectoFinal.MedicApp.Entity;
 
 import com.ProyectoFinal.MedicApp.enums.Modalidad;
 import com.ProyectoFinal.MedicApp.enums.Ubicacion;
 import java.time.LocalTime;
 import java.util.ArrayList;
-
+import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;

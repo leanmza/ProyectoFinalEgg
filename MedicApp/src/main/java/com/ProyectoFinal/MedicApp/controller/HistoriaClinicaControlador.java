@@ -4,13 +4,13 @@
  */
 package com.ProyectoFinal.MedicApp.controller;
 
-import com.ProyectoFinal.MedicApp.entity.HistoriaClinica;
-import com.ProyectoFinal.MedicApp.entity.Paciente;
-import com.ProyectoFinal.MedicApp.entity.Profesional;
-import com.ProyectoFinal.MedicApp.exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.repository.HistoriaClinicaRepositorio;
-import com.ProyectoFinal.MedicApp.service.HistoriaClinicaService;
-import com.ProyectoFinal.MedicApp.service.PacienteService;
+import com.ProyectoFinal.MedicApp.Entity.HistoriaClinica;
+import com.ProyectoFinal.MedicApp.Entity.Paciente;
+import com.ProyectoFinal.MedicApp.Entity.Profesional;
+import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
+import com.ProyectoFinal.MedicApp.Repository.HistoriaClinicaRepositorio;
+import com.ProyectoFinal.MedicApp.Service.HistoriaClinicaService;
+import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
