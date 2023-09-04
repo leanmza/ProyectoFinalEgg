@@ -85,6 +85,10 @@ public class PacienteControlador {
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_ADMINISTRADOR')")
     @PostMapping("/perfil/{id}")
 
+    /////MODIFICAR ESTE MÉTODO, DIVIDIRLO EN 2, UNO DONDE SE PUEDE MODIFICAR LOS DATOS DE INFORMACIÓN Y FOTO DE PERFIL, QUE NO PIDA CONFIRMAR LA CONTRASEÑA
+    //////// Y OTRO U OTROS 2 DONDE SE MODIFIQUEN LOS DATOS DE USUARIO EMAIL Y CONTRASEÑA.
+    /////// HACER LO MISMO CON PROFESIONAL
+    
     public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String telefono,  @RequestParam(required = false) String password, @RequestParam(required = false) String password2,
             @RequestParam String direccion, @RequestParam String sexo, @RequestParam(required = false) MultipartFile archivo, @RequestParam String obraSocial,

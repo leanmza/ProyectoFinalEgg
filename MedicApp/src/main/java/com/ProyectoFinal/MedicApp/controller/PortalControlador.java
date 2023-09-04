@@ -3,6 +3,7 @@ package com.ProyectoFinal.MedicApp.controller;
 import com.ProyectoFinal.MedicApp.Entity.Imagen;
 import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
+import com.ProyectoFinal.MedicApp.Entity.Persona;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
@@ -84,14 +85,6 @@ public class PortalControlador {
 //            }
         }
 
-//        if (session.getAttribute("userSession") != null) {
-//            Profesional logueado = (Profesional) session.getAttribute("userSession");
-//            modelo.put("profesionalSession", logueado);
-//
-//            if (logueado.getRol().toString().equals("ADMINISTRADOR")) {
-//                return "redirect:/admin/dashboard";
-//            }
-//        }
 
         return "inicio.html";
     }
