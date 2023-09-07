@@ -55,7 +55,7 @@
                         placeholder=""
                         th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
                         />
-                    <label for="fecha">Fecha de la consulta</label>
+                    <label for="fecha"><i class="fa-solid fa-calendar-days iconForm"></i>Fecha de la consulta</label>
                 </div>
 
                 <!-- INPUT DNI PACIENTE-->
@@ -67,7 +67,7 @@
                         name="dni"
                         placeholder=""
                         />
-                    <label for="dni">DNI del paciente</label>
+                    <label for="dni"><i class="fa-solid fa-id-card iconForm"></i>DNI del paciente</label>
                 </div>
 
                 <!-- INPUT PROFESIONAL-->
@@ -80,7 +80,7 @@
                       th:value="${profesional.apellido + ',  ' + profesional.nombre}"
                       placeholder=""
                       disabled />
-                    <label for="profesional">Profesional</label>
+                    <label for="profesional"><i class="fa-solid fa-staff-snake iconForm"></i>Profesional</label>
                 </div>
               </div>
           <!-- INPUT ESPECIALIDAD-->
@@ -93,7 +93,7 @@
                       th:value="${profesional.especialidad}"
                       placeholder=""
                       disabled />
-                    <label for="Especialidad">Especialidad</label>
+                    <label for="Especialidad" class="labelArea"><i class="fa-solid fa-suitcase-medical iconForm"></i>Especialidad</label>
                 </div>
               </div>
                
@@ -109,7 +109,7 @@
                     placeholder=""
                     name="diagnostico"
                     ></textarea>
-                <label for="diagnostico">Diagnóstico</label>
+                <label for="diagnostico"><i class="fa-solid fa-stethoscope iconForm"></i>Diagnóstico</label>
               </div>
 
               <!-- INPUT TRATAMIENTO -->
@@ -121,7 +121,7 @@
                     placeholder=""
                     name="tratamiento"
                     ></textarea>
-                <label for="tratamiento">Tratamiento</label>
+                <label for="tratamiento"><i class="fa-solid fa-prescription-bottle-medical iconForm"></i>Tratamiento</label>
               </div>
             </div>
 

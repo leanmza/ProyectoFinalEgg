@@ -32,7 +32,7 @@
 
                     <tbody th:each="turno : ${turnos}">
                         <tr class="trTurnos">
-                            <td th:text="${turno.fecha}"></td>
+                            <td th:text="${turno.fechaFormateada}"></td>
 
                             <td th:text="${turno.hora}"></td>
                             <td th:text="${turno.profesional.especialidad}"></td>
@@ -41,7 +41,7 @@
                        
 
                             <td scope="col" class="col-2">  
-                                <a th:href="@{/pac/anularTurno/__${turno.id}__}" >
+                                <a th:href="@{/paciente/anularTurno/__${turno.id}__}" >
                                 <button type="button" class="btn btn-danger btnAnular"> 
                                     Anular MiTurno
                                 </button>

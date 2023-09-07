@@ -9,16 +9,13 @@ import com.ProyectoFinal.MedicApp.Entity.Paciente;
 
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Repository.HistoriaClinicaRepositorio;
-import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
-
-import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
-
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,27 +32,33 @@ public class HistoriaClinicaService {
     @Autowired
     private PacienteRepositorio pacienteRepositorio;
 
-    @Autowired
-    private ProfesionalRepositorio profesionalRepositorio;
 
     @Transactional
-    public void crearHistoriaClinica(Paciente paciente, Date fechaConsulta, Profesional profesional, String diagnostico) throws MiExcepcion {
+    public void crearHistoriaClinica(String dni, String fechaConsulta, Profesional profesional, String diagnostico) throws MiExcepcion {
 
-        validar(paciente, profesional, diagnostico);
+        Paciente paciente = pacienteRepositorio.buscarPorDni(dni);
+
+        validar(paciente, fechaConsulta, profesional, diagnostico);
 
         HistoriaClinica historiaClinica = new HistoriaClinica();
 
         historiaClinica.setPaciente(paciente);
-        historiaClinica.setFechaConsulta(fechaConsulta);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fechaDeConsulta = LocalDate.parse(fechaConsulta, formatter);
+        historiaClinica.setFechaConsulta(fechaDeConsulta);
+        
         historiaClinica.setProfesional(profesional);
         historiaClinica.setDiagnostico(diagnostico);
 
         historiaClinicaRepositorio.save(historiaClinica);
     }
 
-    public void modificarHistoriaClinica(String idHistoriaClinica, Paciente paciente, Date fechaConsulta, Profesional profesional, String diagnostico) throws MiExcepcion {
+    public void modificarHistoriaClinica(String idHistoriaClinica, String dni, String fechaConsulta, Profesional profesional, String diagnostico) throws MiExcepcion {
 
-        validar(paciente, profesional, diagnostico);
+        Paciente paciente = pacienteRepositorio.buscarPorDni(dni);
+
+        validar(paciente, fechaConsulta, profesional, diagnostico);
 
         Optional<HistoriaClinica> respuesta = historiaClinicaRepositorio.findById(idHistoriaClinica); //busco la historia clinica
 
@@ -65,7 +68,11 @@ public class HistoriaClinicaService {
 
             historiaClinica.setPaciente(paciente);
             historiaClinica.setProfesional(profesional);
-            historiaClinica.setFechaConsulta(fechaConsulta);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate fechaDeConsulta = LocalDate.parse(fechaConsulta, formatter);
+            historiaClinica.setFechaConsulta(fechaDeConsulta);
+            
             historiaClinica.setDiagnostico(diagnostico);
 
             historiaClinicaRepositorio.save(historiaClinica);
@@ -74,23 +81,26 @@ public class HistoriaClinicaService {
 
     @Transactional(readOnly = true)
     public List<HistoriaClinica> listar(String dniPaciente) {
-        
-        System.out.println(dniPaciente);
+
         Paciente paciente = pacienteRepositorio.buscarPorDni(dniPaciente);
 
         String idPaciente = paciente.getId();
-        System.out.println("idPaciente");
+
         List<HistoriaClinica> historiasClinicas; //= new ArrayList();
 
         historiasClinicas = historiaClinicaRepositorio.buscarPorPaciente(idPaciente);
-        
+
         return historiasClinicas;
     }
 
-    public void validar(Paciente paciente, Profesional profesional, String diagnostico) throws MiExcepcion {
+    public void validar(Paciente paciente, String fechaConsulta, Profesional profesional, String diagnostico) throws MiExcepcion {
 
         try {
             if (paciente == null) {
+                throw new MiExcepcion("El paciente no puede ser nulo o vacío");
+            }
+
+            if (fechaConsulta == null || fechaConsulta.isEmpty()) {
                 throw new MiExcepcion("El paciente no puede ser nulo o vacío");
             }
 

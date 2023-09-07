@@ -16,26 +16,36 @@
                     <h3>EDITAR PERFIL</h3>
                 </div>
 
+                <!-- th:action="@{/reader/profile/__${reader.id}__}"
+                method="POST"
+                class="form"
+                id="formLogin"
+                enctype="multipart/form-data" -->
+
                 <form
                     class="form-floating row formulario formularioCrear"
                     id="formulario"
-                    th:action="@{/pac/perfil/__${paciente.id}__}"
+                    th:action="@{/paciente/perfil/__${paciente.id}__}"
                     method="POST"
                     enctype="multipart/form-data"
                     >
+                    <!-- IMAGEN DE PERFIL -->
+                    <div class="rowImagenPerfil">
+                        <div class="col-2 divImagenPerfil">                          
+
+                            <img class="imagenPerfil"
+                                 th:src="${session.userSession.imagen != null ? '/imagen/perfil/__${session.userSession.id}__' : '../predeterminada_perfil.png'}" >
+                            <a href="#" class="linkIconoCamara" >
+                                <i class="fa-solid fa-camera fa-xl"></i>
+                            </a>
+                        </div>
+
+                    </div>
                     <!-- DATOS PERSONALES -->
                     <div class="row rowDatosPersonales">
 
                         <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
-                        <!-- INPUT OCULTO DEL ID -->
-                        <input
-                            hidden
-                            type="text"
-                            id="id"
-                            name="id"
-                            th:value="${paciente.id}"
-                            />
-
+              
                         <!-- INPUT NOMBRE-->
                         <div class="col-xs-12 col-md-6 form-floating">
                             <input
@@ -46,7 +56,7 @@
                                 th:value="${paciente.nombre}"
                                 placeholder=""
                                 />
-                            <label for="nombre">Nombre</label>
+                            <label for="nombre"><i class="fa-solid fa-user iconForm"></i>Nombre</label>
                         </div>
                         <!-- INPUT APELLIDO-->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -58,7 +68,7 @@
                                 th:value="${paciente.apellido}"
                                 placeholder=""
                                 />
-                            <label for="apellido">Apellido</label>
+                            <label for="apellido"><i class="fa-solid fa-circle-exclamation iconForm"></i>Apellido</label>
                         </div>
                         <!-- INPUT DNI-->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -69,8 +79,8 @@
                                 name="dni"
                                 th:value="${paciente.dni}"
                                 placeholder=""
-                                />
-                            <label for="dni">DNI (sin puntos ni espacios)</label>
+                                disabled>
+                                <label for="dni"><i class="fa-solid fa-id-card iconForm"></i>DNI (sin puntos ni espacios)</label>
                         </div>
 
                         <!-- INPUT FECHA NACIMIENTO -->
@@ -80,9 +90,10 @@
                                 class="form-control"
                                 id="naciemiento"
                                 name="nacimiento"
-                                th:value="${#dates.format(paciente.fechaNacimiento, 'yyyy-MM-dd')}"
+                                th:value="${(paciente.fechaNacimiento)}"
+                                disabled
                                 />
-                            <label for="naciemiento">Fecha de Nacimiento</label>
+                                     <label for="naciemiento"><i class="fa-solid fa-calendar-days iconForm"></i>Fecha de Nacimiento</label>
                         </div>
                         <div class="divisorForm divBorder row">
                             <!-- INPUT SEXO-->
@@ -93,7 +104,7 @@
                                     <option value="Femenino" th:selected="${paciente.sexo == 'Femenino'}">Femenino</option>
                                     <option value="Otro" th:selected="${paciente.sexo == 'Otro'}">Otro</option>
                                 </select>
-                                <label for="sexo">Sexo</label>
+                                <label for="sexo"><i class="fa-solid fa-genderless iconForm"></i>Sexo</label>
                             </div>
 
                             <!-- INPUT DIRECCIÓN-->
@@ -106,7 +117,7 @@
                                     th:value="${paciente.direccion}"
                                     placeholder=""
                                     />
-                                <label for="direccion">Dirección</label>
+                                <label for="direccion"><i class="fa-solid fa-location-dot iconForm"></i>Dirección</label>
                             </div>
                             <!-- INPUT MAIL-->
                             <div class="col-xs-12 col-md-6 form-floating">
@@ -117,8 +128,9 @@
                                     name="correo"
                                     th:value="${paciente.email}"
                                     placeholder=""
+                                    disabled
                                     />
-                                <label for="correo">Email</label>
+                                <label for="correo"><i class="fa-solid fa-envelope iconForm"></i>Email</label>
                             </div>
                             <!-- INPUT TELEFONO-->
                             <div class="col-xs-12 col-md-6 form-floating">
@@ -130,7 +142,7 @@
                                     th:value="${paciente.telefono}"
                                     placeholder=""
                                     />
-                                <label for="telefono">Telefono</label>
+                                <label for="telefono"><i class="fa-solid fa-phone iconForm"></i>Telefono</label>
                             </div>
                             <!-- INPUT IMAGEN -->
                             <div class="col-xs-12 col-md-6 form-floating">
@@ -141,7 +153,7 @@
                                     name="archivo"
                                     th:value="${paciente.imagen}"
                                     />
-                                <label for="foto">Foto de Perfil</label>
+                                <label for="foto"><i class="fa-solid fa-camera iconForm"></i>Foto de Perfil</label>
                             </div>
                             <!-- INPUT OBRA SOCIAL-->
                             <div class="col-xs-12 col-md-6 form-floating">
@@ -154,7 +166,7 @@
                                     </th:block>
                                     <option>Cargar otra...</option>
                                 </select>
-                                <label for="obraSocial" class="datosInput">Obra Social</label>
+                                <label for="obraSocial" class="datosInput"><i class="fa-solid fa-book-medical iconForm"></i>Obra Social</label>
                                 <script>
                                     function abrirModal() {
                                         var select = document.getElementById("obraSocial");
@@ -163,7 +175,7 @@
                                         if (value == "Cargar otra...") {
                                             var formulario = document.getElementById("formulario");
                                             var datosFormulario = new FormData(formulario);
-                                            fetch('/pac/guardarDatosFormulario', {
+                                            fetch('/paciente/guardarDatosFormulario', {
                                                 method: 'POST',
                                                 body: datosFormulario
                                             })
@@ -198,7 +210,7 @@
                                     name="password"
                                     placeholder=""
                                     />
-                                <label for="password">Contraseña</label>
+                                <label for="password"><i class="fa-solid fa-lock iconForm"></i>Contraseña</label>
                             </div>
                             <!-- INPUT PASSWORD2-->
                             <div class="col-xs-12 col-md-6 form-floating">
@@ -209,7 +221,7 @@
                                     name="password2"
                                     placeholder=""
                                     />
-                                <label for="password2">Repetir Contraseña</label>
+                                <label for="password2"><i class="fa-solid fa-circle-check iconForm" id="iconoCheck"></i>Repetir Contraseña</label>
                             </div>
                         </div>
                     </div>
@@ -225,7 +237,7 @@
                         </button>
                     </div>
                     <div class="col-xs-12 mt-3 DivBtnEnviar">
-                        <a th:href="@{/pac/baja/__${paciente.id}__}" class="btn btn-danger">
+                        <a th:href="@{/paciente/baja/__${paciente.id}__}" class="btn btn-danger">
                             Darse de baja
                         </a>
                     </div>
@@ -262,7 +274,7 @@
                                             name="nombreObraSocial"
                                             placeholder=""
                                             />
-                                        <label for="nombreObraSocial">Sigla o nombre de la obra social</label>
+                                        <label for="nombreObraSocial"><i class="fa-solid fa-file-medical iconForm"></i>Sigla o nombre de la obra social</label>
                                     </div>
                                 </div>
 

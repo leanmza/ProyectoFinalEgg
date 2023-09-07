@@ -13,12 +13,12 @@
         <main>
 
             <div id="divFormPaciente" class="container-fluid divFormPaciente contenedorMain">
-              <div th:if="${error != null}" class="card text-white bg-danger mb-3 mt-3 mensajeError rounded-3 p-2 col-md-6 col-sm-10 mx-auto">
-                <div class="card-body">
-                  <h5 class="card-title fs-5 fw-bold mb-3" style="font-family: Montserrat, sans-serif;">⚠️¡Ingreso de profesional FALLIDO!⚠️</h5>
-                  <p class="card-text fs-6 mb-0 custom-error-message" th:text="${error}"></p>
+                <div th:if="${error != null}" class="card text-white bg-danger mb-3 mt-3 mensajeError rounded-3 p-2 col-md-6 col-sm-10 mx-auto">
+                    <div class="card-body">
+                        <h5 class="card-title fs-5 fw-bold mb-3" style="font-family: Montserrat, sans-serif;">⚠️¡Ingreso de profesional FALLIDO!⚠️</h5>
+                        <p class="card-text fs-6 mb-0 custom-error-message" th:text="${error}"></p>
+                    </div>
                 </div>
-              </div>
                 <div class="row titulo">
                     <h3>REGISTRAR PROFESIONAL</h3>
                 </div>
@@ -26,7 +26,7 @@
                 <form
                     class="form-floating row formulario formularioCrear"
                     id="formulario"
-                    th:action="@{/admin/crearProfesional}"
+                    th:action="@{/profesional/crearProfesional}"
                     method="POST"
                     enctype="multipart/form-data"
                     th:object="${recargaFormulario}"
@@ -36,10 +36,9 @@
                     <!-- DATOS PERSONALES -->
                     <div class="row rowDatosPersonales">
                         <div class="tituloForm">
-                            <h4>DATOS PERSONALES</h4>
+                            <h4>DATOS PERSONALES</h4><br>
                         </div>
 
-                        <div class="row">
                         <!-- INPUT OCULTO DEL ID -->
                         <input hidden type="text" id="id" name="id"/>
 
@@ -53,7 +52,7 @@
                                 th:value="${recargaFormulario != null ? recargaFormulario.nombre : ''}"
                                 placeholder=""
                                 />
-                            <label for="nombre" class="datosInput">Nombre</label>
+                            <label for="nombre"><i class="fa-solid fa-user iconForm"></i>Nombre</label>
                         </div>
                         <!-- INPUT APELLIDO-->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -65,7 +64,7 @@
                                 th:value="${recargaFormulario != null ? recargaFormulario.apellido : ''}"
                                 placeholder=""
                                 />
-                            <label for="apellido" class="datosInput">Apellido</label>
+                            <label for="apellido"><i class="fa-solid fa-circle-exclamation iconForm"></i>Apellido</label>
                         </div>
                         <!-- INPUT MAIL-->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -77,7 +76,7 @@
                                 th:value="${recargaFormulario != null ? recargaFormulario.email : ''}"
                                 placeholder=""
                                 />
-                            <label for="correo" class="datosInput">Email</label>
+                            <label for="correo"><i class="fa-solid fa-envelope iconForm"></i>Email</label>
                         </div>
                         <!-- INPUT TELEFONO-->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -89,7 +88,7 @@
                                 th:value="${recargaFormulario != null ? recargaFormulario.telefono : ''}"
                                 placeholder=""
                                 />
-                            <label for="telefono" class="datosInput">Telefono</label>
+                            <label for="telefono"><i class="fa-solid fa-phone iconForm"></i>Telefono</label>
                         </div>
                         <!-- INPUT IMAGEN -->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -99,11 +98,8 @@
                                 id="foto" 
                                 name="archivo"
                                 />
-                            <label for="foto">Foto de Perfil</label>
+                            <label for="foto"><i class="fa-solid fa-camera iconForm"></i>Foto de Perfil</label>
                         </div>
-                         </div>
-                        <div class="row">
-                        
                         <!-- INPUT PASSWORD-->
                         <div class="col-xs-12 col-md-6 form-floating">
                             <input
@@ -114,7 +110,7 @@
                                 placeholder=""
                                 minlength="8" required
                                 />
-                            <label for="password" class="datosInput">Contraseña</label>
+                            <label for="password"><i class="fa-solid fa-lock iconForm"></i>Contraseña</label>
                         </div>
                         <!-- INPUT PASSWORD2-->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -126,10 +122,7 @@
                                 placeholder=""
                                 minlength="8" required
                                 />
-                            <label for="password2" class="datosInput"
-                                   >Repetir Contraseña</label
-                            >
-                        </div>
+                            <label for="password2"><i class="fa-solid fa-circle-check iconForm" id="iconoCheck"></i>Repetir Contraseña</label>
                         </div>
                     </div>
 
@@ -153,7 +146,7 @@
                                 <option value="Ginecologia" th:selected="${recargaFormulario != null and recargaFormulario.especialidad == 'Ginecologia'}">Ginecología</option>
                                 <option value="Pediatria" th:selected="${recargaFormulario != null and recargaFormulario.especialidad == 'Pediatria'}">Pediatría</option>
                             </select>
-                            <label for="especialidad" class="datosInput">Especialidad</label>
+                            <label for="especialidad"><i class="fa-solid fa-suitcase-medical iconForm"></i>Especialidad</label>
                         </div>
 
                         <!-- INPUT UBICACIÓN-->
@@ -167,7 +160,7 @@
                                 <option value="" selected disabled>Eligir ubicación...</option>
                                 <option th:each="ubicacion : ${ubicaciones}" th:value="${ubicacion}" th:selected="${recargaFormulario != null and ubicacion == recargaFormulario.ubicacion}" th:text="${ubicacion}"></option>
                             </select>
-                            <label for="ubicacion" class="datosInput">Ubicación</label>
+                            <label for="ubicacion"><i class="fa-solid fa-location-dot iconForm"></i>Ubicación</label>
                         </div>
                         <!-- INPUT MODALIDAD -->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -180,8 +173,9 @@
                                 <option value="" selected disabled>Eligir una modalidad</option>
                                 <option th:each="modalidad : ${modalidades}" th:value="${modalidad}" th:selected="${recargaFormulario != null and modalidad == recargaFormulario.modalidad}" th:text="${modalidad}"></option>
                             </select>
-                            <label for="modalidad" class="datosInput">Modalidad</label>
+                            <label for="modalidad"><i class="fa-solid fa-house-medical iconForm"></i>Modalidad</label>
                         </div>
+
                         <!-- INPUT VALOR CONSULTA-->
                         <div class="col-xs-12 col-md-6 form-floating">
                             <input
@@ -192,9 +186,7 @@
                                 th:value="${recargaFormulario != null ? recargaFormulario.honorario : ''}"
                                 placeholder=""
                                 />
-                            <label for="honorarios" class="datosInput">
-                                <i class="bi bi-currency-dollar"></i>Valor de la consulta</label
-                            >
+                            <label for="honorarios"><i class="fa-solid fa-dollar-sign iconForm"></i>Valor de la consulta</label>
                         </div>
                         <!-- INPUT OBRA SOCIAL-->
                         <div class="col-xs-12 col-md-6 form-floating">
@@ -209,7 +201,7 @@
                                 </th:block>
                                 <option>Cargar otra...</option>
                             </select>
-                            <label for="obraSocial" class="datosInput">Obra Social</label>
+                            <label for="obraSocial"><i class="fa-solid fa-book-medical iconForm"></i>Obra Social</label>
                             <script>
                                 function abrirModal() {
                                     var select = document.getElementById("obraSocial");
@@ -253,7 +245,7 @@
                         <!-- INPUT DE DÍAS -->
                         <div class="col-xs-12">
                             <div class="col-12">
-                                <h5>Días de atención</h5>
+                                <h5><i class="fa-solid fa-calendar-days iconForm"></i>Días de atención</h5>
                             </div>
                             <div class="row row ObrasSociales">
                                 <div
@@ -263,6 +255,8 @@
                                         type="checkbox"
                                         name="dias[]"
                                         id="lunes"
+                                        value="lunes"
+                                        th:checked="${recargaFormulario != null && #arrays.contains(recargaFormulario.dias, 'lunes')}"
                                         class="form-check-input check"
                                         />
                                     <label for="lunes" class="form-check-label labelObraSocial"
@@ -277,6 +271,8 @@
                                         type="checkbox"
                                         name="dias[]"
                                         id="martes"
+                                        value="martes"
+                                        th:checked="${recargaFormulario != null && #arrays.contains(recargaFormulario.dias, 'martes')}"
                                         class="form-check-input check"
                                         />
                                     <label for="martes" class="form-check-label labelObraSocial"
@@ -291,6 +287,8 @@
                                         type="checkbox"
                                         name="dias[]"
                                         id="miercoles"
+                                        value="miercoles"
+                                        th:checked="${recargaFormulario != null && #arrays.contains(recargaFormulario.dias, 'miercoles')}"
                                         class="form-check-input check"
                                         />
                                     <label
@@ -307,6 +305,8 @@
                                         type="checkbox"
                                         name="dias[]"
                                         id="jueves"
+                                        value="jueves"
+                                        th:checked="${recargaFormulario != null && #arrays.contains(recargaFormulario.dias, 'jueves')}"
                                         class="form-check-input check"
                                         />
                                     <label for="jueves" class="form-check-label labelObraSocial"
@@ -320,6 +320,8 @@
                                         type="checkbox"
                                         name="dias[]"
                                         id="viernes"
+                                        value="viernes"
+                                        th:checked="${recargaFormulario != null && #arrays.contains(recargaFormulario.dias, 'viernes')}"
                                         class="form-check-input check"
                                         />
                                     <label for="viernes" class="form-check-label labelObraSocial"
@@ -333,6 +335,8 @@
                                         type="checkbox"
                                         name="dias[]"
                                         id="sabado"
+                                        value="sabado"
+                                        th:checked="${recargaFormulario != null && #arrays.contains(recargaFormulario.dias, 'sabado')}"
                                         class="form-check-input check"
                                         />
                                     <label for="sabado" class="form-check-label labelObraSocial"
@@ -345,7 +349,7 @@
                         <div class="row rowHorario">
                             <!-- INPUT HORA INICIO-->
                             <div class="col-12">
-                                <h5>Horario de atención</h5>
+                                <h5><i class="fa-solid fa-clock iconForm"></i>Horario de atención</h5>
                             </div>
                             <div class="col-xs-12 col-md-3 form-floating inputHora">
                                 <input
@@ -356,9 +360,9 @@
                                     th:value="${recargaFormulario != null ? #temporals.format(recargaFormulario.horaInicio, 'HH:mm') : ''}"
                                     placeholder=""
                                     />
-                                <label for="horaInicio" class="datosInput inputHora">
-                                    <i class="bi bi-clock"></i>Hora de inicio</label
-                                >
+                                <label for="horaInicio" class="inputHora">
+                                    <i class="fa-solid fa-clock iconForm"></i>Hora de inicio
+                                </label>
                             </div>
 
                             <!-- INPUT HORA FIN-->
@@ -371,9 +375,9 @@
                                     th:value="${recargaFormulario != null ? #temporals.format(recargaFormulario.horaFin, 'HH:mm') : ''}"
                                     placeholder=""
                                     />
-                                <label for="horaFin" class="datosInput inputHora">
-                                    <i class="bi bi-clock"></i>Hora de finalización</label
-                                >
+                                <label for="horaFin" class="inputHora">
+                                    <i class="fa-solid fa-clock iconForm"></i>Hora de finalización
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -391,24 +395,24 @@
                 </form>
 
 
-            <!-- VENTANA MODAL PARA CARGA DE NUEVA OBRA SOCIAL -->
-            <div class="modal " id="myModal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form
-                            class="formulario formularioModal"
-                            id="formularioModal"
-                            method="POST"
-                            >
-                            <!-- MODAL HEADER --> 
-                            <div class="modal-header">
-                                <h3 class="modal-title">REGISTRAR NUEVA OBRA SOCIAL</h3>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="cerrarModal()"></button>
-                            </div>
-                            <!-- MODAL BODY -->
-                            <div class="row rowDatosPersonales">
-                                <div class="tituloForm">
-                                    <h4>En caso que la obra social no tenga sigla, usar el nombre completo</h4>
+                <!-- VENTANA MODAL PARA CARGA DE NUEVA OBRA SOCIAL -->
+                <div class="modal " id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form
+                                class="formulario formularioModal"
+                                id="formularioModal"
+                                method="POST"
+                                >
+                                <!-- MODAL HEADER --> 
+                                <div class="modal-header">
+                                    <h3 class="modal-title">REGISTRAR NUEVA OBRA SOCIAL</h3>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="cerrarModal()"></button>
+                                </div>
+                                <!-- MODAL BODY -->
+                                <div class="row rowDatosPersonales">
+                                    <div class="tituloForm">
+                                        <h4>En caso que la obra social no tenga sigla, usar el nombre completo</h4>
 
                                     </div>
                                     <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
@@ -422,7 +426,7 @@
                                             name="nombreObraSocial"
                                             placeholder=""
                                             />
-                                        <label for="nombreObraSocial">Sigla o nombre de la obra social</label>
+                                        <label for="nombreObraSocial"><i class="fa-solid fa-file-medical iconForm"></i>Sigla o nombre de la obra social</label>
                                     </div>
                                 </div>
 

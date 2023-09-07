@@ -81,8 +81,8 @@
                     </tbody>
                 </table>
 
-                <a class="btn btn-primary botonesLista" href="/inicio" role="button" th:if="${session.pacienteSession != null} OR ${session.profesionalSession != null} ">Volver</a>
-                <a class="btn btn-primary botonesLista" href="/" role="button" th:if="${session.pacienteSession == null} AND ${session.profesionalSession == null}">Volver</a>
+                <a class="btn btn-primary botonesLista" href="/inicio" role="button" th:if="${session.userSession != null} ">Volver</a>
+                <a class="btn btn-primary botonesLista" href="/" role="button" th:if="${session.userSession == null}">Volver</a>
             </div>
         </main>
 

@@ -19,12 +19,19 @@
                     <thead>
                         <tr class="row-col-12 titulosTabla">
                             <th scope="col" class="col-2">Profesional</th>
-                            <th scope="col" class="col-2">Especialidad</th>
+                            <th scope="col" class="col-2">
+                                                          <select id="especialidad" class="especialidad" onchange="filtrarTabla()">
+                                <option value="todas">Especialidad</option>
+                                <option value="cardiologia">Cardiología</option>
+                                <option value="clinica">Clínica</option>
+                                <option value="ginecologia">Ginecología</option>
+                                <option value="pediatria">Pediatría</option>
+                            </select>
                             <th scope="col" class="col-1">Horario de Atención</th>
-                            <th scope="col" class="col-1">Valor de Consulta</th>
-                            <th scope="col" class="col-2">Valoración</th> 
-                            <th scope="col" class="col-1">Puntuar</th>
-                            <th scope="col" class="col-1"></th> 
+                            <th scope="col" class="col-1" onclick="ordenarPorValorConsulta()">Valor de Consulta <i class="fa-solid fa-sort"></i> </th>
+                        <th scope="col" class="col-2 califica" onclick="ordenarPorCalificacion()">Calificación <i class="fa-solid fa-sort"></i></th>
+                            <th scope="col" class="col-2">Puntuar</th>
+                            <th scope="col" class="col-2"></th> 
                         </tr>
                         <!--                            <th scope="col" class="col-1" sec:authorize ="hasRole ('ADMINISTRADOR')" >Acciones</th>
                                                 </tr>-->
@@ -53,48 +60,39 @@
                                 <span th:if="${profesional.calificacion >= 4.75}"> <img src="../../img/estrella50.jpg"  class="imgEstrella"> </span>
 
                             <td scope="col" class="col-1 tdValorar">
-                           
-                                
+
+
                                 <button type="button"class="btn btn-warning btnValorar">Valorar</button>
-                         
+
                                 <div class="formValorar" id="formValorar">
                                     <form
-                                        th:action="@{/pac/calificarProfesional/__${profesional.id}__}"
+                                        th:action="@{/paciente/calificarProfesional/__${profesional.id}__}"
                                         method="POST">
 
                                         <div class="row rowDatosPersonales">
                                             <div class="barraBusqueda col-xs-12">
                                                 <div class="container ">
-                                                    <div class="star-widget">
-                                                        <input type="radio" name="puntaje" value="5" id="rate-5">
-                                                        <label for="rate-5" class="fas fa-star"></label>
-                                                        <input type="radio" name="puntaje" value="4" id="rate-4">
-                                                        <label for="rate-4" class="fas fa-star"></label>
-                                                        <input type="radio" name="puntaje" value="3" id="rate-3">
-                                                        <label for="rate-3" class="fas fa-star"></label>
-                                                        <input type="radio" name="puntaje" value="2" id="rate-2">
-                                                        <label for="rate-2" class="fas fa-star"></label>
-                                                        <input type="radio" name="puntaje" value="1" id="rate-1" checked>
-                                                        <label for="rate-1" class="fas fa-star"></label>
+                                                    <div class="rating" data-rating="0">
+                                                        <span class="star"></span>
+                                                        <span class="star"></span>
+                                                        <span class="star"></span>
+                                                        <span class="star"></span>
+                                                        <span class="star"></span>
+                                                        <input type="hidden" class="calificacion-input" name="puntaje" value="">
                                                     </div>
-                                               
                                                 
-                                                
-                                                <button type="submit" class="btn btn-primary  botonesLista btnCalificar">
-                                                    Calificar
-                                              
-                                                     </div>
+                                                    
+
+                                                    <button type="submit" class="btn btn-primary  botonesLista btnCalificar">
+                                                        Calificar
+
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
                                 </div>        
 
                             </td>
-
-
-
-
-
 
                             <td scope="col" class="col-2 tdTurno"><a th:href="@{/turno/formularioTurno/__${profesional.id}__}">
 
@@ -112,20 +110,13 @@
     </div>
 </div>
 
-
-
-
-
-
-
-
-
 </main>
 <!--FOOTER-->
 <div class="container-fluid pie">
     <footer th:replace="/fragments/footer :: footer" </footer><!--NO MODIFICAR-->
 </div>
 <script src="../../scriptsCalificar.js"></script>
+<script src="../../scripts.js"></script>
 <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"

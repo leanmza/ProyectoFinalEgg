@@ -24,7 +24,7 @@
 
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     <div class="col">
-                        <a class="dropdown-item" th:href="@{/pac/misTurnos}" sec:authorize ="hasRole ('PACIENTE')">
+                        <a class="dropdown-item" th:href="@{/paciente/misTurnos}" sec:authorize ="hasRole ('PACIENTE')">
                             <div class="card ">
                                 <div class="card-body card1">
                                     <h3 class="card-title">MIS TURNOS</h3>
@@ -32,7 +32,7 @@
 
                             </div>
                         </a>
-                        <a class="dropdown-item" th:href="@{/profesional/agenda}" sec:authorize ="hasRole ('PROFESIONAL')">
+                        <a class="dropdown-item" th:href="@{/profesional/agenda}" sec:authorize ="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')">
                             <div class="card ">
                                 <div class="card-body card1">
                                     <h3 class="card-title">AGENDA</h3>
@@ -44,7 +44,7 @@
 
 
                     <div class="col">
-                        <a class="dropdown-item" th:href="@{/pac/misProfesionales}" sec:authorize ="hasRole ('PACIENTE')">
+                        <a class="dropdown-item" th:href="@{/paciente/misProfesionales}" sec:authorize ="hasRole ('PACIENTE')">
                             <div class="card">
                                 <div class="card-body card4">
                                     <h3 class="card-title">MIS PROFESIONALES</h3>
@@ -52,7 +52,7 @@
                                 </div>
                             </div>
                         </a>
-                        <a class="dropdown-item" th:href="@{/historiaClinica/buscar}" sec:authorize ="hasRole ('PROFESIONAL')">
+                        <a class="dropdown-item" th:href="@{/historiaClinica/buscar}" sec:authorize ="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')">
                             <div class="card">
                                 <div class="card-body card2">
                                     <h3 class="card-title">BUSCAR <br> HISTORIA CLINICA</h3>
@@ -69,7 +69,7 @@
                                 <h3 class="card-title">CONSEJOS </h3>
 
                             </div>
-                            <a class="dropdown-item" th:href="@{/historiaClinica/form_historia_clinica}"  sec:authorize ="hasRole ('PROFESIONAL')">
+                            <a class="dropdown-item" th:href="@{/historiaClinica/registrarHistoriaClinica}"  sec:authorize ="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')">
                                 <div class="card">
                                     <div class="card-body card3">
                                         <h3 class="card-title">NUEVA <br> HISTORIA CLINICA </h3>

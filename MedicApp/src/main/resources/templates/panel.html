@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="col">
-                        <a class="dropdown-item" th:href="@{/historiaClinica/form_historia_clinica}">
+                        <a class="dropdown-item" th:href="@{/historiaClinica/registrarHistoriaClinica}">
                             <div class="card">
                                 <div class="card-body card3">
                                     <h3 class="card-title">NUEVA <br> HISTORIA CLINICA </h3>
@@ -52,6 +52,11 @@
                 </div>
             </div>
 
+            <div class="alert alert-success mensajeExito" role="alert"  th:if="${exito != null}" >
+                <p class="custom-success-message mensaje" th:text="${exito}">
+
+                </p>
+            </div>
 
         </main>
         <!--FOOTER-->
