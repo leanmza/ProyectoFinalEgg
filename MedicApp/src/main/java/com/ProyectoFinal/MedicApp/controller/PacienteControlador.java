@@ -4,14 +4,11 @@
  */
 package com.ProyectoFinal.MedicApp.controller;
 
-import com.ProyectoFinal.MedicApp.Entity.Imagen;
 import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
-
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Entity.Turno;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.Service.ImagenService;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
@@ -23,18 +20,15 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 /**
  *
@@ -74,7 +68,7 @@ public class PacienteControlador {
             sessionFormulario.setAttribute("datosFormulario", paciente);
 
             model.put("recargaFormulario", sessionFormulario.getAttribute("datosFormulario"));
-
+            
         }
 
         // CARGA DE LAS OBRAS SOCIALES
@@ -245,7 +239,7 @@ public class PacienteControlador {
 ////LISTA MIS PROFESIONALES
     @Transactional
     @GetMapping("/misProfesionales")
-    public String listaProfesionales(ModelMap model, HttpSession session) {
+    public String misProfesionales(ModelMap model, HttpSession session) {
 
         Paciente paciente = (Paciente) session.getAttribute("userSession");
         String idPaciente = paciente.getId();
@@ -259,13 +253,13 @@ public class PacienteControlador {
     ////LISTA MIS TURNOS
     @Transactional
     @GetMapping("/misTurnos")
-    public String listaTurnos(ModelMap model, HttpSession session) {
+    public String misTurnos(ModelMap model, HttpSession session) {
 
         Paciente paciente = (Paciente) session.getAttribute("userSession");
         String idPaciente = paciente.getId();
 
         List<Turno> turnos = pacienteService.listarTurnos(idPaciente);
-
+   
         model.addAttribute("turnos", turnos);
         return "mis_turnos.html";
     }
@@ -275,7 +269,7 @@ public class PacienteControlador {
     @GetMapping("/anularTurno/{id}")
     public String anularTurno(@PathVariable String id) throws MiExcepcion {
 
-        System.out.println("    id" + id);
+        System.out.println("id " + id);
         turnoService.eliminarTurno(id);
         return "redirect:/paciente/misTurnos";
     }
@@ -283,7 +277,7 @@ public class PacienteControlador {
     ////CALIFICAR PROFESIONAL
     @Transactional
     @PostMapping("/calificarProfesional/{id}")
-    public String calificarProfesional(@PathVariable("id") String id, @RequestParam("puntaje") String puntaje) { //recibe el id del profesional
+    public String calificarProfesional(@PathVariable("id") String id, @RequestParam("puntaje") int puntaje) { //recibe el id del profesional
         System.out.println("puntaje " + puntaje);
         pacienteService.calificarProfesional(id, puntaje);
         return "redirect:/paciente/misProfesionales";

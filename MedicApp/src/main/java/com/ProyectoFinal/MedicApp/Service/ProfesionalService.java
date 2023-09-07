@@ -14,6 +14,7 @@ import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
 import com.ProyectoFinal.MedicApp.Repository.TurnoRepositorio;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -187,6 +188,7 @@ public class ProfesionalService {
 
     }
 
+    @Transactional(readOnly = true)
     public Profesional getOne(String id) {
         return profesionalRepositorio.getOne(id);
     }
@@ -342,11 +344,16 @@ public class ProfesionalService {
 
     @Transactional(readOnly = true)
     public List<Turno> listarTurnos(String idProfesional) {
-        System.out.println("id del profesional " + idProfesional);
 
-        List<Turno> misTurnos;
+        List<Turno> misTurnos = turnoRepositorio.buscarPorProfesional(idProfesional);
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        for (Turno turno : misTurnos) {
 
-        misTurnos = turnoRepositorio.buscarPorProfesional(idProfesional);
+            LocalDate fecha = turno.getFecha();
+            String fechaFormateada = fecha.format(formatter);
+            turno.setFechaFormateada(fechaFormateada);
+        }
 
         return misTurnos;
     }

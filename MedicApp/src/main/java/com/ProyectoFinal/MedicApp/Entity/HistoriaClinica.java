@@ -1,14 +1,12 @@
 package com.ProyectoFinal.MedicApp.Entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -29,8 +27,7 @@ public class HistoriaClinica {
     private Paciente paciente;
 
     // GUARDAR LA FECHAM EN LA QUE SE CARGA LA HOSTORIA CLINICA
-    @Temporal(TemporalType.DATE)
-    private Date fechaConsulta;
+    private LocalDate fechaConsulta;
 
     // OBTENER LOS DATOS DEL PROFESIONAL QUE CREO LA HISTORIA CLINICA
     @OneToOne
@@ -38,7 +35,7 @@ public class HistoriaClinica {
 
     // GUARDA EL DIAGNOSTICO DEL PROFESIONAL
     private String diagnostico;
-    
+
     // GUARDA EL TRATAMIENTO BRINDADO POR EL PROFESIONAL
     private String tratamiento;
 

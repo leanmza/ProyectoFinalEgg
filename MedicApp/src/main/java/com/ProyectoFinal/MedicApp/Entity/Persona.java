@@ -24,7 +24,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Data
-public class Persona implements Serializable {
+public class Persona  {
 
     @Id
     @GeneratedValue(generator = "uuid")

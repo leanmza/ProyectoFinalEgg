@@ -183,6 +183,7 @@ public class ProfesionalControlador {
 //        model.addAttribute("especialidad", especialidad);
 //        return "listaespecialidad.html";
 //    }
+    
 //    // GUARDADO DE DATOS DEL FORMULARIO PROFESIONAL EN UNA SESSION PARA INYECTAR LUEGO DE AGRGAR UNA OBRA SOCIAL NUEVA
 //    @Transactional
 //    @PostMapping("/guardarDatosFormulario")
@@ -231,6 +232,7 @@ public class ProfesionalControlador {
 //
 //        return "redirect:/profesional/perfil";
 //    }
+    
     ////AGENDA
     @Transactional
     @GetMapping("/agenda")

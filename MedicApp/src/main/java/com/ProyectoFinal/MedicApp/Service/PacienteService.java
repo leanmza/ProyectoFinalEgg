@@ -73,7 +73,6 @@ public class PacienteService {
 
         paciente.setSexo(sexo);
 
-      
         paciente.setObraSocial(obraSocialServicio.getOne(obraSocial));
 
         paciente.setPassword(new BCryptPasswordEncoder().encode(password));
@@ -111,8 +110,7 @@ public class PacienteService {
 
             paciente.setPassword(new BCryptPasswordEncoder().encode(password));
 
-           
-              if (archivo.getSize() == 0) {
+            if (archivo.getSize() == 0) {
                 paciente.setImagen(null);
             } else {
                 String idImagen = null;
@@ -137,8 +135,8 @@ public class PacienteService {
     public Paciente buscarPorDni(String dni) {
         return pacienteRepositorio.buscarPorDni(dni);
     }
- 
-    @Transactional(readOnly = true)
+
+    @Transactional(readOnly = true) //NO SE USA, hacer una vista para el administrador
     public List<Paciente> listar() {
 
         List<Paciente> pacientes = new ArrayList();
@@ -150,9 +148,15 @@ public class PacienteService {
 
     public void validar(String nombre, String apellido, String dni, String email, String direccion, String telefono,
             String nacimiento, String sexo, String obraSocial, String password, String password2) throws MiExcepcion {
+        // Primero comprobamos que el email y el DNI no se encuentren ya almacenados en la BD
         if (emailChecker(email) == true) {
             throw new MiExcepcion("El email " + email + " ya se encuentra registrado");
         }
+
+        if (dniChecker(dni) == true) {
+            throw new MiExcepcion("El DNI ingresado ya se encuentra registrado");
+        }
+
         if (nombre == null || nombre.isEmpty()) {
             throw new MiExcepcion("El nombre no puede ser nulo o vacío");
         }
@@ -212,6 +216,7 @@ public class PacienteService {
 
     }
 
+    //  VALIDA LOS DATOS QUE ESTAN HABILITADOS PARA MODIFICAR, NO SE REVISA SI EL EMIAL O EL DNI YA EXISITEN
     public void validarModificar(String nombre, String apellido, String direccion, String telefono,
             String sexo, String obraSocial, String password, String password2) throws MiExcepcion {
 
@@ -265,6 +270,15 @@ public class PacienteService {
     private boolean emailChecker(String email) { // Verifica si el email ya existe en la BD
         boolean check = false;
         Paciente paciente = pacienteRepositorio.buscarPorEmail(email);
+        if (paciente != null) {
+            check = true;
+        }
+        return check;
+    }
+
+    private boolean dniChecker(String dni) { // Verifica si el email ya existe en la BD
+        boolean check = false;
+        Paciente paciente = pacienteRepositorio.buscarPorDni(dni);
         if (paciente != null) {
             check = true;
         }
@@ -339,42 +353,33 @@ public class PacienteService {
     public List<Turno> listarTurnos(String idPaciente) {
         System.out.println("id paciente " + idPaciente);
 
-        List<Turno> misTurnos;
+        List<Turno> misTurnos = turnoRepositorio.buscarPorPaciente(idPaciente);
 
-        misTurnos = turnoRepositorio.buscarPorPaciente(idPaciente);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        for (Turno turno : misTurnos) {
+
+            LocalDate fecha = turno.getFecha();
+            String fechaFormateada = fecha.format(formatter);
+            turno.setFechaFormateada(fechaFormateada);
+        }
 
         return misTurnos;
     }
 
-    public void calificarProfesional(String id, String puntaje) {
-        Integer punt = 0;
-        switch (puntaje) {
-            case "0":
-                punt = 0;
-                break;
-            case "1":
-                punt = 1;
-                break;
-            case "2":
-                punt = 2;
-                break;
-            case "3":
-                punt = 3;
-                break;
-            case "4":
-                punt = 4;
-                break;
-            case "5":
-                punt = 5;
-                break;
-        }
+    public void calificarProfesional(String id, int puntaje) {
+//SAQUÉ EL SWITCH Y CAMBIÉ EL TIPO DE DATO DE STRING A INT, FUNCIONA Y QUEDA MÁS LIMPIO EL CÓDIGO
 
         Optional<Profesional> respuesta = profesionalRepositorio.findById(id);
+
         if (respuesta.isPresent()) {
             Profesional profesional = respuesta.get();
+
             profesional.setCantVisitas(profesional.getCantVisitas() + 1);
-            profesional.setPuntaje(profesional.getPuntaje() + punt);
+
+            profesional.setPuntaje(profesional.getPuntaje() + puntaje);
+
             profesional.setCalificacion((double) profesional.getPuntaje() / (double) profesional.getCantVisitas());
+
             profesionalRepositorio.save(profesional);
         }
     }
