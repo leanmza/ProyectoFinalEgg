@@ -321,7 +321,11 @@ public class PacienteService {
         return cumple;
     }
 
-    public void darDeBaja(String id) {
+    public void darDeBaja(String id) { //// SI EN VEZ DE MODIFICAR EL BOOLEAN  A FALSE, SE SETEA EL ROL A 
+//        BAJA ENTOCES NO PUEDE ACCEDER A NADA QUE REQUIERA AUTORIZACIÓN Y SI SE QUIERE 
+//        RECUPERAR EL USUARIO, SE RECIBA UN EMAIL CON UN LINK A SETEAR UNA NUEVA CONTRASEÑA 
+//        Y SE LE DEVUELVE EL ROL PACIENTE O PROFESIONAL
+
         Optional<Paciente> respuesta = pacienteRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Paciente paciente = respuesta.get();
@@ -367,8 +371,8 @@ public class PacienteService {
     }
 
     public void calificarProfesional(String id, int puntaje) {
-//SAQUÉ EL SWITCH Y CAMBIÉ EL TIPO DE DATO DE STRING A INT, FUNCIONA Y QUEDA MÁS LIMPIO EL CÓDIGO
-
+        //SAQUÉ EL SWITCH porque no era necesario, puntaje ya viene limitado a máximo 5 del formulario
+        // CAMBIÉ EL TIPO DE DATO DE STRING A INT, FUNCIONA Y QUEDA MÁS LIMPIO EL CÓDIGO
         Optional<Profesional> respuesta = profesionalRepositorio.findById(id);
 
         if (respuesta.isPresent()) {
@@ -382,5 +386,29 @@ public class PacienteService {
 
             profesionalRepositorio.save(profesional);
         }
+    }
+
+    public Paciente DatosTemporalesFormulario(String nombre, String apellido, String dni, String email, String telefono,
+            String direccion, String fechaNacimiento, String sexo) throws MiExcepcion {
+                
+        Paciente tempPaciente = new Paciente();
+
+        tempPaciente.setNombre(nombre);
+        tempPaciente.setApellido(apellido);
+        tempPaciente.setDni(dni);
+        tempPaciente.setDireccion(direccion);
+        tempPaciente.setTelefono(telefono);
+        tempPaciente.setEmail(email);
+        tempPaciente.setSexo(sexo);
+
+        if (fechaNacimiento != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate fechaDeNacimiento = LocalDate.parse(fechaNacimiento, formatter);
+            tempPaciente.setFechaNacimiento(fechaDeNacimiento);
+        }
+        
+        
+        
+        return tempPaciente;
     }
 }

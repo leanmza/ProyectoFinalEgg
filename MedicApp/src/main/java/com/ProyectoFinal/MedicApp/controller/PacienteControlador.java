@@ -69,13 +69,15 @@ public class PacienteControlador {
 
             model.put("recargaFormulario", sessionFormulario.getAttribute("datosFormulario"));
             
+          
+            
         }
 
         // CARGA DE LAS OBRAS SOCIALES
         List<ObraSocial> obrasSociales = obraSocialServicio.listar();
         model.put("obrasSociales", obrasSociales);
-
-        return "formulario_paciente.html";
+        
+           return "formulario_paciente.html";
     }
 
     @Transactional
@@ -214,24 +216,8 @@ public class PacienteControlador {
             @RequestParam(required = false) String direccion, @RequestParam(required = false) String fechaNacimiento, @RequestParam(required = false) String sexo,
             HttpSession sessionFormulario) throws MiExcepcion {
 
-        Paciente tempPaciente = new Paciente();
-
-        tempPaciente.setNombre(nombre);
-        tempPaciente.setApellido(apellido);
-        tempPaciente.setDni(dni);
-        tempPaciente.setDireccion(direccion);
-        tempPaciente.setTelefono(telefono);
-        tempPaciente.setEmail(email);
-        tempPaciente.setSexo(sexo);
-
-        if (fechaNacimiento != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate fechaDeNacimiento = LocalDate.parse(fechaNacimiento, formatter);
-            tempPaciente.setFechaNacimiento(fechaDeNacimiento);
-        }
-
-        // SAQUÉ LA IMAGEN PORQUE EL ARCHIVO NO SE RECARGA
-        sessionFormulario.setAttribute("datosFormulario", tempPaciente);
+        Paciente pacienteTemporal = pacienteService.DatosTemporalesFormulario(nombre, apellido, dni, email, telefono, direccion, fechaNacimiento, sexo);
+        sessionFormulario.setAttribute("datosFormulario", pacienteTemporal);
 
         return "redirect:/paciente/registroPaciente";
     }
