@@ -4,17 +4,12 @@
  */
 package com.ProyectoFinal.MedicApp.controller;
 
-import com.ProyectoFinal.MedicApp.Entity.Imagen;
 import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
-import com.ProyectoFinal.MedicApp.Entity.Persona;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Entity.Turno;
 import com.ProyectoFinal.MedicApp.Enum.Modalidad;
-import com.ProyectoFinal.MedicApp.Enum.Rol;
 import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
-import java.util.ArrayList;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
 import com.ProyectoFinal.MedicApp.Service.ImagenService;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
@@ -52,16 +47,76 @@ public class ProfesionalControlador {
     ObraSocialService obraSocialServicio;
 
     @Autowired
-    ImagenService imagenServicio;
-
-    @Autowired
     TurnoService turnoService;
+
+    //FORMULARIO PARA CREAR UN PROFESIONAL
+    @GetMapping("/registroProfesional")
+    public String registroProfesional(ModelMap modelo, HttpSession sessionFormulario, HttpSession obraSocialNueva) {
+
+        // EN EL CASO QUE HAYA AGREGADO UNA OBRA SOCIAL NUEVA, CARGAMOS LA SESSIONFORMULARIO
+        if (sessionFormulario.getAttribute("datosFormulario") != null) {
+
+            Profesional profesional = (Profesional) sessionFormulario.getAttribute("datosFormulario");
+
+            if (obraSocialNueva.getAttribute("nuevaObraSocial") != null) {
+
+                String nombreOS = (String) obraSocialNueva.getAttribute("nuevaObraSocial");
+
+                ObraSocial obraSocial = obraSocialServicio.buscarPorNombre(nombreOS);
+
+                profesional.setObraSocial(obraSocial);
+
+            }
+            sessionFormulario.setAttribute("datosFormulario", profesional);
+
+            modelo.put("recargaFormulario", sessionFormulario.getAttribute("datosFormulario"));
+        }
+
+        // CARGA DE LAS UBICACIONES
+        modelo.put("ubicaciones", Ubicacion.values());
+
+        // CARGA DE LAS MODALIDADES
+        modelo.put("modalidades", Modalidad.values());
+
+        // CARFA DE LAS OBRAS SOCIALES
+        List<ObraSocial> obrasSociales = obraSocialServicio.listar();
+        modelo.put("obrasSociales", obrasSociales);
+
+        return "formulario_profesional.html";
+    }
+
+    ///REGISTRA PROFESIONAL
+    @PostMapping("/crearProfesional")
+    public String crearProfesional(@RequestParam String nombre, @RequestParam String apellido,
+            @RequestParam String correo, @RequestParam String telefono, @RequestParam(required = false) MultipartFile archivo,
+            @RequestParam String password, @RequestParam String password2, @RequestParam String especialidad,
+            @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,
+            @RequestParam String obraSocial, @RequestParam(value = "dias[]", required = false) String[] diasSeleccionados,
+            @RequestParam String horaInicio, @RequestParam String horaFin, ModelMap modelo) throws IOException {
+
+        try {
+
+            profesionalService.crearProfesional(nombre, apellido, correo, telefono,
+                    archivo, password, password2, especialidad, ubicacion, modalidad,
+                    honorarios, obraSocial, diasSeleccionados, horaInicio, horaFin);
+
+            return "redirect:/listar?exito=registroExitoso";
+
+        } catch (MiExcepcion e) {
+            System.out.println("Error al cargar Profesional");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            modelo.put("error", e.getMessage());
+            return "formulario_profesional.html";
+        }
+
+    }
 
     ////PERFIL
     @Transactional
     @GetMapping("/perfil")
     public String perfil(HttpSession session, ModelMap modelo, HttpSession obraSocialNueva, @RequestParam(required = false) String error) {
-        
+
         if (error != null && error.equals("errorActualizacion")) {
             String errorMessage = (String) modelo.getAttribute("error");
             modelo.put("error", errorMessage);
@@ -77,9 +132,9 @@ public class ProfesionalControlador {
 
         modelo.addAttribute("profesional", profesional);
 
-           // CARGA DE LAS UBICACIONES
-         modelo.put("ubicaciones", Ubicacion.values());
-  
+        // CARGA DE LAS UBICACIONES
+        modelo.put("ubicaciones", Ubicacion.values());
+
         // CARGA DE LAS MODALIDADES
         modelo.put("modalidades", Modalidad.values());
 
@@ -103,15 +158,9 @@ public class ProfesionalControlador {
 
         try {
 
-            LocalTime horaInicioLT = LocalTime.parse(horaInicio);
-            LocalTime horaFinLT = LocalTime.parse(horaFin);
-            
-            ObraSocial claseObraSocial = obraSocialServicio.buscarPorNombre(obraSocial); // A PARTIR DEL NOMBRE BUSCAMOS LA CLASE OBRAsOCIAL
-            System.out.println("OS: " + claseObraSocial.toString());
-
             profesionalService.modificarProfesional(id, nombre, apellido, correo, telefono, archivo, password, password2,
-                    especialidad, ubicacion, modalidad, honorarios, claseObraSocial, diasSeleccionados, horaInicioLT, horaFinLT);
-            
+                    especialidad, ubicacion, modalidad, honorarios, obraSocial, diasSeleccionados, horaInicio, horaFin);
+
             session.setAttribute("userSession", profesionalService.getOne(id));
 
             return "redirect:/inicio";
@@ -125,8 +174,6 @@ public class ProfesionalControlador {
         }
     }
 
-    
-    
 //    @Transactional
 //    @PostMapping("/buscarEspececialidad")
 //    public String buscarEspececialidad(@RequestParam String especialidad, ModelMap model) {
@@ -136,8 +183,6 @@ public class ProfesionalControlador {
 //        model.addAttribute("especialidad", especialidad);
 //        return "listaespecialidad.html";
 //    }
-
-
 //    // GUARDADO DE DATOS DEL FORMULARIO PROFESIONAL EN UNA SESSION PARA INYECTAR LUEGO DE AGRGAR UNA OBRA SOCIAL NUEVA
 //    @Transactional
 //    @PostMapping("/guardarDatosFormulario")
@@ -186,7 +231,6 @@ public class ProfesionalControlador {
 //
 //        return "redirect:/profesional/perfil";
 //    }
-
     ////AGENDA
     @Transactional
     @GetMapping("/agenda")
@@ -194,7 +238,6 @@ public class ProfesionalControlador {
 
         Profesional profesional = (Profesional) session.getAttribute("userSession");
         String idProfesional = profesional.getId();
-        
 
         List<Turno> turnos = profesionalService.listarTurnos(idProfesional);
 
@@ -202,7 +245,6 @@ public class ProfesionalControlador {
         return "agenda.html";
     }
 
-    
     ////ANULAR TURNO
     @Transactional
     @GetMapping("/anularTurno/{id}")
@@ -213,4 +255,3 @@ public class ProfesionalControlador {
         return "redirect:/profesional/agenda";
     }
 }
-

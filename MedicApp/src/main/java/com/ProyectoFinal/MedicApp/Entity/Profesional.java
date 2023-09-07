@@ -47,13 +47,11 @@ public class Profesional extends Persona {
 
     private Double honorario;
 
-//    @OneToMany
-//    private List<Turno> turnos;
 
     private LocalTime horaInicio;
     private LocalTime horaFin;
     
-    private ArrayList<String> horas; //no me tomaba el List solo, por eso lo cambié a ArrayList
+    private ArrayList<LocalTime> horas; //no me tomaba el List solo, por eso lo cambié a ArrayList
 
     private Integer cantVisitas;
     private Integer puntaje;

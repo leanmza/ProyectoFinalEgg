@@ -41,7 +41,7 @@ public class AdministradorControlador {
     PacienteService pacienteServicio;
 
     @Autowired
-    ProfesionalService profesionalServicio;
+    ProfesionalService profesionalService;
 
     @Autowired
     ObraSocialService obraSocialServicio;
@@ -71,74 +71,6 @@ public class AdministradorControlador {
     }
 
 
-    //FORMULARIO PARA CREAR UN PROFESIONAL
-    @GetMapping("/registroProfesional")
-    public String registroProfesional(ModelMap modelo, HttpSession sessionFormulario, HttpSession obraSocialNueva) {
-
-        // EN EL CASO QUE HAYA AGREGADO UNA OBRA SOCIAL NUEVA, CARGAMOS LA SESSIONFORMULARIO
-        if (sessionFormulario.getAttribute("datosFormulario") != null) {
-
-            if (obraSocialNueva.getAttribute("nuevaObraSocial") != null) {
-
-                Profesional profesional = (Profesional) sessionFormulario.getAttribute("datosFormulario");
-                
-                String nombreOS = (String) obraSocialNueva.getAttribute("nuevaObraSocial");
-                
-                ObraSocial obraSocial = obraSocialServicio.buscarPorNombre(nombreOS);
-                
-                profesional.setObraSocial(obraSocial);
-                
-                sessionFormulario.setAttribute("datosFormulario", profesional);
-            }
-            
-            modelo.put("recargaFormulario", sessionFormulario.getAttribute("datosFormulario"));
-        }
-
-        // CARGA DE LAS UBICACIONES
-         modelo.put("ubicaciones", Ubicacion.values());
-  
-        // CARGA DE LAS MODALIDADES
-        modelo.put("modalidades", Modalidad.values());
-
-        // CARFA DE LAS OBRAS SOCIALES
-        List<ObraSocial> obrasSociales = obraSocialServicio.listar();
-        modelo.put("obrasSociales", obrasSociales);
-
-        return "formulario_profesional.html";
-    }
-
-    ///REGISTRA PROFESIONAL
-    @PostMapping("/crearProfesional")
-    public String crearProfesional(@RequestParam String nombre, @RequestParam String apellido,
-            @RequestParam String correo, @RequestParam String telefono, @RequestParam(required = false) MultipartFile archivo,
-            @RequestParam String password, @RequestParam String password2, @RequestParam String especialidad,
-            @RequestParam String ubicacion, @RequestParam String modalidad, @RequestParam Double honorarios,
-            @RequestParam String obraSocial, @RequestParam(value = "dias[]", required = false) String[] diasSeleccionados,
-            @RequestParam String horaInicio, @RequestParam String horaFin, ModelMap modelo) throws IOException {
-
-        try {
-            System.out.println("Horas: " + horaInicio + "  " + horaFin);
-            LocalTime horaInicioLT = LocalTime.parse(horaInicio);
-            LocalTime horaFinLT = LocalTime.parse(horaFin);
-
-            ObraSocial claseObraSocial = obraSocialServicio.getOne(obraSocial);
-            
-            System.out.println(archivo.getBytes().toString());
-            profesionalServicio.crearProfesional(nombre, apellido, correo, telefono,
-                    archivo, password, password2, especialidad, ubicacion, modalidad,
-                    honorarios, claseObraSocial, diasSeleccionados, horaInicioLT, horaFinLT);
-
-            return "redirect:/listar?exito=registroExitoso";
-
-        } catch (MiExcepcion e) {
-            System.out.println("Error al cargar Profesional");
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-            modelo.put("error", e.getMessage());
-            return "formulario_profesional.html";
-        }
-
-    }
     
 //    // GUARDADO DE DATOS DEL FORMULARIO PROFESIONAL EN UNA SESSION PARA INYECTAR LUEGO DE AGRGAR UNA OBRA SOCIAL NUEVA
 //    @Transactional

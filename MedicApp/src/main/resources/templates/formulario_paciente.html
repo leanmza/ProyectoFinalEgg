@@ -14,17 +14,11 @@
 
 <main>
     <div id="divFormPaciente" class="container-fluid divFormPaciente contenedorMain">
-        <div class="row titulo">
-            <h3>REGISTRATE EN NUESTRA APP</h3>
-        </div>
-
-
-
         <form
             class="form-floating row formulario formularioCrear"
             id="formulario"
 
-            th:action="@{/registroPaciente}"
+            th:action="@{/paciente/registroPaciente}"
             method="POST"
             enctype="multipart/form-data"
             th:object="${recargaFormulario}"
@@ -45,13 +39,7 @@
                 </div>
                 <!-- form-floating es para que el placeholder se haga chiquito en el input y no desaparezca -->
                 
-                <!-- INPUT OCULTO DEL ID -->
-                <input
-                    hidden
-                    type="text"
-                    id="id"
-                    name="id"
-                    />
+        
                 <div class="row divisorForm">
                     <!-- INPUT NOMBRE-->
                     <div class="col-xs-12 col-md-6 form-floating">
@@ -97,7 +85,7 @@
                             class="form-control"
                             id="correo"
                             name="correo"
-                            th:value="${recargaFormulario != null ? recargaFormulario.correo : correo}"
+                            th:value="${recargaFormulario != null ? recargaFormulario.email : email}"
                             placeholder=""
                             />
                         <label for="correo"><i class="fa-solid fa-envelope iconForm"></i>Email</label>
@@ -136,7 +124,7 @@
                             class="form-control"
                             id="naciemiento"
                             name="nacimiento"
-                            th:value="${recargaFormulario != null ? #dates.format(recargaFormulario.nacimiento, 'yyyy-MM-dd') : #dates.format(fechaNacimiento, 'yyyy-MM-dd')}"
+                            th:value="${recargaFormulario != null ? recargaFormulario.fechaNacimiento : fechaNacimiento}"
                             />
                         <label for="naciemiento"><i class="fa-solid fa-calendar-days iconForm"></i>Fecha de Nacimiento</label>
                     </div>
@@ -153,8 +141,7 @@
                     <!-- INPUT OBRA SOCIAL-->
                     <div class="col-xs-12 col-md-6 form-floating">
                         <select name="obraSocial" id="obraSocial" class="obraSocial form-select"
-                                th:value="${recargaFormulario != null ? recargaFormulario.obraSocial : ''}"
-                                onchange="abrirModal()">
+                                th:value="${recargaFormulario != null ? recargaFormulario.obraSocial : ''}">
                             <option value="" selected disabled>Elegir Obra Social</option>
                             <th:block th:each="obraSocial : ${obrasSociales}">
                                 <option th:value="${obraSocial.id}"
@@ -164,37 +151,7 @@
                             <option id="optionCargarOtra">Cargar otra...</option>
                         </select>
                         <label for="obraSocial"><i class="fa-solid fa-book-medical iconForm"></i>Obra Social</label>
-                        <script>
-                            function abrirModal() {
-                                var select = document.getElementById("obraSocial");
-                                var value = select.options[select.selectedIndex].value;
-
-                                if (value == "Cargar otra...") {
-                                    var formulario = document.getElementById("formulario");
-                                    var datosFormulario = new FormData(formulario);
-                                    fetch('/guardarDatosFormulario', {
-                                        method: 'POST',
-                                        body: datosFormulario
-                                    })
-                                            .then(function (respuesta) {
-                                                if (respuesta.ok) {
-                                                    // En caso de éxito, mostrar mensaje de confirmación
-                                                    console.log("Formulario enviado con éxito");
-                                                } else {
-                                                    // En caso de error, mostrar mensaje de error
-                                                    alert("Error al enviar el formulario");
-                                                }
-                                            })
-                                            .catch(function (error) {
-                                                // En caso de error, mostrar mensaje de error
-                                                alert("Error al enviar el formulario: " + error.message);
-                                            });
-
-                                    var ventanaModal = document.getElementById("myModal");
-                                    ventanaModal.style.display = "block";
-                                }
-                            }
-                        </script>
+                       
                     </div>
                     <!-- INPUT IMAGEN -->
                     <div class="col-xs-12 col-md-6 form-floating">
@@ -203,6 +160,7 @@
                             class="form-control"
                             id="foto"
                             name="archivo"
+                            th:value="${recargaFormulario != null ? recargaFormulario.imagen : imagen}"
                             />
                         <label for="foto"><i class="fa-solid fa-camera iconForm"></i>Foto de Perfil  
                     <span class="aclaracion">(opcional)</span> </label>
@@ -336,7 +294,8 @@
 </footer><!--NO MODIFICAR-->
 </div>
 
-        <script src="../../scriptsFormularios.js"></script>
+        <script src="../../scriptsGuardaDatosForm.js"></script>
+        <!-- <script src="../../scriptsFormularios.js"></script> -->
 <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"

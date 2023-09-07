@@ -1,4 +1,4 @@
-/////////VALIDAR CONTRASEÑAS///////////
+// VALIDAR CONTRASEÑAS///////////
 let formulario = document.getElementById("formulario");
 let password = document.getElementById("password");
 let password2 = document.getElementById("password2");
@@ -131,7 +131,7 @@ $(document).ready(function () {
     $.validator.addMethod('contieneNumero', function (value) {
         return /\d/.test(value);
     }, '');
-    // Resto del código
+ 
 });
 $(".formulario").on("submit", function (e) {
 // validación de campos

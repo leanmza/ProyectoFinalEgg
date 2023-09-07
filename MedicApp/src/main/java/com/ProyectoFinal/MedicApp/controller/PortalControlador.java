@@ -6,7 +6,6 @@ import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Persona;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
 import com.ProyectoFinal.MedicApp.Service.ImagenService;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
@@ -41,9 +40,6 @@ public class PortalControlador {
     @Autowired
     ObraSocialService obraSocialService;
 
-    @Autowired
-    ImagenService imagenService;
-
     @GetMapping("/")
     public String index() {
 
@@ -59,7 +55,6 @@ public class PortalControlador {
         }
 
         if (error != null) {
-
             modelo.put("error", "Lo siento, no hemos podido iniciar sesión con las credenciales que proporcionaste."
                     + " Intentalo nuevamente!");
         }
@@ -79,76 +74,15 @@ public class PortalControlador {
             Persona logueado = (Persona) session.getAttribute("userSession");
             modelo.put("userSession", logueado);
 
-//            if (logueado.getRol().toString().equals("ADMINISTRADOR")) {
-//
-//                return "redirect:/admin/dashboard";
-//            }
+            if (logueado.getRol().toString().equals("ADMINISTRADOR")) {
+                return "redirect:/admin/dashboard";
+            }
         }
-
 
         return "inicio.html";
     }
 
-    //FORMULARIO PARA REGISTRAR UN PACIENTE
-    @GetMapping("/form_pac")
-    public String form_pac(ModelMap model, HttpSession sessionFormulario, HttpSession obraSocialNueva) {
-
-        // EN EL CASO QUE HAYA AGREGADO UNA OBRA SOCIAL NUEVA, CARGAMOS LA SESSIONFORMULARIO
-        if (sessionFormulario.getAttribute("datosFormulario") != null) {
-
-            if (obraSocialNueva.getAttribute("nuevaObraSocial") != null) {
-
-                Paciente paciente = (Paciente) sessionFormulario.getAttribute("datosFormulario");
-                String nombreOS = (String) obraSocialNueva.getAttribute("nuevaObraSocial");
-                ObraSocial obraSocial = obraSocialService.buscarPorNombre(nombreOS);
-                paciente.setObraSocial(obraSocial);
-                sessionFormulario.setAttribute("datosFormulario", paciente);
-            }
-            model.put("recargaFormulario", sessionFormulario.getAttribute("datosFormulario"));
-        }
-
-        // CARFA DE LAS OBRAS SOCIALES
-        List<ObraSocial> obrasSociales = obraSocialService.listar();
-        model.put("obrasSociales", obrasSociales);
-
-        return "formulario_paciente.html";
-    }
-
-    @Transactional
-    @PostMapping("/registroPaciente")
-    public String registroPaciente(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni,
-            @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
-            @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
-            @RequestParam(required = false) String sexo, @RequestParam(required = false) MultipartFile archivo,
-            @RequestParam(required = false) String obraSocial, ModelMap modelo, HttpSession session) throws ParseException {
-
-        try {
-            if (sexo == null) {
-                sexo = "No especificado";
-            }
-
-            pacienteService.crearPaciente(nombre, apellido, dni, correo, direccion, telefono, nacimiento, sexo,
-                    obraSocial, password, password2, archivo);
-
-            return "redirect:/inicio?exito=registroExitoso";
-
-        } catch (MiExcepcion me) {
-            System.out.println("Ingreso de paciente FALLIDO!\n" + me.getMessage());
-            modelo.put("error", me.getMessage());
-        }
-
-        modelo.put("nombre", nombre);
-        modelo.put("apellido", apellido);
-        modelo.put("dni", dni);
-        modelo.put("correo", correo);
-        modelo.put("telefono", telefono);
-        modelo.put("nacimiento", nacimiento);
-        modelo.put("direccion", direccion);
-        modelo.put("sexo", sexo);
-        return "formulario_paciente.html";
-
-    }
-
+    
     ////LISTA DE PROFESIONALES HEADER
     @Transactional
     @GetMapping("/listar")
@@ -157,7 +91,6 @@ public class PortalControlador {
         model.addAttribute("profesionales", profesionales);
         return "listar.html";
     }
-    
 
 //    @Transactional
 //    @PostMapping("/buscarespechonorario")
@@ -178,8 +111,6 @@ public class PortalControlador {
 //        model.addAttribute("espec", especialidad);
 //        return "listaespecialidad.html";
 //    }
-
-    
     ////PREGUNTAS FRECUENTES
     @GetMapping("/preguntasFrecuentes")
     public String preguntasFrecuentes() {
@@ -214,41 +145,4 @@ public class PortalControlador {
         }
     }
 
-    ////ALMACENA DATOS DE FORMULARIOS SI SE REFRESCA LA PÁGINA
-    @Transactional
-    @PostMapping("/guardarDatosFormulario")
-    public String guardarDatosFormulario(@RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido,
-            @RequestParam(required = false) String dni, @RequestParam(required = false) String correo, @RequestParam(required = false) String telefono,
-            @RequestParam(required = false) String password, @RequestParam(required = false) String password2, @RequestParam(required = false) String direccion,
-            @RequestParam(required = false) String nacimiento, @RequestParam(required = false) String sexo,
-            @RequestParam(required = false) MultipartFile archivo, @RequestParam(required = false) String obraSocial, HttpSession sessionFormulario) throws MiExcepcion {
-
-    
-            ObraSocial ClaseObraSocial = obraSocialService.buscarPorNombre(obraSocial);
-
-            Paciente paciente = new Paciente();
-
-            paciente.setNombre(nombre);
-            paciente.setApellido(apellido);
-            paciente.setDni(dni);
-            paciente.setEmail(correo);
-            paciente.setTelefono(telefono);
-            paciente.setPassword(new BCryptPasswordEncoder().encode(password));
-            paciente.setDireccion(direccion);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate fechaDeNacimiento = LocalDate.parse(nacimiento, formatter);
-            paciente.setFechaNacimiento(fechaDeNacimiento);
-            paciente.setSexo(sexo);
-            paciente.setObraSocial(ClaseObraSocial);
-
-            if (!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
-                Imagen imagen = imagenService.guardar(archivo);
-                paciente.setImagen(imagen);
-            }
-
-            sessionFormulario.setAttribute("datosFormulario", paciente);
-
- 
-        return "redirect:/form_pac";
-    }
 }

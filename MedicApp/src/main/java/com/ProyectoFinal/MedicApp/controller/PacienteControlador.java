@@ -11,7 +11,6 @@ import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Entity.Turno;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
 import com.ProyectoFinal.MedicApp.Service.ImagenService;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 
@@ -31,16 +30,17 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 /**
  *
  * @author cmoro1
  */
 @Controller
-@PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
 @RequestMapping("/paciente")
 public class PacienteControlador {
 
@@ -51,10 +51,73 @@ public class PacienteControlador {
     ObraSocialService obraSocialServicio;
 
     @Autowired
-    ImagenService imagenServicio;
-
-    @Autowired
     TurnoService turnoService;
+
+    //FORMULARIO PARA REGISTRAR UN PACIENTE
+    @GetMapping("/registroPaciente")
+    public String registroPaciente(ModelMap model, HttpSession sessionFormulario, HttpSession obraSocialNueva) {
+
+        // EN EL CASO QUE HAYA AGREGADO UNA OBRA SOCIAL NUEVA, CARGAMOS LA SESSIONFORMULARIO
+        if (sessionFormulario.getAttribute("datosFormulario") != null) {
+
+            Paciente paciente = (Paciente) sessionFormulario.getAttribute("datosFormulario");
+
+            if (obraSocialNueva.getAttribute("nuevaObraSocial") != null) {
+
+                String nombreOS = (String) obraSocialNueva.getAttribute("nuevaObraSocial");
+
+                ObraSocial obraSocial = obraSocialServicio.buscarPorNombre(nombreOS);
+
+                paciente.setObraSocial(obraSocial);
+            }
+
+            sessionFormulario.setAttribute("datosFormulario", paciente);
+
+            model.put("recargaFormulario", sessionFormulario.getAttribute("datosFormulario"));
+
+        }
+
+        // CARGA DE LAS OBRAS SOCIALES
+        List<ObraSocial> obrasSociales = obraSocialServicio.listar();
+        model.put("obrasSociales", obrasSociales);
+
+        return "formulario_paciente.html";
+    }
+
+    @Transactional
+    @PostMapping("/registroPaciente")
+    public String registroPaciente(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni,
+            @RequestParam String correo, @RequestParam String telefono, @RequestParam String nacimiento,
+            @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
+            @RequestParam(required = false) String sexo, @RequestParam(required = false) MultipartFile archivo,
+            @RequestParam(required = false) String obraSocial, ModelMap modelo, HttpSession session) throws ParseException {
+
+        try {
+            if (sexo == null) {
+                sexo = "No especificado";
+            }
+
+            pacienteService.crearPaciente(nombre, apellido, dni, correo, direccion, telefono, nacimiento, sexo,
+                    obraSocial, password, password2, archivo);
+
+            return "redirect:/inicio?exito=registroExitoso";
+
+        } catch (MiExcepcion me) {
+            System.out.println("Ingreso de paciente FALLIDO!\n" + me.getMessage());
+            modelo.put("error", me.getMessage());
+        }
+
+        modelo.put("nombre", nombre);
+        modelo.put("apellido", apellido);
+        modelo.put("dni", dni);
+        modelo.put("email", correo);
+        modelo.put("telefono", telefono);
+        modelo.put("nacimiento", nacimiento);
+        modelo.put("direccion", direccion);
+        modelo.put("sexo", sexo);
+        return "formulario_paciente.html";
+
+    }
 
     @Transactional
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_ADMINISTRADOR')")
@@ -80,7 +143,7 @@ public class PacienteControlador {
         return "editar_paciente.html";
     }
 
-    ////EDITAR PERFIL
+//////    EDITAR PERFIL
     @Transactional
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE', 'ROLE_ADMINISTRADOR')")
     @PostMapping("/perfil/{id}")
@@ -88,16 +151,15 @@ public class PacienteControlador {
     /////MODIFICAR ESTE MÉTODO, DIVIDIRLO EN 2, UNO DONDE SE PUEDE MODIFICAR LOS DATOS DE INFORMACIÓN Y FOTO DE PERFIL, QUE NO PIDA CONFIRMAR LA CONTRASEÑA
     //////// Y OTRO U OTROS 2 DONDE SE MODIFIQUEN LOS DATOS DE USUARIO EMAIL Y CONTRASEÑA.
     /////// HACER LO MISMO CON PROFESIONAL
-    
     public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
-            @RequestParam String telefono,  @RequestParam(required = false) String password, @RequestParam(required = false) String password2,
+            @RequestParam String telefono, @RequestParam(required = false) String password, @RequestParam(required = false) String password2,
             @RequestParam String direccion, @RequestParam String sexo, @RequestParam(required = false) MultipartFile archivo, @RequestParam String obraSocial,
             HttpSession session, ModelMap modelo) {
 
         try {
-          
+
             pacienteService.modificarPaciente(id, nombre, apellido, direccion, telefono, sexo, obraSocial, password, password2, archivo);
-            
+
             session.setAttribute("userSession", pacienteService.getOne(id));
             return "redirect:/inicio";
 
@@ -124,42 +186,60 @@ public class PacienteControlador {
     }
 
     ////ALMACENA DATOS DE FORMULARIOS SI SE REFRESCA LA PÁGINA
+//    @PostMapping("/guardarDatosFormulario")
+//    public String guardarDatosFormulario(MultipartHttpServletRequest formulario, HttpSession sessionFormulario) throws MiExcepcion {
+//    
+//        Paciente tempPaciente = new Paciente();
+//
+//        tempPaciente.setNombre(formulario.getParameter("nombre"));
+//        tempPaciente.setApellido(formulario.getParameter("apellido"));
+//        tempPaciente.setDni(formulario.getParameter("dni"));
+//        tempPaciente.setDireccion(formulario.getParameter("direccion"));
+//        tempPaciente.setTelefono(formulario.getParameter("telefono"));
+//        tempPaciente.setEmail(formulario.getParameter("email"));
+//        tempPaciente.setSexo(formulario.getParameter("sexo"));
+//    
+//        if (!(formulario.getParameter("nacimiento").equals(""))) {
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//            LocalDate fechaNacimiento = LocalDate.parse(formulario.getParameter("nacimiento"), formatter);
+//            tempPaciente.setFechaNacimiento(fechaNacimiento);
+//        }
+//
+//
+//        tempPaciente.setPassword(formulario.getParameter("password"));
+//
+//        sessionFormulario.setAttribute("datosFormulario", tempPaciente);
+//
+//        return "redirect:/paciente/registroPaciente";
+//    }
     
-    /// ***************** ESTO HAY QUE SACARLO DEL CONTROLADOR Y MANDARLO AL SERVICIO***********************************
-    @Transactional
+    ////ALMACENA DATOS DE FORMULARIOS SI SE REFRESCA LA PÁGINA
     @PostMapping("/guardarDatosFormulario")
     public String guardarDatosFormulario(@RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido,
             @RequestParam(required = false) String dni, @RequestParam(required = false) String email, @RequestParam(required = false) String telefono,
-            @RequestParam(required = false) String password, @RequestParam(required = false) String password2, @RequestParam(required = false) String direccion,
-            @RequestParam(required = false) String fechaNacimiento, @RequestParam(required = false) String sexo,
-            @RequestParam(required = false) MultipartFile archivo, @RequestParam(required = false) String obraSocial, HttpSession sessionFormulario) throws MiExcepcion {
+            @RequestParam(required = false) String direccion, @RequestParam(required = false) String fechaNacimiento, @RequestParam(required = false) String sexo,
+            HttpSession sessionFormulario) throws MiExcepcion {
 
-        ObraSocial ClaseObraSocial = obraSocialServicio.buscarPorNombre(obraSocial);
+        Paciente tempPaciente = new Paciente();
 
-        Paciente paciente = new Paciente();
+        tempPaciente.setNombre(nombre);
+        tempPaciente.setApellido(apellido);
+        tempPaciente.setDni(dni);
+        tempPaciente.setDireccion(direccion);
+        tempPaciente.setTelefono(telefono);
+        tempPaciente.setEmail(email);
+        tempPaciente.setSexo(sexo);
 
-        paciente.setNombre(nombre);
-        paciente.setApellido(apellido);
-        paciente.setDni(dni);
-        paciente.setEmail(email);
-        paciente.setTelefono(telefono);
-        paciente.setPassword(new BCryptPasswordEncoder().encode(password));
-        paciente.setDireccion(direccion);
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate fechaDeNacimiento = LocalDate.parse(fechaNacimiento, formatter);
-        paciente.setFechaNacimiento(fechaDeNacimiento);
-        paciente.setSexo(sexo);
-        paciente.setObraSocial(ClaseObraSocial);
-
-        if (!(archivo.isEmpty())) {  //pedimos esto sino nos crea un id para el archivo
-            Imagen imagen = imagenServicio.guardar(archivo);
-            paciente.setImagen(imagen);
+        if (fechaNacimiento != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate fechaDeNacimiento = LocalDate.parse(fechaNacimiento, formatter);
+            tempPaciente.setFechaNacimiento(fechaDeNacimiento);
         }
 
-        sessionFormulario.setAttribute("datosFormulario", paciente);
+        // SAQUÉ LA IMAGEN PORQUE EL ARCHIVO NO SE RECARGA
+        sessionFormulario.setAttribute("datosFormulario", tempPaciente);
 
-        return "redirect:/paciente/perfil";
+        return "redirect:/paciente/registroPaciente";
     }
 
 ////LISTA MIS PROFESIONALES

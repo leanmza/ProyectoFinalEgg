@@ -73,8 +73,8 @@ public class PacienteService {
 
         paciente.setSexo(sexo);
 
-        ObraSocial ClaseObraSocial = obraSocialServicio.getOne(obraSocial);
-        paciente.setObraSocial(ClaseObraSocial);
+      
+        paciente.setObraSocial(obraSocialServicio.getOne(obraSocial));
 
         paciente.setPassword(new BCryptPasswordEncoder().encode(password));
 

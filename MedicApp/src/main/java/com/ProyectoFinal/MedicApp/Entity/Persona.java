@@ -5,6 +5,7 @@
 package com.ProyectoFinal.MedicApp.Entity;
 
 import com.ProyectoFinal.MedicApp.Enum.Rol;
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -23,7 +24,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Data
-public class Persona {
+public class Persona implements Serializable {
 
     @Id
     @GeneratedValue(generator = "uuid")
