@@ -4,7 +4,6 @@ import com.ProyectoFinal.MedicApp.Entity.Persona;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
-import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -24,9 +23,6 @@ public class PortalControlador {
 
     @Autowired
     ProfesionalService profesionalService;
-
-    @Autowired
-    ObraSocialService obraSocialService;
 
     @GetMapping("/")
     public String index() {
@@ -106,31 +102,6 @@ public class PortalControlador {
         return "preguntas_frecuentes.html"; //ver nombre de archivo
     }
 
-    //FORMULARIO PARA CREAR UNA OBRA SOCIAL
-    @GetMapping("/form_obraSocial")
-    public String form_obraSocial(ModelMap model) {
 
-        return "formulario_obra_social.html";
-    }
-
-    // GUARDADO DE OBRA SOCIAL NUEVA
-    @Transactional
-    @PostMapping("/registroObraSocial")
-    public String registroObraSocial(@RequestParam("nombreObraSocial") String nombreObraSocial, HttpSession obraSocialNueva) {
-
-        try {
-            obraSocialService.crearObraSocial(nombreObraSocial);
-
-            System.out.println("Ingreso de obra social exitoso");
-            obraSocialNueva.setAttribute("nuevaObraSocial", nombreObraSocial);
-            return "formulario_obra_social.html";
-
-        } catch (MiExcepcion me) {
-            System.out.println("Ingreso de obra social FALLIDO!\n" + me.getMessage());
-
-            return "formulario_obra_social.html";
-
-        }
-    }
 
 }

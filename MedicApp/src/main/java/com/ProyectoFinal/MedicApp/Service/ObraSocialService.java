@@ -82,9 +82,7 @@ public class ObraSocialService {
     @Transactional(readOnly = true)
     public List<ObraSocial> listar() {
 
-        List<ObraSocial> obrasSociales = new ArrayList();
-
-        obrasSociales = obraSocialRepositorio.findAll();
+        List<ObraSocial> obrasSociales =  obraSocialRepositorio.findAll();
 
         return obrasSociales;
     }

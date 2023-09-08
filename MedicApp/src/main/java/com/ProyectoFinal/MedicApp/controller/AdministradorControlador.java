@@ -26,15 +26,6 @@ public class AdministradorControlador {
     @Autowired
     PacienteService pacienteServicio;
 
-    @Autowired
-    ProfesionalService profesionalService;
-
-    @Autowired
-    ObraSocialService obraSocialServicio;
-
-    @Autowired
-    ImagenService imagenServicio;
-
     ////DASHBOARD
     @GetMapping("/dashboard")
     public String panelAdministrativo(ModelMap modelo, @RequestParam(required = false) String exito) {
@@ -48,7 +39,7 @@ public class AdministradorControlador {
 
 
     //LISTA DE PACIENTES
-    @GetMapping("/pacientes")  /// NO SE USA ////
+    @GetMapping("/pacientes") ///HACER ENLACE A LA VISTA 
     public String mostrarPacientes(ModelMap modelo) {
         List<Paciente> pacientes = pacienteServicio.listar();
         modelo.put("pacientes", pacientes);
