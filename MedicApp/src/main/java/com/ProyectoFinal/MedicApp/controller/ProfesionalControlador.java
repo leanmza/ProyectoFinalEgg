@@ -10,12 +10,10 @@ import com.ProyectoFinal.MedicApp.Entity.Turno;
 import com.ProyectoFinal.MedicApp.Enum.Modalidad;
 import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.Service.ImagenService;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
 import com.ProyectoFinal.MedicApp.Service.TurnoService;
 import java.io.IOException;
-import java.time.LocalTime;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +43,6 @@ public class ProfesionalControlador {
 
     @Autowired
     ObraSocialService obraSocialServicio;
-
-    @Autowired
-    TurnoService turnoService;
 
     //FORMULARIO PARA CREAR UN PROFESIONAL
     @GetMapping("/registroProfesional")
@@ -247,13 +242,4 @@ public class ProfesionalControlador {
         return "agenda.html";
     }
 
-    ////ANULAR TURNO
-    @Transactional
-    @GetMapping("/anularTurno/{id}")
-    public String anularTurno(@PathVariable String id) throws MiExcepcion {
-
-        System.out.println("    id" + id);
-        turnoService.eliminarTurno(id);
-        return "redirect:/profesional/agenda";
-    }
 }

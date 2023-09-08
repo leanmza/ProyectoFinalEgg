@@ -6,7 +6,6 @@ package com.ProyectoFinal.MedicApp.Service;
 
 import com.ProyectoFinal.MedicApp.Entity.HistoriaClinica;
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
-
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Repository.HistoriaClinicaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,6 @@ public class HistoriaClinicaService {
     @Autowired
     private PacienteRepositorio pacienteRepositorio;
 
-
     @Transactional
     public void crearHistoriaClinica(String dni, String fechaConsulta, Profesional profesional, String diagnostico) throws MiExcepcion {
 
@@ -47,7 +45,7 @@ public class HistoriaClinicaService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate fechaDeConsulta = LocalDate.parse(fechaConsulta, formatter);
         historiaClinica.setFechaConsulta(fechaDeConsulta);
-        
+
         historiaClinica.setProfesional(profesional);
         historiaClinica.setDiagnostico(diagnostico);
 
@@ -72,7 +70,7 @@ public class HistoriaClinicaService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate fechaDeConsulta = LocalDate.parse(fechaConsulta, formatter);
             historiaClinica.setFechaConsulta(fechaDeConsulta);
-            
+
             historiaClinica.setDiagnostico(diagnostico);
 
             historiaClinicaRepositorio.save(historiaClinica);

@@ -5,7 +5,6 @@
 package com.ProyectoFinal.MedicApp.Service;
 
 import com.ProyectoFinal.MedicApp.Entity.Imagen;
-import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Entity.Turno;
 import com.ProyectoFinal.MedicApp.Enum.Modalidad;
