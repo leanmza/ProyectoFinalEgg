@@ -154,6 +154,7 @@ function generarCalendario() {
 
 
 }
+
 btnMesAnterior.addEventListener("click", function () { ///TODAVIA NO ANDA
     // Obtener la fecha del mes anterior
     fecha.setMonth(fecha.getMonth() - 1);

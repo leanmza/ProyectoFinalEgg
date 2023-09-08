@@ -4,11 +4,8 @@ import com.ProyectoFinal.MedicApp.Entity.Paciente;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Entity.Turno;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
-import com.ProyectoFinal.MedicApp.Repository.PacienteRepositorio;
 import com.ProyectoFinal.MedicApp.Repository.TurnoRepositorio;
 import java.time.LocalDate;
-
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -67,6 +64,7 @@ public class TurnoService {
 //            turnoRepositorio.save(turno);
 //        }
 //    }
+    
     @Transactional(readOnly = true) //poco uso, solo para un administrador 
     public List<Turno> listarTurnos() {
         List<Turno> turnos = new ArrayList<>();

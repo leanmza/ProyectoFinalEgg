@@ -10,6 +10,7 @@
         </div>
 
         <!--MAIN-->
+
         <main>
             <div class="container-fluid contenedorMain" id="misProfesionales">
                 <div class="row titulo">
@@ -20,7 +21,7 @@
                         <tr class="row-col-12 titulosTabla">
                             <th scope="col" class="col-2">Profesional</th>
                             <th scope="col" class="col-2">
-                                                          <select id="especialidad" class="especialidad" onchange="filtrarTabla()">
+                                <select id="especialidad" class="especialidad" onchange="filtrarTabla()">
                                 <option value="todas">Especialidad</option>
                                 <option value="cardiologia">Cardiología</option>
                                 <option value="clinica">Clínica</option>
@@ -30,11 +31,10 @@
                             <th scope="col" class="col-1">Horario de Atención</th>
                             <th scope="col" class="col-1" onclick="ordenarPorValorConsulta()">Valor de Consulta <i class="fa-solid fa-sort"></i> </th>
                         <th scope="col" class="col-2 califica" onclick="ordenarPorCalificacion()">Calificación <i class="fa-solid fa-sort"></i></th>
-                            <th scope="col" class="col-2">Puntuar</th>
-                            <th scope="col" class="col-2"></th> 
+                            <th scope="col" class="col-2"  sec:authorize ="hasRole ('PACIENTE')">Puntuar</th>
+                            <th scope="col" class="col-2"  sec:authorize ="hasRole ('PACIENTE')"></th> 
                         </tr>
-                        <!--                            <th scope="col" class="col-1" sec:authorize ="hasRole ('ADMINISTRADOR')" >Acciones</th>
-                                                </tr>-->
+                
                     </thead>
 
                     <tbody th:each="profesional : ${profesionales}">
@@ -59,10 +59,9 @@
                                 <span th:if="${profesional.calificacion >= 4.25 and profesional.calificacion < 4.75}"> <img src="../../img/estrella45.jpg"  class="imgEstrella"> </span>
                                 <span th:if="${profesional.calificacion >= 4.75}"> <img src="../../img/estrella50.jpg"  class="imgEstrella"> </span>
 
-                            <td scope="col" class="col-1 tdValorar">
+                            <td scope="col" class="col-1 tdValorar" sec:authorize ="hasRole ('PACIENTE')">
 
-
-                                <button type="button"class="btn btn-warning btnValorar">Valorar</button>
+                                <button type="button"class="btn btn-warning btnValorar" >Valorar</button>
 
                                 <div class="formValorar" id="formValorar">
                                     <form
@@ -94,7 +93,7 @@
 
                             </td>
 
-                            <td scope="col" class="col-2 tdTurno"><a th:href="@{/turno/formularioTurno/__${profesional.id}__}">
+                            <td scope="col" class="col-2 tdTurno" sec:authorize ="hasRole ('PACIENTE')"><a th:href="@{/turno/formularioTurno/__${profesional.id}__}">
 
                                     <button class="btn btn-primary btnQuieroTurno"> Quiero MiTurno</button></a>
 

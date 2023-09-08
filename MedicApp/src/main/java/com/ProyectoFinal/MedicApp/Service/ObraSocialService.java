@@ -10,7 +10,6 @@ import com.ProyectoFinal.MedicApp.Repository.ObraSocialRepositorio;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,9 +82,7 @@ public class ObraSocialService {
     @Transactional(readOnly = true)
     public List<ObraSocial> listar() {
 
-        List<ObraSocial> obrasSociales = new ArrayList();
-
-        obrasSociales = obraSocialRepositorio.findAll();
+        List<ObraSocial> obrasSociales =  obraSocialRepositorio.findAll();
 
         return obrasSociales;
     }

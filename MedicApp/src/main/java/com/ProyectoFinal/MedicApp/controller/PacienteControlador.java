@@ -14,8 +14,6 @@ import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
 import com.ProyectoFinal.MedicApp.Service.TurnoService;
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,13 +67,15 @@ public class PacienteControlador {
 
             model.put("recargaFormulario", sessionFormulario.getAttribute("datosFormulario"));
             
+          
+            
         }
 
         // CARGA DE LAS OBRAS SOCIALES
         List<ObraSocial> obrasSociales = obraSocialServicio.listar();
         model.put("obrasSociales", obrasSociales);
-
-        return "formulario_paciente.html";
+        
+           return "formulario_paciente.html";
     }
 
     @Transactional
@@ -214,24 +214,8 @@ public class PacienteControlador {
             @RequestParam(required = false) String direccion, @RequestParam(required = false) String fechaNacimiento, @RequestParam(required = false) String sexo,
             HttpSession sessionFormulario) throws MiExcepcion {
 
-        Paciente tempPaciente = new Paciente();
-
-        tempPaciente.setNombre(nombre);
-        tempPaciente.setApellido(apellido);
-        tempPaciente.setDni(dni);
-        tempPaciente.setDireccion(direccion);
-        tempPaciente.setTelefono(telefono);
-        tempPaciente.setEmail(email);
-        tempPaciente.setSexo(sexo);
-
-        if (fechaNacimiento != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate fechaDeNacimiento = LocalDate.parse(fechaNacimiento, formatter);
-            tempPaciente.setFechaNacimiento(fechaDeNacimiento);
-        }
-
-        // SAQUÉ LA IMAGEN PORQUE EL ARCHIVO NO SE RECARGA
-        sessionFormulario.setAttribute("datosFormulario", tempPaciente);
+        Paciente pacienteTemporal = pacienteService.DatosTemporalesFormulario(nombre, apellido, dni, email, telefono, direccion, fechaNacimiento, sexo);
+        sessionFormulario.setAttribute("datosFormulario", pacienteTemporal);
 
         return "redirect:/paciente/registroPaciente";
     }
@@ -247,7 +231,7 @@ public class PacienteControlador {
         List<Profesional> profesionales = pacienteService.listarProfesionales(idPaciente);
 
         model.addAttribute("profesionales", profesionales);
-        return "mis_profesionales.html";
+        return "lista_profesionales.html";
     }
 
     ////LISTA MIS TURNOS
@@ -261,17 +245,7 @@ public class PacienteControlador {
         List<Turno> turnos = pacienteService.listarTurnos(idPaciente);
    
         model.addAttribute("turnos", turnos);
-        return "mis_turnos.html";
-    }
-
-    /////ANULAR TURNO
-    @Transactional
-    @GetMapping("/anularTurno/{id}")
-    public String anularTurno(@PathVariable String id) throws MiExcepcion {
-
-        System.out.println("id " + id);
-        turnoService.eliminarTurno(id);
-        return "redirect:/paciente/misTurnos";
+        return "agenda.html";
     }
 
     ////CALIFICAR PROFESIONAL

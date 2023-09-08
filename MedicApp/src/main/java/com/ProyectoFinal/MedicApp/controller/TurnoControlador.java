@@ -10,10 +10,6 @@ import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
 import com.ProyectoFinal.MedicApp.Service.TurnoService;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,16 +34,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class TurnoControlador {
 
     @Autowired
-    ProfesionalRepositorio profesionalRepositorio;
-
-    @Autowired
     TurnoService turnoService;
 
     @Autowired
     ProfesionalService profesionalService;
 
     ////TURNERO DESDE LA LISTA DE PROFESIONALES
-    
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
     @GetMapping("/formularioTurno/{idProfesional}")
     public String turno(@PathVariable String idProfesional, Model model) throws MiExcepcion {
@@ -63,11 +55,11 @@ public class TurnoControlador {
 //    MODIFICAR PARA QUE SEA UN SOLO GET PARA LOS TURNOS
     @GetMapping("/formularioTurnoHeader")
     public String turno(ModelMap model) {
-        
+
         List<Profesional> profesionales = profesionalService.listar(); //Se usa en el modal que se abre 
-        
+
         model.addAttribute("profesionales", profesionales);
-        
+
         return "formulario_turno_header.html";
     }
 
@@ -75,13 +67,13 @@ public class TurnoControlador {
     @Transactional
     @PostMapping("/registroTurno")
     public String registroTurno(@ModelAttribute Profesional pro, @RequestParam String motivo,
-            @RequestParam String dia, @RequestParam String horario, HttpSession session, ModelMap modelo) 
+            @RequestParam String dia, @RequestParam String horario, HttpSession session, ModelMap modelo)
             throws MiExcepcion {
 
         Paciente paciente = (Paciente) session.getAttribute("userSession");
-  
+
         String idProfesional = pro.getId();
- 
+
         Profesional profesional = profesionalService.getOne(idProfesional);
 
         try {
@@ -95,8 +87,17 @@ public class TurnoControlador {
             System.out.println("Registro de turno FALLIDO!\n" + me.getMessage());
             return "formulario_turno.html";
 
-        } 
+        }
 
+    }
+
+    ////ANULAR TURNO
+    @Transactional
+    @GetMapping("/anularTurno/{id}")
+    public String anularTurno(@PathVariable String id) throws MiExcepcion {
+
+        turnoService.eliminarTurno(id);
+        return "redirect:/profesional/agenda";
     }
 
 }

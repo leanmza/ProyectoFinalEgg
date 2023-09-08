@@ -5,7 +5,6 @@ import java.time.LocalTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import lombok.Data;

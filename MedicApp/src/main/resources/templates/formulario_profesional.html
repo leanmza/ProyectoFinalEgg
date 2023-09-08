@@ -452,7 +452,7 @@
                         var datosFormulario = new FormData();
                         datosFormulario.append("nombreObraSocial", formulario.nombreObraSocial.value);
 
-                        fetch('/registroObraSocial', {
+                        fetch('/obraSocial/registroObraSocial', {
                             method: 'POST',
                             body: datosFormulario
                         })

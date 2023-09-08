@@ -18,11 +18,12 @@
                 <table class="table row-col-12 table-light">
                     <thead>
                         <tr class="row-col-12 titulosTabla">
-                            <th scope="col" class="col-2">Fecha</th>
-                            <th scope="col" class="col-2">Hora</th>
-                            <th scope="col" class="col-2">Paciente</th>
-                            <th scope="col" class="col-1">Motivo</th>
-                            <th scope="col" class="col-2">Telefono</th>
+                            <th scope="col" class="col-md-1">Fecha</th>
+                            <th scope="col" class="col-md-1">Hora</th>
+                            <th scope="col" class="col-2" sec:authorize="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')">Paciente</th>
+                            <th scope="col" class="col-2" sec:authorize="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')">Motivo</th>
+                            <th scope="col" class="col-md-1" sec:authorize="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')">Telefono</th>
+                            <th scope="col" class="col-2" sec:authorize="hasRole ('PACIENTE')">Profesional </th>
                             <th scope="col" class="col-2">Anular</th> 
 
                         </tr>
@@ -32,15 +33,14 @@
                     <tbody th:each="turno : ${turnos}">
                         <tr class="trTurnos">
                             <td th:text="${turno.fechaFormateada}"></td>
-
                             <td th:text="${turno.hora}"></td>
-
-
-                            <td th:text="${turno.paciente.nombre + ', ' + turno.profesional.nombre}"></td>
-                            <td th:text="${turno.motivo}"></td>
-                             <td th:text="${turno.paciente.telefono}"></td>
+                            <td th:text="${turno.paciente.apellido + ', ' + turno.paciente.nombre}" sec:authorize="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')"></td>
+                            <td th:text="${turno.motivo}" sec:authorize="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')"></td>
+                             <td th:text="${turno.paciente.telefono}" sec:authorize="hasRole ('PROFESIONAL') OR hasRole('ADMINISTRADOR')"></td>
+                             <td th:text="${turno.profesional.apellido + ', ' + turno.profesional.nombre}" sec:authorize="hasRole ('PACIENTE')"></td>
                             <td scope="col" class="col-2">  
-                                <a th:href="@{/profesional/anularTurno/__${turno.id}__}" >
+                                <!-- CAMBIAR EL CONTROLADOR A TURNO -->
+                                <a th:href="@{/turno/anularTurno/__${turno.id}__}" > 
                                 <button type="button" class="btn btn-danger btnAnular"> 
                                     Anular MiTurno
                                 </button>
