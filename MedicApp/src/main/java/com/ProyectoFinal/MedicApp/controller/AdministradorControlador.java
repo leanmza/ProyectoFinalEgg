@@ -1,10 +1,7 @@
 package com.ProyectoFinal.MedicApp.controller;
 
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
-import com.ProyectoFinal.MedicApp.Service.ImagenService;
-import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
-import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,13 +36,12 @@ public class AdministradorControlador {
 
 
     //LISTA DE PACIENTES
-    @GetMapping("/pacientes") ///HACER ENLACE A LA VISTA 
+    @GetMapping("/pacientes") ///FALTA ENLACE A LA VISTA 
     public String mostrarPacientes(ModelMap modelo) {
         List<Paciente> pacientes = pacienteServicio.listar();
         modelo.put("pacientes", pacientes);
 
-        return "listar_paciente.html";
+        return "lista_pacientes.html";
     }
-   
 
 }

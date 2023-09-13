@@ -31,7 +31,6 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author cmoro1
  */
-
 @Service
 public class PacienteService {
 
@@ -74,7 +73,7 @@ public class PacienteService {
 
         paciente.setSexo(sexo);
 
-        paciente.setObraSocial(obraSocialServicio.getOne(obraSocial));
+        paciente.setObraSocial(obraSocialServicio.buscarPorNombre(obraSocial));
 
         paciente.setPassword(new BCryptPasswordEncoder().encode(password));
 
@@ -391,7 +390,7 @@ public class PacienteService {
 
     public Paciente DatosTemporalesFormulario(String nombre, String apellido, String dni, String email, String telefono,
             String direccion, String fechaNacimiento, String sexo) throws MiExcepcion {
-                
+
         Paciente tempPaciente = new Paciente();
 
         tempPaciente.setNombre(nombre);
@@ -407,9 +406,7 @@ public class PacienteService {
             LocalDate fechaDeNacimiento = LocalDate.parse(fechaNacimiento, formatter);
             tempPaciente.setFechaNacimiento(fechaDeNacimiento);
         }
-        
-        
-        
+
         return tempPaciente;
     }
 }

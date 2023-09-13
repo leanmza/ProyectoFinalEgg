@@ -12,16 +12,16 @@
         <!--MAIN-->
 
         <main>
-            <div class="container-fluid contenedorMain" id="misProfesionales">
+            <div class="container-fluid contenedorMain" id="tabla-profesionales">
                 <div class="row titulo">
                     <h3>MIS PROFESIONALES</h3>
                 </div>
-                <table class="table row-col-12 table-light tabla misProfesionales">
+                <table class="table row-col-12 table-light tabla tabla-profesionales">
                     <thead>
                         <tr class="row-col-12 titulosTabla">
                             <th scope="col" class="col-2">Profesional</th>
                             <th scope="col" class="col-2">
-                                <select id="especialidad" class="especialidad" onchange="filtrarTabla()">
+                                <select id="especialidad" class="especialidad">
                                 <option value="todas">Especialidad</option>
                                 <option value="cardiologia">Cardiología</option>
                                 <option value="clinica">Clínica</option>
@@ -29,8 +29,8 @@
                                 <option value="pediatria">Pediatría</option>
                             </select>
                             <th scope="col" class="col-1">Horario de Atención</th>
-                            <th scope="col" class="col-1" onclick="ordenarPorValorConsulta()">Valor de Consulta <i class="fa-solid fa-sort"></i> </th>
-                        <th scope="col" class="col-2 califica" onclick="ordenarPorCalificacion()">Calificación <i class="fa-solid fa-sort"></i></th>
+                            <th scope="col" class="col-1" id="consulta">Valor de Consulta <i class="fa-solid fa-sort"></i> </th>
+                        <th scope="col" class="col-2 califica" id="califica">Calificación <i class="fa-solid fa-sort"></i></th>
                             <th scope="col" class="col-2"  sec:authorize ="hasRole ('PACIENTE')">Puntuar</th>
                             <th scope="col" class="col-2"  sec:authorize ="hasRole ('PACIENTE')"></th> 
                         </tr>
@@ -114,8 +114,8 @@
 <div class="container-fluid pie">
     <footer th:replace="/fragments/footer :: footer" </footer><!--NO MODIFICAR-->
 </div>
-<script src="../../scriptsCalificar.js"></script>
-<script src="../../scripts.js"></script>
+
+<script src="../../scriptsProfesionales.js"></script>
 <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"

@@ -85,7 +85,8 @@ public class PacienteControlador {
             @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
             @RequestParam(required = false) String sexo, @RequestParam(required = false) MultipartFile archivo,
             @RequestParam(required = false) String obraSocial, ModelMap modelo, HttpSession session) throws ParseException {
-
+        
+   
         try {
             if (sexo == null) {
                 sexo = "No especificado";

@@ -144,7 +144,7 @@
                                 th:value="${recargaFormulario != null ? recargaFormulario.obraSocial : ''}">
                             <option value="" selected disabled>Elegir Obra Social</option>
                             <th:block th:each="obraSocial : ${obrasSociales}">
-                                <option th:value="${obraSocial.id}"
+                                <option th:value="${obraSocial.nombre}"
                                         th:selected="${recargaFormulario != null and obraSocial == recargaFormulario.obraSocial}"
                                         th:text="${obraSocial.nombre}"></option>
                             </th:block>
