@@ -31,7 +31,7 @@
                             <th scope="col" class="col-1">Horario de Atención</th>
                             <th scope="col" class="col-1" id="consulta">Valor de Consulta <i class="fa-solid fa-sort"></i> </th>
                         <th scope="col" class="col-2 califica" id="califica">Calificación <i class="fa-solid fa-sort"></i></th>
-                          
+                            <th scope="col" class="col-2"  sec:authorize ="hasRole ('PACIENTE')">Puntuar</th>
                             <th scope="col" class="col-2"  sec:authorize ="hasRole ('PACIENTE')"></th> 
                         </tr>
                 
@@ -59,7 +59,39 @@
                                 <span th:if="${profesional.calificacion >= 4.25 and profesional.calificacion < 4.75}"> <img src="../../img/estrella45.jpg"  class="imgEstrella"> </span>
                                 <span th:if="${profesional.calificacion >= 4.75}"> <img src="../../img/estrella50.jpg"  class="imgEstrella"> </span>
 
-                          
+                            <td scope="col" class="col-1 tdValorar" sec:authorize ="hasRole ('PACIENTE')">
+
+                                <button type="button"class="btn btn-warning btnValorar" >Valorar</button>
+
+                                <div class="formValorar" id="formValorar">
+                                    <form
+                                        th:action="@{/paciente/calificarProfesional/__${profesional.id}__}"
+                                        method="POST">
+
+                                        <div class="row rowDatosPersonales">
+                                            <div class="barraBusqueda col-xs-12">
+                                                <div class="container ">
+                                                    <div class="rating" data-rating="0">
+                                                        <span class="star"></span>
+                                                        <span class="star"></span>
+                                                        <span class="star"></span>
+                                                        <span class="star"></span>
+                                                        <span class="star"></span>
+                                                        <input type="hidden" class="calificacion-input" name="puntaje" value="">
+                                                    </div>
+                                                
+                                                    
+
+                                                    <button type="submit" class="btn btn-primary  botonesLista btnCalificar">
+                                                        Calificar
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>        
+
+                            </td>
 
                             <td scope="col" class="col-2 tdTurno" sec:authorize ="hasRole ('PACIENTE')"><a th:href="@{/turno/formularioTurno/__${profesional.id}__}">
 
@@ -69,13 +101,9 @@
                     </tbody>
                 </table>
 
-                <a class="btn btn-primary botonesLista"href="/" th:if="${session.userSession == null}" role="button">Volver</a>
-                <a class="btn btn-primary botonesLista"href="/inicio" th:if="${session.userSession != null}" role="button">Volver</a>
+                <a class="btn btn-primary botonesLista" href="/inicio" role="button">Volver</a>
 
             </div>
-          
-      
-     
         </div>
 
     </div>

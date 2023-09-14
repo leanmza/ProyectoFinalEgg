@@ -232,7 +232,7 @@ public class PacienteControlador {
         List<Profesional> profesionales = pacienteService.listarProfesionales(idPaciente);
 
         model.addAttribute("profesionales", profesionales);
-        return "lista_profesionales.html";
+        return "mis_profesionales.html";
     }
 
     ////LISTA MIS TURNOS

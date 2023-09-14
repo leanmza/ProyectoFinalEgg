@@ -20,7 +20,7 @@
                     <form th:action="@{/historiaClinica/listar}" method="POST" class="form-floating">
                         <div class="row rowDatosPersonales">
                             <div class="barraBusqueda col-xs-12">
-                                
+
                                 <!-- INPUT DNI-->
                                 <div class="form-floating">
                                     <input 
@@ -30,7 +30,7 @@
                                         name="dniPaciente"
                                         placeholder="Ingrese el DNI"
                                         />
-                                    <label for="dniPaciente"><i class="fa-solid fa-id-card iconForm"></i>NI del paciente</label>
+                                    <label for="dniPaciente"><i class="fa-solid fa-id-card iconForm"></i>DNI del paciente</label>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary btnEnviar btnBuscar botonesLista">
@@ -46,15 +46,17 @@
                         <table class="table table-light">
                             <thead>
                                 <tr>
-                                    <th>Fecha de consulta</th>
-                                    <th>Especialidad</th>
-                                    <th>Profesional</th>
-                                    <th>Diagnóstico</th>
+                                    <th class="col-1">Fecha de consulta</th>
+                                    <th class="col-2">Especialidad </th>
+                                    <th class="col-2">Profesional</th>
+                                    <th class="col-4">Diagnóstico</th>
+                                    <th class="col-3">Tratamiento</th>
 
                                 </tr>
                             </thead>
                             <tbody th:each="historiaClinica : ${historiasClinicas}">
                                 <tr>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -65,16 +67,15 @@
                     </div>
                 </div>
                 <div class="col-xs-12 ">
-                    <a href="/historiaClinica">
-                        <button
-                            type="submit"
-                            name="submit"
-                            value="volver"
-                            class="btn btn-primary btnEnviar botonesLista"
-                            >
-                            Volver
-                        </button></a>
-                </div>
+                    <a href="/inicio">
+                      <button
+                   
+                   
+                      class="btn btn-primary btnEnviar botonesLista"
+                    >
+                      Volver
+                    </button></a>
+                  </div>
 
                 <!-- <div class="row">
                   <div class="col-12 text-right">

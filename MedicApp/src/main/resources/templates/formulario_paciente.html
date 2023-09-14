@@ -140,16 +140,19 @@
                     </div>
                     <!-- INPUT OBRA SOCIAL-->
                     <div class="col-xs-12 col-md-6 form-floating">
-                        <select name="obraSocial" id="obraSocial" class="obraSocial form-select"
-                                th:value="${recargaFormulario != null ? recargaFormulario.obraSocial : ''}">
-                            <option value="" selected disabled>Elegir Obra Social</option>
-                            <th:block th:each="obraSocial : ${obrasSociales}">
-                                <option th:value="${obraSocial.nombre}"
-                                        th:selected="${recargaFormulario != null and obraSocial == recargaFormulario.obraSocial}"
-                                        th:text="${obraSocial.nombre}"></option>
-                            </th:block>
-                            <option id="optionCargarOtra">Cargar otra...</option>
-                        </select>
+                        <select
+                        name="obraSocial"
+                        id="obraSocial"
+                        class="obraSocial form-select"
+                      >
+                        <option value="" selected disabled>Elegir Obra Social</option>
+                        <option
+                          th:each="obraSocial : ${obrasSociales}"
+                          th:value="${obraSocial.nombre}"
+                          th:text="${obraSocial.nombre}"
+                        ></option>
+                        <option id="optionCargarOtra">Cargar otra...</option>
+                      </select>
                         <label for="obraSocial"><i class="fa-solid fa-book-medical iconForm"></i>Obra Social</label>
                        
                     </div>
