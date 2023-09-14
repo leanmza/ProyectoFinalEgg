@@ -16,33 +16,27 @@
                 <h3>LISTA DE PACIENTES</h3>
                 <table class="table table-light">
                     <thead>
-                        <tr>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellido</th>
+                        <tr class="row-col-12 titulosTabla">
+                            <th scope="col">Apellido y Nombre</th>
+                            <th scope="col">DNI</th>
+                            <th scope="col">Fecha de Nacimiento</th>
                             <th scope="col">Teléfono</th>
                             <th scope="col">Email</th>
-                            <!-- <th scope="col">Calificación</th> -->
-                            <!--<th scope="col" sec:authorize ="hasRole ('ADMIN')" >Acciones</th>-->
+                            <th scope="col">Obra Social</th>
+                            <th scope="col">Activo</th>
                         </tr>
                     </thead>
 
                     <tbody th:each="paciente : ${pacientes}">
                         <tr>
-                            <td th:text="${paciente.nombre}"> </td>
-                            <td th:text="${paciente.apellido}"></td>
+                            <td th:text="${paciente.apellido} + ', ' + ${paciente.nombre}"> </td>
+                            <td th:text="${paciente.dni}"></td>
+                            <td th:text="${paciente.fechaNacimiento}"></td>
                             <td th:text="${paciente.telefono}"></td>
                             <td th:text="${paciente.email}"></td>
-<!--                             <td th:text="${profesional.calificación}"></td>   resolver como pasar la calificación -->
-                            
-                            <!-- <td>
-                                    <a sec:authorize ="hasRole ('ADMIN')" th:href= "@{/noticia/modificar/__${noticia.id}__}"> Modificar </a>
-                                </td> 
-                                <td>
-                                    <a sec:authorize ="hasRole ('ADMIN')" th:href= "@{/noticia/eliminar/__${noticia.id}__}"> Eliminar </a>
-                                </td> 
-                                                      <td>
-                                              <a sec:authorize ="hasRole ('ADMIN')"  th:href= "@{/libro/modificar/__${libro.isbn}__}"><i class="fas fa-feather-alt"></i> Modificar </a>
-                                          </td>-->
+                            <td th:text="${paciente.obraSocial.nombre}"></td>
+                            <td th:if="${paciente.activo} == true" th:text="SI"></td>
+                            <td th:if="${paciente.activo} == false" th:text="NO"></td>
                         </tr>
                     </tbody>
                 </table>

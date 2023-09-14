@@ -155,50 +155,24 @@
                                     />
                                 <label for="foto"><i class="fa-solid fa-camera iconForm"></i>Foto de Perfil</label>
                             </div>
-                            <!-- INPUT OBRA SOCIAL-->
-                            <div class="col-xs-12 col-md-6 form-floating">
-                                <select name="obraSocial" id="obraSocial" class="obraSocial form-select"
-                                        th:value="${paciente.obraSocial}"
-                                        onchange="abrirModal()">
-                                    <option value="" selected disabled>Elegir Obra Social</option>
-                                    <th:block th:each="obraSocial : ${obrasSociales}">
-                                        <option th:text="${obraSocial.nombre}" th:selected="${obraSocial.id == paciente.obraSocial.id}"></option>
-                                    </th:block>
-                                    <option>Cargar otra...</option>
-                                </select>
-                                <label for="obraSocial" class="datosInput"><i class="fa-solid fa-book-medical iconForm"></i>Obra Social</label>
-                                <script>
-                                    function abrirModal() {
-                                        var select = document.getElementById("obraSocial");
-                                        var value = select.options[select.selectedIndex].value;
-
-                                        if (value == "Cargar otra...") {
-                                            var formulario = document.getElementById("formulario");
-                                            var datosFormulario = new FormData(formulario);
-                                            fetch('/paciente/guardarDatosFormulario', {
-                                                method: 'POST',
-                                                body: datosFormulario
-                                            })
-                                                    .then(function (respuesta) {
-                                                        if (respuesta.ok) {
-                                                            // En caso de éxito, mostrar mensaje de confirmación
-                                                            console.log("Formulario enviado con éxito");
-                                                        } else {
-                                                            // En caso de error, mostrar mensaje de error
-                                                            alert("Error al enviar el formulario");
-                                                        }
-                                                    })
-                                                    .catch(function (error) {
-                                                        // En caso de error, mostrar mensaje de error
-                                                        alert("Error al enviar el formulario: " + error.message);
-                                                    });
-
-                                            var ventanaModal = document.getElementById("myModal");
-                                            ventanaModal.style.display = "block";
-                                        }
-                                    }
-                                </script>
-                            </div>
+                             <!-- INPUT OBRA SOCIAL-->
+                    <div class="col-xs-12 col-md-6 form-floating">
+                        <select
+                        name="obraSocial"
+                        id="obraSocial"
+                        class="obraSocial form-select"
+                      >
+                        <option th:value="${paciente.obraSocial.nombre}" th:text="${paciente.obraSocial.nombre}" selected disabled></option>
+                        <option
+                          th:each="obraSocial : ${obrasSociales}"
+                          th:value="${obraSocial.nombre}"
+                          th:text="${obraSocial.nombre}"
+                        ></option>
+                        <option id="optionCargarOtra">Cargar otra...</option>
+                      </select>
+                        <label for="obraSocial"><i class="fa-solid fa-book-medical iconForm"></i>Obra Social</label>
+                       
+                    </div>
                         </div>
                         <div class="divisorForm divBorder row">
                             <!-- INPUT PASSWORD-->
@@ -327,7 +301,11 @@
         <div class="container-fluid pie">
             <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
         </div>
+    </div>
 
+    <script src="../../scriptsGuardaDatosForm.js"></script>
+    <!-- <script src="../../scriptsFormularios.js"></script> -->
+<script
 
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"

@@ -48,9 +48,7 @@ function generarCalendario() {
 
     //Obtener hoy
     let hoy = fechaActual.getDate();
-
-
-
+    
     // Crear una matriz para almacenar los nombres de los meses
     let nombresMeses = [
         "Enero",
@@ -90,8 +88,7 @@ function generarCalendario() {
 
     // Crear una fecha para el primer día del mes actual
     let primerDia = new Date(fechaActual.getFullYear(), mesActual, 1);
-
-
+    
     // Obtener el número de días del mes actual
     let numDias = new Date(fechaActual.getFullYear(), mesActual + 1, 0).getDate();
 
@@ -115,14 +112,24 @@ function generarCalendario() {
 
             if (i === 0 && j < primerDia.getDay()) {
                 filaHTML += "<td class='celdaDias'></td>";
-            } else if ((esDomingo) && (contadorDias <= numDias)) {
+            } else if(contadorDias < hoy){
+                filaHTML += "<td class='celdaDias' ><label for=" + contadorDias + " class='diaDeshabilitado'>" +
+                contadorDias +
+                "</label> <input class='inputRadio' type='radio' name='dia' id=" + contadorDias + " \n\
+                value=" + contadorDias + "-" +  (mesActual +1 ) + "-" + anioActual + " disabled></td>";
+                contadorDias++;
+            } 
+            else if ((esDomingo) && (contadorDias <= numDias)) {
                 filaHTML += "<td class='celdaDias' ><label for=" + contadorDias + " class='diaDeshabilitado'>" +
                         contadorDias +
                         "</label> <input class='inputRadio' type='radio' name='dia' id=" + contadorDias + " \n\
           value=" + contadorDias + "-" +  (mesActual +1 ) + "-" + anioActual + " disabled></td>";
-                filaHTML += "<td class='celdaDias'></td>";
+                // filaHTML += "<td class='celdaDias'></td>";
+                contadorDias++;
 
-            } else if ((contadorDias >= hoy) && (contadorDias <= numDias)) {
+            } 
+            else 
+            if ((contadorDias >= hoy) && (contadorDias <= numDias)) { 
                 filaHTML +=
                         "<td class='celdaDias' ><label for=" +
                         contadorDias +
@@ -130,13 +137,16 @@ function generarCalendario() {
                         contadorDias +
                         "</label> <input class='inputRadio' type='radio' name='dia' id=" + contadorDias + " \n\
             value=" + contadorDias + "-" + (mesActual +1 )  + "-" + anioActual + " ></td>";
-
+            contadorDias++;
 
             } else {
                 // Si ya se agregaron todos los días del mes, agregar una celda vacía
                 filaHTML += "<td class='celdaDias'></td>";
+                contadorDias++;
             }
-            contadorDias++;
+          
+          
+        
         }
 
         // Cerrar la fila
@@ -163,25 +173,4 @@ btnMesAnterior.addEventListener("click", function () { ///TODAVIA NO ANDA
     generarCalendario();
 });
 
-//PARA LISTAR PROFESIONALES
-function filtrarTabla() {
-    var filtro = document.getElementById("especialidad").value.toLowerCase();
-    var filas = document.querySelectorAll("#tabla-profesionales tbody tr");
-
-    filas.forEach(function (fila) {
-        var especialidad = fila.querySelector("td:nth-child(2)").textContent.toLowerCase();
-
-        if (filtro === "todas" || especialidad.includes(filtro)) {
-            fila.style.display = "";
-        } else {
-            fila.style.display = "none";
-        }
-    });
-}
-;
-
-
-/////////ORDENAR POR VALOR///////////
-
-/////////ORDENAR POR CALIFICACIÓN///////////
 

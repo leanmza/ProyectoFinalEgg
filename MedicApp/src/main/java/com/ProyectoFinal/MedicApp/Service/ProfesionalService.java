@@ -80,7 +80,7 @@ public class ProfesionalService {
         profesional.setHonorario(honorarios);
 
         ///TIENE QUE SER UN ARRAYLIST DE OBRAS SOCIALES
-        profesional.setObraSocial(obraSocialService.getOne(obraSocial));
+        profesional.setObraSocial(obraSocialService.buscarPorNombre(obraSocial));
 
         // CREAMOS LA LISTA DE HORARIOS SEPARADOS CADA 30 MINUTOS
         ArrayList<LocalTime> horario = new ArrayList();
@@ -156,7 +156,7 @@ public class ProfesionalService {
             profesional.setHonorario(honorarios);
 
             ///TIENE QUE SER UN ARRAYLIST DE OBRAS SOCIALES
-            profesional.setObraSocial(obraSocialService.getOne(obraSocial));
+            profesional.setObraSocial(obraSocialService.buscarPorNombre(obraSocial));
 
             LocalTime horarioInicio = LocalTime.parse(horaInicio);
             profesional.setHoraInicio(horarioInicio);
