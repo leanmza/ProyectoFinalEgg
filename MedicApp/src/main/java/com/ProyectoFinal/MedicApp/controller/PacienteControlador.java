@@ -12,7 +12,7 @@ import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 
 import com.ProyectoFinal.MedicApp.Service.PacienteService;
-import com.ProyectoFinal.MedicApp.Service.TurnoService;
+import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
 import java.text.ParseException;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -43,7 +43,7 @@ public class PacienteControlador {
     ObraSocialService obraSocialServicio;
 
     @Autowired
-    TurnoService turnoService;
+    ProfesionalService profesionalService;
 
     //FORMULARIO PARA REGISTRAR UN PACIENTE
     @GetMapping("/registroPaciente")
@@ -228,9 +228,14 @@ public class PacienteControlador {
 
         Paciente paciente = (Paciente) session.getAttribute("userSession");
         String idPaciente = paciente.getId();
+        
+        List<String> especialidades = profesionalService.listaEspecialidadesActivas();
+        
+      
 
         List<Profesional> profesionales = pacienteService.listarProfesionales(idPaciente);
 
+        model.addAttribute("especialidad", especialidades);
         model.addAttribute("profesionales", profesionales);
         return "mis_profesionales.html";
     }

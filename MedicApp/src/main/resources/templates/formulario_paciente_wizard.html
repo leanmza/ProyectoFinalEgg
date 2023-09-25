@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace= "/fragments/head :: head" </head>  <!--NO MODIFICAR-->
+
+    <body>
+        <!--HEADER-->
+        <div class="container-fluid cabecera">
+            <header th:replace="/fragments/header :: header"</header>  <!--NO MODIFICAR-->
+        </div>
+
+        <!--MAIN-->
+        <main>
+            <div
+            id="divFormPaciente"
+            class="container-fluid divFormTurno contenedorMain"
+          >
+            <form
+              id="formulario"
+              class="form-floating formWizard"
+              th:action="@{/paciente/registroPaciente}"
+              method="POST"
+              enctype="multipart/form-data"
+              th:object="${recargaFormulario}"
+            >
+              <div class="tituloForm">
+                <h4>Completá el formulario y sé parte de MiTurno</h4>
+              </div>
+              <!-- Una pestaña para cada paso del formulario -->
+      
+             <div class="pestana">
+                <h3>Datos Personales:</h3>
+                <div class="row">
+                <div class="col-xs-12 col-md-6 form-floating">
+               
+                 <!-- INPUT NOMBRE  -->
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="nombre"
+                    name="nombre"
+                   placeholder=""
+                  />
+                  <label for="nombre"
+                    ><i class="fa-solid fa-user iconForm"></i>Nombre</label
+                  >
+                </div>
+                <!-- INPUT APELLIDO -->
+                <div class="col-xs-12 col-md-6 form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="apellido"
+                    name="apellido"
+                   
+                    placeholder=""
+                  />
+                  <label for="apellido"
+                    ><i class="fa-solid fa-circle-exclamation iconForm"></i
+                    >Apellido</label
+                  >
+                </div>
+                </div>
+                
+                <div class="row">
+                  <!-- INPUT MAIL-->
+                  <div class="col-xs-12 col-md-6 form-floating">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="correo"
+                        name="correo"
+                        th:value="${recargaFormulario != null ? recargaFormulario.email : email}"
+                        placeholder=""
+                        />
+                    <label for="correo"><i class="fa-solid fa-envelope iconForm"></i>Email</label>
+                </div>
+                 <!-- INPUT DNI  -->
+                <div class="col-xs-12 col-md-6 form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="dni"
+                    name="dni"
+                   
+                    placeholder=""
+                  />
+                  <label for="dni"
+                    ><i class="fa-solid fa-id-card iconForm"></i>DNI
+                    <span class="aclaracion"> (sin puntos ni espacios)</span>
+                  </label>
+                </div>
+              </div>
+                <div class="row">
+                 <!-- INPUT FECHA NACIMIENTO -->
+                  <div class="col-xs-12 col-md-6 form-floating">
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="naciemiento"
+                      name="nacimiento"
+                    
+                    />
+                    <label for="naciemiento"
+                      ><i class="fa-solid fa-calendar-days iconForm"></i>Fecha de
+                      Nacimiento</label
+                    >
+                  </div>
+                    <!-- INPUT SEXO -->
+                  <div class="col-xs-12 col-md-6 divSexo form-floating">
+                    <select
+                      name="sexo"
+                      id="sexo"
+                      class="sexo form-select"
+                    
+                    >
+                      <option value="Elegir Opcion" selected disabled>
+                        Elegir opción...
+                      </option>
+                      <option
+                        value="Masculino"
+               
+                      >
+                        Masculino
+                      </option>
+                      <option
+                        value="Femenino"
+            
+                      >
+                        Femenino
+                      </option>
+                      <option
+                        value="Otro"
+              
+                      >
+                        Otro
+                      </option>
+                    </select>
+                    <label for="sexo"
+                      ><i class="fa-solid fa-genderless iconForm"></i>Sexo</label
+                    >
+                  </div>
+                </div>
+                <div class="row">
+                           <!-- INPUT TELEFONO-->
+                           <div class="col-xs-12 col-md-6 form-floating">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="telefono"
+                                name="telefono"
+                                th:value="${recargaFormulario != null ? recargaFormulario.telefono : telefono}"
+                                placeholder=""
+                                />
+                            <label for="telefono"><i class="fa-solid fa-phone iconForm"></i>Telefono</label>
+                        </div>
+                <!-- INPUT DIRECCIÓN  -->
+                <div class="col-xs-12  col-md-6 form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="direccion"
+                    name="direccion"
+      
+                    placeholder=""
+                  />
+                  <label for="direccion"
+                    ><i class="fa-solid fa-location-dot iconForm"></i>Dirección</label
+                  >
+                </div>
+              </div>
+              </div>
+      
+               <div class="pestana">
+                <h3>Obra Social</h3>
+                 <!-- INPUT OBRA SOCIAL -->
+                <div class="col-xs-12 col-md-6 form-floating">
+                  <select
+                    name="obraSocial"
+                    id="obraSocial"
+                    class="obraSocial form-select"
+                  >
+                    <option value="" selected disabled>Elegir Obra Social</option>
+                    <option
+                      th:each="obraSocial : ${obrasSociales}"
+                      th:value="${obraSocial.nombre}"
+                      th:text="${obraSocial.nombre}"
+                    ></option>
+                    <option id="optionCargarOtra">Cargar otra...</option>
+                  </select>
+                  <label for="obraSocial"
+                    ><i class="fa-solid fa-book-medical iconForm"></i>Obra
+                    Social</label
+                  >
+                </div>
+      
+                <!-- este div se muestra solo si se elije cargar otra -->
+                <div class="col-xs-12 col-md-6 form-floating formObraSocial
+                " id="formObraSocial">
+                  <h5>Cargar nueva Obra Social</h5>
+      
+                  <!-- INPUT NOMBRE -->
+                    <div class="col-xs-12 form-floating">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="nombreObraSocial"
+                        name="nombreObraSocial"
+                        placeholder=""
+                      />
+                      <label for="nombreObraSocial"
+                        ><i class="fa-solid fa-file-medical iconForm"></i>Sigla o
+                        nombre de la obra social</label
+                      >
+                     <button
+                      type="button"
+                      class="btn btn-primary"
+                      id="btnSubmitOS"
+                    >
+                      Guardar
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      id="btnCancelar"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </div>
+               <!-- Se puede poner un carrousel con logos de obras sociales -->
+              </div>
+      
+              <div class="pestana">
+                <h3>Imagen de perfil</h3>
+                <div class="col-xs-12 col-md-6 form-floating">
+                  <input
+                    type="file"
+                    class="form-control"
+                    id="foto"
+                    name="archivo"
+                    th:value="${recargaFormulario != null ? recargaFormulario.imagen : imagen}"
+                  />
+                  <label for="foto"
+                    ><i class="fa-solid fa-camera iconForm"></i>Foto de Perfil
+                    <span class="aclaracion">(opcional)</span>
+                  </label>
+                </div>
+                <img
+                  id="imagePreview"
+                  src="#"
+                  alt="Vista previa de la imagen"
+                  class="fotoFormulario"
+                />
+      
+          <!-- AGREGAR LA OPCIÓN OMITIR  -->
+              </div> 
+      
+              <div class="pestana">
+                <h3>Contraseña</h3>
+                <!-- INPUT PASSWORD-->
+                <div class="col-xs-12 col-md-6 form-floating">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    name="password"
+                    placeholder=""
+                  />
+                  <label for="password"
+                    ><i class="fa-solid fa-lock iconForm"></i>Contraseña</label
+                  >
+                </div>
+                <!-- INPUT PASSWORD2-->
+                <div class="col-xs-12 col-md-6 form-floating">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password2"
+                    name="password2"
+                    placeholder=""
+                  />
+                  <label for="password2"
+                    ><i class="fa-solid fa-circle-check iconForm" id="iconoCheck"></i
+                    >Repetir Contraseña</label
+                  >
+                </div>
+                <div>
+                  <p>La contraseña debe tener:</p>
+                  <ul>
+                    <li id="longCaracteres">Longitud mínima de 8 caracteres</li>
+                    <li id="mayuscula">Al menos una mayúscula</li>
+                    <li id="minuscula">Al menos una minúscula</li>
+                    <li id="numero">Al menos un número</li>
+                  </ul>
+                </div>
+              </div>
+      
+              <div class="btnFormulario">
+                <button
+                  type="button"
+                  id="prevBtn"
+                  name="prevBtn"
+                  class="btn btn-primary btnEnviar botonesFormulario"
+                >
+                  Anterior
+                </button>
+                <button
+                  type="button"
+                  id="nextBtn"
+                  name="nextBtn"
+                  class="btn btn-primary btnEnviar botonesFormulario"
+                >
+                  > Siguiente
+                </button>
+              </div>
+      
+              <!-- Circles which indicates the steps of the form  PASAR EL ESTILO AL CSS  -->
+              <div style="text-align: center; margin-top: 40px">
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+              </div>
+            </form>
+          </div>
+        </main>
+        <!--FOOTER-->
+        <div class="container-fluid pie">
+            <footer  th:replace="/fragments/footer :: footer"</footer><!--NO MODIFICAR-->
+        </div>
+
+        <script src="../../scriptsWizard.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+            crossorigin="anonymous"
+        ></script> <!--NO MODIFICAR-->
+
+    </body>
+</html>

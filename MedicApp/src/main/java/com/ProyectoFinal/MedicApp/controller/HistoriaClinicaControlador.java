@@ -49,12 +49,12 @@ public class HistoriaClinicaControlador {
     @Transactional
     @PostMapping("/registroHistoriaClinica")
     public String registroPaciente(@RequestParam String dni, @RequestParam String fecha,
-            @RequestParam String diagnostico, HttpSession session, ModelMap modelo) {
+            @RequestParam String diagnostico, @RequestParam String tratamiento, HttpSession session, ModelMap modelo) {
 
         Profesional profesional = (Profesional) session.getAttribute("userSession");
 
         try {
-            historiaClinicaService.crearHistoriaClinica(dni, fecha, profesional, diagnostico);
+            historiaClinicaService.crearHistoriaClinica(dni, fecha, profesional, diagnostico, tratamiento);
 
             modelo.put("exito", "Ingreso de historia clinica exitoso");
             return "redirect:/inicio";

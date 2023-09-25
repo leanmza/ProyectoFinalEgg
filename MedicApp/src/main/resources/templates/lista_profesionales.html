@@ -23,11 +23,9 @@
                             <th scope="col" class="col-2">
                                 <select id="especialidad" class="especialidad">
                                 <option value="todas">Especialidad</option>
-                                <option value="cardiologia">Cardiología</option>
-                                <option value="clinica">Clínica</option>
-                                <option value="ginecologia">Ginecología</option>
-                                <option value="pediatria">Pediatría</option>
-                            </select>
+                                <option th:each="especialidad : ${especialidad}" th:value="${especialidad}" th:text="${especialidad}"></option>
+                           
+                            </select></th>
                             <th scope="col" class="col-1">Horario de Atención</th>
                             <th scope="col" class="col-1" id="consulta">Valor de Consulta <i class="fa-solid fa-sort"></i> </th>
                         <th scope="col" class="col-2 califica" id="califica">Calificación <i class="fa-solid fa-sort"></i></th>

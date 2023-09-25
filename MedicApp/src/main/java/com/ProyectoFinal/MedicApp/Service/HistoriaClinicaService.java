@@ -32,7 +32,7 @@ public class HistoriaClinicaService {
     private PacienteRepositorio pacienteRepositorio;
 
     @Transactional
-    public void crearHistoriaClinica(String dni, String fechaConsulta, Profesional profesional, String diagnostico) throws MiExcepcion {
+    public void crearHistoriaClinica(String dni, String fechaConsulta, Profesional profesional, String diagnostico, String tratamiento) throws MiExcepcion {
 
         Paciente paciente = pacienteRepositorio.buscarPorDni(dni);
 

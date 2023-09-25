@@ -2,9 +2,11 @@ package com.ProyectoFinal.MedicApp.controller;
 
 import com.ProyectoFinal.MedicApp.Entity.Persona;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
+import com.ProyectoFinal.MedicApp.Enum.Especialidad;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
 import com.ProyectoFinal.MedicApp.Service.ObraSocialService;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,11 +69,15 @@ public class PortalControlador {
     }
 
     
-    ////LISTA DE PROFESIONALES HEADER
+    ////LISTA DE PROFESIONALES 
     @Transactional
     @GetMapping("/listar")
     public String listar(ModelMap model) {
         List<Profesional> profesionales = profesionalService.listar();
+        
+      List<String> especialidades = profesionalService.listaEspecialidadesActivas(); //MUESTRA SOLO LAS ESPECIALIDADES QUE HAY EN LA BD, NO TODAS LAS QUE ESTAN EN EL ENUM
+        
+        model.addAttribute("especialidad", especialidades);
         model.addAttribute("profesionales", profesionales);
         return "lista_profesionales.html";
     }

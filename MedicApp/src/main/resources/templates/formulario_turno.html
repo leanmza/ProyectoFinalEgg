@@ -17,7 +17,7 @@
                 <div class="row titulo">
                     <h3>SACAR MITURNO</h3>
                 </div>
-
+            
                 <div class="row formTurno">
                     <form
                         class="form-floating row formulario formularioTurno"
@@ -28,7 +28,7 @@
                         <!-- DATOS PERSONALES -->
                         <div class="row turno">
                             <!-- COLUMNA IZQUIERDA -->
-                            <div class="col-4">
+                            <div class="col-3">
 
                                  <!--INPUT OCULTO DEL ID--> 
                                 <input hidden type="text" id="id" name="id" th:value="${profesional.id}"/>
@@ -89,21 +89,21 @@
 
                             <!-- COLUMNA CENTRO -->
 
-                            <div class="col-4">
+                            <div class="col-5">
                                 <!--CALENDARIO-->
                                 <div class="col-xs-12 fecha" id="fecha">
                                     <div class="row selectorMes">
                                         <button
                                             id="btn-mes-anterior"
-                                            class="col-2 btn btn-primary btnEnviar botonesFormulario"
-                                            disabled="  ">
+                                            class="col-2 btn btn-primary btnEnviar btnAtras btnCalendario botonesFormulario"
+                                            >
                                             <i class="fa-solid fa-caret-left"></i>
                                         </button>
                                   
                                         <h5 id="mes" class="col-6">      <!--ACA SE INYECTA CON JS EL NOMBRE DEL MES--></h5>
                                         <button
                                             id="btn-mes-siguiente"
-                                            class="col-2 btn btn-primary btnEnviar botonesFormulario"
+                                            class="col-2 btn btn-primary btnEnviar btnCalendario botonesFormulario"
                                             >
                                             <i class="fa-solid fa-caret-right"></i>
                                         </button>

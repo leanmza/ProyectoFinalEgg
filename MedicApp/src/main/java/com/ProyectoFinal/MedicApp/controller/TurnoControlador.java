@@ -5,9 +5,9 @@
 package com.ProyectoFinal.MedicApp.controller;
 
 import com.ProyectoFinal.MedicApp.Entity.Paciente;
+import com.ProyectoFinal.MedicApp.Entity.Persona;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
-import com.ProyectoFinal.MedicApp.Repository.ProfesionalRepositorio;
 import com.ProyectoFinal.MedicApp.Service.ProfesionalService;
 import com.ProyectoFinal.MedicApp.Service.TurnoService;
 import java.util.List;
@@ -41,22 +41,36 @@ public class TurnoControlador {
 
     ////TURNERO DESDE LA LISTA DE PROFESIONALES
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
-    @GetMapping("/formularioTurno/{idProfesional}")
-    public String turno(@PathVariable String idProfesional, Model model) throws MiExcepcion {
+    @GetMapping("/formularioTurno")
+    public String turno(Model model) throws MiExcepcion {
 
-        Profesional profesional = profesionalService.getOne(idProfesional); //Busco el profesional 
+        List<Profesional> profesionales = profesionalService.listar();
+        model.addAttribute("profesional", profesionales); //Agrego al profesional al model
 
-        model.addAttribute("profesional", profesional); //Agrego al profesional al model
+        List<String> especialidades = profesionalService.listaEspecialidadesActivas(); //MUESTRA SOLO LAS ESPECIALIDADES QUE HAY EN LA BD, NO TODAS LAS QUE ESTAN EN EL ENUM
 
-        return "formulario_turno.html";
+        model.addAttribute("especialidad", especialidades);
+
+        return "formulario_turno_wizard.html";
     }
 
+//    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
+//    @GetMapping("/formularioTurno/{idProfesional}")
+//    public String turno(@PathVariable String idProfesional, Model model) throws MiExcepcion {
+//
+//        Profesional profesional = profesionalService.getOne(idProfesional); //Busco el profesional 
+//
+//        model.addAttribute("profesional", profesional); //Agrego al profesional al model
+//
+//        return "formulario_turno.html";
+//    }
 ////TURNERO DESDE EL HEADER 
 //    MODIFICAR PARA QUE SEA UN SOLO GET PARA LOS TURNOS
     @GetMapping("/formularioTurnoHeader")
     public String turno(ModelMap model) {
 
         List<Profesional> profesionales = profesionalService.listar(); //Se usa en el modal que se abre 
+//        List<String> especialidades = profesionales.listaEspecialidadesActivas();
 
         model.addAttribute("profesionales", profesionales);
 
@@ -94,8 +108,18 @@ public class TurnoControlador {
     ////ANULAR TURNO
     @Transactional
     @GetMapping("/anularTurno/{id}")
-    public String anularTurno(@PathVariable String id) throws MiExcepcion {
+    public String anularTurno(@PathVariable String id, HttpSession session) throws MiExcepcion {
 
+        if (session.getAttribute("userSession") != null) {
+            Persona logueado = (Persona) session.getAttribute("userSession");
+
+            if (logueado.getRol().toString().equals("PACIENTE")) {
+                turnoService.eliminarTurno(id);
+                return "redirect:/paciente/misTurnos";
+            } else {
+
+            }
+        }
         turnoService.eliminarTurno(id);
         return "redirect:/profesional/agenda";
     }

@@ -148,11 +148,9 @@
                                 class="especialidad form-select"
                                 th:value="${profesional.especialidad}"
                                 >
-                                <option value="" selected disabled>Elegir especialidad</option>
-                                <option value="Cardiologia" th:selected="${profesional.especialidad == 'Cardiologia'}">Cardiología</option>
-                                <option value="Clinica" th:selected="${profesional.especialidad == 'Clinica'}">Clínica</option>
-                                <option value="Ginecologia" th:selected="${profesional.especialidad == 'Ginecologia'}">Ginecología</option>
-                                <option value="Pediatria" th:selected="${profesional.especialidad == 'Pediatria'}">Pediatría</option>
+                                <option value="${profesional.especialidad}" th:selected="${profesional.especialidad}" th:text="${profesional.especialidad}"></option>
+                                <option th:each="especialidad : ${especialidad}" th:value="${especialidad}" th:text="${especialidad}"></option>
+                        
                             </select>
                              <label for="especialidad"><i class="fa-solid fa-suitcase-medical iconForm"></i>Especialidad</label>
                         </div>
@@ -206,7 +204,7 @@
                         id="obraSocial"
                         class="obraSocial form-select"
                       >
-                      <option th:value="${profesional.obraSocial.nombre}" th:text="${profesional.obraSocial.nombre}" selected disabled></option>
+                      <option th:value="${profesional.obraSocial.nombre}" th:text="${profesional.obraSocial.nombre}" selected ></option>
                         <option
                           th:each="obraSocial : ${obrasSociales}"
                           th:value="${obraSocial.nombre}"

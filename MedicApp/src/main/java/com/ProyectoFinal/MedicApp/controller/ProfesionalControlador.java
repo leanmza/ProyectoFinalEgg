@@ -7,6 +7,7 @@ package com.ProyectoFinal.MedicApp.controller;
 import com.ProyectoFinal.MedicApp.Entity.ObraSocial;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Entity.Turno;
+import com.ProyectoFinal.MedicApp.Enum.Especialidad;
 import com.ProyectoFinal.MedicApp.Enum.Modalidad;
 import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import com.ProyectoFinal.MedicApp.Exception.MiExcepcion;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Controller
 @RequestMapping("/profesional")
-@PreAuthorize("hasAnyRole('ROLE_PROFESIONAL', 'ROLE_ADMINISTRADOR')")
+//@PreAuthorize("hasAnyRole('ROLE_PROFESIONAL', 'ROLE_ADMINISTRADOR')")
 public class ProfesionalControlador {
 
     @Autowired
@@ -46,6 +48,7 @@ public class ProfesionalControlador {
 
     //FORMULARIO PARA CREAR UN PROFESIONAL
     @GetMapping("/registroProfesional")
+    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL', 'ROLE_ADMINISTRADOR')")
     public String registroProfesional(ModelMap modelo, HttpSession sessionFormulario, HttpSession obraSocialNueva) {
 
         // EN EL CASO QUE HAYA AGREGADO UNA OBRA SOCIAL NUEVA, CARGAMOS LA SESSIONFORMULARIO
@@ -67,6 +70,9 @@ public class ProfesionalControlador {
             modelo.put("recargaFormulario", sessionFormulario.getAttribute("datosFormulario"));
         }
 
+        // CARGA DE LAS ESPECIALIDADES
+        modelo.put("especialidad", Especialidad.values());
+
         // CARGA DE LAS UBICACIONES
         modelo.put("ubicaciones", Ubicacion.values());
 
@@ -82,6 +88,7 @@ public class ProfesionalControlador {
 
     ///REGISTRA PROFESIONAL
     @PostMapping("/crearProfesional")
+    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL', 'ROLE_ADMINISTRADOR')")
     public String crearProfesional(@RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String correo, @RequestParam String telefono, @RequestParam(required = false) MultipartFile archivo,
             @RequestParam String password, @RequestParam String password2, @RequestParam String especialidad,
@@ -108,8 +115,8 @@ public class ProfesionalControlador {
     }
 
     ////PERFIL
-    @Transactional
     @GetMapping("/perfil")
+    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL', 'ROLE_ADMINISTRADOR')")
     public String perfil(HttpSession session, ModelMap modelo, HttpSession obraSocialNueva, @RequestParam(required = false) String error) {
 
         if (error != null && error.equals("errorActualizacion")) {
@@ -127,6 +134,9 @@ public class ProfesionalControlador {
 
         modelo.addAttribute("profesional", profesional);
 
+        // CARGA DE LAS ESPECIALIDADES
+        modelo.put("especialidad", Especialidad.values());
+
         // CARGA DE LAS UBICACIONES
         modelo.put("ubicaciones", Ubicacion.values());
 
@@ -143,6 +153,7 @@ public class ProfesionalControlador {
     ////EDITAR PERFIL
     @Transactional
     @PostMapping("/editarPerfil/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL', 'ROLE_ADMINISTRADOR')")
     public String modificarPerfil(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String correo, @RequestParam String telefono, @RequestParam(required = false) MultipartFile archivo,
             @RequestParam(required = false) String password, @RequestParam(required = false) String password2, @RequestParam String especialidad,
@@ -178,11 +189,32 @@ public class ProfesionalControlador {
 //        model.addAttribute("especialidad", especialidad);
 //        return "listaespecialidad.html";
 //    }
-    
-
     ////AGENDA
-    @Transactional
+    @GetMapping("/dias/{id}")
+    public ResponseEntity<String[]> obtenerProfesionalPorId(@PathVariable String id) {
+
+        String[] dias = profesionalService.getDias(id);
+
+        if (dias != null) {
+            return ResponseEntity.ok(dias);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/listaProfesionales")
+    public ResponseEntity<List> listaDeProfesionales() {
+        List<Profesional> listaProfesionales = profesionalService.listar();
+
+        if (listaProfesionales != null && !listaProfesionales.isEmpty()) {
+            return ResponseEntity.ok(listaProfesionales);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping("/agenda")
+    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL', 'ROLE_ADMINISTRADOR')")
     public String listaTurnos(ModelMap model, HttpSession session) {
 
         Profesional profesional = (Profesional) session.getAttribute("userSession");

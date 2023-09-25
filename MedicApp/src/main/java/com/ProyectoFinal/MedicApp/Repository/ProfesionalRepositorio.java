@@ -30,4 +30,8 @@ public interface ProfesionalRepositorio extends JpaRepository<Profesional, Strin
     
     @Query("SELECT p FROM Profesional p WHERE p.email = :email")
     public Profesional buscarPorEmail(@Param("email") String email);
+    
+    @Query("SELECT DISTINCT especialidad FROM Profesional p")
+    public List<String> buscarEspecialidadesActivas();
 }
+

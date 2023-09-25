@@ -257,6 +257,7 @@ footer {
   justify-content: space-evenly;
   padding: 5% 5% 5% 5%;
 }
+
 .rowFiltros {
   justify-content: end;
 }
@@ -459,13 +460,6 @@ h5 {
 
 /* INDEX */
 
-.presentacionRow {
-  display: flex;
-  justify-content: space-between;
-  text-align: center;
-  align-items: center;
-}
-
 .index {
   background-image: url(./doctor-estetoscopio-manos-fondo-transparente.png);
   background-size: 60vw;
@@ -484,17 +478,21 @@ h5 {
   padding-inline: 5%;
   padding-top: 4%;
   padding-bottom: 5%;
+  display: flex;
+  justify-content: end;
+  text-align: center;
+  align-items: center;
 }
 .divNosotros {
   padding: 0 !important;
 }
-.adorno1,
-.adorno2,
-.adorno3 {
+
+.divNosotros h2 {
   font-size: 2.5em;
   text-align: center;
   padding: 0.5em 0 0.5em 0;
 }
+
 .adorno1,
 .adorno3 {
   color: #fff;
@@ -504,13 +502,6 @@ h5 {
   color: #17252a !important  ;
 }
 
-.nosotros {
-  color: #17252a !important;
-}
-
-.btnIndex {
-  box-shadow: 0px 1px 4px #17252a;
-}
 .textoIndex {
   color: #fff !important;
   padding-top: 5%;
@@ -519,6 +510,12 @@ h5 {
   font-weight: 600;
   text-shadow: 0px 1px 4px #17252a;
 }
+
+.btnIndex {
+  box-shadow: 0px 1px 4px #17252a;
+}
+
+/* CALENDARIO TURNO */
 
 .tablaCalendario {
   justify-content: center;
@@ -535,12 +532,21 @@ h5 {
   justify-content: center;
   display: inline-grid;
   text-align: center;
-  width: 3em;
+  width: 3.5em;
+}
+.diaHabilitado{
+  font-weight: 700;
+}
+.btnAtras{
+  display: none;
 }
 
 .inputRadio {
   width: 1.4em;
   height: 1.4em;
+}
+.btnCalendario{
+  width: 50px !important;
 }
 
 .labelHoraTurno {

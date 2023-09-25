@@ -141,10 +141,7 @@
                                 th:value="${recargaFormulario != null ? recargaFormulario.especialidad : ''}"
                                 >
                                 <option value="" selected disabled>Elegir especialidad</option>
-                                <option value="Cardiologia" th:selected="${recargaFormulario != null and recargaFormulario.especialidad == 'Cardiologia'}">Cardiología</option>
-                                <option value="Clinica" th:selected="${recargaFormulario != null and recargaFormulario.especialidad == 'Clinica'}">Clínica</option>
-                                <option value="Ginecologia" th:selected="${recargaFormulario != null and recargaFormulario.especialidad == 'Ginecologia'}">Ginecología</option>
-                                <option value="Pediatria" th:selected="${recargaFormulario != null and recargaFormulario.especialidad == 'Pediatria'}">Pediatría</option>
+                                <option th:each="especialidad : ${especialidad}" th:value="${especialidad}" th:text="${especialidad}"></option>
                             </select>
                             <label for="especialidad"><i class="fa-solid fa-suitcase-medical iconForm"></i>Especialidad</label>
                         </div>

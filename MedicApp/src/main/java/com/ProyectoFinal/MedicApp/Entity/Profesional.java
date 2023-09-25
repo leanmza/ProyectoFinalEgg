@@ -1,5 +1,6 @@
 package com.ProyectoFinal.MedicApp.Entity;
 
+import com.ProyectoFinal.MedicApp.Enum.Especialidad;
 import com.ProyectoFinal.MedicApp.Enum.Modalidad;
 import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
 import java.time.LocalTime;
@@ -29,7 +30,8 @@ import lombok.ToString;
 public class Profesional extends Persona {
     
     // "CLINICA", "PEDIATRIA", "CARDIOLOGIA", ETC
-    private String especialidad;
+    @Enumerated(EnumType.STRING)
+    private Especialidad especialidad;
 
     // PUEDE SER PRESENCIAL O A DISTANCIA
     @Enumerated(EnumType.STRING)
@@ -49,6 +51,7 @@ public class Profesional extends Persona {
 
 
     private LocalTime horaInicio;
+
     private LocalTime horaFin;
     
     private ArrayList<LocalTime> horas; //no me tomaba el List solo, por eso lo cambié a ArrayList

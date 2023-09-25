@@ -7,6 +7,7 @@ package com.ProyectoFinal.MedicApp.Service;
 import com.ProyectoFinal.MedicApp.Entity.Imagen;
 import com.ProyectoFinal.MedicApp.Entity.Profesional;
 import com.ProyectoFinal.MedicApp.Entity.Turno;
+import com.ProyectoFinal.MedicApp.Enum.Especialidad;
 import com.ProyectoFinal.MedicApp.Enum.Modalidad;
 import com.ProyectoFinal.MedicApp.Enum.Rol;
 import com.ProyectoFinal.MedicApp.Enum.Ubicacion;
@@ -71,7 +72,7 @@ public class ProfesionalService {
 
         profesional.setActivo(true);
 
-        profesional.setEspecialidad(especialidad);
+        profesional.setEspecialidad(Especialidad.valueOf(especialidad));
 
         profesional.setModalidad(Modalidad.valueOf(modalidad));
 
@@ -148,7 +149,7 @@ public class ProfesionalService {
 
             profesional.setPassword(new BCryptPasswordEncoder().encode(password));
             profesional.setActivo(true);
-            profesional.setEspecialidad(especialidad);
+            profesional.setEspecialidad(Especialidad.valueOf(especialidad));
 
             // NO SETEAMOS ROL PORQUE MANTIENE EL QUE TENIA AL MODIFICAR PERFIL 
             profesional.setModalidad(Modalidad.valueOf(modalidad));
@@ -181,6 +182,7 @@ public class ProfesionalService {
             profesional.setHoras(horario);
 
             profesional.setHoras(horario);
+             profesional.setDias(dias);
             profesionalRepositorio.save(profesional);
 
         }
@@ -190,6 +192,13 @@ public class ProfesionalService {
     @Transactional(readOnly = true)
     public Profesional getOne(String id) {
         return profesionalRepositorio.getOne(id);
+    }
+
+    @Transactional(readOnly = true)
+    public String[] getDias(String id) {
+        Profesional profesional = getOne(id);
+        String[] dias = profesional.getDias();
+        return dias;
     }
 
     @Transactional(readOnly = true)
@@ -345,7 +354,7 @@ public class ProfesionalService {
     public List<Turno> listarTurnos(String idProfesional) {
 
         List<Turno> misTurnos = turnoRepositorio.buscarPorProfesional(idProfesional);
-        
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         for (Turno turno : misTurnos) {
 
@@ -357,4 +366,11 @@ public class ProfesionalService {
         return misTurnos;
     }
 
+    
+    public List<String> listaEspecialidadesActivas(){
+    
+        List<String> especialidades = profesionalRepositorio.buscarEspecialidadesActivas();
+        
+        return especialidades;
+    }
 }
