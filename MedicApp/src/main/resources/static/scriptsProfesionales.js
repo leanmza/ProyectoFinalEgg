@@ -1,4 +1,5 @@
-//PARA LISTA DE PROFESIONALES
+//este script maneja las tablas de profesionales, filtro de busqueda y calificación
+
 const especialidad = document.getElementById("especialidad");
 especialidad.addEventListener("change", filtrarTabla);
 

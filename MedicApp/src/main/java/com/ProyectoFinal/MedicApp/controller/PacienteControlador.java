@@ -54,7 +54,7 @@ public class PacienteControlador {
 
             Paciente paciente = (Paciente) sessionFormulario.getAttribute("datosFormulario");
 
-            if (obraSocialNueva.getAttribute("nuevaObraSocial") != null) {
+            if (obraSocialNueva.getAttribute("nuevaObraSocial") != null) { // Esto se podría eliminar
 
                 String nombreOS = (String) obraSocialNueva.getAttribute("nuevaObraSocial");
 
@@ -66,16 +66,14 @@ public class PacienteControlador {
             sessionFormulario.setAttribute("datosFormulario", paciente);
 
             model.put("recargaFormulario", sessionFormulario.getAttribute("datosFormulario"));
-            
-          
-            
+
         }
 
         // CARGA DE LAS OBRAS SOCIALES
         List<ObraSocial> obrasSociales = obraSocialServicio.listar();
         model.put("obrasSociales", obrasSociales);
-        
-           return "formulario_paciente.html";
+
+        return "formulario_paciente_wizard.html";
     }
 
     @Transactional
@@ -85,8 +83,7 @@ public class PacienteControlador {
             @RequestParam String password, @RequestParam String password2, @RequestParam String direccion,
             @RequestParam(required = false) String sexo, @RequestParam(required = false) MultipartFile archivo,
             @RequestParam(required = false) String obraSocial, ModelMap modelo, HttpSession session) throws ParseException {
-        
-   
+
         try {
             if (sexo == null) {
                 sexo = "No especificado";
@@ -207,7 +204,6 @@ public class PacienteControlador {
 //
 //        return "redirect:/paciente/registroPaciente";
 //    }
-    
     ////ALMACENA DATOS DE FORMULARIOS SI SE REFRESCA LA PÁGINA
     @PostMapping("/guardarDatosFormulario")
     public String guardarDatosFormulario(@RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido,
@@ -228,10 +224,8 @@ public class PacienteControlador {
 
         Paciente paciente = (Paciente) session.getAttribute("userSession");
         String idPaciente = paciente.getId();
-        
+
         List<String> especialidades = profesionalService.listaEspecialidadesActivas();
-        
-      
 
         List<Profesional> profesionales = pacienteService.listarProfesionales(idPaciente);
 
@@ -249,7 +243,7 @@ public class PacienteControlador {
         String idPaciente = paciente.getId();
 
         List<Turno> turnos = pacienteService.listarTurnos(idPaciente);
-   
+
         model.addAttribute("turnos", turnos);
         return "agenda.html";
     }
