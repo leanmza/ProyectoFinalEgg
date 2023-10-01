@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const especialidadSelect = document.getElementById("especialidad");
   const profesionalSelect = document.getElementById("profesional");
+  const rowAgenda = document.getElementById("rowAgenda");
 
   const opcionesProfesionales = Array.from(profesionalSelect.options);
 
@@ -32,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const idProfesional = optionSeleccionado.getAttribute("data-id");
 
+    rowAgenda.style.display = "block" ;
     calendario(idProfesional);
   });
 
@@ -61,6 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //Tiene 2 funciones en cascada para asegurame que se ejecuten en el orden en que estan escritas
 
   function calendario(idProfesional) {
+
     // URL del endpoint GET
     const url = `http://localhost:8080/profesional/dias/${idProfesional}`;
 
@@ -317,8 +320,13 @@ document.addEventListener("DOMContentLoaded", function () {
       divCalendario.innerHTML = calendarioHTML;
 
       mes.innerHTML =
-        "<i class='fa-solid fa-calendar-days iconForm'></i>" +
         nombresMeses[mesActual];
+
+
+
+
+
+        
     }
   }
 });

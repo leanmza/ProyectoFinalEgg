@@ -32,6 +32,7 @@ h1,
 h2,
 h3 {
   font-weight: 900 !important; /* NEGRITA*/
+  text-align: center;
 }
 
 .botonesHeader,
@@ -229,15 +230,19 @@ footer {
 }
 
 .formTurno {
-  width: 85vw;
+  width: 85vw !important;
+  margin: 20px auto !important;
+  padding-top: 25px !important;
 }
 .formularioTurno {
   width: 80%;
   padding-top: 3% !important;
   background-color: transparent !important;
 }
+
 .motivo {
-  height: 8em !important;
+  resize: none;
+  height: 5em !important;
 }
 
 .contador {
@@ -245,17 +250,15 @@ footer {
   text-align: end;
 }
 
-.fecha,
-.hora {
-  background-color: #fff;
-  border-radius: 8px;
+.rowAgenda {
+  display: none;
 }
 
 .selectorMes {
   margin: 0 !important;
   display: flex !important;
   justify-content: space-evenly;
-  padding: 5% 5% 5% 5%;
+  padding: 0 10% 0 10%;
 }
 
 .rowFiltros {
@@ -348,13 +351,7 @@ input {
 }
 
 /* FORMULARIO PERSONA Y PROFESIONAL */
-.tituloForm {
-  padding: 0 0 2% 0;
-}
 
-.tituloForm h4 {
-  text-align: center;
-}
 .formularioCrear {
   width: 70vw !important;
   padding-top: 5% !important;
@@ -379,21 +376,15 @@ input {
   justify-content: space-evenly !important;
 }
 .especialidad {
-  /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
-
   display: flex;
   justify-content: start;
 }
 .ubicacion {
-  /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
-
   display: flex;
   justify-content: center;
 }
 
 .modalidad {
-  /* MODIFICAR EN MEDIAS QUERYS PARA TAMAÑOS CHICOS */
-
   display: flex;
   justify-content: end;
 }
@@ -434,6 +425,11 @@ h5 {
   text-align: center;
   padding-top: 2%;
   padding-bottom: 2%;
+}
+
+form h5 {
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .tituloFormPro {
@@ -534,10 +530,10 @@ h5 {
   text-align: center;
   width: 3.5em;
 }
-.diaHabilitado{
+.diaHabilitado {
   font-weight: 700;
 }
-.btnAtras{
+.btnAtras {
   display: none;
 }
 
@@ -545,8 +541,9 @@ h5 {
   width: 1.4em;
   height: 1.4em;
 }
-.btnCalendario{
-  width: 50px !important;
+.btnCalendario {
+  width: 40px !important;
+  height: 50px;
 }
 
 .labelHoraTurno {
@@ -876,8 +873,8 @@ form label {
 
 /* Para el efecto del index*/
 
- /* Style the form */
- .formWizard {
+/* Style the form */
+.formWizard {
   background-color: #ffffff;
   margin: 100px auto;
   padding: 40px;
@@ -924,10 +921,10 @@ input.invalid {
 
 /* Mark the steps that are finished and valid: */
 .step.finish {
-  background-color: #04AA6D;
-} 
+  background-color: #04aa6d;
+}
 
-.fotoFormulario{
+.fotoFormulario {
   display: none;
   height: 300px;
   width: 300px;
@@ -936,11 +933,34 @@ input.invalid {
   object-fit: cover;
 }
 
-.btnFormulario{
+.btnFormulario {
   display: flex;
   justify-content: center;
 }
 
-.formObraSocial{
+.formObraSocial {
   display: none;
+}
+
+@media (max-width: 1200px) and (min-width: 992px) {
+  .celdaDias {
+    width: 3em;
+  }
+}
+
+@media (max-width: 576px) {
+  
+  .celdaDias {
+    width: 2.4em;
+  }
+
+  .form-floating {
+    padding-inline: 10px;
+  }
+
+  .formTurno {
+    width: 100% !important;
+    margin: 10px auto !important;
+    padding-top: 25px !important;
+  }
 }

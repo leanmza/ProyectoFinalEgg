@@ -16,22 +16,19 @@
           >
             <form
               id="formulario"
-              class="form-floating formWizard"
+              class="form-floating formWizard formTurno"
               th:action="@{/turno/registroTurno}"
               method="POST"
               enctype="multipart/form-data"
               >
               <div class="tituloForm">
-                <h4>Reservar MiTurno</h4>
+                <h1>Reservar MiTurno</h1>
               </div>
-              <!-- Una pestaña para cada paso del formulario -->
-      
-             <!-- <div class="pestana"> -->
-                <h3>Elegí el profesional</h3>
-                <div class="row">
-                           
-                 <!-- INPUT ESPECIALIDAD  -->
-                <div class="col-12 form-floating">
+                 
+              <div class="row">
+                <h5>Elegí el profesional</h5>
+               
+                <div class="col-12 col-md-6 form-floating">
                   <select
                       name="especialidad"
                       id="especialidad"
@@ -43,7 +40,7 @@
                    <label for="especialidad"><i class="fa-solid fa-suitcase-medical iconForm"></i>Especialidad</label>
               </div>
 
-              <div class="col-12  form-floating">
+              <div class="col-12 col-md-6 form-floating">
                 <select name="profesional" id="profesional" class="form-select"  >
                   <option value="">Profesional</option>
                   <option th:each = "profesional : ${profesional}"
@@ -56,16 +53,31 @@
                 <label for="profesional"><i class="fa-solid fa-user iconForm"></i>Profesional</label>
                  
                 </div>
+
+                <div class="col-xs-12 form-floating">
+                  <textarea
+                      type="text"
+                      class="form-control motivo"
+                      id="motivo"
+                      placeholder=""
+                      name="motivo"
+                      ></textarea>
+                  <label for="motivo"
+                         ><i class="fa-sharp fa-solid fa-heart-pulse iconForm"></i>Motivo de la consulta
+                      <span class="aclaracion">(opcional)</span> <!-- cambiar estilo del span -->
+                  </label>
+                  <p id="contador" class="contador"></p>
+              </div>
                 </div>
-              <!-- </div> -->
-               
-      
-           <!-- <div class="pestana"> -->
-                <h3>Fecha</h3>
+
+              <div class="rowAgenda" id="rowAgenda">
+                <div class="row">
              
-                <div class="col-xs-12 col-md-6 form-floating">
-                  <div class="col-xs-12 fecha" id="fecha">
-                    <div class="row selectorMes">
+                             
+                <div class="col-xs-12 col-lg-6 form-floating">
+                  <h5><i class='fa-solid fa-calendar-days iconForm'></i>Fecha</h5>
+                  <div class="fecha">
+                    <div class="selectorMes">
                         <button
                             id="btn-mes-anterior"
                             class="col-2 btn btn-primary btnEnviar btnAtras btnCalendario botonesFormulario"
@@ -81,65 +93,53 @@
                             <i class="fa-solid fa-caret-right"></i>
                         </button>
                     </div>
-                    <div class="col-xs-12 calendario" id="calendario"></div>
+                    <div class="col-xs-12 calendario" id="calendario">
+                      
+                    </div>
                           
                 </div>
               </div>
-            <!-- </div>  -->
-        
-      <!--        <div class="pestana">
-                <h3>Imagen de perfil</h3>
-                <div class="col-xs-12 hora" id="hora">
-                  <div class="row selectorHora">
-                 <div class="row selectorMes">
-                          <h5 id="mes" class="col-6"><i class="fa-solid fa-clock iconForm"></i>Horarios</h5>
+ 
+               
+                <div class="col-xs-12 col-lg-6 form-floating">
+                  <h5><i class="fa-solid fa-clock iconForm"></i>Horario</h5>
+                  <div class="hora">
+                 <div class="selectorMes">
+                          <h5 id="mes" class="col-6">Horarios</h5>
   
                   </div>
                           
-                      <div class="horariosDiv row">
+                   <!--    <div class="horariosDiv row">
                           <div th:each="horario : ${profesional.horas}" class="horariosInput col-3">
                               <label th:text="${horario}" class="labelHoraTurno"></label>
                               <input type="radio"  th:value="${horario}"  name="horario"  class="inputRadioHora"/>
                           </div>
                           
-                   </div>
+                   </div>-->
          
 
                   </div>
 
-              </div>
               </div> 
-      
-              <div class="pestana">
-               resumen
-              </div>
-      
-              <div class="btnFormulario">
+                </div> 
+            </div>
+                  
+
+
+
+
+              <div class="col-xs-12 DivBtnEnviar">
                 <button
-                  type="button"
-                  id="prevBtn"
-                  name="prevBtn"
-                  class="btn btn-primary btnEnviar botonesFormulario"
-                >
-                  Anterior
+                    type="submit"
+                    name="submit"
+                    value="registrar"
+                    class="btn btn-primary btnEnviar botonesFormulario"
+                    >
+                    ¡Sacar MiTurno!
                 </button>
-                <button
-                  type="button"
-                  id="nextBtn"
-                  name="nextBtn"
-                  class="btn btn-primary btnEnviar botonesFormulario"
-                >
-                  > Siguiente
-                </button>
-              </div>
-      
-              <!-- Circles which indicates the steps of the form  PASAR EL ESTILO AL CSS  -->
-              <div style="text-align: center; margin-top: 40px">
-                <span class="step"></span>
-                <span class="step"></span>
-                <span class="step"></span>
-                <span class="step"></span>
-              </div>
+            </div>          
+           
+ 
             </form>
           </div>
         </main>
@@ -149,7 +149,7 @@
         </div>
         <script src="../../scripts.js"></script>
         <script src="../../scriptsTurno.js"></script>
-        <script src="../../scriptsWizard.js"></script>
+   
        
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"

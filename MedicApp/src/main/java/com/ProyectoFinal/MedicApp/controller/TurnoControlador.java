@@ -39,10 +39,14 @@ public class TurnoControlador {
     @Autowired
     ProfesionalService profesionalService;
 
-    ////TURNERO DESDE LA LISTA DE PROFESIONALES
+    ////TURNERO DESDE LA LISTA DE PROFESIONALES,
     @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
-    @GetMapping("/formularioTurno")
-    public String turno(Model model) throws MiExcepcion {
+    @GetMapping("/formularioTurno/{id}")
+    public String turno(@PathVariable String id, Model model) throws MiExcepcion {
+        
+        Profesional profesional = profesionalService.getOne(id);
+        
+        model.addAttribute("profe", profesional);
 
         List<Profesional> profesionales = profesionalService.listar();
         model.addAttribute("profesional", profesionales); //Agrego al profesional al model
@@ -54,27 +58,20 @@ public class TurnoControlador {
         return "formulario_turno_wizard.html";
     }
 
-//    @PreAuthorize("hasAnyRole('ROLE_PACIENTE')")
-//    @GetMapping("/formularioTurno/{idProfesional}")
-//    public String turno(@PathVariable String idProfesional, Model model) throws MiExcepcion {
-//
-//        Profesional profesional = profesionalService.getOne(idProfesional); //Busco el profesional 
-//
-//        model.addAttribute("profesional", profesional); //Agrego al profesional al model
-//
-//        return "formulario_turno.html";
-//    }
-////TURNERO DESDE EL HEADER 
-//    MODIFICAR PARA QUE SEA UN SOLO GET PARA LOS TURNOS
+
+////TURNERO DESDE EL HEADER, no se le pasa ID de profesional 
+
     @GetMapping("/formularioTurnoHeader")
     public String turno(ModelMap model) {
 
-        List<Profesional> profesionales = profesionalService.listar(); //Se usa en el modal que se abre 
-//        List<String> especialidades = profesionales.listaEspecialidadesActivas();
+        List<Profesional> profesionales = profesionalService.listar();
+        model.addAttribute("profesional", profesionales); //Agrego al profesional al model
 
-        model.addAttribute("profesionales", profesionales);
+        List<String> especialidades = profesionalService.listaEspecialidadesActivas(); //MUESTRA SOLO LAS ESPECIALIDADES QUE HAY EN LA BD, NO TODAS LAS QUE ESTAN EN EL ENUM
 
-        return "formulario_turno_header.html";
+        model.addAttribute("especialidad", especialidades);
+
+        return "formulario_turno_wizard.html";
     }
 
     ///REGISTRO DE TURNO
